@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/number_layout"
+    android:background="#FCFCFF">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_air_parcel_blue_logo"
+            android:layout_alignStart="@+id/text1"
+            android:layout_marginBottom="25dp"
+            android:layout_above="@+id/text1"
+            android:layout_alignLeft="@+id/text1" />
+
+        <TextView
+            android:id="@+id/text1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/text"
+            android:layout_alignEnd="@+id/text"
+            android:fontFamily="@font/poppins_semibold"
+            android:layout_marginBottom="3dp"
+            android:layout_above="@+id/text"
+            android:textStyle="bold"
+            android:textSize="28sp"
+            android:textColor="#0f122f"
+            android:lineSpacingExtra="14sp"
+            android:text="Mobile Number"
+            android:layout_alignLeft="@+id/next"
+            android:layout_alignRight="@+id/next" />
+
+        <TextView
+            android:id="@+id/text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/layout"
+            android:layout_alignEnd="@+id/layout"
+            android:layout_marginBottom="25dp"
+            android:fontFamily="@font/poppins_regular"
+            android:layout_above="@+id/layout"
+            android:textStyle="normal"
+            android:textSize="14sp"
+            android:textColor="#0f122f"
+            android:lineSpacingExtra="9sp"
+            android:text="We will send a verification code to this number"
+            android:layout_alignLeft="@+id/next"
+            android:layout_alignRight="@+id/next" />
+
+        <LinearLayout
+            android:id="@+id/layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/edittext_bg"
+            android:layout_alignStart="@+id/next"
+            android:layout_alignEnd="@+id/next"
+            android:layout_marginBottom="15dp"
+            android:layout_above="@+id/next"
+            android:gravity="center_vertical"
+            android:layout_alignLeft="@+id/next"
+            android:layout_alignRight="@+id/next">
+
+            <TextView
+                android:id="@+id/country_code"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_regular"
+                android:layout_marginStart="15dp"
+                android:textStyle="normal"
+                android:textSize="14sp"
+                android:textColor="#56586d"
+                android:lineSpacingExtra="5sp"
+                android:text="+88 0"
+                android:layout_marginLeft="15dp" />
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="20dp"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="15dp"
+                android:background="#e2e5ff"/>
+
+            <EditText
+                android:id="@+id/phone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_regular"
+                android:inputType="phone"
+                android:maxLength="10"
+                android:maxLines="1"
+                android:background="@null"
+                android:hint="@string/enter_your_phone_number"
+                android:textColor="#000"
+                android:padding="20dp"
+                android:textSize="14sp"/>
+
+        </LinearLayout>
+
+
+        <TextView
+            android:id="@+id/next"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins_regular"
+            android:textAlignment="center"
+            android:layout_centerInParent="true"
+            android:padding="18dp"
+            android:text="Next"
+            android:textColor="#ffffff"
+            android:textSize="15sp"
+            android:layout_marginStart="15dp"
+            android:layout_marginEnd="15dp"
+            android:background="@drawable/before_button_bg"
+            android:gravity="center_horizontal" />
+
+    </RelativeLayout>
+
+</RelativeLayout>

@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/otp_layout"
+    android:background="#FCFCFF">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="20dp">
+
+        <ImageView
+            android:id="@+id/back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_back_icon"
+            android:layout_alignStart="@+id/text3"
+            android:layout_marginBottom="22dp"
+            android:layout_above="@+id/text3"
+            android:layout_alignLeft="@+id/text3" />
+
+        <TextView
+            android:id="@+id/text3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins_semibold"
+            android:layout_marginBottom="3dp"
+            android:layout_above="@+id/text2"
+            android:textStyle="bold"
+            android:textSize="28sp"
+            android:textColor="#0f122f"
+            android:lineSpacingExtra="14sp"
+            android:text="Verification" />
+
+        <TextView
+            android:id="@+id/text2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins_regular"
+            android:layout_marginBottom="25dp"
+            android:layout_above="@+id/otp_view"
+            android:textStyle="normal"
+            android:textSize="14sp"
+            android:textColor="#0f122f"
+            android:lineSpacingExtra="9sp"
+            android:text="We will send a verification code to this number" />
+
+        <in.aabhasjindal.otptextview.OtpTextView
+            android:id="@+id/otp_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins_regular"
+            android:layout_above="@+id/next"
+            android:layout_marginBottom="15dp"
+            android:textColor="#0f122f"
+            android:layout_centerHorizontal="true"
+            app:bar_enabled="false"
+            app:bar_height="2dp"
+            app:height="40dp"
+            app:width="40dp"
+            app:length="6"
+            app:otp_box_background="@drawable/button_bg"
+            app:otp_text_size="18dp"/>
+
+
+        <TextView
+            android:id="@+id/next"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins_regular"
+            android:textAlignment="center"
+            android:layout_centerInParent="true"
+            android:padding="18dp"
+            android:text="Done"
+            android:textColor="#ffffff"
+            android:textSize="15sp"
+            android:background="@drawable/before_button_bg"
+            android:gravity="center_horizontal" />
+
+    </RelativeLayout>
+
+</RelativeLayout>

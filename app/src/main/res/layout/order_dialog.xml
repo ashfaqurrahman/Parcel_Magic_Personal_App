@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="110dp"
+        android:layout_height="220dp"
+        android:layout_marginTop="51dp"
+        android:gravity="center_vertical"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true">
+
+        <RelativeLayout
+            android:id="@+id/main"
+            android:layout_width="110dp"
+            android:layout_height="220dp"
+            android:background="@drawable/half_circle"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true">
+
+            <TextView
+                android:id="@+id/tv1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="40dp"
+                android:layout_marginLeft="20dp"
+                android:rotation="-50"
+                android:textColor="#BAC6D9"
+                android:text="Order History" />
+
+            <TextView
+                android:id="@+id/tv"
+                android:layout_marginTop="60dp"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="40dp"
+                android:layout_marginLeft="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#1B4180"
+                android:textStyle="bold"
+                android:rotation="-130"
+                android:text="Recent Order" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="50dp"
+            android:layout_height="125dp"
+            android:layout_marginTop="51dp"
+            android:layout_centerVertical="true"
+            android:background="@drawable/blue_half_circle"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:rotation="-90"
+                android:textStyle="bold"
+                android:textColor="@color/white"
+                android:text="Done" />
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+</RelativeLayout>

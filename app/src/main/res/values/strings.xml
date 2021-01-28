@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">BitoronBD</string>
+    <string name="next">Next</string>
+    <string name="skip">Skip</string>
+    <string name="done">Done</string>
+    <string name="enter_your_phone_number">Enter your phone number</string>
 </resources>
