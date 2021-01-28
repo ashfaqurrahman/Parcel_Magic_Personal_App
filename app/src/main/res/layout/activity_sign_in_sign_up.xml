@@ -8,7 +8,7 @@
 
     <include layout="@layout/open_screen_layout"/>
     <include layout="@layout/mobile_number_layout"/>
-    <include layout="@layout/mobile_number_layout"/>
+    <include layout="@layout/otp_layout"/>
     <include layout="@layout/sign_up_layout"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
