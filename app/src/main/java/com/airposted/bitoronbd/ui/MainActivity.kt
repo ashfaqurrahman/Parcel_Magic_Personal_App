@@ -1,38 +1,48 @@
 package com.airposted.bitoronbd.ui
 
-import android.app.Dialog
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.ViewGroup
-import android.view.Window
-import android.widget.Button
+import androidx.fragment.app.Fragment
 import com.airposted.bitoronbd.R
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class MainActivity : AppCompatActivity() {
+    private val homeFragment = HomeFragment()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val button = findViewById<Button>(R.id.button)
-        button.setOnClickListener {
-            openOrderDialog()
+        loadFragment(HomeFragment())
+
+        val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottom_navigation)
+        bottomNavigationView.setOnNavigationItemSelectedListener { item ->
+            when (item.itemId) {
+                R.id.nav_home -> {
+                    loadFragmentToBack(HomeFragment())
+                }
+                R.id.nav_my_parcel -> {
+                    loadFragmentToBack(MyParcelFragment())
+                }
+                R.id.nav_setting -> {
+                    loadFragmentToBack(SettingFragment())
+                }
+
+            }
+            true
         }
     }
 
-    private fun openOrderDialog() {
-        val dialogs = Dialog(this)
-        dialogs.requestWindowFeature(Window.FEATURE_NO_TITLE)
-        dialogs.setContentView(R.layout.order_dialog)
-        dialogs.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        dialogs.window!!.setLayout(
-            ViewGroup.LayoutParams.MATCH_PARENT,
-            ViewGroup.LayoutParams.MATCH_PARENT
-        )
+    private fun loadFragment(fragment: Fragment) { // load fragment
+        val transaction = supportFragmentManager.beginTransaction()
+        transaction.replace(R.id.frame_container, fragment)
+        transaction.commit()
+    }
 
-        dialogs.setCancelable(true)
-
-        dialogs.show()
+    private fun loadFragmentToBack(fragment: Fragment) { // load fragment
+        val transaction = supportFragmentManager.beginTransaction()
+        transaction.replace(R.id.frame_container, fragment)
+        transaction.addToBackStack(null)
+        transaction.commit()
     }
 }
