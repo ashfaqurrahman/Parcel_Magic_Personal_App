@@ -1,51 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <RelativeLayout
+    <LinearLayout
         android:id="@+id/main"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:orientation="vertical"
         android:background="#FCFCFF">
 
-        <include layout="@layout/custom_toolbar"/>
+        <include layout="@layout/custom_toolbar"
+            android:id="@+id/toolbar"/>
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
             <TextView
-                android:id="@+id/text1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignStart="@+id/text"
-                android:layout_alignEnd="@+id/text"
-                android:fontFamily="@font/poppins_semibold"
-                android:layout_marginBottom="3dp"
-                android:layout_above="@+id/text"
-                android:textStyle="bold"
-                android:textSize="28sp"
-                android:textColor="#0f122f"
-                android:lineSpacingExtra="14sp"
-                android:text="Mobile Number"
-                android:layout_alignLeft="@+id/next"
-                android:layout_alignRight="@+id/next" />
-
-            <TextView
-                android:id="@+id/text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignStart="@+id/layout"
                 android:layout_alignEnd="@+id/layout"
-                android:layout_marginBottom="25dp"
-                android:fontFamily="@font/poppins_regular"
                 android:layout_above="@+id/layout"
+                android:layout_marginBottom="25dp"
+                android:fontFamily="@font/poppins_semibold"
                 android:textStyle="normal"
-                android:textSize="14sp"
+                android:textSize="18sp"
                 android:textColor="#0f122f"
-                android:lineSpacingExtra="9sp"
-                android:text="We will send a verification code to this number"
-                android:layout_alignLeft="@+id/next"
-                android:layout_alignRight="@+id/next" />
+                android:text="Please enter your mobile \nnumber to continue"
+                />
 
             <LinearLayout
                 android:id="@+id/layout"
@@ -122,6 +104,6 @@
 
         </RelativeLayout>
 
-    </RelativeLayout>
+    </LinearLayout>
 
 </layout>
