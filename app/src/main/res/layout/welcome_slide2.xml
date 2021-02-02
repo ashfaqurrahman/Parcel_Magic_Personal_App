@@ -20,34 +20,44 @@
             android:layout_marginTop="100dp"
             android:src="@drawable/ic_intro_two_bg" />
 
-        <TextView
-            android:id="@+id/intro_two_title"
-            android:layout_below="@+id/intro_two_bg"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingStart="15dp"
-            android:paddingEnd="15dp"
-            android:layout_centerHorizontal="true"
-            android:fontFamily="@font/poppins_semibold"
-            android:textStyle="normal"
-            android:textSize="25sp"
-            android:textColor="#ffffff"
-            android:text="Delivery within one day"
-            />
-
-        <TextView
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/intro_two_title"
-            android:layout_marginTop="49dp"
-            android:fontFamily="@font/poppins_regular"
-            android:gravity="center_horizontal"
-            android:paddingStart="15dp"
-            android:paddingEnd="15dp"
-            android:text="Blazing fast courier and parcel delivery service in Bangladesh. One stop delivery solution for your growing business."
-            android:textColor="#ffffff"
-            android:textSize="14sp"
-            android:textStyle="normal" />
+            android:orientation="vertical"
+            android:layout_alignParentBottom="true"
+            android:layout_below="@id/intro_two_bg"
+            android:gravity="center">
+
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_semibold"
+                android:textSize="25sp"
+                android:textStyle="normal"
+                android:textColor="#ffffff"
+                android:paddingStart="15dp"
+                android:paddingEnd="15dp"
+                android:gravity="center"
+                android:text="Delivery within one day"
+                />
+
+            <TextView
+                android:id="@+id/desc1"
+                android:layout_marginTop="15dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_regular"
+                android:paddingStart="15dp"
+                android:paddingEnd="15dp"
+                android:textStyle="normal"
+                android:textSize="14sp"
+                android:textColor="#ffffff"
+                android:gravity="center"
+                android:text="Blazing fast courier and parcel delivery service in Bangladesh. One stop delivery solution for your growing business."
+                />
+
+        </LinearLayout>
 
     </RelativeLayout>
 

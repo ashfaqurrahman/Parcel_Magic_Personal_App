@@ -27,7 +27,6 @@ android {
     }
 
     buildFeatures {
-        viewBinding true
         dataBinding true
     }
 
@@ -87,4 +86,7 @@ dependencies {
     implementation "androidx.preference:preference-ktx:1.1.1"
 
     implementation 'com.github.aabhasr1:OtpView:v1.1.2-ktx'
+    implementation 'com.jaeger.statusbarutil:library:1.5.1'
+    //app bajar
+    implementation 'com.aapbd:appbajar-lib:1.0.2'
 }

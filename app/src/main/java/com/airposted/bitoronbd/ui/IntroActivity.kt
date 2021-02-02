@@ -4,7 +4,6 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Html
 import android.view.LayoutInflater
@@ -13,9 +12,13 @@ import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager.widget.PagerAdapter
 import androidx.viewpager.widget.ViewPager
+import com.aapbd.appbajarlib.storage.PersistData
 import com.airposted.bitoronbd.R
+import com.airposted.bitoronbd.ui.auth.SignInSignUpActivity
+import com.airposted.bitoronbd.util.AppHelper
 
 class IntroActivity : AppCompatActivity() {
     private var viewPager: ViewPager? = null
@@ -31,10 +34,12 @@ class IntroActivity : AppCompatActivity() {
         setContentView(R.layout.activity_intro)
 
         context = this
-        if (Build.VERSION.SDK_INT >= 21) {
-            window.decorView.systemUiVisibility =
-                View.SYSTEM_UI_FLAG_LAYOUT_STABLE or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-        }
+
+        window.setFlags(
+            WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
+            WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
+        )
+
         viewPager = findViewById(R.id.view_pager)
         dotsLayout = findViewById(R.id.layoutDots)
         btnSkip = findViewById(R.id.btn_skip)
@@ -50,21 +55,23 @@ class IntroActivity : AppCompatActivity() {
         viewPager!!.addOnPageChangeListener(viewPagerPageChangeListener)
         btnSkip!!.setOnClickListener {
             startActivity(Intent(context, SignInSignUpActivity::class.java))
-            //                PersistData.setBooleanData(context, AppHelper.OPEN_SCREEN_LOAD, true);
-//                gotoNewActivityWithClearActivity(WelcomeActivity.class);
+            PersistData.setBooleanData(context, AppHelper.OPEN_SCREEN_LOAD, true)
+            startActivity(Intent(context, SignInSignUpActivity::class.java))
+            finish()
         }
-        btnNext!!.setOnClickListener(View.OnClickListener {
+        btnNext!!.setOnClickListener {
             // checking for last page
             // if last page home screen will be launched
             val current = getItem(+1)
             if (current < layouts!!.size) {
                 // move to next screen
-                viewPager!!.setCurrentItem(current)
+                viewPager!!.currentItem = current
             } else {
-//                    PersistData.setBooleanData(context, AppHelper.OPEN_SCREEN_LOAD, true);
-//                    gotoNewActivityWithClearActivity(WelcomeActivity.class);
+                PersistData.setBooleanData(context, AppHelper.OPEN_SCREEN_LOAD, true)
+                startActivity(Intent(context, SignInSignUpActivity::class.java))
+                finish()
             }
-        })
+        }
     }
 
     private fun addBottomDots(currentPage: Int) {

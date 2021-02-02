@@ -4,6 +4,10 @@
     <string name="skip">Skip</string>
     <string name="done">Done</string>
     <string name="enter_your_phone_number">Enter your phone number</string>
+    <string name="enter_your_name">Enter your name</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="loading">Loading..</string>
+    <string name="upload_your_photo_optional">Upload your photo (optional)</string>
+    <string name="personal_information">Personal Information</string>
 </resources>
