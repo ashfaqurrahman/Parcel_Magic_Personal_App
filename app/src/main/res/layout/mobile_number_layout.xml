@@ -22,7 +22,7 @@
                 android:layout_alignEnd="@+id/layout"
                 android:layout_above="@+id/layout"
                 android:layout_marginBottom="25dp"
-                android:fontFamily="@font/poppins_semibold"
+                android:fontFamily="@font/poppins_medium"
                 android:textStyle="normal"
                 android:textSize="18sp"
                 android:textColor="#0f122f"

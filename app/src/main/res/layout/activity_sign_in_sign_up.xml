@@ -2,7 +2,7 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".ui.auth.SignInSignUpActivity"
@@ -12,11 +12,13 @@
             android:id="@+id/open_layout"/>
         <include layout="@layout/mobile_number_layout"
             android:id="@+id/number_layout"/>
+        <include layout="@layout/welcome_back_layout"
+            android:id="@+id/welcome_back_layout"/>
         <include layout="@layout/otp_layout"
             android:id="@+id/otp_layout"/>
         <include layout="@layout/sign_up_layout"
             android:id="@+id/sign_up_layout"/>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </LinearLayout>
 
 </layout>

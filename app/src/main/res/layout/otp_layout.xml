@@ -4,18 +4,18 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <LinearLayout
+        android:id="@+id/main"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:background="#FCFCFF">
 
         <include layout="@layout/custom_toolbar"
             android:id="@+id/toolbar"/>
 
         <RelativeLayout
-            android:id="@+id/main"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="#FCFCFF">
+            android:layout_height="match_parent">
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -23,7 +23,7 @@
                 android:padding="20dp">
 
                 <TextView
-                    android:id="@+id/otp_text"
+                    android:id="@+id/otp_top_text"
                     android:layout_above="@+id/otp_view"
                     android:layout_marginBottom="25dp"
                     android:layout_width="wrap_content"

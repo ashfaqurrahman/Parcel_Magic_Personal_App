@@ -12,4 +12,9 @@
     <string name="personal_information">Personal Information</string>
     <string name="toolbar">ToolBar</string>
     <string name="by_useing">By using Airposted, I agree to Airposted\'s</string>
+    <string name="and">and</string>
+    <string name="terms_of_service">Terms of Service</string>
+    <string name="airposted_terms_of_condition">Airposted Terms and Conditions</string>
+    <string name="privacy_policy">Privacy Policy</string>
+    <string name="webview">WebView</string>
 </resources>

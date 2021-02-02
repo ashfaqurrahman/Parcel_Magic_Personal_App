@@ -20,7 +20,7 @@
             android:id="@+id/text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/poppins_regular"
+            android:fontFamily="@font/poppins_medium"
             android:layout_alignStart="@+id/next"
             android:layout_marginBottom="25dp"
             android:layout_above="@+id/next"
@@ -48,6 +48,7 @@
             android:gravity="center_horizontal" />
 
         <TextView
+            android:id="@+id/tv_terms_condition_signup"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignStart="@+id/next"
@@ -57,11 +58,10 @@
             android:fontFamily="sans-serif"
             android:textStyle="normal"
             android:textSize="12sp"
-            android:textColor="#0f122f"
+            android:textColor="@color/text_color"
             android:lineSpacingExtra="10sp"
             android:gravity="center_horizontal"
-            android:text="By using Airposted, I agree to Airposted&apos;sTerms of Service
- and Privacy Policy"
+            android:text="@string/by_useing"
             />
 
         <ImageView

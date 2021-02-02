@@ -3,8 +3,15 @@ package com.airposted.bitoronbd.util
 import android.app.Activity
 import android.app.ProgressDialog
 import android.content.Context
+import android.content.Intent
+import android.os.Bundle
 import android.text.Editable
+import android.text.SpannableStringBuilder
+import android.text.TextPaint
 import android.text.TextWatcher
+import android.text.method.LinkMovementMethod
+import android.text.style.ClickableSpan
+import android.text.style.ForegroundColorSpan
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
@@ -13,6 +20,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import com.airposted.bitoronbd.R
+import com.airposted.bitoronbd.ui.WebviewActivity
 import com.google.android.material.snackbar.Snackbar
 
 
@@ -109,4 +117,57 @@ fun textWatcher(context: Context, size: Int, input: EditText, button: TextView) 
             }
         }
     })
+}
+
+fun customTextView(view: TextView, context: Context) {
+    val spanTxt = SpannableStringBuilder(
+        context.getString(R.string.by_useing)
+    )
+    spanTxt.append(" ").append(context.getString(R.string.terms_of_service))
+    spanTxt.setSpan(object : ClickableSpan() {
+        override fun onClick(widget: View) {
+            AppHelper.webviewTitle = context.getString(R.string.terms_of_service)
+            val bundle = Bundle()
+            bundle.putString(AppHelper.DETAILS_KEY, AppHelper.TERMS)
+            val intent = Intent(context, WebviewActivity::class.java)
+            intent.putExtras(bundle)
+            context.startActivity(intent)
+        }
+
+        override fun updateDrawState(ds: TextPaint) {
+            ds.isUnderlineText = false
+        }
+    }, spanTxt.length - context.getString(R.string.terms_of_service).length, spanTxt.length, 0)
+    spanTxt.setSpan(
+        ForegroundColorSpan(ContextCompat.getColor(context, R.color.blue
+        )),
+        context.getString(R.string.by_useing).length,
+        spanTxt.length,
+        0
+    )
+    spanTxt.append(" ").append(context.getString(R.string.and))
+    spanTxt.append(" ").append(context.getString(R.string.privacy_policy))
+    spanTxt.setSpan(object : ClickableSpan() {
+        override fun onClick(widget: View) {
+            AppHelper.webviewTitle = context.getString(R.string.privacy_policy)
+            val bundle = Bundle()
+            bundle.putString(AppHelper.DETAILS_KEY, AppHelper.PEIVACY_POLICY)
+            val intent = Intent(context, WebviewActivity::class.java)
+            intent.putExtras(bundle)
+            context.startActivity(intent)
+        }
+
+        override fun updateDrawState(ds: TextPaint) {
+            ds.isUnderlineText = false
+        }
+    }, spanTxt.length - context.getString(R.string.privacy_policy).length, spanTxt.length, 0)
+    view.movementMethod = LinkMovementMethod.getInstance()
+    spanTxt.setSpan(
+        ForegroundColorSpan(ContextCompat.getColor(context, R.color.blue
+        )),
+        context.getString(R.string.by_useing).length + context.getString(R.string.and).length + context.getString(R.string.terms_of_service).length + 2,
+        spanTxt.length,
+        0
+    )
+    view.setText(spanTxt, TextView.BufferType.SPANNABLE)
 }

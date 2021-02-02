@@ -4,7 +4,9 @@ import `in`.aabhasjindal.otptextview.OTPListener
 import android.content.Intent
 import android.os.Bundle
 import android.os.CountDownTimer
+import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
@@ -51,14 +53,20 @@ class SignInSignUpActivity : AppCompatActivity(), KodeinAware {
 
         binding.openLayout.main.visibility = View.VISIBLE
         binding.numberLayout.main.visibility = View.GONE
+        binding.welcomeBackLayout.main.visibility = View.GONE
         binding.otpLayout.main.visibility = View.GONE
         binding.signUpLayout.main.visibility = View.GONE
+
+        customTextView(binding.openLayout.tvTermsConditionSignup, this)
 
         binding.openLayout.next.setOnClickListener {
             binding.openLayout.main.visibility = View.GONE
             binding.numberLayout.main.visibility = View.VISIBLE
+            binding.welcomeBackLayout.main.visibility = View.GONE
             binding.otpLayout.main.visibility = View.GONE
             binding.signUpLayout.main.visibility = View.GONE
+
+            binding.numberLayout.toolbar.toolbarTitle.text = "Mobile Number"
 
             textWatcher(this, 9, binding.numberLayout.phone, binding.numberLayout.next)
         }
@@ -75,42 +83,21 @@ class SignInSignUpActivity : AppCompatActivity(), KodeinAware {
                         dismissDialog()
                         binding.openLayout.main.visibility = View.GONE
                         binding.numberLayout.main.visibility = View.GONE
-                        binding.otpLayout.main.visibility = View.VISIBLE
+                        binding.welcomeBackLayout.main.visibility = View.VISIBLE
+                        binding.otpLayout.main.visibility = View.GONE
                         binding.signUpLayout.main.visibility = View.GONE
                         isAvailable = true
                         token = authResponse.data.token
-
-                        binding.otpLayout.verify.isEnabled = false
-
-                        binding.otpLayout.otpView.otpListener = object : OTPListener {
-                            override fun onInteractionListener() {
-                                binding.otpLayout.verify.isEnabled = false
-                                binding.otpLayout.verify.background = ContextCompat.getDrawable(
-                                    this@SignInSignUpActivity,
-                                    R.drawable.before_button_bg
-                                )
-                                binding.otpLayout.otpView.resetState()
-                            }
-
-                            override fun onOTPComplete(otp: String) {
-                                otp1 = otp
-                                binding.otpLayout.verify.background = ContextCompat.getDrawable(
-                                    this@SignInSignUpActivity,
-                                    R.drawable.after_button_bg
-                                )
-                                binding.otpLayout.verify.isEnabled = true
-                            }
-                        }
-
-                        //timer()
-                        //sendVerificationCode("+880$phone")
 
                     } else {
                         dismissDialog()
                         binding.openLayout.main.visibility = View.GONE
                         binding.numberLayout.main.visibility = View.GONE
+                        binding.welcomeBackLayout.main.visibility = View.GONE
                         binding.otpLayout.main.visibility = View.GONE
                         binding.signUpLayout.main.visibility = View.VISIBLE
+
+                        binding.signUpLayout.toolbar.toolbarTitle.text = "Sign Up"
 
                         textWatcher(
                             applicationContext,
@@ -131,6 +118,42 @@ class SignInSignUpActivity : AppCompatActivity(), KodeinAware {
             }
         }
 
+        binding.welcomeBackLayout.next.setOnClickListener {
+            binding.openLayout.main.visibility = View.GONE
+            binding.numberLayout.main.visibility = View.GONE
+            binding.welcomeBackLayout.main.visibility = View.GONE
+            binding.otpLayout.main.visibility = View.VISIBLE
+            binding.signUpLayout.main.visibility = View.GONE
+            binding.otpLayout.verify.isEnabled = false
+
+            binding.otpLayout.otpTopText.text = "Enter verification code sent to\n+880$phone"
+
+            binding.otpLayout.toolbar.toolbarTitle.text = "Verification"
+
+            binding.otpLayout.otpView.otpListener = object : OTPListener {
+                override fun onInteractionListener() {
+                    binding.otpLayout.verify.isEnabled = false
+                    binding.otpLayout.verify.background = ContextCompat.getDrawable(
+                        this@SignInSignUpActivity,
+                        R.drawable.before_button_bg
+                    )
+                    binding.otpLayout.otpView.resetState()
+                }
+
+                override fun onOTPComplete(otp: String) {
+                    otp1 = otp
+                    binding.otpLayout.verify.background = ContextCompat.getDrawable(
+                        this@SignInSignUpActivity,
+                        R.drawable.after_button_bg
+                    )
+                    binding.otpLayout.verify.isEnabled = true
+                }
+            }
+
+            timer()
+            sendVerificationCode("+880$phone")
+        }
+
         binding.otpLayout.verify.setOnClickListener {
             hideKeyboard(this)
             setProgressDialog(this)
@@ -139,14 +162,58 @@ class SignInSignUpActivity : AppCompatActivity(), KodeinAware {
             signInWithCredential(credential)
         }
 
-        binding.otpLayout.back.setOnClickListener {
-            binding.openLayout.main.visibility = View.GONE
-            binding.numberLayout.main.visibility = View.VISIBLE
+        binding.numberLayout.toolbar.backImage.setOnClickListener {
+            hideKeyboard(this)
+            binding.openLayout.main.visibility = View.VISIBLE
+            binding.numberLayout.main.visibility = View.GONE
+            binding.welcomeBackLayout.main.visibility = View.GONE
             binding.otpLayout.main.visibility = View.GONE
             binding.signUpLayout.main.visibility = View.GONE
+
+            binding.numberLayout.phone.setText("")
+        }
+
+        binding.welcomeBackLayout.back.setOnClickListener {
+            binding.openLayout.main.visibility = View.GONE
+            binding.numberLayout.main.visibility = View.VISIBLE
+            binding.welcomeBackLayout.main.visibility = View.GONE
+            binding.otpLayout.main.visibility = View.GONE
+            binding.signUpLayout.main.visibility = View.GONE
+
+            binding.numberLayout.toolbar.toolbarTitle.text = "Mobile Number"
+        }
+
+        binding.signUpLayout.toolbar.backImage.setOnClickListener {
+            hideKeyboard(this)
+            binding.openLayout.main.visibility = View.GONE
+            binding.numberLayout.main.visibility = View.VISIBLE
+            binding.welcomeBackLayout.main.visibility = View.GONE
+            binding.otpLayout.main.visibility = View.GONE
+            binding.signUpLayout.main.visibility = View.GONE
+
+            binding.signUpLayout.name.setText("")
+
+            binding.numberLayout.toolbar.toolbarTitle.text = "Mobile Number"
+        }
+
+        binding.otpLayout.toolbar.backImage.setOnClickListener {
+            hideKeyboard(this)
+            binding.openLayout.main.visibility = View.GONE
+            binding.numberLayout.main.visibility = View.VISIBLE
+            binding.welcomeBackLayout.main.visibility = View.GONE
+            binding.otpLayout.main.visibility = View.GONE
+            binding.signUpLayout.main.visibility = View.GONE
+
+            timer!!.cancel()
+            binding.signUpLayout.name.setText("")
+            binding.otpLayout.otpView.setOTP("")
+
+            binding.numberLayout.toolbar.toolbarTitle.text = "Mobile Number"
         }
 
         binding.signUpLayout.next.setOnClickListener {
+
+            binding.otpLayout.toolbar.toolbarTitle.text = "Verification"
 
             binding.otpLayout.verify.isEnabled = false
 
@@ -173,28 +240,37 @@ class SignInSignUpActivity : AppCompatActivity(), KodeinAware {
             hideKeyboard(this)
             binding.openLayout.main.visibility = View.GONE
             binding.numberLayout.main.visibility = View.GONE
+            binding.welcomeBackLayout.main.visibility = View.GONE
             binding.otpLayout.main.visibility = View.VISIBLE
             binding.signUpLayout.main.visibility = View.GONE
-            //timer()
+
+            binding.otpLayout.otpTopText.text = "Enter verification code sent to\n+880$phone"
+
+            timer()
             sendVerificationCode("+880$phone")
 
         }
+
+        binding.otpLayout.resend.setOnClickListener {
+            timer()
+            sendVerificationCode("+880$phone")
+        }
     }
 
-    /*private fun timer() {
-        resend.isClickable = false
+    private fun timer() {
+        binding.otpLayout.resend.isClickable = false
         timer = object : CountDownTimer(60000, 1000) {
             override fun onTick(millisUntilFinished: Long) {
-                resend.text = " " + (millisUntilFinished / 1000) + "s"
+                binding.otpLayout.resend.text = " " + (millisUntilFinished / 1000) + "s"
             }
 
             override fun onFinish() {
-                resend.text = " Resend Code"
-                resend.isClickable = true
+                binding.otpLayout.resend.text = " Resend Code"
+                binding.otpLayout.resend.isClickable = true
             }
         }
         timer?.start()
-    }*/
+    }
 
     private fun sendVerificationCode(number: String) {
         PhoneAuthProvider.getInstance().verifyPhoneNumber(
@@ -239,6 +315,8 @@ class SignInSignUpActivity : AppCompatActivity(), KodeinAware {
 
                     if (isAvailable){
                         dismissDialog()
+                        Toast.makeText(this, "Login Successful", Toast.LENGTH_LONG).show()
+                        binding.rootLayout.snackbar("Login Successful")
                         PersistentUser.getInstance().setLogin(this)
                         PersistentUser.getInstance().setAccessToken(this, token)
                         startActivity(Intent(applicationContext, MainActivity::class.java))
@@ -252,6 +330,7 @@ class SignInSignUpActivity : AppCompatActivity(), KodeinAware {
                                 )
                                 if (authResponse.success) {
                                     dismissDialog()
+                                    Toast.makeText(this@SignInSignUpActivity, authResponse.msg, Toast.LENGTH_LONG).show()
                                     PersistentUser.getInstance().setLogin(this@SignInSignUpActivity)
                                     PersistentUser.getInstance().setAccessToken(this@SignInSignUpActivity, token)
                                     startActivity(
