@@ -7,18 +7,11 @@
         android:layout_height="match_parent"
         android:background="#FCFCFF">
 
+        <include layout="@layout/custom_toolbar"/>
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_air_parcel_blue_logo"
-                android:layout_alignStart="@+id/text1"
-                android:layout_marginBottom="25dp"
-                android:layout_above="@+id/text1"
-                android:layout_alignLeft="@+id/text1" />
 
             <TextView
                 android:id="@+id/text1"
@@ -119,6 +112,13 @@
                 android:layout_marginEnd="15dp"
                 android:background="@drawable/before_button_bg"
                 android:gravity="center_horizontal" />
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="10dp"
+                android:src="@drawable/ic_open_screen_bg"/>
 
         </RelativeLayout>
 
