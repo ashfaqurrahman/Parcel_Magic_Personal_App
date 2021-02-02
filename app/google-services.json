@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "586110684187",
+    "project_id": "bitoronbd-498d1",
+    "storage_bucket": "bitoronbd-498d1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:586110684187:android:3c7d6ced1eaf4aa34dfcbe",
+        "android_client_info": {
+          "package_name": "com.airposted.bitoronbd"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "586110684187-lrgrih46499dqbr4mbe2slqhdphbaa3m.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.airposted.bitoronbd",
+            "certificate_hash": "dcf6f5bcba07dcd145ecd92f2f566b159ffe5a4b"
+          }
+        },
+        {
+          "client_id": "586110684187-tn3atclmcsvolb3drp5gkvtdd64uueqh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBYm9iZRuuP_Sok6FfrJ7V-snAD3UalEkg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "586110684187-tn3atclmcsvolb3drp5gkvtdd64uueqh.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

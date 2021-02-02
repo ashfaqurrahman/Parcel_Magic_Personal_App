@@ -3,10 +3,15 @@ package com.airposted.bitoronbd.util
 import android.app.Activity
 import android.app.ProgressDialog
 import android.content.Context
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.View
 import android.view.inputmethod.InputMethodManager
+import android.widget.EditText
 import android.widget.ProgressBar
+import android.widget.TextView
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import com.airposted.bitoronbd.R
 import com.google.android.material.snackbar.Snackbar
 
@@ -76,4 +81,32 @@ fun hideKeyboard(activity: Activity) {
         view = View(activity)
     }
     imm.hideSoftInputFromWindow(view.windowToken, 0)
+}
+
+fun textWatcher(context: Context, size: Int, input: EditText, button: TextView) {
+    button.isEnabled = false
+    input.addTextChangedListener(object : TextWatcher {
+        override fun afterTextChanged(s: Editable) {
+
+        }
+
+        override fun beforeTextChanged(
+            s: CharSequence?, start: Int,
+            count: Int, after: Int
+        ) {
+        }
+
+        override fun onTextChanged(
+            s: CharSequence, start: Int,
+            before: Int, count: Int
+        ) {
+            if (s.length > size) {
+                button.background = ContextCompat.getDrawable(context, R.drawable.after_button_bg)
+                button.isEnabled = true
+            } else {
+                button.background = ContextCompat.getDrawable(context, R.drawable.before_button_bg)
+                button.isEnabled = false
+            }
+        }
+    })
 }

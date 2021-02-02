@@ -1,28 +1,35 @@
 package com.airposted.bitoronbd.data.network
 
 import com.airposted.bitoronbd.data.network.responses.AuthResponse
+import okhttp3.MultipartBody
 import okhttp3.OkHttpClient
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.http.Field
-import retrofit2.http.FormUrlEncoded
-import retrofit2.http.POST
+import retrofit2.http.*
 
 interface MyApi {
 
     @FormUrlEncoded
-    @POST("api/phonenumbercheck")
+    @POST("phonenumbercheck")
     suspend fun numberCheck(
         @Field("phone") email: String
     ) : Response<AuthResponse>
 
     @FormUrlEncoded
-    @POST("signup")
+    @POST("register_personal")
     suspend fun userSignup(
-        @Field("name") name: String,
-        @Field("email") email: String,
-        @Field("password") password: String
+        @Field("username") name: String,
+        @Field("phone") email: String
+    ) : Response<AuthResponse>
+
+    @FormUrlEncoded
+    @POST("register_personal")
+    suspend fun userSignupWithPhoto(
+        @Field("username") name: String,
+        @Field("phone") email: String,
+        @Part file: MultipartBody.Part,
+        @Part("user_photo") photo_name: String
     ) : Response<AuthResponse>
 
     /*@GET("quotes")
@@ -39,7 +46,7 @@ interface MyApi {
 
             return Retrofit.Builder()
                 .client(okkHttpclient)
-                .baseUrl("https://parcel.airposted.com/")
+                .baseUrl("https://parcel.airposted.com/api/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()
                 .create(MyApi::class.java)
