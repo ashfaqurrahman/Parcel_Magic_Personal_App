@@ -6,7 +6,7 @@
     tools:context=".ui.SettingFragment">
 
     <RelativeLayout
-        android:id="@+id/"
+        android:id="@+id/main"
         android:layout_width="match_parent"
         android:layout_height="122dp"
         android:orientation="vertical"

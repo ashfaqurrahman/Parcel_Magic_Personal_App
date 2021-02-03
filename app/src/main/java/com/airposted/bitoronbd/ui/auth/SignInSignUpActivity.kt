@@ -1,18 +1,26 @@
 package com.airposted.bitoronbd.ui.auth
 
 import `in`.aabhasjindal.otptextview.OTPListener
+import android.Manifest
+import android.app.Activity
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.graphics.PorterDuff
+import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.util.Log
 import android.view.View
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.*
 import com.aapbd.appbajarlib.storage.PersistentUser
 import com.airposted.bitoronbd.R
+import com.airposted.bitoronbd.data.network.responses.AuthResponse
 import com.airposted.bitoronbd.databinding.*
 import com.airposted.bitoronbd.ui.MainActivity
 import com.airposted.bitoronbd.util.*
@@ -23,6 +31,8 @@ import com.google.firebase.auth.PhoneAuthCredential
 import com.google.firebase.auth.PhoneAuthProvider
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import com.theartofdev.edmodo.cropper.CropImage
+import com.theartofdev.edmodo.cropper.CropImageView
 import kotlinx.coroutines.launch
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.kodein
@@ -41,7 +51,8 @@ class SignInSignUpActivity : AppCompatActivity(), KodeinAware {
     private lateinit var mAuth: FirebaseAuth
     var otp1: String? = null
     var isAvailable = false
-    var token:String? = null
+    var authResponse: AuthResponse? = null
+    private var cropImageUri: Uri? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -78,8 +89,8 @@ class SignInSignUpActivity : AppCompatActivity(), KodeinAware {
             phone = zeroRemove(binding.numberLayout.phone.text.toString().trim())
             lifecycleScope.launch {
                 try {
-                    val authResponse = viewModel.checkNumber("+880$phone")
-                    if (authResponse.data != null) {
+                    authResponse = viewModel.checkNumber("+880$phone")
+                    if (authResponse?.data != null) {
                         dismissDialog()
                         binding.openLayout.main.visibility = View.GONE
                         binding.numberLayout.main.visibility = View.GONE
@@ -87,7 +98,6 @@ class SignInSignUpActivity : AppCompatActivity(), KodeinAware {
                         binding.otpLayout.main.visibility = View.GONE
                         binding.signUpLayout.main.visibility = View.GONE
                         isAvailable = true
-                        token = authResponse.data.token
 
                     } else {
                         dismissDialog()
@@ -116,6 +126,17 @@ class SignInSignUpActivity : AppCompatActivity(), KodeinAware {
                     e.printStackTrace()
                 }
             }
+        }
+
+        binding.numberLayout.toolbar.backImage.setOnClickListener {
+            hideKeyboard(this)
+            binding.openLayout.main.visibility = View.VISIBLE
+            binding.numberLayout.main.visibility = View.GONE
+            binding.welcomeBackLayout.main.visibility = View.GONE
+            binding.otpLayout.main.visibility = View.GONE
+            binding.signUpLayout.main.visibility = View.GONE
+
+            binding.numberLayout.phone.setText("")
         }
 
         binding.welcomeBackLayout.next.setOnClickListener {
@@ -154,25 +175,6 @@ class SignInSignUpActivity : AppCompatActivity(), KodeinAware {
             sendVerificationCode("+880$phone")
         }
 
-        binding.otpLayout.verify.setOnClickListener {
-            hideKeyboard(this)
-            setProgressDialog(this)
-            val code = otp1
-            val credential = PhoneAuthProvider.getCredential(verificationId!!, code!!)
-            signInWithCredential(credential)
-        }
-
-        binding.numberLayout.toolbar.backImage.setOnClickListener {
-            hideKeyboard(this)
-            binding.openLayout.main.visibility = View.VISIBLE
-            binding.numberLayout.main.visibility = View.GONE
-            binding.welcomeBackLayout.main.visibility = View.GONE
-            binding.otpLayout.main.visibility = View.GONE
-            binding.signUpLayout.main.visibility = View.GONE
-
-            binding.numberLayout.phone.setText("")
-        }
-
         binding.welcomeBackLayout.back.setOnClickListener {
             binding.openLayout.main.visibility = View.GONE
             binding.numberLayout.main.visibility = View.VISIBLE
@@ -183,17 +185,17 @@ class SignInSignUpActivity : AppCompatActivity(), KodeinAware {
             binding.numberLayout.toolbar.toolbarTitle.text = "Mobile Number"
         }
 
-        binding.signUpLayout.toolbar.backImage.setOnClickListener {
+        binding.otpLayout.verify.setOnClickListener {
             hideKeyboard(this)
-            binding.openLayout.main.visibility = View.GONE
-            binding.numberLayout.main.visibility = View.VISIBLE
-            binding.welcomeBackLayout.main.visibility = View.GONE
-            binding.otpLayout.main.visibility = View.GONE
-            binding.signUpLayout.main.visibility = View.GONE
+            setProgressDialog(this)
+            val code = otp1
+            val credential = PhoneAuthProvider.getCredential(verificationId!!, code!!)
+            signInWithCredential(credential)
+        }
 
-            binding.signUpLayout.name.setText("")
-
-            binding.numberLayout.toolbar.toolbarTitle.text = "Mobile Number"
+        binding.otpLayout.resend.setOnClickListener {
+            timer()
+            sendVerificationCode("+880$phone")
         }
 
         binding.otpLayout.toolbar.backImage.setOnClickListener {
@@ -251,11 +253,80 @@ class SignInSignUpActivity : AppCompatActivity(), KodeinAware {
 
         }
 
-        binding.otpLayout.resend.setOnClickListener {
-            timer()
-            sendVerificationCode("+880$phone")
+        binding.signUpLayout.imageUpload.setOnClickListener {
+            CropImage.startPickImageActivity(this)
+        }
+
+        binding.signUpLayout.toolbar.backImage.setOnClickListener {
+            hideKeyboard(this)
+            binding.openLayout.main.visibility = View.GONE
+            binding.numberLayout.main.visibility = View.VISIBLE
+            binding.welcomeBackLayout.main.visibility = View.GONE
+            binding.otpLayout.main.visibility = View.GONE
+            binding.signUpLayout.main.visibility = View.GONE
+
+            binding.signUpLayout.name.setText("")
+
+            binding.numberLayout.toolbar.toolbarTitle.text = "Mobile Number"
         }
     }
+
+    @RequiresApi(Build.VERSION_CODES.M)
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == CropImage.PICK_IMAGE_CHOOSER_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
+            val imageUri = CropImage.getPickImageResultUri(this, data)
+            if (CropImage.isReadExternalStoragePermissionsRequired(this, imageUri)) {
+                cropImageUri = imageUri
+                Log.e("AAAA", cropImageUri.toString())
+                requestPermissions(arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE), 0)
+            } else {
+                startCropImageActivity(imageUri)
+            }
+        }
+
+        if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
+            val result = CropImage.getActivityResult(data)
+            if (resultCode == Activity.RESULT_OK) {
+                binding.signUpLayout.profileImage.setImageURI(result.uri)
+                cropImageUri = result.uri
+                /*binding.signUpLayout.photo.background?.setColorFilter(
+                    resources.getColor(R.color.edittext_border),
+                    PorterDuff.Mode.SRC_ATOP
+                )
+                binding.signUpLayout.photo.background?.setColorFilter(
+                    resources.getColor(R.color.edittext_border),
+                    PorterDuff.Mode.SRC_ATOP)*/
+            } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
+                Toast.makeText(this, "Cropping failed: " + result.error, Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<String>,
+        grantResults: IntArray
+    ) {
+        if (cropImageUri != null && grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            startCropImageActivity(cropImageUri!!)
+        } else {
+            Toast.makeText(
+                this,
+                "Cancelling, required permissions are not granted",
+                Toast.LENGTH_LONG
+            ).show()
+        }
+    }
+
+    private fun startCropImageActivity(imageUri: Uri?) {
+        CropImage.activity(imageUri)
+            .setGuidelines(CropImageView.Guidelines.ON)
+            .setMultiTouchEnabled(true)
+            .setAspectRatio(1, 1)
+            .start(this)
+    }
+
 
     private fun timer() {
         binding.otpLayout.resend.isClickable = false
@@ -316,9 +387,13 @@ class SignInSignUpActivity : AppCompatActivity(), KodeinAware {
                     if (isAvailable){
                         dismissDialog()
                         Toast.makeText(this, "Login Successful", Toast.LENGTH_LONG).show()
-                        binding.rootLayout.snackbar("Login Successful")
+                        //binding.rootLayout.snackbar("Login Successful")
                         PersistentUser.getInstance().setLogin(this)
-                        PersistentUser.getInstance().setAccessToken(this, token)
+                        PersistentUser.getInstance().setAccessToken(this, authResponse?.data?.token)
+                        PersistentUser.getInstance().setUserID(this, authResponse?.user?.id.toString())
+                        PersistentUser.getInstance().setFullname(this, authResponse?.user?.name)
+                        PersistentUser.getInstance().setPhonenumber(this, authResponse?.user?.phone)
+                        PersistentUser.getInstance().setUserImage(this, authResponse?.user?.image)
                         startActivity(Intent(applicationContext, MainActivity::class.java))
                         finish()
                     } else {
@@ -332,7 +407,11 @@ class SignInSignUpActivity : AppCompatActivity(), KodeinAware {
                                     dismissDialog()
                                     Toast.makeText(this@SignInSignUpActivity, authResponse.msg, Toast.LENGTH_LONG).show()
                                     PersistentUser.getInstance().setLogin(this@SignInSignUpActivity)
-                                    PersistentUser.getInstance().setAccessToken(this@SignInSignUpActivity, token)
+                                    PersistentUser.getInstance().setAccessToken(this@SignInSignUpActivity, authResponse.data?.token)
+                                    PersistentUser.getInstance().setUserID(this@SignInSignUpActivity, authResponse.user?.id.toString())
+                                    PersistentUser.getInstance().setFullname(this@SignInSignUpActivity, authResponse.user?.name)
+                                    PersistentUser.getInstance().setPhonenumber(this@SignInSignUpActivity, authResponse.user?.phone)
+                                    PersistentUser.getInstance().setUserImage(this@SignInSignUpActivity, authResponse.user?.image)
                                     startActivity(
                                         Intent(
                                             applicationContext,
