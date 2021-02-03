@@ -28,13 +28,130 @@
 
     </RelativeLayout>
 
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:layout_width="70dp"
-        android:layout_height="70dp"
-        android:layout_alignParentBottom="true"
-        android:background="@drawable/circle_solid_white"
-        android:src="@drawable/sample_pro_pic"
+<!--    <de.hdodenhof.circleimageview.CircleImageView-->
+<!--        android:layout_width="70dp"-->
+<!--        android:layout_height="70dp"-->
+<!--        android:layout_alignParentBottom="true"-->
+<!--        android:background="@drawable/circle_solid_white"-->
+<!--        android:src="@drawable/sample_pro_pic"-->
+<!--        android:layout_marginStart="15dp"-->
+<!--        android:layout_marginBottom="-35dp"/>-->
+
+    <LinearLayout
+        android:layout_below="@+id/main"
+        android:layout_marginTop="58dp"
         android:layout_marginStart="15dp"
-        android:layout_marginBottom="-35dp"/>
+        android:layout_marginEnd="15dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/poppins_regular"
+            android:textStyle="normal"
+            android:textSize="15sp"
+            android:textColor="#0f122f"
+            android:lineSpacingExtra="8sp"
+            tools:text="Badol Mondal"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="42dp"
+            android:drawableLeft="@drawable/ic_my_parcel_icon"
+            android:drawablePadding="20dp"
+            android:fontFamily="@font/poppins_regular"
+            android:textStyle="normal"
+            android:textSize="14sp"
+            android:textColor="#0f122f"
+            android:lineSpacingExtra="7sp"
+            tools:text="My Parcel"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="42dp"
+            android:drawableLeft="@drawable/ic_parcel_history_icon"
+            android:drawablePadding="20dp"
+            android:fontFamily="@font/poppins_regular"
+            android:textStyle="normal"
+            android:textSize="14sp"
+            android:textColor="#0f122f"
+            android:lineSpacingExtra="7sp"
+            tools:text="Parcel history"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="42dp"
+            android:drawableLeft="@drawable/ic_user_icon"
+            android:drawablePadding="20dp"
+            android:fontFamily="@font/poppins_regular"
+            android:textStyle="normal"
+            android:textSize="14sp"
+            android:textColor="#0f122f"
+            android:lineSpacingExtra="7sp"
+            tools:text="Profile"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="42dp"
+            android:drawableLeft="@drawable/ic_information_icon"
+            android:drawablePadding="20dp"
+            android:fontFamily="@font/poppins_regular"
+            android:textStyle="normal"
+            android:textSize="14sp"
+            android:textColor="#0f122f"
+            android:lineSpacingExtra="7sp"
+            tools:text="Help"
+            />
+
+        <TextView
+            android:id="@+id/setting"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="42dp"
+            android:fontFamily="@font/poppins_regular"
+            android:textStyle="normal"
+            android:textSize="14sp"
+            android:textColor="#0f122f"
+            android:lineSpacingExtra="7sp"
+            tools:text="Settings"
+            />
+
+        <TextView
+            android:id="@+id/terms_condition"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="42dp"
+            android:fontFamily="@font/poppins_regular"
+            android:textStyle="normal"
+            android:textSize="14sp"
+            android:textColor="#0f122f"
+            android:lineSpacingExtra="7sp"
+            tools:text="Terms &amp; Conditions / Privacy"
+            />
+
+        <TextView
+            android:id="@+id/sing_out"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="42dp"
+            android:fontFamily="@font/poppins_regular"
+            android:textStyle="normal"
+            android:textSize="14sp"
+            android:textColor="#0f122f"
+            android:lineSpacingExtra="7sp"
+            tools:text="Sign out"
+            />
+
+    </LinearLayout>
 
 </RelativeLayout>
