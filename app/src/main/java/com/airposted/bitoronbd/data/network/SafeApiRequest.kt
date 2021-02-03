@@ -1,6 +1,6 @@
 package com.airposted.bitoronbd.data.network
 
-import com.airposted.bitoronbd.util.ApiException
+import com.airposted.bitoronbd.utils.ApiException
 import org.json.JSONException
 import org.json.JSONObject
 import retrofit2.Response

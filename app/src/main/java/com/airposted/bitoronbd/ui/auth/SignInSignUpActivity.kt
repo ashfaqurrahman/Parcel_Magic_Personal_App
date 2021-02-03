@@ -5,14 +5,11 @@ import android.Manifest
 import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.graphics.PorterDuff
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.CountDownTimer
-import android.util.Log
 import android.view.View
-import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -23,21 +20,26 @@ import com.airposted.bitoronbd.R
 import com.airposted.bitoronbd.data.network.responses.AuthResponse
 import com.airposted.bitoronbd.databinding.*
 import com.airposted.bitoronbd.ui.MainActivity
-import com.airposted.bitoronbd.util.*
-import com.google.android.gms.tasks.TaskExecutors
+import com.airposted.bitoronbd.utils.*
 import com.google.firebase.FirebaseException
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.PhoneAuthCredential
+import com.google.firebase.auth.PhoneAuthOptions
 import com.google.firebase.auth.PhoneAuthProvider
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.theartofdev.edmodo.cropper.CropImage
 import com.theartofdev.edmodo.cropper.CropImageView
 import kotlinx.coroutines.launch
+import okhttp3.MediaType
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.kodein
 import org.kodein.di.generic.instance
+import java.io.File
 import java.util.concurrent.TimeUnit
+
 
 class SignInSignUpActivity : AppCompatActivity(), KodeinAware {
 
@@ -77,7 +79,7 @@ class SignInSignUpActivity : AppCompatActivity(), KodeinAware {
             binding.otpLayout.main.visibility = View.GONE
             binding.signUpLayout.main.visibility = View.GONE
 
-            binding.numberLayout.toolbar.toolbarTitle.text = "Mobile Number"
+            binding.numberLayout.toolbar.toolbarTitle.text = getString(R.string.mobile_number)
 
             textWatcher(this, 9, binding.numberLayout.phone, binding.numberLayout.next)
         }
@@ -107,7 +109,7 @@ class SignInSignUpActivity : AppCompatActivity(), KodeinAware {
                         binding.otpLayout.main.visibility = View.GONE
                         binding.signUpLayout.main.visibility = View.VISIBLE
 
-                        binding.signUpLayout.toolbar.toolbarTitle.text = "Sign Up"
+                        binding.signUpLayout.toolbar.toolbarTitle.text = getString(R.string.sign_up)
 
                         textWatcher(
                             applicationContext,
@@ -149,7 +151,7 @@ class SignInSignUpActivity : AppCompatActivity(), KodeinAware {
 
             binding.otpLayout.otpTopText.text = "Enter verification code sent to\n+880$phone"
 
-            binding.otpLayout.toolbar.toolbarTitle.text = "Verification"
+            binding.otpLayout.toolbar.toolbarTitle.text = getString(R.string.verification)
 
             binding.otpLayout.otpView.otpListener = object : OTPListener {
                 override fun onInteractionListener() {
@@ -182,7 +184,9 @@ class SignInSignUpActivity : AppCompatActivity(), KodeinAware {
             binding.otpLayout.main.visibility = View.GONE
             binding.signUpLayout.main.visibility = View.GONE
 
-            binding.numberLayout.toolbar.toolbarTitle.text = "Mobile Number"
+            isAvailable = false
+
+            binding.numberLayout.toolbar.toolbarTitle.text = getString(R.string.mobile_number)
         }
 
         binding.otpLayout.verify.setOnClickListener {
@@ -206,16 +210,20 @@ class SignInSignUpActivity : AppCompatActivity(), KodeinAware {
             binding.otpLayout.main.visibility = View.GONE
             binding.signUpLayout.main.visibility = View.GONE
 
+            isAvailable = false
+            cropImageUri = null
+            binding.signUpLayout.profileImage.setImageResource(R.drawable.sample_pro_pic)
+
             timer!!.cancel()
             binding.signUpLayout.name.setText("")
             binding.otpLayout.otpView.setOTP("")
 
-            binding.numberLayout.toolbar.toolbarTitle.text = "Mobile Number"
+            binding.numberLayout.toolbar.toolbarTitle.text = getString(R.string.mobile_number)
         }
 
         binding.signUpLayout.next.setOnClickListener {
 
-            binding.otpLayout.toolbar.toolbarTitle.text = "Verification"
+            binding.otpLayout.toolbar.toolbarTitle.text = getString(R.string.verification)
 
             binding.otpLayout.verify.isEnabled = false
 
@@ -265,9 +273,13 @@ class SignInSignUpActivity : AppCompatActivity(), KodeinAware {
             binding.otpLayout.main.visibility = View.GONE
             binding.signUpLayout.main.visibility = View.GONE
 
+            isAvailable = false
+            cropImageUri = null
+            binding.signUpLayout.profileImage.setImageResource(R.drawable.sample_pro_pic)
+
             binding.signUpLayout.name.setText("")
 
-            binding.numberLayout.toolbar.toolbarTitle.text = "Mobile Number"
+            binding.numberLayout.toolbar.toolbarTitle.text = getString(R.string.mobile_number)
         }
     }
 
@@ -278,7 +290,6 @@ class SignInSignUpActivity : AppCompatActivity(), KodeinAware {
             val imageUri = CropImage.getPickImageResultUri(this, data)
             if (CropImage.isReadExternalStoragePermissionsRequired(this, imageUri)) {
                 cropImageUri = imageUri
-                Log.e("AAAA", cropImageUri.toString())
                 requestPermissions(arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE), 0)
             } else {
                 startCropImageActivity(imageUri)
@@ -290,15 +301,8 @@ class SignInSignUpActivity : AppCompatActivity(), KodeinAware {
             if (resultCode == Activity.RESULT_OK) {
                 binding.signUpLayout.profileImage.setImageURI(result.uri)
                 cropImageUri = result.uri
-                /*binding.signUpLayout.photo.background?.setColorFilter(
-                    resources.getColor(R.color.edittext_border),
-                    PorterDuff.Mode.SRC_ATOP
-                )
-                binding.signUpLayout.photo.background?.setColorFilter(
-                    resources.getColor(R.color.edittext_border),
-                    PorterDuff.Mode.SRC_ATOP)*/
             } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
-                Toast.makeText(this, "Cropping failed: " + result.error, Toast.LENGTH_SHORT).show()
+                toast("Cropping failed: " + result.error)
             }
         }
     }
@@ -311,11 +315,7 @@ class SignInSignUpActivity : AppCompatActivity(), KodeinAware {
         if (cropImageUri != null && grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
             startCropImageActivity(cropImageUri!!)
         } else {
-            Toast.makeText(
-                this,
-                "Cancelling, required permissions are not granted",
-                Toast.LENGTH_LONG
-            ).show()
+            toast("Cancelling, required permissions are not granted")
         }
     }
 
@@ -344,13 +344,14 @@ class SignInSignUpActivity : AppCompatActivity(), KodeinAware {
     }
 
     private fun sendVerificationCode(number: String) {
-        PhoneAuthProvider.getInstance().verifyPhoneNumber(
-            number,
-            60,
-            TimeUnit.SECONDS,
-            this,
-            mCallBack
-        )
+
+        val options = PhoneAuthOptions.newBuilder(mAuth)
+            .setPhoneNumber(number)
+            .setTimeout(60L, TimeUnit.SECONDS)
+            .setActivity(this)
+            .setCallbacks(mCallBack)
+            .build()
+        PhoneAuthProvider.verifyPhoneNumber(options)
     }
 
     private val mCallBack: PhoneAuthProvider.OnVerificationStateChangedCallbacks =
@@ -386,11 +387,14 @@ class SignInSignUpActivity : AppCompatActivity(), KodeinAware {
 
                     if (isAvailable){
                         dismissDialog()
-                        Toast.makeText(this, "Login Successful", Toast.LENGTH_LONG).show()
+                        toast("Login Successful")
                         //binding.rootLayout.snackbar("Login Successful")
                         PersistentUser.getInstance().setLogin(this)
                         PersistentUser.getInstance().setAccessToken(this, authResponse?.data?.token)
-                        PersistentUser.getInstance().setUserID(this, authResponse?.user?.id.toString())
+                        PersistentUser.getInstance().setUserID(
+                            this,
+                            authResponse?.user?.id.toString()
+                        )
                         PersistentUser.getInstance().setFullname(this, authResponse?.user?.name)
                         PersistentUser.getInstance().setPhonenumber(this, authResponse?.user?.phone)
                         PersistentUser.getInstance().setUserImage(this, authResponse?.user?.image)
@@ -399,19 +403,98 @@ class SignInSignUpActivity : AppCompatActivity(), KodeinAware {
                     } else {
                         lifecycleScope.launch {
                             try {
-                                val authResponse = viewModel.userSignup(
-                                    binding.signUpLayout.name.text.toString(),
-                                    "+880$phone"
-                                )
-                                if (authResponse.success) {
+                                val signupResponse: AuthResponse?
+                                if (cropImageUri != null){
+                                    val file = File(cropImageUri?.path)
+                                    val compressedImage = reduceImageSize(file)
+                                    if (compressedImage != null){
+                                        val fileReqBody = RequestBody.create(
+                                            MediaType.parse("image/*"),
+                                            compressedImage
+                                        )
+                                        val part = MultipartBody.Part.createFormData(
+                                            "image",
+                                            compressedImage.name,
+                                            fileReqBody
+                                        )
+                                        val photoName = RequestBody.create(
+                                            MediaType.parse("text/plain"),
+                                            "image-type"
+                                        )
+                                        val name = RequestBody.create(
+                                            MediaType.parse("text/plain"),
+                                            binding.signUpLayout.name.text.toString()
+                                        )
+                                        val phone = RequestBody.create(
+                                            MediaType.parse("text/plain"),
+                                            "+880$phone"
+                                        )
+                                        signupResponse = viewModel.userSignupWithPhoto(
+                                            name,
+                                            phone,
+                                            part,
+                                            photoName
+                                        )
+                                    } else {
+                                        val fileReqBody = RequestBody.create(
+                                            MediaType.parse("image/*"),
+                                            file
+                                        )
+                                        val part = MultipartBody.Part.createFormData(
+                                            "image",
+                                            file.name,
+                                            fileReqBody
+                                        )
+                                        val photoName = RequestBody.create(
+                                            MediaType.parse("text/plain"),
+                                            "image-type"
+                                        )
+                                        val name = RequestBody.create(
+                                            MediaType.parse("text/plain"),
+                                            binding.signUpLayout.name.text.toString()
+                                        )
+                                        val phone = RequestBody.create(
+                                            MediaType.parse("text/plain"),
+                                            "+880$phone"
+                                        )
+                                        signupResponse = viewModel.userSignupWithPhoto(
+                                            name,
+                                            phone,
+                                            part,
+                                            photoName
+                                        )
+                                    }
+
+                                } else {
+                                    signupResponse = viewModel.userSignup(
+                                        binding.signUpLayout.name.text.toString(),
+                                        "+880$phone"
+                                    )
+                                }
+                                if (signupResponse.success) {
                                     dismissDialog()
-                                    Toast.makeText(this@SignInSignUpActivity, authResponse.msg, Toast.LENGTH_LONG).show()
+                                    toast(signupResponse.msg)
                                     PersistentUser.getInstance().setLogin(this@SignInSignUpActivity)
-                                    PersistentUser.getInstance().setAccessToken(this@SignInSignUpActivity, authResponse.data?.token)
-                                    PersistentUser.getInstance().setUserID(this@SignInSignUpActivity, authResponse.user?.id.toString())
-                                    PersistentUser.getInstance().setFullname(this@SignInSignUpActivity, authResponse.user?.name)
-                                    PersistentUser.getInstance().setPhonenumber(this@SignInSignUpActivity, authResponse.user?.phone)
-                                    PersistentUser.getInstance().setUserImage(this@SignInSignUpActivity, authResponse.user?.image)
+                                    PersistentUser.getInstance().setAccessToken(
+                                        this@SignInSignUpActivity,
+                                        signupResponse.data?.token
+                                    )
+                                    PersistentUser.getInstance().setUserID(
+                                        this@SignInSignUpActivity,
+                                        signupResponse.user?.id.toString()
+                                    )
+                                    PersistentUser.getInstance().setFullname(
+                                        this@SignInSignUpActivity,
+                                        signupResponse.user?.name
+                                    )
+                                    PersistentUser.getInstance().setPhonenumber(
+                                        this@SignInSignUpActivity,
+                                        signupResponse.user?.phone
+                                    )
+                                    PersistentUser.getInstance().setUserImage(
+                                        this@SignInSignUpActivity,
+                                        signupResponse.user?.image
+                                    )
                                     startActivity(
                                         Intent(
                                             applicationContext,
@@ -422,7 +505,7 @@ class SignInSignUpActivity : AppCompatActivity(), KodeinAware {
 
                                 } else {
                                     dismissDialog()
-                                    binding.rootLayout.snackbar(authResponse.msg)
+                                    binding.rootLayout.snackbar(signupResponse.msg)
                                 }
 
                             } catch (e: ApiException) {

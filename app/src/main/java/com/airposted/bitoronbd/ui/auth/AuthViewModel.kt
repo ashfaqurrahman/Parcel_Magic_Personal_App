@@ -5,6 +5,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import com.airposted.bitoronbd.data.repositories.UserRepository
 import okhttp3.MultipartBody
+import okhttp3.RequestBody
 
 
 class AuthViewModel(
@@ -26,10 +27,10 @@ class AuthViewModel(
     ) = withContext(Dispatchers.IO) { repository.userSignup(name, phone) }
 
     suspend fun userSignupWithPhoto(
-        name: String,
-        phone: String,
+        name: RequestBody,
+        phone: RequestBody,
         photo: MultipartBody.Part,
-        photo_name: String
+        photo_name: RequestBody
     ) = withContext(Dispatchers.IO) { repository.userSignupWithPhoto(name, phone, photo, photo_name) }
 
 }

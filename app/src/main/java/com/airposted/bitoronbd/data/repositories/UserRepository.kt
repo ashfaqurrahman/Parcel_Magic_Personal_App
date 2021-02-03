@@ -4,6 +4,7 @@ import com.airposted.bitoronbd.data.network.MyApi
 import com.airposted.bitoronbd.data.network.SafeApiRequest
 import com.airposted.bitoronbd.data.network.responses.AuthResponse
 import okhttp3.MultipartBody
+import okhttp3.RequestBody
 
 class UserRepository(
     private val api: MyApi,
@@ -26,10 +27,10 @@ class UserRepository(
     }
 
     suspend fun userSignupWithPhoto(
-        name: String,
-        phone: String,
+        name: RequestBody,
+        phone: RequestBody,
         photo: MultipartBody.Part,
-        photo_name: String
+        photo_name: RequestBody
     ) : AuthResponse {
         return apiRequest{ api.userSignupWithPhoto(name, phone, photo, photo_name)}
     }

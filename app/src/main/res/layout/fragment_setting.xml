@@ -1,157 +1,162 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.SettingFragment">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <RelativeLayout
-        android:id="@+id/main"
         android:layout_width="match_parent"
-        android:layout_height="122dp"
-        android:orientation="vertical"
-        android:elevation="1dp"
-        android:background="@drawable/splash_bg_gradient_start_end">
+        android:layout_height="match_parent"
+        tools:context=".ui.setting.SettingFragment">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/poppins_medium"
+        <RelativeLayout
+            android:id="@+id/main"
+            android:layout_width="match_parent"
+            android:layout_height="122dp"
+            android:orientation="vertical"
+            android:elevation="1dp"
+            android:background="@drawable/splash_bg_gradient_start_end">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_medium"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="40dp"
+                android:textStyle="normal"
+                android:textSize="20sp"
+                android:textColor="#ffffff"
+                android:lineSpacingExtra="10sp"
+                android:text="@string/account_settings"
+                />
+
+        </RelativeLayout>
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/profile_image"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:elevation="2dp"
+            android:padding="2dp"
+            android:background="@drawable/circle_solid_white"
+            android:src="@drawable/sample_pro_pic"
             android:layout_marginStart="15dp"
-            android:layout_marginTop="40dp"
-            android:textStyle="normal"
-            android:textSize="20sp"
-            android:textColor="#ffffff"
-            android:lineSpacingExtra="10sp"
-            tools:text="Account Settings"
-            />
+            android:layout_marginBottom="-35dp"
+            android:layout_alignBottom="@id/main"/>
+
+        <LinearLayout
+            android:layout_below="@+id/main"
+            android:layout_marginTop="58dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginEnd="15dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/profile_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_regular"
+                android:textStyle="normal"
+                android:textSize="15sp"
+                android:textColor="#0f122f"
+                android:lineSpacingExtra="8sp"
+                android:text="Badol Mondal"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="42dp"
+                android:drawablePadding="20dp"
+                android:fontFamily="@font/poppins_regular"
+                android:textStyle="normal"
+                android:textSize="14sp"
+                android:textColor="#0f122f"
+                android:lineSpacingExtra="7sp"
+                android:text="@string/my_parcel"
+                app:drawableStartCompat="@drawable/ic_my_parcel_icon" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="42dp"
+                android:drawablePadding="20dp"
+                android:fontFamily="@font/poppins_regular"
+                android:textStyle="normal"
+                android:textSize="14sp"
+                android:textColor="#0f122f"
+                android:lineSpacingExtra="7sp"
+                android:text="@string/parcel_history"
+                app:drawableLeftCompat="@drawable/ic_parcel_history_icon" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="42dp"
+                android:drawablePadding="20dp"
+                android:fontFamily="@font/poppins_regular"
+                android:textStyle="normal"
+                android:textSize="14sp"
+                android:textColor="#0f122f"
+                android:lineSpacingExtra="7sp"
+                android:text="@string/profile"
+                app:drawableLeftCompat="@drawable/ic_user_icon" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="42dp"
+                android:drawablePadding="20dp"
+                android:fontFamily="@font/poppins_regular"
+                android:textStyle="normal"
+                android:textSize="14sp"
+                android:textColor="#0f122f"
+                android:lineSpacingExtra="7sp"
+                android:text="@string/help"
+                app:drawableLeftCompat="@drawable/ic_information_icon" />
+
+            <TextView
+                android:id="@+id/setting"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="42dp"
+                android:fontFamily="@font/poppins_regular"
+                android:textStyle="normal"
+                android:textSize="14sp"
+                android:textColor="#0f122f"
+                android:lineSpacingExtra="7sp"
+                android:text="@string/settings"
+                />
+
+            <TextView
+                android:id="@+id/terms_condition"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="42dp"
+                android:fontFamily="@font/poppins_regular"
+                android:textStyle="normal"
+                android:textSize="14sp"
+                android:textColor="#0f122f"
+                android:lineSpacingExtra="7sp"
+                android:text="@string/terms_conditions_privacy"
+                />
+
+            <TextView
+                android:id="@+id/sing_out"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="42dp"
+                android:fontFamily="@font/poppins_regular"
+                android:textStyle="normal"
+                android:textSize="14sp"
+                android:textColor="#0f122f"
+                android:lineSpacingExtra="7sp"
+                android:text="@string/sign_out"
+                />
+
+        </LinearLayout>
 
     </RelativeLayout>
 
-<!--    <de.hdodenhof.circleimageview.CircleImageView-->
-<!--        android:layout_width="70dp"-->
-<!--        android:layout_height="70dp"-->
-<!--        android:layout_alignParentBottom="true"-->
-<!--        android:background="@drawable/circle_solid_white"-->
-<!--        android:src="@drawable/sample_pro_pic"-->
-<!--        android:layout_marginStart="15dp"-->
-<!--        android:layout_marginBottom="-35dp"/>-->
-
-    <LinearLayout
-        android:layout_below="@+id/main"
-        android:layout_marginTop="58dp"
-        android:layout_marginStart="15dp"
-        android:layout_marginEnd="15dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/poppins_regular"
-            android:textStyle="normal"
-            android:textSize="15sp"
-            android:textColor="#0f122f"
-            android:lineSpacingExtra="8sp"
-            tools:text="Badol Mondal"
-            />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="42dp"
-            android:drawableLeft="@drawable/ic_my_parcel_icon"
-            android:drawablePadding="20dp"
-            android:fontFamily="@font/poppins_regular"
-            android:textStyle="normal"
-            android:textSize="14sp"
-            android:textColor="#0f122f"
-            android:lineSpacingExtra="7sp"
-            tools:text="My Parcel"
-            />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="42dp"
-            android:drawableLeft="@drawable/ic_parcel_history_icon"
-            android:drawablePadding="20dp"
-            android:fontFamily="@font/poppins_regular"
-            android:textStyle="normal"
-            android:textSize="14sp"
-            android:textColor="#0f122f"
-            android:lineSpacingExtra="7sp"
-            tools:text="Parcel history"
-            />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="42dp"
-            android:drawableLeft="@drawable/ic_user_icon"
-            android:drawablePadding="20dp"
-            android:fontFamily="@font/poppins_regular"
-            android:textStyle="normal"
-            android:textSize="14sp"
-            android:textColor="#0f122f"
-            android:lineSpacingExtra="7sp"
-            tools:text="Profile"
-            />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="42dp"
-            android:drawableLeft="@drawable/ic_information_icon"
-            android:drawablePadding="20dp"
-            android:fontFamily="@font/poppins_regular"
-            android:textStyle="normal"
-            android:textSize="14sp"
-            android:textColor="#0f122f"
-            android:lineSpacingExtra="7sp"
-            tools:text="Help"
-            />
-
-        <TextView
-            android:id="@+id/setting"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="42dp"
-            android:fontFamily="@font/poppins_regular"
-            android:textStyle="normal"
-            android:textSize="14sp"
-            android:textColor="#0f122f"
-            android:lineSpacingExtra="7sp"
-            tools:text="Settings"
-            />
-
-        <TextView
-            android:id="@+id/terms_condition"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="42dp"
-            android:fontFamily="@font/poppins_regular"
-            android:textStyle="normal"
-            android:textSize="14sp"
-            android:textColor="#0f122f"
-            android:lineSpacingExtra="7sp"
-            tools:text="Terms &amp; Conditions / Privacy"
-            />
-
-        <TextView
-            android:id="@+id/sing_out"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="42dp"
-            android:fontFamily="@font/poppins_regular"
-            android:textStyle="normal"
-            android:textSize="14sp"
-            android:textColor="#0f122f"
-            android:lineSpacingExtra="7sp"
-            tools:text="Sign out"
-            />
-
-    </LinearLayout>
-
-</RelativeLayout>
+</layout>

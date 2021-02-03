@@ -1,11 +1,8 @@
-package com.airposted.bitoronbd.util;
+package com.airposted.bitoronbd.utils;
 
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
-import android.text.TextUtils;
-
-import androidx.lifecycle.MutableLiveData;
 
 /*import com.airposted.latest.ui.model.CartCountModel;
 import com.airposted.latest.ui.model.SettingsModel;
@@ -14,8 +11,6 @@ import com.airposted.latest.ui.model.User;*/
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.text.DecimalFormat;
-import java.util.Arrays;
-import java.util.List;
 import java.util.Objects;
 
 public class AppHelper {

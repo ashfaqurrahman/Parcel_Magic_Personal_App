@@ -1,4 +1,4 @@
-package com.airposted.bitoronbd.util
+package com.airposted.bitoronbd.utils
 
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers

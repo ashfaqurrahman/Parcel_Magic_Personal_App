@@ -5,7 +5,7 @@ import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Build
 import androidx.annotation.RequiresApi
-import com.airposted.bitoronbd.util.NoInternetException
+import com.airposted.bitoronbd.utils.NoInternetException
 import okhttp3.Interceptor
 import okhttp3.Response
 

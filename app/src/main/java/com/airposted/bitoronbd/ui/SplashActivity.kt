@@ -7,7 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.aapbd.appbajarlib.storage.PersistData
 import com.aapbd.appbajarlib.storage.PersistentUser
 import com.airposted.bitoronbd.ui.auth.SignInSignUpActivity
-import com.airposted.bitoronbd.util.AppHelper
+import com.airposted.bitoronbd.utils.AppHelper
 
 class SplashActivity : AppCompatActivity() {
     private var context: Context? = null

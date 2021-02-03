@@ -1,9 +1,11 @@
-package com.airposted.bitoronbd.util
+package com.airposted.bitoronbd.utils
 
 import android.app.Activity
 import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.text.Editable
 import android.text.SpannableStringBuilder
@@ -22,6 +24,9 @@ import androidx.core.content.ContextCompat
 import com.airposted.bitoronbd.R
 import com.airposted.bitoronbd.ui.WebviewActivity
 import com.google.android.material.snackbar.Snackbar
+import java.io.File
+import java.io.FileInputStream
+import java.io.FileOutputStream
 
 
 fun Context.toast(message: String){
@@ -139,8 +144,11 @@ fun customTextView(view: TextView, context: Context) {
         }
     }, spanTxt.length - context.getString(R.string.terms_of_service).length, spanTxt.length, 0)
     spanTxt.setSpan(
-        ForegroundColorSpan(ContextCompat.getColor(context, R.color.blue
-        )),
+        ForegroundColorSpan(
+            ContextCompat.getColor(
+                context, R.color.blue
+            )
+        ),
         context.getString(R.string.by_useing).length,
         spanTxt.length,
         0
@@ -163,11 +171,55 @@ fun customTextView(view: TextView, context: Context) {
     }, spanTxt.length - context.getString(R.string.privacy_policy).length, spanTxt.length, 0)
     view.movementMethod = LinkMovementMethod.getInstance()
     spanTxt.setSpan(
-        ForegroundColorSpan(ContextCompat.getColor(context, R.color.blue
-        )),
-        context.getString(R.string.by_useing).length + context.getString(R.string.and).length + context.getString(R.string.terms_of_service).length + 2,
+        ForegroundColorSpan(
+            ContextCompat.getColor(
+                context, R.color.blue
+            )
+        ),
+        context.getString(R.string.by_useing).length + context.getString(R.string.and).length + context.getString(
+            R.string.terms_of_service
+        ).length + 2,
         spanTxt.length,
         0
     )
     view.setText(spanTxt, TextView.BufferType.SPANNABLE)
+}
+
+fun reduceImageSize(file: File): File? {
+    return try {
+
+        // BitmapFactory options to downsize the image
+        val o = BitmapFactory.Options()
+        o.inJustDecodeBounds = true
+        o.inSampleSize = 6
+        // factor of downsizing the image
+        var inputStream = FileInputStream(file)
+        //Bitmap selectedBitmap = null;
+        BitmapFactory.decodeStream(inputStream, null, o)
+        inputStream.close()
+
+        // The new size we want to scale to
+        val REQUIRED_SIZE = 55
+
+        // Find the correct scale value. It should be the power of 2.
+        var scale = 1
+        while (o.outWidth / scale / 2 >= REQUIRED_SIZE &&
+            o.outHeight / scale / 2 >= REQUIRED_SIZE
+        ) {
+            scale *= 2
+        }
+        val o2 = BitmapFactory.Options()
+        o2.inSampleSize = scale
+        inputStream = FileInputStream(file)
+        val selectedBitmap = BitmapFactory.decodeStream(inputStream, null, o2)
+        inputStream.close()
+
+        // here i override the original image file
+        file.createNewFile()
+        val outputStream = FileOutputStream(file)
+        selectedBitmap!!.compress(Bitmap.CompressFormat.JPEG, 100, outputStream)
+        file
+    } catch (e: java.lang.Exception) {
+        null
+    }
 }

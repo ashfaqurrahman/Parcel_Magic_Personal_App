@@ -18,7 +18,7 @@ import androidx.viewpager.widget.ViewPager
 import com.aapbd.appbajarlib.storage.PersistData
 import com.airposted.bitoronbd.R
 import com.airposted.bitoronbd.ui.auth.SignInSignUpActivity
-import com.airposted.bitoronbd.util.AppHelper
+import com.airposted.bitoronbd.utils.AppHelper
 
 class IntroActivity : AppCompatActivity() {
     private var viewPager: ViewPager? = null

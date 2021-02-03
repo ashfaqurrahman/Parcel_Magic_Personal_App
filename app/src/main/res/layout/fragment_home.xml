@@ -17,7 +17,7 @@
         android:textStyle="bold"
         android:textSize="16sp"
         android:textColor="#3c5b9a"
-        tools:text="Current Location"
+        android:text="Current Location"
         />
 
     <TextView
@@ -30,7 +30,7 @@
         android:textStyle="normal"
         android:textSize="13sp"
         android:textColor="#0f122f"
-        tools:text="Rd No. 1/A    &gt;"
+        android:text="Rd No. 1/A    &gt;"
         />
 
     <ImageView

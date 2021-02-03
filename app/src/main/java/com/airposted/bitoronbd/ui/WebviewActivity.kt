@@ -10,7 +10,7 @@ import android.widget.TextView
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
 import com.airposted.bitoronbd.R
-import com.airposted.bitoronbd.util.AppHelper
+import com.airposted.bitoronbd.utils.AppHelper
 
 class WebviewActivity : AppCompatActivity() {
     var url = ""

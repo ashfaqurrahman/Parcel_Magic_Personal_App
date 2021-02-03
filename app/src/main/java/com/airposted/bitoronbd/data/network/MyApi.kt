@@ -3,6 +3,7 @@ package com.airposted.bitoronbd.data.network
 import com.airposted.bitoronbd.data.network.responses.AuthResponse
 import okhttp3.MultipartBody
 import okhttp3.OkHttpClient
+import okhttp3.RequestBody
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -24,13 +25,13 @@ interface MyApi {
         @Field("phone") email: String
     ) : Response<AuthResponse>
 
-    @FormUrlEncoded
+    @Multipart
     @POST("register_personal")
     suspend fun userSignupWithPhoto(
-        @Field("username") name: String,
-        @Field("phone") email: String,
+        @Part("username") name: RequestBody,
+        @Part("phone") email: RequestBody,
         @Part file: MultipartBody.Part,
-        @Part("user_photo") photo_name: String
+        @Part("image") requestBody: RequestBody
     ) : Response<AuthResponse>
 
     /*@GET("quotes")
