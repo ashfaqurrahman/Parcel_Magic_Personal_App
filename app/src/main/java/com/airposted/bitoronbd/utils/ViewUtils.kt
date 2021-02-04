@@ -21,6 +21,8 @@ import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
 import com.airposted.bitoronbd.R
 import com.airposted.bitoronbd.ui.WebviewActivity
 import com.google.android.material.snackbar.Snackbar
@@ -223,3 +225,18 @@ fun reduceImageSize(file: File): File? {
         null
     }
 }
+
+/*fun loadFragmentWithoutBack(activity: Activity, fragment: Fragment) { // load fragment
+    val fragmentManager = (activity as FragmentActivity).supportFragmentManager
+    val transaction = fragmentManager.beginTransaction()
+    transaction.replace(R.id.frame_container, fragment)
+    transaction.commit()
+}
+
+fun loadFragmentWithBack(activity: Activity, fragment: Fragment) { // load fragment
+    val fragmentManager = (activity as FragmentActivity).supportFragmentManager
+    val transaction = fragmentManager.beginTransaction()
+    transaction.replace(R.id.frame_container, fragment)
+    transaction.addToBackStack(null)
+    transaction.commit()
+}*/

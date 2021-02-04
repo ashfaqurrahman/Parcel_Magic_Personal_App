@@ -1,9 +1,7 @@
 package com.airposted.bitoronbd.data.network
 
 import com.airposted.bitoronbd.data.network.responses.AuthResponse
-import okhttp3.MultipartBody
-import okhttp3.OkHttpClient
-import okhttp3.RequestBody
+import okhttp3.*
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -34,8 +32,20 @@ interface MyApi {
         @Part("image") requestBody: RequestBody
     ) : Response<AuthResponse>
 
-    /*@GET("quotes")
-    suspend fun getQuotes() : Response<QuotesResponse>*/
+    @FormUrlEncoded
+    @POST("personal/userupdate")
+    suspend fun userNameUpdate(
+        @Header("Authorization") header: String,
+        @Field("username") name: String
+    ) : Response<AuthResponse>
+
+    @Multipart
+    @POST("personal/userupdate")
+    suspend fun userImageUpdate(
+        @Header("Authorization") header: String,
+        @Part file: MultipartBody.Part,
+        @Part("image") requestBody: RequestBody
+    ) : Response<AuthResponse>
 
     companion object{
         operator fun invoke(

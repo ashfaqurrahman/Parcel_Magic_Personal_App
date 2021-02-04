@@ -2,16 +2,16 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_home"
+            android:id="@+id/homeFragment"
             android:icon="@drawable/ic_home_icon"
-            android:title="Home"/>
+            android:title="@string/home"/>
         <item
-            android:id="@+id/nav_my_parcel"
+            android:id="@+id/myParcelFragment"
             android:icon="@drawable/ic_parcel_icon"
-            android:title="My Parcel"/>
+            android:title="@string/my_parcel"/>
         <item
-            android:id="@+id/nav_setting"
+            android:id="@+id/settingFragment"
             android:icon="@drawable/ic_settings_icon"
-            android:title="Setting"/>
+            android:title="@string/setting"/>
     </group>
 </menu>

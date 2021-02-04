@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    <androidx.cardview.widget.CardView
+            android:id="@+id/relativeLayout1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_margin="30dp"
+            app:cardBackgroundColor="#f9faff"
+            app:cardCornerRadius="5dp"
+            android:orientation="vertical">
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="15dp">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/MyTextInputLayout"
+                app:errorEnabled="false"
+                android:layout_marginTop="10dp">
+
+                <androidx.appcompat.widget.AppCompatEditText
+                    android:id="@+id/et_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text"
+                    android:hint="Name"
+                    android:imeOptions="actionNext"
+                    style="@style/MyTextInputEditText"
+                    android:maxLines="1"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!--<com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/MyTextInputLayout"
+                    app:errorEnabled="false"
+                    android:layout_marginTop="10dp">
+
+                <androidx.appcompat.widget.AppCompatEditText
+                        android:id="@+id/et_address"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="text"
+                        android:hint="Address"
+                        android:imeOptions="actionNext"
+                        style="@style/MyTextInputEditText"
+                        android:maxLines="1"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/MyTextInputLayout"
+                    app:errorEnabled="false"
+                    android:layout_marginTop="10dp">
+
+                <androidx.appcompat.widget.AppCompatEditText
+                        android:id="@+id/et_bkash"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="phone"
+                        android:hint="@string/bkash"
+                        android:imeOptions="actionNext"
+                        style="@style/MyTextInputEditText"
+                        android:maxLines="1"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/MyTextInputLayout"
+                    app:errorEnabled="false"
+                    android:layout_marginTop="10dp">
+
+                <androidx.appcompat.widget.AppCompatEditText
+                        android:id="@+id/et_rocket"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="phone"
+                        android:hint="@string/rokect"
+                        android:imeOptions="actionNext"
+                        style="@style/MyTextInputEditText"
+                        android:maxLines="1"/>
+
+            </com.google.android.material.textfield.TextInputLayout>-->
+
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:paddingBottom="10dp">
+
+                <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/btnUpdate"
+                        style="@style/normal_button_style"
+                        android:text="@string/update" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+    <ImageView
+            android:id="@+id/button_close"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:padding="5dp"
+            android:layout_alignTop="@+id/relativeLayout1"
+            android:layout_alignEnd="@+id/relativeLayout1"
+            android:layout_marginTop="-15dp"
+            android:layout_marginEnd="-15dp"
+            android:elevation="15dp"
+            android:src="@drawable/ic_close"
+            android:background="@drawable/circle_solid_white" />
+
+</RelativeLayout>
+

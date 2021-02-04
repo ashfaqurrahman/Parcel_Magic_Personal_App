@@ -28,4 +28,11 @@
     <string name="terms_conditions_privacy"><![CDATA[Terms & Conditions / Privacy]]></string>
     <string name="sign_out">Sign out</string>
     <string name="my_parcel">My Parcel</string>
+    <string name="phone">Phone</string>
+    <string name="bkash">Bkash</string>
+    <string name="rokect">Rocket</string>
+    <string name="update">Update</string>
+    <string name="home">Home</string>
+    <string name="setting">Setting</string>
+    <string name="my_profile">My Profile</string>
 </resources>

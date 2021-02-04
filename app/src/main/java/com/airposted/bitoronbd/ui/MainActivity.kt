@@ -2,48 +2,35 @@ package com.airposted.bitoronbd.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.view.Menu
+import androidx.databinding.DataBindingUtil
+import androidx.navigation.NavController
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.ui.*
 import com.airposted.bitoronbd.R
-import com.airposted.bitoronbd.ui.setting.SettingFragment
-import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.airposted.bitoronbd.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
-    private val homeFragment = HomeFragment()
+    private lateinit var mainBinding: ActivityMainBinding
+    private lateinit var navController: NavController
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        mainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main)
 
-        loadFragment(HomeFragment())
+        val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+        navController = navHostFragment.findNavController()
 
-        val bottomNavigationView = findViewById<BottomNavigationView>(R.id.bottom_navigation)
-        bottomNavigationView.setOnNavigationItemSelectedListener { item ->
-            when (item.itemId) {
-                R.id.nav_home -> {
-                    loadFragmentToBack(HomeFragment())
-                }
-                R.id.nav_my_parcel -> {
-                    loadFragmentToBack(MyParcelFragment())
-                }
-                R.id.nav_setting -> {
-                    loadFragmentToBack(SettingFragment())
-                }
-
-            }
-            true
-        }
+        mainBinding.bottomNavigation.setupWithNavController(navController)
     }
 
-    private fun loadFragment(fragment: Fragment) { // load fragment
-        val transaction = supportFragmentManager.beginTransaction()
-        transaction.replace(R.id.frame_container, fragment)
-        transaction.commit()
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_bottom_navigation, menu)
+        return true
     }
 
-    private fun loadFragmentToBack(fragment: Fragment) { // load fragment
-        val transaction = supportFragmentManager.beginTransaction()
-        transaction.replace(R.id.frame_container, fragment)
-        transaction.addToBackStack(null)
-        transaction.commit()
+    override fun onSupportNavigateUp(): Boolean {
+        return navController.navigateUp() || super.onSupportNavigateUp()
     }
 }

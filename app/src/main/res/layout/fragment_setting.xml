@@ -6,7 +6,8 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.setting.SettingFragment">
+        tools:context=".ui.setting.SettingFragment"
+        android:background="@color/white">
 
         <RelativeLayout
             android:id="@+id/main"
@@ -65,6 +66,7 @@
                 />
 
             <TextView
+                android:id="@+id/my_parcel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="42dp"
@@ -91,6 +93,7 @@
                 app:drawableLeftCompat="@drawable/ic_parcel_history_icon" />
 
             <TextView
+                android:id="@+id/profile"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="42dp"

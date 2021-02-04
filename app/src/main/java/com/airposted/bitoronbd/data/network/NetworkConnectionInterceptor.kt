@@ -6,8 +6,10 @@ import android.net.NetworkCapabilities
 import android.os.Build
 import androidx.annotation.RequiresApi
 import com.airposted.bitoronbd.utils.NoInternetException
+import okhttp3.CacheControl
 import okhttp3.Interceptor
 import okhttp3.Response
+import java.util.concurrent.TimeUnit
 
 class NetworkConnectionInterceptor(
     context: Context
@@ -17,9 +19,21 @@ class NetworkConnectionInterceptor(
 
     @RequiresApi(Build.VERSION_CODES.M)
     override fun intercept(chain: Interceptor.Chain): Response {
-        if (!isInternetAvailable())
+        if (!isInternetAvailable()) {
             throw NoInternetException("Make sure you have an active data connection")
-        return chain.proceed(chain.request())
+        }
+
+        val original = chain.request()
+        val builder = original.newBuilder()
+        builder.cacheControl(
+            CacheControl.Builder()
+                .maxAge(0, TimeUnit.SECONDS).build()
+        )
+        val request = builder
+            .addHeader("Content-Type", "application/json")
+            .method(original.method(), original.body())
+            .build()
+        return chain.proceed(request)
     }
 
     @RequiresApi(Build.VERSION_CODES.M)

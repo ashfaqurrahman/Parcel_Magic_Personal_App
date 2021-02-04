@@ -4,8 +4,6 @@ import android.content.Context
 import android.content.SharedPreferences
 import androidx.preference.PreferenceManager
 
-private const val KEY_SAVED_AT = "key_saved_at"
-
 class PreferenceProvider(
     context: Context
 ) {
@@ -16,15 +14,20 @@ class PreferenceProvider(
         get() = PreferenceManager.getDefaultSharedPreferences(appContext)
 
 
-    fun savelastSavedAt(savedAt: String) {
+    fun saveSharedPreferences(key: String, savedAt: String) {
         preference.edit().putString(
-            KEY_SAVED_AT,
+            key,
             savedAt
         ).apply()
     }
 
-    fun getLastSavedAt(): String? {
-        return preference.getString(KEY_SAVED_AT, null)
+    fun getSharedPreferences(key: String): String? {
+        return preference.getString(key, null)
     }
 
+    fun deleteSharedPreferences(key: String) {
+        preference.edit().remove(
+            key
+        ).apply()
+    }
 }
