@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/map_bg"
+    tools:context=".ui.product.ProductFragment">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="15dp"
+        app:cardCornerRadius="50dp"
+        app:cardElevation="20dp"
+        android:layout_marginTop="28dp">
+
+        <ImageView
+            android:layout_width="47dp"
+            android:layout_height="47dp"
+            android:padding="15dp"
+            android:src="@drawable/ic_back_icon"/>
+
+    </androidx.cardview.widget.CardView>
+
+    <include layout="@layout/bottom_sheet_persistent" />
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

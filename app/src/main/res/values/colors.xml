@@ -31,7 +31,6 @@
     <color name="dot_light_screen3">#3b5998</color>
     <color name="dot_light_screen4">#3b5998</color>
     <color name="text_color">#0f122f</color>
-    <color name="text_color">#0f122f</color>
 
     <array name="array_dot_active">
         <item>@color/dot_light_screen1</item>
