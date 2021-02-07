@@ -34,5 +34,6 @@
     <string name="update">Update</string>
     <string name="home">Home</string>
     <string name="setting">Setting</string>
+    <string name="more">More</string>
     <string name="my_profile">My Profile</string>
 </resources>

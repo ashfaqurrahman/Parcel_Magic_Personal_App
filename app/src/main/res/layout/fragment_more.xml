@@ -6,7 +6,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.setting.SettingFragment"
+        tools:context=".ui.setting.MoreFragment"
         android:background="@color/white">
 
         <RelativeLayout
@@ -27,7 +27,7 @@
                 android:textSize="20sp"
                 android:textColor="#ffffff"
                 android:lineSpacingExtra="10sp"
-                android:text="@string/account_settings"
+                android:text="@string/more"
                 />
 
         </RelativeLayout>
@@ -69,7 +69,7 @@
                 android:id="@+id/my_parcel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="42dp"
+                android:layout_marginTop="35dp"
                 android:drawablePadding="20dp"
                 android:fontFamily="@font/poppins_regular"
                 android:textStyle="normal"
@@ -82,7 +82,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="42dp"
+                android:layout_marginTop="35dp"
                 android:drawablePadding="20dp"
                 android:fontFamily="@font/poppins_regular"
                 android:textStyle="normal"
@@ -96,7 +96,7 @@
                 android:id="@+id/profile"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="42dp"
+                android:layout_marginTop="35dp"
                 android:drawablePadding="20dp"
                 android:fontFamily="@font/poppins_regular"
                 android:textStyle="normal"
@@ -109,7 +109,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="42dp"
+                android:layout_marginTop="35dp"
                 android:drawablePadding="20dp"
                 android:fontFamily="@font/poppins_regular"
                 android:textStyle="normal"
@@ -123,7 +123,7 @@
                 android:id="@+id/setting"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="42dp"
+                android:layout_marginTop="35dp"
                 android:fontFamily="@font/poppins_regular"
                 android:textStyle="normal"
                 android:textSize="14sp"
@@ -136,7 +136,7 @@
                 android:id="@+id/terms_condition"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="42dp"
+                android:layout_marginTop="35dp"
                 android:fontFamily="@font/poppins_regular"
                 android:textStyle="normal"
                 android:textSize="14sp"
@@ -149,7 +149,7 @@
                 android:id="@+id/sing_out"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="42dp"
+                android:layout_marginTop="35dp"
                 android:fontFamily="@font/poppins_regular"
                 android:textStyle="normal"
                 android:textSize="14sp"

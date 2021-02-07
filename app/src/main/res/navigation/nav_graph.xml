@@ -33,9 +33,8 @@
     </fragment>
     <fragment
         android:id="@+id/settingFragment"
-        android:name="com.airposted.bitoronbd.ui.setting.SettingFragment"
-        android:label="{username}"
-        tools:layout="@layout/fragment_setting" >
+        android:name="com.airposted.bitoronbd.ui.setting.MoreFragment"
+        tools:layout="@layout/fragment_more" >
         <argument
             android:name="username"
             app:argType="string" />
