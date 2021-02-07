@@ -11,7 +11,7 @@ import kotlinx.coroutines.withContext
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 
-class SettingRepository(context: Context, private val api: MyApi) : SafeApiRequest() {
+class MoreRepository(context: Context, private val api: MyApi) : SafeApiRequest() {
     private val userName = MutableLiveData<String>()
     private val userPhone = MutableLiveData<String>()
     private val userImage = MutableLiveData<String>()

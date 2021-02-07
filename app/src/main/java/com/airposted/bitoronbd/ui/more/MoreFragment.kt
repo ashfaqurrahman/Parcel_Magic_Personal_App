@@ -1,4 +1,4 @@
-package com.airposted.bitoronbd.ui.setting
+package com.airposted.bitoronbd.ui.more
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -19,8 +19,8 @@ class MoreFragment : Fragment(), KodeinAware {
     private lateinit var settingBinding: FragmentMoreBinding
     override val kodein by kodein()
 
-    private val factory: SettingViewModelFactory by instance()
-    private lateinit var viewModel: SettingViewModel
+    private val factory: MoreViewModelFactory by instance()
+    private lateinit var viewModel: MoreViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -33,7 +33,7 @@ class MoreFragment : Fragment(), KodeinAware {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(requireActivity(), factory).get(SettingViewModel::class.java)
+        viewModel = ViewModelProvider(requireActivity(), factory).get(MoreViewModel::class.java)
         bindUI()
     }
 

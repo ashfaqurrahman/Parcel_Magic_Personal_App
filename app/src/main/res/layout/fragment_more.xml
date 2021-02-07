@@ -6,64 +6,113 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.setting.MoreFragment"
-        android:background="@color/white">
+        android:background="@color/white"
+        tools:context=".ui.more.MoreFragment">
 
         <RelativeLayout
             android:id="@+id/main"
             android:layout_width="match_parent"
             android:layout_height="122dp"
-            android:orientation="vertical"
-            android:elevation="1dp"
-            android:background="@drawable/splash_bg_gradient_start_end">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/poppins_medium"
-                android:layout_marginStart="15dp"
-                android:layout_marginTop="40dp"
-                android:textStyle="normal"
-                android:textSize="20sp"
-                android:textColor="#ffffff"
-                android:lineSpacingExtra="10sp"
-                android:text="@string/more"
-                />
-
-        </RelativeLayout>
-
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/profile_image"
-            android:layout_width="70dp"
-            android:layout_height="70dp"
-            android:elevation="2dp"
-            android:padding="2dp"
-            android:background="@drawable/circle_solid_white"
-            android:src="@drawable/sample_pro_pic"
-            android:layout_marginStart="15dp"
-            android:layout_marginBottom="-35dp"
-            android:layout_alignBottom="@id/main"/>
-
-        <LinearLayout
-            android:layout_below="@+id/main"
-            android:layout_marginTop="58dp"
-            android:layout_marginStart="15dp"
-            android:layout_marginEnd="15dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:background="@drawable/splash_bg_gradient_start_end"
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/profile_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="40dp"
+                android:fontFamily="@font/poppins_medium"
+                android:lineSpacingExtra="10sp"
+                android:text="@string/more"
+                android:textColor="#ffffff"
+                android:textSize="20sp"
+                android:textStyle="normal" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_alignBottom="@+id/main"
+            android:layout_marginStart="15dp"
+            android:layout_marginBottom="-35dp">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/profile_image"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/circle_solid_white"
+                android:src="@drawable/sample_pro_pic"
+                app:civ_border_color="#ffffff"
+                app:civ_border_width="2dp" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/image_upload"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:src="@drawable/profile_plus" />
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/main"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="58dp"
+            android:layout_marginEnd="15dp"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/profile_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins_regular"
+                    android:lineSpacingExtra="8sp"
+                    android:text="Badol Mondal"
+                    android:textColor="@color/text_color"
+                    android:textSize="15sp"
+                    android:textStyle="normal"
+                    android:visibility="visible" />
+
+                <EditText
+                    android:id="@+id/edit_profile_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/enter_your_name"
+                    android:textColor="@color/black"
+                    android:textSize="15sp"
+                    android:visibility="gone"
+                    android:textColorHint="@color/black"/>
+
+                <ImageView
+                    android:id="@+id/edit_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:padding="2dp"
+                    android:src="@drawable/ic_edit" />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/phone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/poppins_regular"
-                android:textStyle="normal"
-                android:textSize="15sp"
-                android:textColor="#0f122f"
                 android:lineSpacingExtra="8sp"
-                android:text="Badol Mondal"
-                />
+                android:text="+8801564765432"
+                android:textColor="#0f122f"
+                android:textSize="11sp"
+                android:textStyle="normal" />
 
             <TextView
                 android:id="@+id/my_parcel"
@@ -72,11 +121,11 @@
                 android:layout_marginTop="35dp"
                 android:drawablePadding="20dp"
                 android:fontFamily="@font/poppins_regular"
-                android:textStyle="normal"
-                android:textSize="14sp"
-                android:textColor="#0f122f"
                 android:lineSpacingExtra="7sp"
                 android:text="@string/my_parcel"
+                android:textColor="#0f122f"
+                android:textSize="14sp"
+                android:textStyle="normal"
                 app:drawableStartCompat="@drawable/ic_my_parcel_icon" />
 
             <TextView
@@ -85,11 +134,11 @@
                 android:layout_marginTop="35dp"
                 android:drawablePadding="20dp"
                 android:fontFamily="@font/poppins_regular"
-                android:textStyle="normal"
-                android:textSize="14sp"
-                android:textColor="#0f122f"
                 android:lineSpacingExtra="7sp"
                 android:text="@string/parcel_history"
+                android:textColor="#0f122f"
+                android:textSize="14sp"
+                android:textStyle="normal"
                 app:drawableLeftCompat="@drawable/ic_parcel_history_icon" />
 
             <TextView
@@ -99,11 +148,11 @@
                 android:layout_marginTop="35dp"
                 android:drawablePadding="20dp"
                 android:fontFamily="@font/poppins_regular"
-                android:textStyle="normal"
-                android:textSize="14sp"
-                android:textColor="#0f122f"
                 android:lineSpacingExtra="7sp"
                 android:text="@string/profile"
+                android:textColor="#0f122f"
+                android:textSize="14sp"
+                android:textStyle="normal"
                 app:drawableLeftCompat="@drawable/ic_user_icon" />
 
             <TextView
@@ -112,11 +161,11 @@
                 android:layout_marginTop="35dp"
                 android:drawablePadding="20dp"
                 android:fontFamily="@font/poppins_regular"
-                android:textStyle="normal"
-                android:textSize="14sp"
-                android:textColor="#0f122f"
                 android:lineSpacingExtra="7sp"
                 android:text="@string/help"
+                android:textColor="#0f122f"
+                android:textSize="14sp"
+                android:textStyle="normal"
                 app:drawableLeftCompat="@drawable/ic_information_icon" />
 
             <TextView
@@ -125,12 +174,11 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="35dp"
                 android:fontFamily="@font/poppins_regular"
-                android:textStyle="normal"
-                android:textSize="14sp"
-                android:textColor="#0f122f"
                 android:lineSpacingExtra="7sp"
                 android:text="@string/settings"
-                />
+                android:textColor="#0f122f"
+                android:textSize="14sp"
+                android:textStyle="normal" />
 
             <TextView
                 android:id="@+id/terms_condition"
@@ -138,12 +186,11 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="35dp"
                 android:fontFamily="@font/poppins_regular"
-                android:textStyle="normal"
-                android:textSize="14sp"
-                android:textColor="#0f122f"
                 android:lineSpacingExtra="7sp"
                 android:text="@string/terms_conditions_privacy"
-                />
+                android:textColor="#0f122f"
+                android:textSize="14sp"
+                android:textStyle="normal" />
 
             <TextView
                 android:id="@+id/sing_out"
@@ -151,12 +198,11 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="35dp"
                 android:fontFamily="@font/poppins_regular"
-                android:textStyle="normal"
-                android:textSize="14sp"
-                android:textColor="#0f122f"
                 android:lineSpacingExtra="7sp"
                 android:text="@string/sign_out"
-                />
+                android:textColor="#0f122f"
+                android:textSize="14sp"
+                android:textStyle="normal" />
 
         </LinearLayout>
 

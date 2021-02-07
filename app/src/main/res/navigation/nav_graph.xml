@@ -33,7 +33,7 @@
     </fragment>
     <fragment
         android:id="@+id/settingFragment"
-        android:name="com.airposted.bitoronbd.ui.setting.MoreFragment"
+        android:name="com.airposted.bitoronbd.ui.more.MoreFragment"
         tools:layout="@layout/fragment_more" >
         <argument
             android:name="username"

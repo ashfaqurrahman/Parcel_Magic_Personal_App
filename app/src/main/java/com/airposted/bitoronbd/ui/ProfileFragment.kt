@@ -22,8 +22,8 @@ import androidx.lifecycle.lifecycleScope
 import com.aapbd.appbajarlib.storage.PersistentUser
 import com.airposted.bitoronbd.R
 import com.airposted.bitoronbd.databinding.FragmentProfileBinding
-import com.airposted.bitoronbd.ui.setting.SettingViewModel
-import com.airposted.bitoronbd.ui.setting.SettingViewModelFactory
+import com.airposted.bitoronbd.ui.more.MoreViewModel
+import com.airposted.bitoronbd.ui.more.MoreViewModelFactory
 import com.airposted.bitoronbd.utils.*
 import com.bumptech.glide.Glide
 import com.theartofdev.edmodo.cropper.CropImage
@@ -43,8 +43,8 @@ class ProfileFragment : Fragment(), KodeinAware {
     private lateinit var profileBinding: FragmentProfileBinding
     override val kodein by kodein()
 
-    private val factory: SettingViewModelFactory by instance()
-    private lateinit var viewModel: SettingViewModel
+    private val factory: MoreViewModelFactory by instance()
+    private lateinit var viewModel: MoreViewModel
     private var cropImageUri: Uri? = null
 
     override fun onCreateView(
@@ -59,7 +59,7 @@ class ProfileFragment : Fragment(), KodeinAware {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(requireActivity(), factory).get(SettingViewModel::class.java)
+        viewModel = ViewModelProvider(requireActivity(), factory).get(MoreViewModel::class.java)
         bindUI()
     }
 

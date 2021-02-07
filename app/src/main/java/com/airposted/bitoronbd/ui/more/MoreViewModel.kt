@@ -1,15 +1,15 @@
-package com.airposted.bitoronbd.ui.setting
+package com.airposted.bitoronbd.ui.more
 
 import androidx.lifecycle.ViewModel
-import com.airposted.bitoronbd.data.repositories.SettingRepository
+import com.airposted.bitoronbd.data.repositories.MoreRepository
 import com.airposted.bitoronbd.utils.lazyDeferred
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 
-class SettingViewModel (
-    private val repository: SettingRepository
+class MoreViewModel (
+    private val repository: MoreRepository
 ) : ViewModel() {
 
     val getName by lazyDeferred {
