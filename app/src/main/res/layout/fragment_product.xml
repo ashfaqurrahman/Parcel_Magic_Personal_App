@@ -1,28 +1,205 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@drawable/map_bg"
-    tools:context=".ui.product.ProductFragment">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <androidx.cardview.widget.CardView
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:layout_marginStart="15dp"
-        app:cardCornerRadius="50dp"
-        app:cardElevation="20dp"
-        android:layout_marginTop="28dp">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.product.ProductFragment">
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/back"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="15dp"
+            app:cardCornerRadius="50dp"
+            app:cardElevation="20dp"
+            android:layout_marginTop="28dp"
+            app:cardBackgroundColor="@color/white">
+
+            <ImageView
+                android:layout_width="47dp"
+                android:layout_height="47dp"
+                android:padding="15dp"
+                android:src="@drawable/ic_back_icon"/>
+
+        </androidx.cardview.widget.CardView>
+
+        <fragment
+            android:id="@+id/mapProduct"
+            android:name="com.google.android.gms.maps.SupportMapFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
 
         <ImageView
-            android:layout_width="47dp"
-            android:layout_height="47dp"
-            android:padding="15dp"
-            android:src="@drawable/ic_back_icon"/>
+            android:id="@+id/marker"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_marker"
+            android:layout_centerInParent="true"/>
 
-    </androidx.cardview.widget.CardView>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_alignParentBottom="true">
 
-    <include layout="@layout/bottom_sheet_persistent" />
+            <ImageView
+                android:id="@+id/my_location"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:background="@drawable/circle_solid_blue"
+                android:src="@drawable/ic_current_location_icon"
+                android:layout_marginBottom="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_gravity="end"/>
 
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+            <LinearLayout
+                android:id="@+id/bottom"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bottom_sheet_bg"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginEnd="15dp"
+                    android:elevation="10dp"
+                    android:orientation="vertical"
+                    android:id="@+id/parent"
+                    android:animateLayoutChanges="true">
+
+                    <!--<View
+                        android:layout_width="30dp"
+                        android:layout_height="4dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_gravity="center_horizontal"
+                        android:background="@drawable/button_bg"/>-->
+
+                    <!--<RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp">
+
+                        <ImageView
+                            android:id="@+id/product_icon"
+                            android:layout_width="35dp"
+                            android:layout_height="35dp"
+                            android:layout_centerVertical="true"
+                            android:padding="10dp"
+                            android:background="@drawable/circle_solid_blue"
+                            android:src="@drawable/ic_product_btn_icon_white"/>
+
+                        <TextView
+                            android:id="@+id/product_title"
+                            android:layout_toEndOf="@+id/product_icon"
+                            android:layout_marginStart="13dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/poppins_medium"
+                            android:textStyle="normal"
+                            android:textSize="16sp"
+                            android:textColor="@color/text_color"
+                            android:text="Products"
+                            />
+
+                        <TextView
+                            android:layout_below="@+id/product_title"
+                            android:layout_toEndOf="@+id/product_icon"
+                            android:layout_marginStart="13dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/poppins_regular"
+                            android:textStyle="normal"
+                            android:textSize="12sp"
+                            android:textColor="#868896"
+                            android:text="Gifts, Electronic, Food, Accessories, Etc...."
+                            />
+
+                    </RelativeLayout>-->
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginBottom="20dp"
+                        android:background="@drawable/button_bg"
+                        android:padding="15dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/address"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/poppins_medium"
+                            android:gravity="start"
+                            android:textStyle="normal"
+                            android:textSize="19sp"
+                            android:textColor="#0f122f"
+                            android:lineSpacingExtra="18sp"
+                            android:maxLines="1"
+                            android:ellipsize="end"
+                            android:text="Rd No. 1/A, Banani"
+                            android:drawablePadding="15dp"
+                            app:drawableStartCompat="@drawable/ic_location_icon_solid" />
+
+                    </LinearLayout>
+
+                    <!--<LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:background="@drawable/button_bg"
+                        android:padding="15dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/poppins_medium"
+                            android:gravity="start"
+                            android:textStyle="normal"
+                            android:textSize="19sp"
+                            android:textColor="#0f122f"
+                            android:lineSpacingExtra="18sp"
+                            android:text="25 cm &amp; 03 kg"
+                            />
+
+                    </LinearLayout>-->
+
+                    <LinearLayout
+                        android:id="@+id/receiver_address"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="15dp"
+                        android:background="@drawable/after_button_bg"
+                        android:padding="15dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/poppins_medium"
+                            android:gravity="start"
+                            android:textAlignment="center"
+                            android:textStyle="normal"
+                            android:textSize="19sp"
+                            android:textColor="#ffffff"
+                            android:lineSpacingExtra="18sp"
+                            android:text="Set Receiver Address" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+</layout>

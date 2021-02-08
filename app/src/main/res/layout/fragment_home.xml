@@ -32,8 +32,10 @@
             android:textStyle="normal"
             android:textSize="13sp"
             android:textColor="#0f122f"
-            android:text="Rd No. 1/A    &gt;"
-            />
+            android:text="@string/searching"
+            android:gravity="center_vertical"
+            android:drawablePadding="5dp"
+            app:drawableEndCompat="@drawable/ic_next" />
 
         <ImageView
             android:layout_width="wrap_content"
