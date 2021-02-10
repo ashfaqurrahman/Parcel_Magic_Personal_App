@@ -390,7 +390,7 @@ class SignInSignUpActivity : AppCompatActivity(), KodeinAware {
                         toast("Login Successful")
                         //binding.rootLayout.snackbar("Login Successful")
                         PersistentUser.getInstance().setLogin(this)
-                        PersistentUser.getInstance().setAccessToken(this, authResponse?.data?.token)
+                        PersistentUser.getInstance().setAccessToken(this, "Bearer " + authResponse?.data?.token)
                         PersistentUser.getInstance().setUserID(
                             this,
                             authResponse?.user?.id.toString()
@@ -477,7 +477,7 @@ class SignInSignUpActivity : AppCompatActivity(), KodeinAware {
                                     PersistentUser.getInstance().setLogin(this@SignInSignUpActivity)
                                     PersistentUser.getInstance().setAccessToken(
                                         this@SignInSignUpActivity,
-                                        signupResponse.data?.token
+                                        "Bearer " + signupResponse.data?.token
                                     )
                                     PersistentUser.getInstance().setUserID(
                                         this@SignInSignUpActivity,

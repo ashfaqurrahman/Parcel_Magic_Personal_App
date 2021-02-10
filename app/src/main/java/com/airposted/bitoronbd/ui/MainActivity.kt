@@ -3,6 +3,7 @@ package com.airposted.bitoronbd.ui
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
+import android.view.View
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
@@ -21,6 +22,14 @@ class MainActivity : AppCompatActivity() {
 
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         navController = navHostFragment.findNavController()
+
+        navController.addOnDestinationChangedListener { _, destination, _ ->
+            if(destination.id == R.id.productFragment) {
+                mainBinding.bottomNavigation.visibility = View.GONE
+            } else {
+                mainBinding.bottomNavigation.visibility = View.VISIBLE
+            }
+        }
 
         mainBinding.bottomNavigation.setupWithNavController(navController)
     }

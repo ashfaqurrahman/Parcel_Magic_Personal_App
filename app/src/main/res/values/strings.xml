@@ -7,7 +7,7 @@
     <string name="enter_your_name">Enter your name</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="loading">Loading..</string>
+    <string name="loading">Loading…</string>
     <string name="upload_your_photo_optional">Upload your photo (optional)</string>
     <string name="personal_information">Personal Information</string>
     <string name="toolbar">ToolBar</string>
@@ -36,8 +36,5 @@
     <string name="setting">Setting</string>
     <string name="more">More</string>
     <string name="my_profile">My Profile</string>
-    <string name="receiver_name">Receiver Name</string>
-    <string name="receiver_phone_number">Receiver Phone Number</string>
-    <string name="additional_direction">Additional Direction</string>
-    <string name="view_this_parcel">View This Parcel</string>
+    <string name="searching">Searching…</string>
 </resources>

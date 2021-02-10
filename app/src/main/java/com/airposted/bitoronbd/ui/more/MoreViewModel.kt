@@ -16,10 +16,6 @@ class MoreViewModel (
         repository.getName()
     }
 
-    val getImage by lazyDeferred {
-        repository.getImage()
-    }
-
     suspend fun userNameUpdate(
         header: String,
         name: String

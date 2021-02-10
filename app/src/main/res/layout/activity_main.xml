@@ -29,6 +29,7 @@
             app:itemIconTint="@color/bnv_select_color"
             app:itemTextColor="@color/bnv_select_color"
             app:menu="@menu/menu_bottom_navigation"
+            app:hideOnScroll="true"
             app:layout_behavior="com.google.android.material.behavior.HideBottomViewOnScrollBehavior" />
 
     </RelativeLayout>
