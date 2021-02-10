@@ -40,98 +40,125 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp">
-
-                    <ImageView
-                        android:id="@+id/product_icon"
-                        android:layout_width="35dp"
-                        android:layout_height="35dp"
-                        android:layout_centerVertical="true"
-                        android:padding="10dp"
-                        android:background="@drawable/circle_solid_blue"
-                        android:src="@drawable/ic_product_btn_icon_white"/>
+                    android:layout_marginTop="20dp"
+                    android:background="@drawable/button_bg"
+                    android:padding="15dp"
+                    android:orientation="horizontal">
 
                     <TextView
-                        android:id="@+id/product_title"
-                        android:layout_toEndOf="@+id/product_icon"
-                        android:layout_marginStart="13dp"
+                        android:id="@+id/tk_sign"
+                        android:layout_width="36dp"
+                        android:layout_height="36dp"
+                        android:gravity="center"
+                        android:background="@drawable/circle_solid_white"
+                        android:text="৳"
+                        android:textSize="20dp"
+                        android:textStyle="bold"
+                        android:textColor="@color/black"/>
+
+
+                    <TextView
+                        android:layout_toEndOf="@+id/tk_sign"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginStart="15dp"
                         android:fontFamily="@font/poppins_medium"
+                        android:gravity="start"
                         android:textStyle="normal"
-                        android:textSize="16sp"
-                        android:textColor="@color/text_color"
-                        android:text="Products"
+                        android:textSize="18sp"
+                        android:textColor="#0f122f"
+                        android:text="Total Charge"
                         />
 
                     <TextView
-                        android:layout_below="@+id/product_title"
-                        android:layout_toEndOf="@+id/product_icon"
-                        android:layout_marginStart="13dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/poppins_regular"
+                        android:fontFamily="@font/poppins_medium"
+                        android:layout_alignParentEnd="true"
                         android:textStyle="normal"
-                        android:textSize="12sp"
-                        android:textColor="#868896"
-                        android:text="Gifts, Electronic, Food, Accessories, Etc...."
+                        android:textSize="18sp"
+                        android:textColor="#3b5998"
+                        android:lineSpacingExtra="19sp"
+                        android:text="৳0.00"
                         />
 
                 </RelativeLayout>
 
-                <LinearLayout
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:fontFamily="@font/poppins_medium"
+                    android:textStyle="normal"
+                    android:textSize="20sp"
+                    android:textColor="#0f122f"
+                    android:lineSpacingExtra="10sp"
+                    tools:text="Receiver&apos;s Details" />
+
+                <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:background="@drawable/button_bg"
-                    android:padding="15dp"
-                    android:orientation="horizontal">
+                    android:layout_marginTop="10dp"
+                    style="@style/MyTextInputLayout"
+                    app:errorEnabled="false">
 
-                    <TextView
-                        android:layout_width="wrap_content"
+                    <androidx.appcompat.widget.AppCompatEditText
+                        android:id="@+id/receiver_name"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/poppins_medium"
-                        android:gravity="start"
-                        android:textStyle="normal"
-                        android:textSize="19sp"
-                        android:textColor="#0f122f"
-                        android:lineSpacingExtra="18sp"
-                        android:text="25 cm &amp; 03 kg"
-                        />
+                        android:inputType="textCapWords"
+                        android:hint="@string/receiver_name"
+                        android:imeOptions="actionNext"
+                        style="@style/MyTextInputEditText"
+                        android:maxLines="1"/>
 
-                </LinearLayout>
+                </com.google.android.material.textfield.TextInputLayout>
 
-                <LinearLayout
+                <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:background="@drawable/button_bg"
-                    android:padding="15dp"
-                    android:orientation="horizontal">
+                    android:layout_marginTop="10dp"
+                    style="@style/MyTextInputLayout"
+                    app:errorEnabled="false">
 
-                    <TextView
-                        android:id="@+id/address"
-                        android:layout_width="wrap_content"
+                    <androidx.appcompat.widget.AppCompatEditText
+                        android:id="@+id/receiver_phone"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/poppins_medium"
-                        android:gravity="start"
-                        android:textStyle="normal"
-                        android:textSize="19sp"
-                        android:textColor="#0f122f"
-                        android:lineSpacingExtra="18sp"
-                        android:text="Rd No. 1/A, Banani"
-                        android:drawablePadding="15dp"
-                        app:drawableStartCompat="@drawable/ic_location_icon_solid" />
+                        android:inputType="phone"
+                        android:hint="@string/receiver_phone_number"
+                        android:imeOptions="actionNext"
+                        style="@style/MyTextInputEditText"
+                        android:maxLines="1"/>
 
-                </LinearLayout>
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    style="@style/MyTextInputLayout"
+                    app:errorEnabled="false">
+
+                    <androidx.appcompat.widget.AppCompatEditText
+                        android:id="@+id/receiver_direction"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="text"
+                        android:hint="@string/additional_direction"
+                        android:imeOptions="actionDone"
+                        style="@style/MyTextInputEditText"
+                        android:maxLines="1"/>
+
+                </com.google.android.material.textfield.TextInputLayout>
 
                 <LinearLayout
-                    android:id="@+id/receiver_address"
+                    android:id="@+id/confirm_receiver_address"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="15dp"
                     android:layout_marginTop="20dp"
-                    android:background="@drawable/after_button_bg"
+                    android:background="@drawable/before_button_bg"
                     android:padding="15dp"
                     android:orientation="horizontal">
 
@@ -145,7 +172,7 @@
                         android:textSize="19sp"
                         android:textColor="#ffffff"
                         android:lineSpacingExtra="18sp"
-                        android:text="Set Receiver Address" />
+                        android:text="Confirm Receiver Details" />
 
                 </LinearLayout>
 
