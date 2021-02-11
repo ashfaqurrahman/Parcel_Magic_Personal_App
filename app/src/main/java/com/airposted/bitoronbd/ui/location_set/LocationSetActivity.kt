@@ -8,6 +8,8 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.databinding.DataBindingUtil
@@ -71,6 +73,14 @@ class LocationSetActivity : AppCompatActivity(), KodeinAware, CustomClickListene
                 location(s.toString())
             }
         })
+
+        val bounce: Animation = AnimationUtils.loadAnimation(
+            baseContext,
+            R.anim.bounce
+        ) // load the animation from the resource
+
+
+        binding.marker.startAnimation(bounce)
     }
 
     private fun location(location: String) {
@@ -184,7 +194,7 @@ class LocationSetActivity : AppCompatActivity(), KodeinAware, CustomClickListene
                 } else {
                     locationString = locationString + ", " + addresses[0].thoroughfare
                 }
-                binding.editTextTextLocation.setText(locationString)
+                //binding.editTextTextLocation.setText(locationString)
             }
         }
 
