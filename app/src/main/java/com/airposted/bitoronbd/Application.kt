@@ -4,9 +4,11 @@ import android.app.Application
 import com.airposted.bitoronbd.data.network.MyApi
 import com.airposted.bitoronbd.data.network.NetworkConnectionInterceptor
 import com.airposted.bitoronbd.data.network.preferences.PreferenceProvider
-import com.airposted.bitoronbd.data.repositories.MoreRepository
-import com.airposted.bitoronbd.data.repositories.UserRepository
+import com.airposted.bitoronbd.data.repositories.*
 import com.airposted.bitoronbd.ui.auth.AuthViewModelFactory
+import com.airposted.bitoronbd.ui.home.HomeViewModelFactory
+import com.airposted.bitoronbd.ui.location_set.LocationSetViewModelFactory
+import com.airposted.bitoronbd.ui.main.MainViewModelFactory
 import com.airposted.bitoronbd.ui.more.MoreViewModelFactory
 import org.kodein.di.Kodein
 import org.kodein.di.KodeinAware
@@ -26,9 +28,15 @@ class Application : Application(), KodeinAware {
 //        bind() from singleton { AppDatabase(instance()) }
         bind() from singleton { PreferenceProvider(instance()) }
         bind() from singleton { UserRepository(instance()) }
+        bind() from singleton { HomeRepository(instance()) }
         bind() from singleton { MoreRepository(instance(), MyApi(instance())) }
+        bind() from singleton { MainRepository(instance()) }
+        bind() from singleton { LocationSetRepository(instance()) }
         bind() from provider { AuthViewModelFactory(instance()) }
         bind() from provider { MoreViewModelFactory(instance()) }
+        bind() from provider { MainViewModelFactory(instance()) }
+        bind() from provider { HomeViewModelFactory(instance()) }
+        bind() from provider { LocationSetViewModelFactory(instance()) }
 
 
     }

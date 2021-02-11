@@ -1,13 +1,13 @@
 package com.airposted.bitoronbd.ui.product
 
 import android.Manifest
-import android.annotation.SuppressLint
 import android.content.pm.PackageManager
 import android.location.Geocoder
 import android.location.Location
 import android.os.Build
 import android.os.Bundle
 import android.os.Looper
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -22,17 +22,14 @@ import com.google.android.gms.maps.GoogleMap.OnCameraMoveStartedListener
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.*
+import com.google.maps.android.PolyUtil
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.x.kodein
-import pub.devrel.easypermissions.AfterPermissionGranted
-import pub.devrel.easypermissions.EasyPermissions
 import java.util.*
-
 
 class ProductFragment : Fragment(), OnMapReadyCallback, KodeinAware {
 
     private lateinit var mMap: GoogleMap
-    private val REQUEST_LOCATION_PERMISSION = 1
     private lateinit var mLocationRequest: LocationRequest
     private lateinit var mLastLocation: Location
     private var mFusedLocationClient: FusedLocationProviderClient? = null
@@ -60,18 +57,19 @@ class ProductFragment : Fragment(), OnMapReadyCallback, KodeinAware {
         val mapFragment =
             childFragmentManager.findFragmentById(R.id.mapProduct) as SupportMapFragment
         mapFragment.getMapAsync(this)
-        requestLocationPermission()
 
         productBinding.back.setOnClickListener {
             requireActivity().onBackPressed()
         }
 
-        productBinding.myLocation.setOnClickListener{
+        productBinding.myLocation.setOnClickListener {
             val cameraPosition =
-                CameraPosition.Builder().target(LatLng(mLastLocation.latitude, mLastLocation.longitude))
-                    .zoom(16f).build()
+                CameraPosition.Builder()
+                    .target(LatLng(mLastLocation.latitude, mLastLocation.longitude))
+                    .zoom(18f).build()
             mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition))
         }
+
     }
 
     override fun onPause() {
@@ -90,6 +88,16 @@ class ProductFragment : Fragment(), OnMapReadyCallback, KodeinAware {
                 mLastLocation = location
 
                 val latLng = LatLng(location.latitude, location.longitude)
+                val points: MutableList<LatLng> = ArrayList()
+                points.add(LatLng(23.843974, 90.370339))
+                points.add(LatLng(23.749419, 90.354546))
+                points.add(LatLng(23.752248, 90.499085))
+                points.add(LatLng(23.861558, 90.469903))
+
+                //val polygon: Polygon = mMap.addPolygon(PolygonOptions().addAll(points))
+                val contain = PolyUtil.containsLocation(latLng, points, true)
+
+                Log.e("aaaaa", contain.toString())
 
                 val cameraPosition =
                     CameraPosition.Builder().target(LatLng(latLng.latitude, latLng.longitude))
@@ -102,10 +110,9 @@ class ProductFragment : Fragment(), OnMapReadyCallback, KodeinAware {
                     val addresses = geo.getFromLocation(center.latitude, center.longitude, 1)
                     if (addresses.isEmpty()) {
                         productBinding.address.text = getString(R.string.searching)
-                    }
-                    else {
-                        var locationString:String
-                        locationString = if (addresses[0].featureName == null){
+                    } else {
+                        var locationString: String
+                        locationString = if (addresses[0].featureName == null) {
                             ""
                         } else {
                             addresses[0].featureName
@@ -155,41 +162,11 @@ class ProductFragment : Fragment(), OnMapReadyCallback, KodeinAware {
                     mLocationRequest, mLocationCallback,
                     Looper.myLooper()
                 )
-            } else {
-                requestLocationPermission()
             }
         } else {
             mFusedLocationClient!!.requestLocationUpdates(
                 mLocationRequest, mLocationCallback,
                 Looper.myLooper()
-            )
-        }
-    }
-
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<String>,
-        grantResults: IntArray
-    ) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this)
-    }
-
-    @SuppressLint("MissingPermission")
-    @AfterPermissionGranted(1)
-    fun requestLocationPermission() {
-        val perms = Manifest.permission.ACCESS_FINE_LOCATION
-        if (EasyPermissions.hasPermissions(requireActivity(), perms)) {
-            mFusedLocationClient!!.requestLocationUpdates(
-                mLocationRequest,
-                mLocationCallback, Looper.myLooper()
-            )
-        } else {
-            EasyPermissions.requestPermissions(
-                requireActivity(),
-                "Please grant the location permission",
-                REQUEST_LOCATION_PERMISSION,
-                perms
             )
         }
     }

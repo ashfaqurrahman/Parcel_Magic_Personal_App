@@ -3,6 +3,7 @@ package com.airposted.bitoronbd.data.repositories
 import com.airposted.bitoronbd.data.network.MyApi
 import com.airposted.bitoronbd.data.network.SafeApiRequest
 import com.airposted.bitoronbd.data.network.responses.AuthResponse
+import com.airposted.bitoronbd.model.SearchLocation
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 
@@ -13,6 +14,10 @@ class UserRepository(
 
     suspend fun numberCheck(mobile: String): AuthResponse {
         return apiRequest { api.numberCheck(mobile) }
+    }
+
+    suspend fun locationSearch(mobile: String): SearchLocation {
+        return apiRequest { api.getPlacesNameList(mobile) }
     }
 
     /*suspend fun userLogin(email: String, password: String): AuthResponse {

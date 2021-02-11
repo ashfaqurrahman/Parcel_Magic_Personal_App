@@ -6,7 +6,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.MainActivity"
+        tools:context=".ui.main.MainActivity"
         android:id="@+id/main">
 
         <androidx.fragment.app.FragmentContainerView
@@ -17,6 +17,19 @@
             android:layout_above="@id/bottom_navigation"
             app:defaultNavHost="true"
             app:navGraph="@navigation/nav_graph" />
+
+        <TextView
+            android:id="@+id/no_internet"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@id/bottom_navigation"
+            android:text="No Internet"
+            android:textAlignment="center"
+            android:background="@color/red"
+            android:padding="10dp"
+            android:visibility="gone"
+            android:textColor="@color/white"
+            android:textSize="18sp"/>
 
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/bottom_navigation"

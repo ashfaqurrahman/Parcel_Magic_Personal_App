@@ -21,8 +21,6 @@ import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentActivity
 import com.airposted.bitoronbd.R
 import com.airposted.bitoronbd.ui.WebviewActivity
 import com.google.android.material.snackbar.Snackbar
@@ -124,6 +122,34 @@ fun textWatcher(context: Context, size: Int, input: EditText, button: TextView) 
             }
         }
     })
+}
+
+fun locationTextWatcher(size: Int, input: EditText): String {
+    var text = ""
+    input.addTextChangedListener(object : TextWatcher {
+        override fun afterTextChanged(s: Editable) {
+
+        }
+
+        override fun beforeTextChanged(
+            s: CharSequence?, start: Int,
+            count: Int, after: Int
+        ) {
+        }
+
+        override fun onTextChanged(
+            s: CharSequence, start: Int,
+            before: Int, count: Int
+        ) {
+            text = if (s.length > size) {
+                s.toString()
+            } else {
+                ""
+            }
+        }
+    })
+
+    return text
 }
 
 fun customTextView(view: TextView, context: Context) {

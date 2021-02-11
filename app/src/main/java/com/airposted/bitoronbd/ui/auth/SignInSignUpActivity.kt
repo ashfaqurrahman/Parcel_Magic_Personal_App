@@ -5,10 +5,13 @@ import android.Manifest
 import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.location.Address
+import android.location.Geocoder
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.CountDownTimer
+import android.util.Log
 import android.view.View
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
@@ -19,8 +22,10 @@ import com.aapbd.appbajarlib.storage.PersistentUser
 import com.airposted.bitoronbd.R
 import com.airposted.bitoronbd.data.network.responses.AuthResponse
 import com.airposted.bitoronbd.databinding.*
-import com.airposted.bitoronbd.ui.MainActivity
+import com.airposted.bitoronbd.ui.location_set.LocationSetActivity
+import com.airposted.bitoronbd.ui.main.MainActivity
 import com.airposted.bitoronbd.utils.*
+import com.google.android.gms.maps.model.LatLng
 import com.google.firebase.FirebaseException
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.PhoneAuthCredential
@@ -38,6 +43,7 @@ import org.kodein.di.KodeinAware
 import org.kodein.di.android.kodein
 import org.kodein.di.generic.instance
 import java.io.File
+import java.net.URL
 import java.util.concurrent.TimeUnit
 
 
@@ -73,7 +79,8 @@ class SignInSignUpActivity : AppCompatActivity(), KodeinAware {
         customTextView(binding.openLayout.tvTermsConditionSignup, this)
 
         binding.openLayout.next.setOnClickListener {
-            binding.openLayout.main.visibility = View.GONE
+            startActivity(Intent(this, LocationSetActivity::class.java))
+            /*binding.openLayout.main.visibility = View.GONE
             binding.numberLayout.main.visibility = View.VISIBLE
             binding.welcomeBackLayout.main.visibility = View.GONE
             binding.otpLayout.main.visibility = View.GONE
@@ -81,7 +88,7 @@ class SignInSignUpActivity : AppCompatActivity(), KodeinAware {
 
             binding.numberLayout.toolbar.toolbarTitle.text = getString(R.string.mobile_number)
 
-            textWatcher(this, 9, binding.numberLayout.phone, binding.numberLayout.next)
+            textWatcher(this, 9, binding.numberLayout.phone, binding.numberLayout.next)*/
         }
 
         binding.numberLayout.next.setOnClickListener {
@@ -280,6 +287,23 @@ class SignInSignUpActivity : AppCompatActivity(), KodeinAware {
             binding.signUpLayout.name.setText("")
 
             binding.numberLayout.toolbar.toolbarTitle.text = getString(R.string.mobile_number)
+        }
+    }
+
+    private fun getLatLngFromAddress(address: String): LatLng? {
+        val geocoder = Geocoder(this)
+        val addressList: List<Address>?
+        return try {
+            addressList = geocoder.getFromLocationName(address, 1)
+            if (addressList != null) {
+                val singleaddress = addressList[0]
+                LatLng(singleaddress.latitude, singleaddress.longitude)
+            } else {
+                null
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+            null
         }
     }
 

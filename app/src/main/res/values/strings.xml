@@ -37,4 +37,8 @@
     <string name="more">More</string>
     <string name="my_profile">My Profile</string>
     <string name="searching">Searching…</string>
+    <string name="receiver_name">Receiver Name</string>
+    <string name="receiver_phone_number">Receiver Phone Number</string>
+    <string name="additional_direction">Additional Direction</string>
+    <string name="view_this_parcel">View This Parcel</string>
 </resources>

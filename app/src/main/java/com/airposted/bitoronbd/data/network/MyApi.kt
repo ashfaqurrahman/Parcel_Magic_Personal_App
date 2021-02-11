@@ -1,12 +1,14 @@
 package com.airposted.bitoronbd.data.network
 
 import com.airposted.bitoronbd.data.network.responses.AuthResponse
+import com.airposted.bitoronbd.model.SearchLocation
 import okhttp3.*
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.*
 import java.util.concurrent.TimeUnit
+
 
 interface MyApi {
 
@@ -46,6 +48,9 @@ interface MyApi {
         @Part file: MultipartBody.Part,
         @Part("image") requestBody: RequestBody
     ) : Response<AuthResponse>
+
+    @GET
+    suspend fun getPlacesNameList(@Url url: String): Response<SearchLocation>
 
     companion object{
         operator fun invoke(
