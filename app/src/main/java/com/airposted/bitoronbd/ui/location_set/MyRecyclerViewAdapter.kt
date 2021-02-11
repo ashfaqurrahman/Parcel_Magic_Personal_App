@@ -19,7 +19,7 @@ class MyRecyclerViewAdapter(
     ): ViewHolder {
         val binding: ItemQuoteBinding = DataBindingUtil.inflate(
             LayoutInflater.from(parent.context),
-            R.layout.item_quote, parent, false
+            R.layout.item_location_search, parent, false
         )
         return ViewHolder(binding)
     }
