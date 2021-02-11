@@ -6,7 +6,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.airposted.bitoronbd.BR
 import com.airposted.bitoronbd.R
-import com.airposted.bitoronbd.databinding.ItemQuoteBinding
+import com.airposted.bitoronbd.databinding.ItemLocationSearchBinding
 import com.airposted.bitoronbd.model.Prediction
 
 class MyRecyclerViewAdapter(
@@ -17,7 +17,7 @@ class MyRecyclerViewAdapter(
         parent: ViewGroup,
         viewType: Int
     ): ViewHolder {
-        val binding: ItemQuoteBinding = DataBindingUtil.inflate(
+        val binding: ItemLocationSearchBinding = DataBindingUtil.inflate(
             LayoutInflater.from(parent.context),
             R.layout.item_location_search, parent, false
         )
@@ -34,7 +34,7 @@ class MyRecyclerViewAdapter(
         return dataModelList.size
     }
 
-    inner class ViewHolder(var itemRowBinding: ItemQuoteBinding) : RecyclerView.ViewHolder(
+    inner class ViewHolder(var itemRowBinding: ItemLocationSearchBinding) : RecyclerView.ViewHolder(
         itemRowBinding.root
     ) {
         fun bind(obj: Any?) {
