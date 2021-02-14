@@ -97,8 +97,6 @@ class ProductFragment : Fragment(), OnMapReadyCallback, KodeinAware {
                 //val polygon: Polygon = mMap.addPolygon(PolygonOptions().addAll(points))
                 val contain = PolyUtil.containsLocation(latLng, points, true)
 
-                Log.e("aaaaa", contain.toString())
-
                 val cameraPosition =
                     CameraPosition.Builder().target(LatLng(latLng.latitude, latLng.longitude))
                         .zoom(16f).build()

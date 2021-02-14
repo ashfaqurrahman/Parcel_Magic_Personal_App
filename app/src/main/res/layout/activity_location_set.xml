@@ -47,11 +47,12 @@
                 android:id="@+id/edit_layout1">
 
                 <androidx.appcompat.widget.SearchView
+                    android:id="@+id/search"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="text"
                     android:layout_toStartOf="@+id/current_location"
-                    android:closeIcon="@drawable/ic_cross_icon"
+                    app:closeIcon="@drawable/ic_close_red"
                     app:searchIcon="@null"
                     app:iconifiedByDefault="false"
                     app:queryHint="Search Here"
@@ -63,11 +64,12 @@
                     android:textColor="@color/black"/>
 
                 <com.airbnb.lottie.LottieAnimationView
-                    android:id="@+id/empty_cart"
-                    android:layout_width="wrap_content"
+                    android:id="@+id/loading"
+                    android:layout_width="50dp"
                     android:layout_toStartOf="@+id/current_location"
                     app:lottie_rawRes="@raw/loading"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
+                    android:visibility="gone"
                     app:lottie_loop="true"
                     app:lottie_autoPlay="true"/>
 
@@ -108,6 +110,18 @@
             android:layout_below="@id/edit_layout"
             android:layout_above="@id/receiver_address"/>
 
+        <ImageView
+            android:id="@+id/my_location"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:background="@drawable/circle_solid_blue"
+            android:src="@drawable/ic_current_location_icon"
+            android:layout_marginBottom="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_alignParentEnd="true"
+            android:layout_above="@id/receiver_address"/>
+
         <LinearLayout
             android:id="@+id/receiver_address"
             android:layout_width="match_parent"
@@ -137,7 +151,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:visibility="invisible" />
+            android:visibility="gone" />
 
     </RelativeLayout>
 
