@@ -55,24 +55,24 @@ class LocationSetActivity : AppCompatActivity(), KodeinAware, CustomClickListene
             .findFragmentById(R.id.mapSearch) as SupportMapFragment
         mapFragment.getMapAsync(this)
 
-        binding.editTextTextLocation.addTextChangedListener(object : TextWatcher {
-            override fun afterTextChanged(s: Editable) {
-
-            }
-
-            override fun beforeTextChanged(
-                s: CharSequence?, start: Int,
-                count: Int, after: Int
-            ) {
-            }
-
-            override fun onTextChanged(
-                s: CharSequence, start: Int,
-                before: Int, count: Int
-            ) {
-                location(s.toString())
-            }
-        })
+//        binding.editTextTextLocation.addTextChangedListener(object : TextWatcher {
+//            override fun afterTextChanged(s: Editable) {
+//
+//            }
+//
+//            override fun beforeTextChanged(
+//                s: CharSequence?, start: Int,
+//                count: Int, after: Int
+//            ) {
+//            }
+//
+//            override fun onTextChanged(
+//                s: CharSequence, start: Int,
+//                before: Int, count: Int
+//            ) {
+//                location(s.toString())
+//            }
+//        })
 
         val bounce: Animation = AnimationUtils.loadAnimation(
             baseContext,
@@ -147,7 +147,7 @@ class LocationSetActivity : AppCompatActivity(), KodeinAware, CustomClickListene
 
     override fun onItemClick(location: Prediction) {
         hideKeyboard(this)
-        binding.editTextTextLocation.setText(location.description)
+//        binding.editTextTextLocation.setText(location.description)
         binding.recyclerview.visibility = View.GONE
 
         val latLong = getLatLngFromAddress(location.description)

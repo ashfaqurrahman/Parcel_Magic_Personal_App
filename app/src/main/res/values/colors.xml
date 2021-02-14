@@ -12,6 +12,7 @@
 
     <color name="blue">#3b5998</color>
     <color name="top_bar_color">#ffffff</color>
+    <color name="gray">#808080</color>
 
     <!-- Screens background color-->
     <color name="bg_screen1">#f9faff</color>
