@@ -5,13 +5,10 @@ import android.Manifest
 import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.location.Address
-import android.location.Geocoder
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.CountDownTimer
-import android.util.Log
 import android.view.View
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
@@ -20,12 +17,11 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.*
 import com.aapbd.appbajarlib.storage.PersistentUser
 import com.airposted.bitoronbd.R
+import com.airposted.bitoronbd.R.string.enter
 import com.airposted.bitoronbd.data.network.responses.AuthResponse
 import com.airposted.bitoronbd.databinding.*
-import com.airposted.bitoronbd.ui.location_set.LocationSetActivity
-import com.airposted.bitoronbd.ui.main.MainActivity
+import com.airposted.bitoronbd.ui.permission.PermissionActivity
 import com.airposted.bitoronbd.utils.*
-import com.google.android.gms.maps.model.LatLng
 import com.google.firebase.FirebaseException
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.PhoneAuthCredential
@@ -43,7 +39,6 @@ import org.kodein.di.KodeinAware
 import org.kodein.di.android.kodein
 import org.kodein.di.generic.instance
 import java.io.File
-import java.net.URL
 import java.util.concurrent.TimeUnit
 
 
@@ -54,12 +49,12 @@ class SignInSignUpActivity : AppCompatActivity(), KodeinAware {
     private lateinit var binding: ActivitySignInSignUpBinding
     private lateinit var viewModel: AuthViewModel
     var phone: String? = null
-    var timer: CountDownTimer? = null
+    private var timer: CountDownTimer? = null
     private var verificationId: String? = null
     private lateinit var mAuth: FirebaseAuth
     var otp1: String? = null
-    var isAvailable = false
-    var authResponse: AuthResponse? = null
+    private var isAvailable = false
+    private var authResponse: AuthResponse? = null
     private var cropImageUri: Uri? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -79,8 +74,7 @@ class SignInSignUpActivity : AppCompatActivity(), KodeinAware {
         customTextView(binding.openLayout.tvTermsConditionSignup, this)
 
         binding.openLayout.next.setOnClickListener {
-            startActivity(Intent(this, LocationSetActivity::class.java))
-            /*binding.openLayout.main.visibility = View.GONE
+            binding.openLayout.main.visibility = View.GONE
             binding.numberLayout.main.visibility = View.VISIBLE
             binding.welcomeBackLayout.main.visibility = View.GONE
             binding.otpLayout.main.visibility = View.GONE
@@ -88,7 +82,7 @@ class SignInSignUpActivity : AppCompatActivity(), KodeinAware {
 
             binding.numberLayout.toolbar.toolbarTitle.text = getString(R.string.mobile_number)
 
-            textWatcher(this, 9, binding.numberLayout.phone, binding.numberLayout.next)*/
+            textWatcher(this, 9, binding.numberLayout.phone, binding.numberLayout.next)
         }
 
         binding.numberLayout.next.setOnClickListener {
@@ -156,7 +150,7 @@ class SignInSignUpActivity : AppCompatActivity(), KodeinAware {
             binding.signUpLayout.main.visibility = View.GONE
             binding.otpLayout.verify.isEnabled = false
 
-            binding.otpLayout.otpTopText.text = "Enter verification code sent to\n+880$phone"
+            binding.otpLayout.otpTopText.text = getString(enter, phone)
 
             binding.otpLayout.toolbar.toolbarTitle.text = getString(R.string.verification)
 
@@ -261,7 +255,7 @@ class SignInSignUpActivity : AppCompatActivity(), KodeinAware {
             binding.otpLayout.main.visibility = View.VISIBLE
             binding.signUpLayout.main.visibility = View.GONE
 
-            binding.otpLayout.otpTopText.text = "Enter verification code sent to\n+880$phone"
+            binding.otpLayout.otpTopText.text = getString(enter, phone)
 
             timer()
             sendVerificationCode("+880$phone")
@@ -290,21 +284,9 @@ class SignInSignUpActivity : AppCompatActivity(), KodeinAware {
         }
     }
 
-    private fun getLatLngFromAddress(address: String): LatLng? {
-        val geocoder = Geocoder(this)
-        val addressList: List<Address>?
-        return try {
-            addressList = geocoder.getFromLocationName(address, 1)
-            if (addressList != null) {
-                val singleaddress = addressList[0]
-                LatLng(singleaddress.latitude, singleaddress.longitude)
-            } else {
-                null
-            }
-        } catch (e: Exception) {
-            e.printStackTrace()
-            null
-        }
+    override fun onDestroy() {
+        super.onDestroy()
+        finish()
     }
 
     @RequiresApi(Build.VERSION_CODES.M)
@@ -356,11 +338,11 @@ class SignInSignUpActivity : AppCompatActivity(), KodeinAware {
         binding.otpLayout.resend.isClickable = false
         timer = object : CountDownTimer(60000, 1000) {
             override fun onTick(millisUntilFinished: Long) {
-                binding.otpLayout.resend.text = " " + (millisUntilFinished / 1000) + "s"
+                " ${millisUntilFinished / 1000}s".also { binding.otpLayout.resend.text = it }
             }
 
             override fun onFinish() {
-                binding.otpLayout.resend.text = " Resend Code"
+                binding.otpLayout.resend.text = getString(R.string.resend_code)
                 binding.otpLayout.resend.isClickable = true
             }
         }
@@ -422,7 +404,7 @@ class SignInSignUpActivity : AppCompatActivity(), KodeinAware {
                         PersistentUser.getInstance().setFullname(this, authResponse?.user?.name)
                         PersistentUser.getInstance().setPhonenumber(this, authResponse?.user?.phone)
                         PersistentUser.getInstance().setUserImage(this, authResponse?.user?.image)
-                        startActivity(Intent(applicationContext, MainActivity::class.java))
+                        startActivity(Intent(applicationContext, PermissionActivity::class.java))
                         finish()
                     } else {
                         lifecycleScope.launch {
@@ -522,7 +504,7 @@ class SignInSignUpActivity : AppCompatActivity(), KodeinAware {
                                     startActivity(
                                         Intent(
                                             applicationContext,
-                                            MainActivity::class.java
+                                            PermissionActivity::class.java
                                         )
                                     )
                                     finish()

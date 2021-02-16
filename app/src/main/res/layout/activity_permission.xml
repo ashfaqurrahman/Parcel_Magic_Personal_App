@@ -1,89 +1,93 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:gravity="center_horizontal"
-    tools:context=".PermissionActivity">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:gravity="center"
-        android:layout_above="@+id/current_location"
-        android:orientation="vertical">
+        android:layout_height="match_parent"
+        android:gravity="center_horizontal"
+        tools:context=".ui.permission.PermissionActivity">
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="25dp"
-            android:src="@drawable/ic_map_icon"/>
-
-        <TextView
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="25dp"
-            android:textAlignment="center"
-            android:fontFamily="@font/poppins_semibold"
-            android:textStyle="normal"
-            android:textSize="22sp"
-            android:textColor="#0f122f"
-            android:lineSpacingExtra="3sp"
-            android:text="Control is on your hand"
-            />
+            android:layout_alignParentTop="true"
+            android:gravity="center"
+            android:layout_above="@+id/current_location"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="25dp"
+                android:src="@drawable/ic_map_icon"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="25dp"
+                android:textAlignment="center"
+                android:fontFamily="@font/poppins_semibold"
+                android:textStyle="normal"
+                android:textSize="22sp"
+                android:textColor="#0f122f"
+                android:lineSpacingExtra="3sp"
+                android:text="Control is on your hand"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                android:layout_marginEnd="30dp"
+                android:layout_marginBottom="30dp"
+                android:fontFamily="@font/poppins_regular"
+                android:gravity="center_horizontal"
+                android:textColor="#767789"
+                android:textSize="13sp"
+                android:textStyle="normal"
+                android:text="To get great service your need to provide some permissions. You can always change them from setting" />
+
+        </LinearLayout>
 
         <TextView
-            android:layout_width="wrap_content"
+            android:id="@+id/current_location"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="30dp"
-            android:layout_marginEnd="30dp"
-            android:layout_marginBottom="30dp"
+            android:layout_above="@+id/another_location"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="25dp"
+            android:background="@drawable/after_button_bg"
             android:fontFamily="@font/poppins_regular"
             android:gravity="center_horizontal"
-            android:textColor="#767789"
-            android:textSize="13sp"
-            android:textStyle="normal"
-            android:text="To get great service your need to provide some permissions. You can always change them from setting" />
+            android:padding="18dp"
+            android:text="Use current location  "
+            android:textAlignment="center"
+            android:textColor="#ffffff"
+            android:textSize="15sp" />
 
-    </LinearLayout>
+        <TextView
+            android:id="@+id/another_location"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/bg"
+            android:layout_marginBottom="10dp"
+            android:fontFamily="@font/poppins_medium"
+            android:text="Select another location"
+            android:textAlignment="center"
+            android:textColor="#3b5998"
+            android:textSize="15sp"
+            android:textStyle="normal" />
 
-    <TextView
-        android:id="@+id/current_location"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/another_location"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginBottom="25dp"
-        android:background="@drawable/after_button_bg"
-        android:fontFamily="@font/poppins_regular"
-        android:gravity="center_horizontal"
-        android:padding="18dp"
-        android:text="Use current location  "
-        android:textAlignment="center"
-        android:textColor="#ffffff"
-        android:textSize="15sp" />
+        <ImageView
+            android:id="@+id/bg"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:background="@drawable/ic_dashboard_bg"
+            android:scaleType="fitXY" />
 
-    <TextView
-        android:id="@+id/another_location"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/bg"
-        android:layout_marginBottom="10dp"
-        android:fontFamily="@font/poppins_medium"
-        android:text="Select another location"
-        android:textAlignment="center"
-        android:textColor="#3b5998"
-        android:textSize="15sp"
-        android:textStyle="normal" />
+    </RelativeLayout>
 
-    <ImageView
-        android:id="@+id/bg"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:background="@drawable/ic_dashboard_bg"
-        android:scaleType="fitXY" />
-
-</RelativeLayout>
+</layout>
