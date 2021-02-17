@@ -30,18 +30,13 @@ import java.lang.reflect.Field
 import java.lang.reflect.Method
 
 
-class MainActivity : AppCompatActivity(), KodeinAware, GoogleApiClient.ConnectionCallbacks,
-    GoogleApiClient.OnConnectionFailedListener {
+class MainActivity : AppCompatActivity(), KodeinAware {
     private lateinit var mainBinding: ActivityMainBinding
     override val kodein by kodein()
 
     private val factory: MainViewModelFactory by instance()
     private lateinit var navController: NavController
     private lateinit var viewModel: MainViewModel
-    private var mInternetDialog: AlertDialog? = null
-    var mGoogleApiClient: GoogleApiClient? = null
-    var result: PendingResult<LocationSettingsResult>? = null
-    private var wifiManager: WifiManager? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -60,47 +55,12 @@ class MainActivity : AppCompatActivity(), KodeinAware, GoogleApiClient.Connectio
             }
         }
 
-        bindUI()
-
         mainBinding.bottomNavigation.setupWithNavController(navController)
     }
 
     override fun onStop() {
         super.onStop()
         finish()
-    }
-
-    private fun bindUI() {
-
-        wifiManager = applicationContext.getSystemService(WIFI_SERVICE) as WifiManager
-
-        viewModel.gps.observe(this, {
-            if (!it) {
-                mGoogleApiClient = GoogleApiClient.Builder(this)
-                    .addApi(LocationServices.API)
-                    .addConnectionCallbacks(this)
-                    .addOnConnectionFailedListener(this).build()
-                mGoogleApiClient?.connect()
-            } else {
-
-            }
-        })
-
-        viewModel.currentLocation.observe(this, {
-            Log.e("aaaaa", it)
-        })
-
-        viewModel.network.observe(this, { itt ->
-            if (!itt) {
-                mainBinding.noInternet.visibility = View.VISIBLE
-                showNoInternetDialog()
-            } else {
-                if (mInternetDialog != null) {
-                    mainBinding.noInternet.visibility = View.GONE
-                    mInternetDialog!!.dismiss()
-                }
-            }
-        })
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -110,111 +70,5 @@ class MainActivity : AppCompatActivity(), KodeinAware, GoogleApiClient.Connectio
 
     override fun onSupportNavigateUp(): Boolean {
         return navController.navigateUp() || super.onSupportNavigateUp()
-    }
-
-    private fun showNoInternetDialog() {
-        if (mInternetDialog != null && mInternetDialog!!.isShowing) {
-            return
-        }
-        val builder: AlertDialog.Builder = AlertDialog.Builder(this)
-        builder.setTitle("Internet Disabled!")
-        builder.setMessage("No active Internet connection found.")
-        builder.setPositiveButton(
-            "Turn On"
-        ) { _, _ ->
-            //val gpsOptionsIntent = Intent(Settings.ACTION_WIFI_SETTINGS)
-            //startActivityForResult(gpsOptionsIntent, WIFI_ENABLE_REQUEST)
-            setMobileDataEnabled()
-        }
-        mInternetDialog = builder.create()
-        mInternetDialog!!.show()
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        when (requestCode) {
-            GPS_ENABLE_REQUEST -> {
-                viewModel.gps.observe(this, {
-                    if (!it) {
-                        val manager: LocationManager =
-                            getSystemService(Context.LOCATION_SERVICE) as LocationManager
-                        if (!manager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-                            mGoogleApiClient = GoogleApiClient.Builder(this)
-                                .addApi(LocationServices.API)
-                                .addConnectionCallbacks(this)
-                                .addOnConnectionFailedListener(this).build()
-                            mGoogleApiClient?.connect()
-                        }
-                    } else {
-                        viewModel.network.observe(this@MainActivity, { itt ->
-                            if (!itt) {
-                                mainBinding.noInternet.visibility = View.VISIBLE
-                                showNoInternetDialog()
-                            } else {
-                                if (mInternetDialog != null) {
-                                    mainBinding.noInternet.visibility = View.GONE
-                                    mInternetDialog!!.dismiss()
-                                }
-                            }
-                        })
-                    }
-                })
-            }
-            WIFI_ENABLE_REQUEST -> {
-
-            }
-            else -> {
-                super.onActivityResult(requestCode, resultCode, data)
-            }
-        }
-    }
-
-    companion object {
-        private const val GPS_ENABLE_REQUEST = 0x1001
-        private const val WIFI_ENABLE_REQUEST = 0x1006
-    }
-
-    override fun onConnected(p0: Bundle?) {
-        val mLocationRequest = LocationRequest.create()
-        val builder: LocationSettingsRequest.Builder =
-            LocationSettingsRequest.Builder().addLocationRequest(mLocationRequest)
-        builder.setAlwaysShow(true);
-        result = LocationServices.SettingsApi.checkLocationSettings(
-            mGoogleApiClient,
-            builder.build()
-        )
-
-        result?.setResultCallback { result ->
-            val status: Status = result.status
-            when (status.statusCode) {
-                LocationSettingsStatusCodes.SUCCESS -> {
-
-                }
-                LocationSettingsStatusCodes.RESOLUTION_REQUIRED ->  // Location settings are not satisfied. But could be fixed by showing the user
-                    // a dialog.
-                    try { // Show the dialog by calling startResolutionForResult(),
-                        // and check the result in onActivityResult().
-                        status.startResolutionForResult(
-                            this@MainActivity,
-                            GPS_ENABLE_REQUEST
-                        )
-                    } catch (e: IntentSender.SendIntentException) { // Ignore the error.
-                    }
-                LocationSettingsStatusCodes.SETTINGS_CHANGE_UNAVAILABLE -> {
-                }
-            }
-        }
-    }
-
-    override fun onConnectionSuspended(p0: Int) {
-
-    }
-
-    override fun onConnectionFailed(p0: ConnectionResult) {
-
-    }
-
-    private fun setMobileDataEnabled() {
-        wifiManager?.isWifiEnabled = true
-
     }
 }

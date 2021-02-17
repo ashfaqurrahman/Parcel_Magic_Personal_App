@@ -8,7 +8,6 @@ import android.location.Location
 import android.os.Build
 import android.os.Bundle
 import android.os.Looper
-import android.util.Log
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
@@ -64,9 +63,6 @@ class LocationSetActivity : AppCompatActivity(), KodeinAware, CustomClickListene
             .findFragmentById(R.id.mapSearch) as SupportMapFragment
         mapFragment.getMapAsync(this)
 
-        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
-        mLocationRequest = LocationRequest()
-
         binding.search.setOnQueryTextListener(object : SearchView.OnQueryTextListener,
             androidx.appcompat.widget.SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String): Boolean {
@@ -102,6 +98,13 @@ class LocationSetActivity : AppCompatActivity(), KodeinAware, CustomClickListene
 
     }
 
+    override fun onResume() {
+        super.onResume()
+
+        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
+        mLocationRequest = LocationRequest()
+    }
+
     override fun onPause() {
         super.onPause()
 
@@ -124,7 +127,6 @@ class LocationSetActivity : AppCompatActivity(), KodeinAware, CustomClickListene
                     sb.append("input=$location")
                     sb.append("&key=AIzaSyB8gzYgvsy-1TufBYLYaD58EYDTWUZBWZQ")
                     sb.append("&components=country:bd")
-                    Log.e("cccccc", sb.toString())
                     list = viewModel.getLocations(sb.toString())
                     binding.loading.visibility = View.GONE
                     btnClose.visibility = View.VISIBLE

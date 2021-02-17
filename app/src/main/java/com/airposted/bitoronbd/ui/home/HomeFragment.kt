@@ -1,5 +1,6 @@
 package com.airposted.bitoronbd.ui.home
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,6 +11,7 @@ import androidx.navigation.Navigation
 import com.airposted.bitoronbd.R
 import com.airposted.bitoronbd.data.network.preferences.PreferenceProvider
 import com.airposted.bitoronbd.databinding.FragmentHomeBinding
+import com.airposted.bitoronbd.ui.location_set.LocationSetActivity
 import com.airposted.bitoronbd.utils.Coroutines
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.x.kodein
@@ -43,11 +45,14 @@ class HomeFragment : Fragment(R.layout.fragment_home), KodeinAware {
 
         homeBinding.address.text = PreferenceProvider(requireActivity()).getSharedPreferences("currentLocation")
 
+        homeBinding.address.setOnClickListener {
+            startActivity(Intent(requireActivity(), LocationSetActivity::class.java))
+        }
+
         homeBinding.productBtn.setOnClickListener{
             Navigation.findNavController(requireView()).navigate(
                 R.id.productFragment
             )
         }
-
     }
 }

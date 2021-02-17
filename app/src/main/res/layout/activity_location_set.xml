@@ -17,10 +17,17 @@
         android:id="@+id/rootLayout"
         android:background="@color/white">
 
+        <fragment
+            android:id="@+id/mapSearch"
+            android:name="com.google.android.gms.maps.SupportMapFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/edit_layout">
+            android:id="@+id/edit_layout"
+            android:background="@color/white">
 
             <ImageView
                 android:id="@+id/back"
@@ -85,30 +92,20 @@
 
         </RelativeLayout>
 
-        <fragment
-            android:id="@+id/mapSearch"
-            android:name="com.google.android.gms.maps.SupportMapFragment"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@+id/edit_layout"/>
-
         <ImageView
             android:id="@+id/marker"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_marker"
-            android:layout_below="@+id/edit_layout"
-            android:layout_above="@id/receiver_address"
             android:layout_centerInParent="true"/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerview"
             tools:listitem="@layout/item_location_search"
-            android:adapter="@{myAdapter}"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@id/edit_layout"
-            android:layout_above="@id/receiver_address"/>
+            android:layout_above="@id/set_location"/>
 
         <ImageView
             android:id="@+id/my_location"
@@ -120,10 +117,10 @@
             android:layout_marginBottom="20dp"
             android:layout_marginEnd="20dp"
             android:layout_alignParentEnd="true"
-            android:layout_above="@id/receiver_address"/>
+            android:layout_above="@id/set_location"/>
 
         <LinearLayout
-            android:id="@+id/receiver_address"
+            android:id="@+id/set_location"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="15dp"
@@ -138,7 +135,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/poppins_medium"
-                android:text="Search Address"
+                android:text="Set Location"
                 android:textAlignment="center"
                 android:textColor="#ffffff"
                 android:textSize="16sp"
