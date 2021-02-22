@@ -1,19 +1,27 @@
 package com.airposted.bitoronbd.ui.product
 
 import android.Manifest
+import android.app.Dialog
 import android.content.pm.PackageManager
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.location.Geocoder
 import android.location.Location
 import android.os.Build
 import android.os.Bundle
 import android.os.Looper
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
+import android.widget.ImageView
+import android.widget.LinearLayout
+import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentTransaction
+import androidx.navigation.Navigation
 import com.airposted.bitoronbd.R
 import com.airposted.bitoronbd.databinding.FragmentProductBinding
+import com.airposted.bitoronbd.ui.location_set.LocationSetFragment
 import com.google.android.gms.location.*
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -67,6 +75,32 @@ class ProductFragment : Fragment(), OnMapReadyCallback, KodeinAware {
                     .target(LatLng(mLastLocation.latitude, mLastLocation.longitude))
                     .zoom(18f).build()
             mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition))
+        }
+
+        productBinding.addressLayout.setOnClickListener {
+            /*val dialogs = Dialog(requireActivity())
+            dialogs.requestWindowFeature(Window.FEATURE_NO_TITLE)
+            dialogs.setContentView(R.layout.receiver_address)
+            dialogs.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+            dialogs.window?.setLayout(
+                ViewGroup.LayoutParams.MATCH_PARENT,  //w
+                ViewGroup.LayoutParams.MATCH_PARENT //h
+            )
+
+            dialogs.window?.attributes?.windowAnimations = R.style.DialogAnimation_2
+
+            dialogs.findViewById<TextView>(R.id.toolbar_title).text = "Where Are you sending?"
+            dialogs.findViewById<ImageView>(R.id.backImage).setOnClickListener {
+                dialogs.dismiss()
+            }
+
+            dialogs.setCancelable(true)
+
+            dialogs.show()*/
+
+            Navigation.findNavController(requireView()).navigate(
+                R.id.receiverAddressFragment
+            )
         }
 
     }

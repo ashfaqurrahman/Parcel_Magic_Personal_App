@@ -48,7 +48,7 @@ class MainActivity : AppCompatActivity(), KodeinAware {
         navController = navHostFragment.findNavController()
 
         navController.addOnDestinationChangedListener { _, destination, _ ->
-            if (destination.id == R.id.productFragment) {
+            if (destination.id == R.id.productFragment || destination.id == R.id.locationSetFragment || destination.id == R.id.receiverAddressFragment) {
                 mainBinding.bottomNavigation.visibility = View.GONE
             } else {
                 mainBinding.bottomNavigation.visibility = View.VISIBLE

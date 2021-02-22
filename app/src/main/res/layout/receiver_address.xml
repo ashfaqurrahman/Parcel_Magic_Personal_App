@@ -4,9 +4,47 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@color/white">
 
-    <include layout="@layout/custom_toolbar" />
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            style="@style/top_bar_layout"
+            android:orientation="horizontal"
+            android:id="@+id/top_layout"
+            tools:ignore="RelativeOverlap"
+            android:background="@color/top_bar_color">
+
+            <ImageView
+                android:id="@+id/backImage"
+                android:layout_width="25dp"
+                android:padding="5dp"
+                android:layout_marginStart="15dp"
+                android:layout_centerVertical="true"
+                android:layout_height="25dp"
+                app:srcCompat="@drawable/ic_back_icon"/>
+
+            <TextView
+                android:id="@+id/toolbar_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@+id/backImage"
+                android:layout_marginStart="25dp"
+                android:layout_centerVertical="true"
+                android:fontFamily="@font/poppins_medium"
+                android:textStyle="normal"
+                android:textSize="20sp"
+                android:textColor="#111329"
+                android:lineSpacingExtra="5sp"
+                tools:text="Mobile Number"
+                />
+
+        </RelativeLayout>
+
+    </androidx.cardview.widget.CardView>
 
     <RelativeLayout
         android:layout_marginStart="15dp"
@@ -84,7 +122,7 @@
             android:textSize="19sp"
             android:textStyle="normal"
             app:drawableStartCompat="@drawable/ic_current_location_icon"
-            tools:text="Set on map" />
+            android:text="Set on map" />
 
     </LinearLayout>
 

@@ -22,10 +22,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.BitoronBD">
-        <activity android:name=".ui.permission.PermissionActivity"></activity>
-        <activity
-            android:name=".ui.location_set.LocationSetActivity"
-            android:theme="@style/Theme.BitoronBD1" />
+        <activity android:name=".ui.permission.PermissionActivity"/>
         <activity android:name=".ui.WebviewActivity" />
         <activity android:name=".ui.auth.SignInSignUpActivity" />
         <activity android:name=".ui.IntroActivity" />
