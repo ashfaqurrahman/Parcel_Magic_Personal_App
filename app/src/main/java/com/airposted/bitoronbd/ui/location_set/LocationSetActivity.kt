@@ -4,81 +4,77 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.location.*
+import android.location.LocationListener
+import android.os.Build
 import android.os.Bundle
+import android.os.Looper
 import android.provider.Settings
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import android.view.animation.Animation
-import android.view.animation.AnimationUtils
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.SearchView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.fragment.app.Fragment
+import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.GridLayoutManager
-import com.airposted.bitoronbd.R
-import com.airposted.bitoronbd.data.network.preferences.PreferenceProvider
-import com.airposted.bitoronbd.databinding.FragmentLocationSetBinding
+import com.airposted.bitoronbd.databinding.ActivityLocationSetBinding
 import com.airposted.bitoronbd.model.Prediction
 import com.airposted.bitoronbd.model.SearchLocation
-import com.airposted.bitoronbd.ui.main.MainActivity
-import com.airposted.bitoronbd.utils.ApiException
-import com.airposted.bitoronbd.utils.NoInternetException
-import com.airposted.bitoronbd.utils.hideKeyboard
-import com.airposted.bitoronbd.utils.snackbar
-import com.google.android.gms.common.api.ResolvableApiException
-import com.google.android.gms.location.LocationRequest
-import com.google.android.gms.location.LocationServices
-import com.google.android.gms.location.LocationSettingsRequest
-import com.google.android.gms.location.LocationSettingsStatusCodes
+import com.airposted.bitoronbd.utils.*
+import com.google.android.gms.location.*
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
+import kotlinx.coroutines.launch
+import org.kodein.di.KodeinAware
+import com.airposted.bitoronbd.R
+import com.airposted.bitoronbd.data.network.preferences.PreferenceProvider
+import com.airposted.bitoronbd.ui.main.MainActivity
+import com.google.android.gms.common.api.ResolvableApiException
 import com.google.maps.android.PolyUtil
 import com.nabinbhandari.android.permissions.PermissionHandler
 import com.nabinbhandari.android.permissions.Permissions
-import kotlinx.coroutines.launch
-import org.kodein.di.KodeinAware
-import org.kodein.di.android.x.kodein
+import org.kodein.di.android.kodein
 import org.kodein.di.generic.instance
 import java.util.*
 
-class LocationSetFragment : Fragment(), KodeinAware, CustomClickListener,
+
+class LocationSetActivity : AppCompatActivity(), KodeinAware, CustomClickListener,
     OnMapReadyCallback, LocationListener {
 
     override val kodein by kodein()
     private val factory: LocationSetViewModelFactory by instance()
-    private lateinit var binding: FragmentLocationSetBinding
+    private lateinit var binding: ActivityLocationSetBinding
     private lateinit var viewModel: LocationSetViewModel
     private lateinit var list: SearchLocation
     private lateinit var mMap: GoogleMap
+    private lateinit var builder: LocationSettingsRequest.Builder
+    private lateinit var locationManager: LocationManager
     private var latitude = ""
     private var longitude = ""
     private var locationName = ""
-    private lateinit var locationManager: LocationManager
-    private lateinit var builder: LocationSettingsRequest.Builder
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        binding = FragmentLocationSetBinding.inflate(inflater, container, false)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
 
-
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_location_set)
         viewModel = ViewModelProvider(this, factory).get(LocationSetViewModel::class.java)
 
-        val mapFragment = childFragmentManager
-            .findFragmentById(R.id.mapSearch1) as SupportMapFragment
+        val mapFragment = supportFragmentManager
+            .findFragmentById(R.id.mapSearch) as SupportMapFragment
         mapFragment.getMapAsync(this)
+
+
+        //overridePendingTransition(R.anim.slide_in_left, R.anim.slide_in_right)
 
         binding.search.setOnQueryTextListener(object : SearchView.OnQueryTextListener,
             androidx.appcompat.widget.SearchView.OnQueryTextListener {
@@ -94,25 +90,60 @@ class LocationSetFragment : Fragment(), KodeinAware, CustomClickListener,
         })
 
         /*val bounce: Animation = AnimationUtils.loadAnimation(
-            requireActivity(),
+            baseContext,
             R.anim.bounce
         )
+
         binding.marker.startAnimation(bounce)*/
 
+        binding.setLocation.isEnabled = false
+
+        binding.setLocation.setOnClickListener {
+
+            val latLng = LatLng(latitude.toDouble(), longitude.toDouble())
+            val points: MutableList<LatLng> = ArrayList()
+            points.add(LatLng(23.843974, 90.370339))
+            points.add(LatLng(23.749419, 90.354546))
+            points.add(LatLng(23.752248, 90.499085))
+            points.add(LatLng(23.861558, 90.469903))
+
+            //val polygon: Polygon = mMap.addPolygon(PolygonOptions().addAll(points))
+            val contain = PolyUtil.containsLocation(latLng, points, true)
+
+            if (contain) {
+                PreferenceProvider(this).saveSharedPreferences(
+                    "currentLocation",
+                    locationName
+                )
+                PreferenceProvider(this).saveSharedPreferences("latitude", latitude)
+                PreferenceProvider(this).saveSharedPreferences("longitude", longitude)
+                val intent = Intent(this, MainActivity::class.java)
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                startActivity(intent)
+            } else {
+                binding.rootLayout.snackbar("Sorry!! We are currently not providing our service to this area")
+            }
+        }
+
+        val editText =
+            binding.search.findViewById(androidx.appcompat.R.id.search_src_text) as EditText
+        editText.setHintTextColor(resources.getColor(R.color.gray))
+        editText.setTextColor(resources.getColor(R.color.black))
+
         binding.back.setOnClickListener {
-            requireActivity().onBackPressed()
+            onBackPressed()
         }
 
         binding.myLocation.setOnClickListener {
 
             Permissions.check(
-                requireActivity(),
+                this,
                 Manifest.permission.ACCESS_FINE_LOCATION,
                 null,
                 object : PermissionHandler() {
                     override fun onGranted() {
 
-                        val manager:LocationManager = requireActivity().getSystemService(Context.LOCATION_SERVICE) as LocationManager
+                        val manager:LocationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
                         if (manager.isProviderEnabled(LocationManager.GPS_PROVIDER)){
                             getLocation()
                         } else {
@@ -124,7 +155,7 @@ class LocationSetFragment : Fragment(), KodeinAware, CustomClickListener,
                             builder = LocationSettingsRequest.Builder()
                                 .addLocationRequest(request)
 
-                            val result = LocationServices.getSettingsClient(requireActivity())
+                            val result = LocationServices.getSettingsClient(this@LocationSetActivity)
                                 .checkLocationSettings(
                                     builder.build()
                                 )
@@ -139,7 +170,7 @@ class LocationSetFragment : Fragment(), KodeinAware, CustomClickListener,
                                                 val resolvableApiException =
                                                     e as ResolvableApiException
                                                 resolvableApiException.startResolutionForResult(
-                                                    requireActivity(),
+                                                    this@LocationSetActivity,
                                                     REQUEST_CHANGE_CODE
                                                 )
                                             } catch (ex: ClassCastException) {
@@ -176,48 +207,13 @@ class LocationSetFragment : Fragment(), KodeinAware, CustomClickListener,
                         return super.onBlocked(context, blockedList)
                     }
                 })
+            /*val cameraPosition =
+                CameraPosition.Builder()
+                    .target(LatLng(mLastLocation.latitude, mLastLocation.longitude))
+                    .zoom(18f).build()
+            mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition))*/
         }
 
-        val editText =
-            binding.search.findViewById(androidx.appcompat.R.id.search_src_text) as EditText
-        editText.setHintTextColor(resources.getColor(R.color.gray))
-        editText.setTextColor(resources.getColor(R.color.black))
-
-        binding.setLocation.isEnabled = false
-
-        binding.setLocation.setOnClickListener {
-
-            val latLng = LatLng(latitude.toDouble(), longitude.toDouble())
-            val points: MutableList<LatLng> = ArrayList()
-            points.add(LatLng(23.843974, 90.370339))
-            points.add(LatLng(23.749419, 90.354546))
-            points.add(LatLng(23.752248, 90.499085))
-            points.add(LatLng(23.861558, 90.469903))
-
-            //val polygon: Polygon = mMap.addPolygon(PolygonOptions().addAll(points))
-            val contain = PolyUtil.containsLocation(latLng, points, true)
-
-            if (contain) {
-                PreferenceProvider(requireActivity()).saveSharedPreferences(
-                    "currentLocation",
-                    locationName
-                )
-                PreferenceProvider(requireActivity()).saveSharedPreferences("latitude", latitude)
-                PreferenceProvider(requireActivity()).saveSharedPreferences("longitude", longitude)
-                val intent = Intent(requireActivity(), MainActivity::class.java)
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
-                startActivity(intent)
-            } else {
-                binding.rootLayout.snackbar("Sorry!! We are currently not providing our service to this area")
-            }
-        }
-
-        return binding.root
-    }
-
-    override fun onResume() {
-        super.onResume()
-        //getLocation()
     }
 
     private fun location(location: String) {
@@ -226,6 +222,7 @@ class LocationSetFragment : Fragment(), KodeinAware, CustomClickListener,
             btnClose.visibility = View.GONE
             binding.loading.visibility = View.VISIBLE
             binding.recyclerview.visibility = View.VISIBLE
+            //binding.progressBar.show()
             lifecycleScope.launch {
                 try {
                     val sb =
@@ -239,38 +236,44 @@ class LocationSetFragment : Fragment(), KodeinAware, CustomClickListener,
                     if (list.predictions.isNotEmpty()) {
                         val myRecyclerViewAdapter = MyRecyclerViewAdapter(
                             list.predictions,
-                            this@LocationSetFragment,
+                            this@LocationSetActivity,
                         )
                         binding.recyclerview.layoutManager = GridLayoutManager(
-                            requireActivity(),
+                            this@LocationSetActivity,
                             1
                         )
+                        //binding.recyclerview.addItemDecoration(GridSpacingItemDecoration(3, dpToPx(4), true))
                         binding.recyclerview.itemAnimator = DefaultItemAnimator()
                         binding.recyclerview.adapter = myRecyclerViewAdapter
                     } else {
                         binding.recyclerview.visibility = View.GONE
                     }
+
+                    //binding.progressBar.hide()
                 } catch (e: ApiException) {
+                    //binding.progressBar.hide()
                     binding.rootLayout.snackbar(e.message!!)
                     e.printStackTrace()
                 } catch (e: NoInternetException) {
+                    //binding.progressBar.hide()
                     binding.rootLayout.snackbar(e.message!!)
                     e.printStackTrace()
                 }
             }
         } else {
+            //binding.progressBar.hide()
             binding.recyclerview.visibility = View.GONE
         }
     }
 
     private fun getLatLngFromAddress(address: String): LatLng? {
-        val geocoder = Geocoder(requireActivity())
+        val geocoder = Geocoder(this)
         val addressList: List<Address>?
         return try {
             addressList = geocoder.getFromLocationName(address, 1)
             if (addressList != null) {
-                val singleAddress = addressList[0]
-                LatLng(singleAddress.latitude, singleAddress.longitude)
+                val singleaddress = addressList[0]
+                LatLng(singleaddress.latitude, singleaddress.longitude)
             } else {
                 null
             }
@@ -281,10 +284,10 @@ class LocationSetFragment : Fragment(), KodeinAware, CustomClickListener,
     }
 
     private fun getAddressFromLatLng(latLng: LatLng): Address? {
-        val geoCoder = Geocoder(requireActivity())
+        val geocoder = Geocoder(this)
         val addresses: List<Address>?
         return try {
-            addresses = geoCoder.getFromLocation(latLng.latitude, latLng.longitude, 5)
+            addresses = geocoder.getFromLocation(latLng.latitude, latLng.longitude, 5)
             addresses?.get(0)
         } catch (e: Exception) {
             e.printStackTrace()
@@ -292,10 +295,26 @@ class LocationSetFragment : Fragment(), KodeinAware, CustomClickListener,
         }
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == REQUEST_FINE_LOCATION_PERMISSIONS_REQUEST_CODE) {
+            val manager: LocationManager =
+                this.getSystemService(Context.LOCATION_SERVICE) as LocationManager
+            if (manager.isProviderEnabled(LocationManager.GPS_PROVIDER) || manager.isProviderEnabled(
+                    LocationManager.NETWORK_PROVIDER
+                )) {
+                getLocation()
+            }
+        }
+    }
+
     override fun onItemClick(location: Prediction) {
-        hideKeyboard(requireActivity())
+        hideKeyboard(this)
+//        binding.editTextTextLocation.setText(location.description)
         binding.recyclerview.visibility = View.GONE
+
         val latLong = getLatLngFromAddress(location.description)
+
         val cameraPosition =
             CameraPosition.Builder().target(latLong)
                 .zoom(16f).build()
@@ -304,6 +323,21 @@ class LocationSetFragment : Fragment(), KodeinAware, CustomClickListener,
 
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
+
+        if (ActivityCompat.checkSelfPermission(
+                this,
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                this,
+                Manifest.permission.ACCESS_COARSE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+
+            return
+        }
+        mMap.isMyLocationEnabled = true
+
+        mMap.uiSettings.isMyLocationButtonEnabled = false
 
         mMap.setOnCameraIdleListener {
             val center = mMap.cameraPosition.target
@@ -326,7 +360,7 @@ class LocationSetFragment : Fragment(), KodeinAware, CustomClickListener,
                 latitude = center.latitude.toString()
                 longitude = center.longitude.toString()
                 binding.setLocation.background = ContextCompat.getDrawable(
-                    requireActivity(),
+                    this,
                     R.drawable.after_button_bg
                 )
                 binding.setLocation.isEnabled = true
@@ -343,7 +377,7 @@ class LocationSetFragment : Fragment(), KodeinAware, CustomClickListener,
                     //binding.editTextTextLocation.setText(getString(R.string.searching))
                     //productBinding.receiverAddress.visibility = View.GONE
                     binding.setLocation.background = ContextCompat.getDrawable(
-                        requireActivity(),
+                        this,
                         R.drawable.before_button_bg
                     )
                     binding.setLocation.isEnabled = false
@@ -352,29 +386,23 @@ class LocationSetFragment : Fragment(), KodeinAware, CustomClickListener,
         }
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == REQUEST_FINE_LOCATION_PERMISSIONS_REQUEST_CODE) {
-            val manager: LocationManager =
-                requireActivity().getSystemService(Context.LOCATION_SERVICE) as LocationManager
-            if (manager.isProviderEnabled(LocationManager.GPS_PROVIDER) || manager.isProviderEnabled(
-                    LocationManager.NETWORK_PROVIDER
-                )) {
-                getLocation()
-            }
+    override fun onLocationChanged(location: Location) {
+        try {
+            val cameraPosition =
+                CameraPosition.Builder()
+                    .target(LatLng(location.latitude, location.longitude))
+                    .zoom(16f).build()
+            mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition))
+        } catch (e: Exception) {
+            e.printStackTrace()
         }
-    }
-
-    companion object {
-        private const val REQUEST_FINE_LOCATION_PERMISSIONS_REQUEST_CODE = 34
-        private const val REQUEST_CHANGE_CODE = 35
     }
 
     @SuppressLint("MissingPermission")
     private fun getLocation() {
         try {
             locationManager =
-                requireActivity().getSystemService(AppCompatActivity.LOCATION_SERVICE) as LocationManager
+                this.getSystemService(LOCATION_SERVICE) as LocationManager
             locationManager.requestLocationUpdates(
                 LocationManager.GPS_PROVIDER,
                 0,
@@ -392,21 +420,14 @@ class LocationSetFragment : Fragment(), KodeinAware, CustomClickListener,
         }
     }
 
-    override fun onLocationChanged(location: Location) {
-        try {
-            val cameraPosition =
-                CameraPosition.Builder()
-                    .target(LatLng(location.latitude, location.longitude))
-                    .zoom(16f).build()
-            mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition))
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
-    }
-
     override fun onStatusChanged(provider: String, status: Int, extras: Bundle) {}
 
     override fun onProviderEnabled(provider: String) {}
 
     override fun onProviderDisabled(provider: String) {}
+
+    companion object {
+        private const val REQUEST_FINE_LOCATION_PERMISSIONS_REQUEST_CODE = 34
+        private const val REQUEST_CHANGE_CODE = 35
+    }
 }

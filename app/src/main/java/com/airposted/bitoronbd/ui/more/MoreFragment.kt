@@ -24,6 +24,7 @@ import com.airposted.bitoronbd.R
 import com.airposted.bitoronbd.databinding.FragmentMoreBinding
 import com.airposted.bitoronbd.utils.*
 import com.bumptech.glide.Glide
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.theartofdev.edmodo.cropper.CropImage
 import com.theartofdev.edmodo.cropper.CropImageView
 import kotlinx.coroutines.launch
@@ -62,6 +63,7 @@ class MoreFragment : Fragment(), KodeinAware {
 
     private fun bindUI() = Coroutines.main {
 
+        requireActivity().findViewById<BottomNavigationView>(R.id.bottom_navigation).menu.getItem(2).isChecked = true
         Glide.with(requireActivity()).load(
             PersistentUser.getInstance().getUserImage(requireActivity())
         ).placeholder(R.drawable.sample_pro_pic).error(

@@ -10,7 +10,7 @@
             android:icon="@drawable/ic_parcel_icon"
             android:title="@string/my_parcel"/>
         <item
-            android:id="@+id/settingFragment"
+            android:id="@+id/moreFragment"
             android:icon="@drawable/ic_settings_icon"
             android:title="@string/more"/>
     </group>

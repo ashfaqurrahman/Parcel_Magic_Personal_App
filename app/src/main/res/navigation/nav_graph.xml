@@ -10,96 +10,56 @@
         android:name="com.airposted.bitoronbd.ui.home.HomeFragment"
         android:label="Home"
         tools:layout="@layout/fragment_home">
+
         <action
-            android:id="@+id/action_homeFragment_to_myParcelFragment"
-            app:destination="@id/myParcelFragment"
-            app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left"
-            app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right" />
-    </fragment>
-    <fragment
-        android:id="@+id/myParcelFragment"
-        android:name="com.airposted.bitoronbd.ui.MyParcelFragment"
-        android:label="Login"
-        tools:layout="@layout/fragment_my_parcel">
+            android:id="@+id/action_homeFragment_to_productFragment"
+            app:destination="@id/productFragment"
+            app:popUpTo="@id/homeFragment"/>
+
         <action
-            android:id="@+id/action_myParcelFragment_to_settingFragment"
-            app:destination="@id/settingFragment"
-            app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left"
-            app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right" />
-    </fragment>
-    <fragment
-        android:id="@+id/settingFragment"
-        android:name="com.airposted.bitoronbd.ui.more.MoreFragment"
-        tools:layout="@layout/fragment_more" >
-        <argument
-            android:name="username"
-            app:argType="string" />
-        <argument
-            android:name="password"
-            app:argType="string" />
-        <action
-            android:id="@+id/action_settingFragment_to_homeFragment"
-            app:destination="@id/homeFragment"
-            app:popUpTo="@id/homeFragment"
-            app:popUpToInclusive="true" />
+            android:id="@+id/action_homeFragment_to_locationSetFragment"
+            app:destination="@id/locationSetFragment"
+            app:popUpTo="@id/homeFragment" />
+
     </fragment>
 
     <fragment
-        android:id="@+id/productFragment"
-        android:name="com.airposted.bitoronbd.ui.product.ProductFragment"
-        tools:layout="@layout/fragment_product" >
-        <action
-            android:id="@+id/action_homeFragment_to_productFragment"
-            app:destination="@id/homeFragment"
-            app:popUpTo="@id/homeFragment"
-            app:popUpToInclusive="true" />
+        android:id="@+id/myParcelFragment"
+        android:name="com.airposted.bitoronbd.ui.MyParcelFragment"
+        tools:layout="@layout/fragment_my_parcel">
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/moreFragment"
+        android:name="com.airposted.bitoronbd.ui.more.MoreFragment"
+        tools:layout="@layout/fragment_more" >
+
     </fragment>
 
     <fragment
         android:id="@+id/locationSetFragment"
         android:name="com.airposted.bitoronbd.ui.location_set.LocationSetFragment"
         tools:layout="@layout/fragment_location_set" >
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/productFragment"
+        android:name="com.airposted.bitoronbd.ui.product.ProductFragment"
+        tools:layout="@layout/fragment_product" >
+
         <action
-            android:id="@+id/action_homeFragment_to_locationSetFragment"
-            app:destination="@id/homeFragment"
-            app:popUpTo="@id/homeFragment"
-            app:popUpToInclusive="true" />
+            android:id="@+id/action_productFragment_to_receiverAddressFragment"
+            app:destination="@id/receiverAddressFragment"
+            app:popUpTo="@id/productFragment"/>
+
     </fragment>
 
     <fragment
         android:id="@+id/receiverAddressFragment"
         android:name="com.airposted.bitoronbd.ui.product.ReceiverAddressFragment"
         tools:layout="@layout/fragment_receiver_address" >
-        <action
-            android:id="@+id/action_homeFragment_to_receiverAddressFragment"
-            app:destination="@id/productFragment"
-            app:popUpTo="@id/productFragment"
-            app:popUpToInclusive="true" />
+
     </fragment>
-    <!--<fragment
-        android:id="@+id/settingsFragment"
-        android:name="com.codinginflow.navigationcomponenttutorial.SettingsFragment"
-        android:label="Settings"
-        tools:layout="@layout/fragment_settings" />
-    <fragment
-        android:id="@+id/termsFragment"
-        android:name="com.codinginflow.navigationcomponenttutorial.TermsFragment"
-        android:label="Terms &amp; Conditions"
-        tools:layout="@layout/fragment_terms" />
-    <action
-        android:id="@+id/action_global_termsFragment"
-        app:destination="@id/termsFragment"
-        app:enterAnim="@anim/slide_in_top"
-        app:exitAnim="@anim/slide_out_bottom"
-        app:popEnterAnim="@anim/slide_in_bottom"
-        app:popExitAnim="@anim/slide_out_top" />
-    <fragment
-        android:id="@+id/searchFragment"
-        android:name="com.codinginflow.navigationcomponenttutorial.SearchFragment"
-        android:label="Search"
-        tools:layout="@layout/fragment_search" />-->
 </navigation>

@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="myAdapter"
+            type="com.airposted.bitoronbd.ui.location_set.MyRecyclerViewAdapter" />
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.location_set.LocationSetActivity"
+        android:id="@+id/rootLayout"
+        android:background="@color/white">
+
+        <fragment
+            android:id="@+id/mapSearch"
+            android:name="com.google.android.gms.maps.SupportMapFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/edit_layout"
+            android:background="@color/white">
+
+            <ImageView
+                android:id="@+id/back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:layout_marginStart="5dp"
+                android:src="@drawable/ic_back_icon"
+                android:layout_centerVertical="true"
+                android:layout_alignParentStart="true"/>
+
+            <RelativeLayout
+                android:layout_toEndOf="@+id/back"
+                android:layout_alignParentEnd="true"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="15dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="5dp"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="@drawable/edittext_bg_search"
+                android:id="@+id/edit_layout1">
+
+                <androidx.appcompat.widget.SearchView
+                    android:id="@+id/search"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text"
+                    android:layout_toStartOf="@+id/loading"
+                    app:closeIcon="@drawable/ic_close_red"
+                    app:searchIcon="@null"
+                    app:iconifiedByDefault="false"
+                    app:queryHint="Search Here"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    android:fontFamily="@font/poppins_regular"
+                    app:queryBackground="@null"
+                    android:textColorHint="@color/black"
+                    android:textColor="@color/black"/>
+
+                <com.airbnb.lottie.LottieAnimationView
+                    android:id="@+id/loading"
+                    android:layout_width="50dp"
+                    android:layout_alignParentEnd="true"
+                    app:lottie_rawRes="@raw/loading"
+                    android:layout_height="match_parent"
+                    android:visibility="gone"
+                    app:lottie_loop="true"
+                    app:lottie_autoPlay="true"/>
+
+                <!--<ImageView
+                    android:id="@+id/current_location"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_current_location_icon"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentEnd="true"/>-->
+
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+        <ImageView
+            android:id="@+id/marker"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_marker"
+            android:layout_centerInParent="true"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerview"
+            tools:listitem="@layout/item_location_search"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/edit_layout"
+            android:layout_above="@id/set_location"/>
+
+        <ImageView
+            android:id="@+id/my_location"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:background="@drawable/circle_solid_blue"
+            android:src="@drawable/ic_current_location_icon"
+            android:layout_marginBottom="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_alignParentEnd="true"
+            android:layout_above="@id/set_location"/>
+
+        <LinearLayout
+            android:id="@+id/set_location"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginEnd="15dp"
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/before_button_bg"
+            android:orientation="horizontal"
+            android:padding="12dp"
+            android:layout_alignParentBottom="true">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_medium"
+                android:text="Set Location"
+                android:textAlignment="center"
+                android:textColor="#ffffff"
+                android:textSize="16sp"
+                android:textStyle="normal" />
+
+        </LinearLayout>
+
+        <ProgressBar
+            android:id="@+id/progress_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:visibility="gone" />
+
+    </RelativeLayout>
+
+</layout>

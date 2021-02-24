@@ -1,27 +1,28 @@
 package com.airposted.bitoronbd.ui.product
 
 import android.Manifest
-import android.app.Dialog
+import android.annotation.SuppressLint
+import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import android.location.Geocoder
 import android.location.Location
-import android.os.Build
+import android.location.LocationListener
+import android.location.LocationManager
 import android.os.Bundle
-import android.os.Looper
+import android.provider.Settings
 import android.view.*
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentTransaction
-import androidx.navigation.Navigation
 import com.airposted.bitoronbd.R
+import com.airposted.bitoronbd.data.network.preferences.PreferenceProvider
 import com.airposted.bitoronbd.databinding.FragmentProductBinding
-import com.airposted.bitoronbd.ui.location_set.LocationSetFragment
+import com.airposted.bitoronbd.ui.main.CommunicatorFragmentInterface
+import com.airposted.bitoronbd.ui.main.MainActivity
+import com.airposted.bitoronbd.utils.snackbar
+import com.google.android.gms.common.api.ResolvableApiException
 import com.google.android.gms.location.*
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -30,18 +31,23 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.*
 import com.google.maps.android.PolyUtil
+import com.nabinbhandari.android.permissions.PermissionHandler
+import com.nabinbhandari.android.permissions.Permissions
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.x.kodein
 import java.util.*
 
-class ProductFragment : Fragment(), OnMapReadyCallback, KodeinAware {
+class ProductFragment : Fragment(), OnMapReadyCallback, KodeinAware, LocationListener {
 
     private lateinit var mMap: GoogleMap
-    private lateinit var mLocationRequest: LocationRequest
-    private lateinit var mLastLocation: Location
-    private var mFusedLocationClient: FusedLocationProviderClient? = null
     private lateinit var productBinding: FragmentProductBinding
     override val kodein by kodein()
+    var myCommunicator: CommunicatorFragmentInterface? = null
+    private lateinit var builder: LocationSettingsRequest.Builder
+    private lateinit var locationManager: LocationManager
+
+    private var latitude = ""
+    private var longitude = ""
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -58,8 +64,9 @@ class ProductFragment : Fragment(), OnMapReadyCallback, KodeinAware {
     }
 
     private fun bindUI() {
-        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity())
-        mLocationRequest = LocationRequest()
+        myCommunicator = context as CommunicatorFragmentInterface
+
+        productBinding.receiverAddress.isEnabled = false
 
         val mapFragment =
             childFragmentManager.findFragmentById(R.id.mapProduct) as SupportMapFragment
@@ -70,11 +77,82 @@ class ProductFragment : Fragment(), OnMapReadyCallback, KodeinAware {
         }
 
         productBinding.myLocation.setOnClickListener {
-            val cameraPosition =
+            Permissions.check(
+                requireActivity(),
+                Manifest.permission.ACCESS_FINE_LOCATION,
+                null,
+                object : PermissionHandler() {
+                    override fun onGranted() {
+
+                        val manager: LocationManager = requireActivity().getSystemService(Context.LOCATION_SERVICE) as LocationManager
+                        if (manager.isProviderEnabled(LocationManager.GPS_PROVIDER)){
+                            getLocation()
+                        } else {
+                            val request = LocationRequest()
+                                .setFastestInterval(0)
+                                .setInterval(0)
+                                .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY)
+
+                            builder = LocationSettingsRequest.Builder()
+                                .addLocationRequest(request)
+
+                            val result = LocationServices.getSettingsClient(requireActivity())
+                                .checkLocationSettings(
+                                    builder.build()
+                                )
+
+                            result.addOnCompleteListener {
+                                try {
+                                    it.getResult(com.google.android.gms.common.api.ApiException::class.java)
+                                } catch (e: com.google.android.gms.common.api.ApiException) {
+                                    when (e.statusCode) {
+                                        LocationSettingsStatusCodes.RESOLUTION_REQUIRED -> {
+                                            try {
+                                                val resolvableApiException =
+                                                    e as ResolvableApiException
+                                                resolvableApiException.startResolutionForResult(
+                                                    requireActivity(),
+                                                    REQUEST_CHANGE_CODE
+                                                )
+                                            } catch (ex: ClassCastException) {
+
+                                            }
+                                        }
+                                        LocationSettingsStatusCodes.SETTINGS_CHANGE_UNAVAILABLE -> {
+                                            val intent = Intent().apply {
+                                                action = Settings.ACTION_LOCATION_SOURCE_SETTINGS
+                                            }
+                                            startActivityForResult(
+                                                intent,
+                                                REQUEST_FINE_LOCATION_PERMISSIONS_REQUEST_CODE
+                                            )
+                                        }
+                                    }
+                                }
+                            }
+                            getLocation()
+                        }
+                    }
+
+                    override fun onDenied(
+                        context: Context?,
+                        deniedPermissions: ArrayList<String>?
+                    ) {
+                        super.onDenied(context, deniedPermissions)
+                    }
+
+                    override fun onBlocked(
+                        context: Context?,
+                        blockedList: ArrayList<String>?
+                    ): Boolean {
+                        return super.onBlocked(context, blockedList)
+                    }
+                })
+            /*val cameraPosition =
                 CameraPosition.Builder()
                     .target(LatLng(mLastLocation.latitude, mLastLocation.longitude))
                     .zoom(18f).build()
-            mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition))
+            mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition))*/
         }
 
         productBinding.addressLayout.setOnClickListener {
@@ -98,108 +176,138 @@ class ProductFragment : Fragment(), OnMapReadyCallback, KodeinAware {
 
             dialogs.show()*/
 
-            Navigation.findNavController(requireView()).navigate(
-                R.id.receiverAddressFragment
-            )
+
+            myCommunicator?.addContentFragment(ReceiverAddressFragment(), true)
+
+            //findNavController().navigate(R.id.action_productFragment_to_receiverAddressFragment)
         }
 
-    }
+        productBinding.receiverAddress.setOnClickListener {
+            val latLng = LatLng(latitude.toDouble(), longitude.toDouble())
+            val points: MutableList<LatLng> = ArrayList()
+            points.add(LatLng(23.843974, 90.370339))
+            points.add(LatLng(23.749419, 90.354546))
+            points.add(LatLng(23.752248, 90.499085))
+            points.add(LatLng(23.861558, 90.469903))
 
-    override fun onPause() {
-        super.onPause()
+            //val polygon: Polygon = mMap.addPolygon(PolygonOptions().addAll(points))
+            val contain = PolyUtil.containsLocation(latLng, points, true)
 
-        if (mFusedLocationClient != null) {
-            mFusedLocationClient!!.removeLocationUpdates(mLocationCallback)
-        }
-    }
+            if (contain) {
 
-    private var mLocationCallback: LocationCallback = object : LocationCallback() {
-        override fun onLocationResult(locationResult: LocationResult) {
-            val locationList = locationResult.locations
-            if (locationList.size > 0) {
-                val location = locationList[locationList.size - 1]
-                mLastLocation = location
-
-                val latLng = LatLng(location.latitude, location.longitude)
-                val points: MutableList<LatLng> = ArrayList()
-                points.add(LatLng(23.843974, 90.370339))
-                points.add(LatLng(23.749419, 90.354546))
-                points.add(LatLng(23.752248, 90.499085))
-                points.add(LatLng(23.861558, 90.469903))
-
-                //val polygon: Polygon = mMap.addPolygon(PolygonOptions().addAll(points))
-                val contain = PolyUtil.containsLocation(latLng, points, true)
-
-                val cameraPosition =
-                    CameraPosition.Builder().target(LatLng(latLng.latitude, latLng.longitude))
-                        .zoom(16f).build()
-                mMap.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition))
-
-                mMap.setOnCameraIdleListener {
-                    val center = mMap.cameraPosition.target
-                    val geo = Geocoder(requireActivity(), Locale.getDefault())
-                    val addresses = geo.getFromLocation(center.latitude, center.longitude, 1)
-                    if (addresses.isEmpty()) {
-                        productBinding.address.text = getString(R.string.searching)
-                    } else {
-                        var locationString: String
-                        locationString = if (addresses[0].featureName == null) {
-                            ""
-                        } else {
-                            addresses[0].featureName
-                        }
-                        if (addresses[0].thoroughfare == null) {
-                            locationString += ""
-                        } else {
-                            locationString = locationString + ", " + addresses[0].thoroughfare
-                        }
-                        productBinding.address.text = locationString
-                    }
-                    productBinding.receiverAddress.visibility = View.VISIBLE
-                }
-
-                mMap.setOnCameraMoveStartedListener { reason ->
-                    when (reason) {
-                        OnCameraMoveStartedListener.REASON_GESTURE -> {
-                            productBinding.address.text = getString(R.string.searching)
-                            productBinding.receiverAddress.visibility = View.GONE
-                        }
-                    }
-                }
+            } else {
+                productBinding.rootLayout.snackbar("Sorry!! We are currently not providing our service to this area")
             }
         }
+
     }
+
+    override fun onLocationChanged(location: Location) {
+        try {
+            val cameraPosition =
+                CameraPosition.Builder()
+                    .target(LatLng(location.latitude, location.longitude))
+                    .zoom(16f).build()
+            mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition))
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
+    @SuppressLint("MissingPermission")
+    private fun getLocation() {
+        try {
+            locationManager =
+                requireActivity().getSystemService(AppCompatActivity.LOCATION_SERVICE) as LocationManager
+            locationManager.requestLocationUpdates(
+                LocationManager.GPS_PROVIDER,
+                0,
+                5f,
+                this
+            )
+            locationManager.requestLocationUpdates(
+                LocationManager.NETWORK_PROVIDER,
+                0,
+                5f,
+                this
+            )
+        } catch (e: java.lang.Exception) {
+            e.printStackTrace()
+        }
+    }
+
+    override fun onStatusChanged(provider: String, status: Int, extras: Bundle) {}
+
+    override fun onProviderEnabled(provider: String) {}
+
+    override fun onProviderDisabled(provider: String) {}
 
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
 
+        if (ActivityCompat.checkSelfPermission(
+                requireActivity(),
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                requireActivity(),
+                Manifest.permission.ACCESS_COARSE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+
+            return
+        }
         mMap.isMyLocationEnabled = true
 
         mMap.uiSettings.isMyLocationButtonEnabled = false
 
-        mLocationRequest.interval = 120000
-
-        mLocationRequest.fastestInterval = 120000
-        mLocationRequest.priority = LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (ContextCompat.checkSelfPermission(
+        mMap.setOnCameraIdleListener {
+            val center = mMap.cameraPosition.target
+            val geo = Geocoder(requireActivity(), Locale.getDefault())
+            val addresses = geo.getFromLocation(center.latitude, center.longitude, 1)
+            if (addresses.isEmpty()) {
+                //productBinding.address.text = getString(R.string.searching)
+            } else {
+                var locationString: String
+                locationString = if (addresses[0].featureName == null) {
+                    ""
+                } else {
+                    addresses[0].featureName
+                }
+                if (addresses[0].thoroughfare == null) {
+                    locationString += ""
+                } else {
+                    locationString = locationString + ", " + addresses[0].thoroughfare
+                }
+                latitude = center.latitude.toString()
+                longitude = center.longitude.toString()
+                productBinding.address.text = locationString
+                productBinding.receiverAddress.background = ContextCompat.getDrawable(
                     requireActivity(),
-                    Manifest.permission.ACCESS_FINE_LOCATION
+                    R.drawable.after_button_bg
                 )
-                == PackageManager.PERMISSION_GRANTED
-            ) {
-                mFusedLocationClient!!.requestLocationUpdates(
-                    mLocationRequest, mLocationCallback,
-                    Looper.myLooper()
-                )
+                productBinding.receiverAddress.isEnabled = true
             }
-        } else {
-            mFusedLocationClient!!.requestLocationUpdates(
-                mLocationRequest, mLocationCallback,
-                Looper.myLooper()
-            )
+            productBinding.receiverAddress.visibility = View.VISIBLE
         }
+
+        mMap.setOnCameraMoveStartedListener { reason ->
+            when (reason) {
+                OnCameraMoveStartedListener.REASON_GESTURE -> {
+                    productBinding.address.text = getString(R.string.searching)
+                    productBinding.receiverAddress.visibility = View.GONE
+                    productBinding.receiverAddress.background = ContextCompat.getDrawable(
+                        requireActivity(),
+                        R.drawable.before_button_bg
+                    )
+                    productBinding.receiverAddress.isEnabled = false
+                }
+            }
+        }
+    }
+
+    companion object {
+        private const val REQUEST_FINE_LOCATION_PERMISSIONS_REQUEST_CODE = 34
+        private const val REQUEST_CHANGE_CODE = 35
     }
 
 }

@@ -28,7 +28,7 @@ class Application : Application(), KodeinAware {
 //        bind() from singleton { AppDatabase(instance()) }
         bind() from singleton { PreferenceProvider(instance()) }
         bind() from singleton { UserRepository(instance()) }
-        bind() from singleton { HomeRepository(instance()) }
+        bind() from singleton { HomeRepository(instance(), MyApi(instance())) }
         bind() from singleton { MoreRepository(instance(), MyApi(instance())) }
         bind() from singleton { MainRepository(instance()) }
         bind() from singleton { LocationSetRepository(instance()) }

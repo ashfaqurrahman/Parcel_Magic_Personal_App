@@ -2,6 +2,7 @@ package com.airposted.bitoronbd.data.network
 
 import com.airposted.bitoronbd.data.network.responses.AuthResponse
 import com.airposted.bitoronbd.model.SearchLocation
+import com.airposted.bitoronbd.model.SettingModel
 import okhttp3.*
 import retrofit2.Response
 import retrofit2.Retrofit
@@ -51,6 +52,9 @@ interface MyApi {
 
     @GET
     suspend fun getPlacesNameList(@Url url: String): Response<SearchLocation>
+
+    @GET("app_settings")
+    suspend fun getSetting(): Response<SettingModel>
 
     companion object{
         operator fun invoke(
