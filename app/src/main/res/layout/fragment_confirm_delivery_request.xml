@@ -79,25 +79,210 @@
 
                     </RelativeLayout>
 
-                    <LinearLayout
+                    <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@drawable/button_bg"
                         android:padding="10dp"
+                        android:layout_marginTop="18dp"
                         android:orientation="horizontal">
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/poppins_medium"
+                            android:layout_alignParentStart="true"
+                            android:layout_centerVertical="true"
                             android:textStyle="normal"
                             android:textSize="16sp"
                             android:textColor="#0f122f"
                             android:lineSpacingExtra="21sp"
-                            tools:text="25 cm &amp; 01 kg"
+                            android:text="25 cm &amp; 01 kg"
                             />
 
-                    </LinearLayout>
+                    </RelativeLayout>
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="15dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                app:cardCornerRadius="8dp"
+                app:cardBackgroundColor="@color/white">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="20dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/poppins_semibold"
+                        android:textStyle="normal"
+                        android:textSize="14sp"
+                        android:textColor="#1a1662"
+                        android:lineSpacingExtra="47sp"
+                        android:text="Receiver Details"
+                        />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/poppins_regular"
+                            android:textStyle="normal"
+                            android:textSize="13sp"
+                            android:textColor="#8c8cb2"
+                            android:layout_alignParentStart="true"
+                            android:text="Name"
+                            />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/poppins_semibold"
+                            android:textStyle="normal"
+                            android:textSize="14sp"
+                            android:textColor="#1a1662"
+                            android:layout_alignParentEnd="true"
+                            android:text="Fahim Rana"
+                            />
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/poppins_regular"
+                            android:textStyle="normal"
+                            android:textSize="13sp"
+                            android:textColor="#8c8cb2"
+                            android:layout_alignParentStart="true"
+                            tools:text="Phone Number"
+                            />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/poppins_semibold"
+                            android:textStyle="normal"
+                            android:textSize="14sp"
+                            android:textColor="#1a1662"
+                            android:layout_alignParentEnd="true"
+                            android:text="0174 2618 399"
+                            />
+
+                    </RelativeLayout>
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="15dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                app:cardCornerRadius="8dp"
+                app:cardBackgroundColor="@color/white">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="20dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/poppins_semibold"
+                        android:textStyle="normal"
+                        android:textSize="14sp"
+                        android:textColor="#1a1662"
+                        android:lineSpacingExtra="47sp"
+                        tools:text="Delivery Details"
+                        />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:id="@+id/from"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_toEndOf="@+id/from_icon"
+                            android:layout_marginStart="20dp"
+                            android:layout_marginTop="15dp"
+                            android:fontFamily="@font/poppins_semibold"
+                            android:textStyle="normal"
+                            android:textSize="14sp"
+                            android:textColor="#1a1662"
+                            android:text="@string/house_43_road_1_block_i_banani_dhaka_1213"
+                            />
+
+                        <TextView
+                            android:id="@+id/to"
+                            android:layout_below="@+id/from"
+                            android:layout_toEndOf="@+id/to_icon"
+                            android:layout_marginStart="20dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="30dp"
+                            android:fontFamily="@font/poppins_semibold"
+                            android:textStyle="normal"
+                            android:textSize="14sp"
+                            android:textColor="#1a1662"
+                            android:text="@string/house_43_road_1_block_i_banani_dhaka_1213"
+                            />
+
+                        <ImageView
+                            android:id="@+id/from_icon"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/ic_location_icon_solid"
+                            android:layout_alignTop="@+id/from"
+                            android:layout_alignBottom="@+id/from"/>
+
+                        <ImageView
+                            android:id="@+id/to_icon"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/ic_location_icon_solid"
+                            android:layout_alignTop="@+id/to"
+                            android:layout_alignBottom="@+id/to"/>
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/doted_line_blue"
+                            android:layout_alignStart="@id/from_icon"
+                            android:layout_alignEnd="@+id/from_icon"
+                            android:layout_below="@+id/from_icon"
+                            android:layout_above="@id/to_icon"/>
+
+                    </RelativeLayout>
 
                 </LinearLayout>
 
