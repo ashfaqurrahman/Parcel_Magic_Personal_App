@@ -48,4 +48,7 @@
     <string name="search_location">Search Location</string>
     <string name="not_now">Not Now</string>
     <string name="submit">Submit</string>
+    <string name="confirm_delivery_request">Confirm Delivery Request</string>
+    <string name="product">Product</string>
+    <string name="gifts_electronic_food_accessories_etc">Gifts, Electronic, Food, Accessories, Etc....</string>
 </resources>
