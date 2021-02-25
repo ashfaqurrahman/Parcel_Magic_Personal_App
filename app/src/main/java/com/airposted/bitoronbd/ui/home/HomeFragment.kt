@@ -56,6 +56,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), KodeinAware {
         lifecycleScope.launch {
             try {
                 val settingResponse = viewModel.getSetting()
+                PreferenceProvider(requireActivity()).saveSharedPreferences("rate", settingResponse.rate.perKmPrice.toString())
                 //dismissDialog()
             } catch (e: ApiException) {
                 //dismissDialog()

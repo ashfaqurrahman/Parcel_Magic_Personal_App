@@ -89,7 +89,6 @@ class MainActivity : AppCompatActivity(), KodeinAware, CommunicatorFragmentInter
     }
 
     override fun onBackPressed() {
-        Log.e("aaaaaa", supportFragmentManager.backStackEntryCount.toString())
         super.onBackPressed()
         if (supportFragmentManager.backStackEntryCount == 0) {
             mainBinding.bottomNavigation.visibility = View.VISIBLE

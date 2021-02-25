@@ -1,6 +1,7 @@
 package com.airposted.bitoronbd.data.network
 
 import com.airposted.bitoronbd.data.network.responses.AuthResponse
+import com.airposted.bitoronbd.model.GoogleMapDTO
 import com.airposted.bitoronbd.model.SearchLocation
 import com.airposted.bitoronbd.model.SettingModel
 import okhttp3.*
@@ -52,6 +53,9 @@ interface MyApi {
 
     @GET
     suspend fun getPlacesNameList(@Url url: String): Response<SearchLocation>
+
+    @GET
+    suspend fun getDirectionsList(@Url url: String): Response<GoogleMapDTO>
 
     @GET("app_settings")
     suspend fun getSetting(): Response<SettingModel>

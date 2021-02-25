@@ -27,32 +27,30 @@
 
         </androidx.cardview.widget.CardView>
 
-            <LinearLayout
-                android:orientation="vertical"
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:weightSum="2">
-
+                android:layout_height="match_parent">
 
                 <fragment
-                    android:id="@+id/mapProduct"
+                    android:id="@+id/mapReceiverDetails"
                     android:name="com.google.android.gms.maps.SupportMapFragment"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="0.8"/>
+                    android:layout_height="match_parent"
+                    android:layout_above="@id/layout"
+                    android:layout_marginBottom="-20dp"/>
 
                 <LinearLayout
                     android:id="@+id/layout"
                     android:layout_width="match_parent"
-                    android:layout_height="0dp"
+                    android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:layout_weight="1.2">
+                    android:layout_alignParentBottom="true">
 
                     <ScrollView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:scrollbars="none"
-                        android:paddingBottom="80dp">
+                        android:paddingBottom="90dp">
 
                         <LinearLayout
                             android:id="@+id/bottom"
@@ -71,12 +69,12 @@
                                 android:id="@+id/parent"
                                 android:animateLayoutChanges="true">
 
-                                <View
+                                <!--<View
                                     android:layout_width="30dp"
                                     android:layout_height="4dp"
                                     android:layout_marginTop="5dp"
                                     android:layout_gravity="center_horizontal"
-                                    android:background="@drawable/button_bg"/>
+                                    android:background="@drawable/button_bg"/>-->
 
                                 <TextView
                                     android:layout_width="wrap_content"
@@ -87,7 +85,7 @@
                                     android:textSize="20sp"
                                     android:textColor="#0f122f"
                                     android:lineSpacingExtra="10sp"
-                                    tools:text="Receiver&apos;s Details" />
+                                    android:text="Receiver&apos;s Details" />
 
                                 <com.google.android.material.textfield.TextInputLayout
                                     android:layout_width="match_parent"
@@ -154,7 +152,7 @@
 
                 </LinearLayout>
 
-            </LinearLayout>
+            </RelativeLayout>
 
         <LinearLayout
             android:id="@+id/confirm_receiver_address"
@@ -165,7 +163,7 @@
             android:layout_marginStart="15dp"
             android:layout_marginEnd="15dp"
             android:layout_alignParentBottom="true"
-            android:background="@drawable/before_button_bg"
+            android:background="@drawable/after_button_bg"
             android:padding="15dp"
             android:orientation="horizontal">
 

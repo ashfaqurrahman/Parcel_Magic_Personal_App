@@ -17,10 +17,10 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.airposted.bitoronbd.R
-import com.airposted.bitoronbd.data.network.preferences.PreferenceProvider
 import com.airposted.bitoronbd.databinding.FragmentProductBinding
 import com.airposted.bitoronbd.ui.main.CommunicatorFragmentInterface
-import com.airposted.bitoronbd.ui.main.MainActivity
+import com.airposted.bitoronbd.utils.dismissDialog
+import com.airposted.bitoronbd.utils.setProgressDialog
 import com.airposted.bitoronbd.utils.snackbar
 import com.google.android.gms.common.api.ResolvableApiException
 import com.google.android.gms.location.*
@@ -36,6 +36,7 @@ import com.nabinbhandari.android.permissions.Permissions
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.x.kodein
 import java.util.*
+import kotlin.properties.Delegates
 
 class ProductFragment : Fragment(), OnMapReadyCallback, KodeinAware, LocationListener {
 
@@ -46,8 +47,9 @@ class ProductFragment : Fragment(), OnMapReadyCallback, KodeinAware, LocationLis
     private lateinit var builder: LocationSettingsRequest.Builder
     private lateinit var locationManager: LocationManager
 
-    private var latitude = ""
-    private var longitude = ""
+    private var latitude by Delegates.notNull<Double>()
+    private var longitude by Delegates.notNull<Double>()
+    private var locationName = ""
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -77,6 +79,7 @@ class ProductFragment : Fragment(), OnMapReadyCallback, KodeinAware, LocationLis
         }
 
         productBinding.myLocation.setOnClickListener {
+            setProgressDialog(requireActivity())
             Permissions.check(
                 requireActivity(),
                 Manifest.permission.ACCESS_FINE_LOCATION,
@@ -185,16 +188,27 @@ class ProductFragment : Fragment(), OnMapReadyCallback, KodeinAware, LocationLis
         productBinding.receiverAddress.setOnClickListener {
             val latLng = LatLng(latitude.toDouble(), longitude.toDouble())
             val points: MutableList<LatLng> = ArrayList()
-            points.add(LatLng(23.843974, 90.370339))
-            points.add(LatLng(23.749419, 90.354546))
-            points.add(LatLng(23.752248, 90.499085))
-            points.add(LatLng(23.861558, 90.469903))
+            points.add(LatLng(23.888112, 90.383920))
+            points.add(LatLng(23.834108, 90.344095))
+            points.add(LatLng(23.753687, 90.341691))
+            points.add(LatLng(23.703085, 90.375680))
+            points.add(LatLng(23.685794, 90.463228))
+            points.add(LatLng(23.717859, 90.534295))
+            points.add(LatLng(23.795789, 90.562105))
+            points.add(LatLng(23.845413, 90.519189))
+            points.add(LatLng(23.881833, 90.452585))
 
             //val polygon: Polygon = mMap.addPolygon(PolygonOptions().addAll(points))
             val contain = PolyUtil.containsLocation(latLng, points, true)
 
             if (contain) {
-
+                val fragment = ConfirmReceiverAddressFragment()
+                val bundle = Bundle()
+                bundle.putString("location_name", locationName)
+                bundle.putDouble("latitude", latitude)
+                bundle.putDouble("longitude", longitude)
+                fragment.arguments = bundle
+                myCommunicator?.addContentFragment(fragment, true)
             } else {
                 productBinding.rootLayout.snackbar("Sorry!! We are currently not providing our service to this area")
             }
@@ -204,6 +218,7 @@ class ProductFragment : Fragment(), OnMapReadyCallback, KodeinAware, LocationLis
 
     override fun onLocationChanged(location: Location) {
         try {
+            dismissDialog()
             val cameraPosition =
                 CameraPosition.Builder()
                     .target(LatLng(location.latitude, location.longitude))
@@ -278,9 +293,10 @@ class ProductFragment : Fragment(), OnMapReadyCallback, KodeinAware, LocationLis
                 } else {
                     locationString = locationString + ", " + addresses[0].thoroughfare
                 }
-                latitude = center.latitude.toString()
-                longitude = center.longitude.toString()
+                latitude = center.latitude
+                longitude = center.longitude
                 productBinding.address.text = locationString
+                locationName = locationString
                 productBinding.receiverAddress.background = ContextCompat.getDrawable(
                     requireActivity(),
                     R.drawable.after_button_bg

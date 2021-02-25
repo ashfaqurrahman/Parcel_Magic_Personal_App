@@ -10,6 +10,10 @@ class LocationSetViewModel (
 ) : ViewModel() {
 
     suspend fun getLocations(
-        mobile: String
-    ) = withContext(Dispatchers.IO) { repository.locationSearch(mobile) }
+        url: String
+    ) = withContext(Dispatchers.IO) { repository.locationSearch(url) }
+
+    suspend fun getDirections(
+        url: String
+    ) = withContext(Dispatchers.IO) { repository.directionSearch(url) }
 }
