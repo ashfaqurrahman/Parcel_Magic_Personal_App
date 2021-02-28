@@ -1,18 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
     android:background="#fcfcff"
     tools:context=".ui.product.ConfirmDeliveryRequestFragment">
 
-    <include layout="@layout/custom_toolbar_blue"/>
+    <include layout="@layout/custom_toolbar_blue"
+        android:id="@+id/toolbar"/>
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/toolbar"
         android:scrollbars="none">
 
         <LinearLayout
@@ -177,7 +178,7 @@
                             android:textSize="13sp"
                             android:textColor="#8c8cb2"
                             android:layout_alignParentStart="true"
-                            tools:text="Phone Number"
+                            android:text="Phone Number"
                             />
 
                         <TextView
@@ -221,7 +222,7 @@
                         android:textSize="14sp"
                         android:textColor="#1a1662"
                         android:lineSpacingExtra="47sp"
-                        tools:text="Delivery Details"
+                        android:text="Delivery Details"
                         />
 
                     <RelativeLayout
@@ -265,20 +266,26 @@
                             android:layout_alignTop="@+id/from"
                             android:layout_alignBottom="@+id/from"/>
 
-                        <ImageView
+                        <RelativeLayout
                             android:id="@+id/to_icon"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:src="@drawable/ic_location_icon_solid"
+                            android:gravity="center_vertical"
                             android:layout_alignTop="@+id/to"
-                            android:layout_alignBottom="@+id/to"/>
+                            android:layout_alignBottom="@+id/to">
+
+                            <ImageView
+                                android:layout_width="15dp"
+                                android:layout_height="15dp"
+                                android:src="@drawable/circle_with_border"/>
+
+                        </RelativeLayout>
 
                         <ImageView
-                            android:layout_width="wrap_content"
+                            android:layout_width="2dp"
                             android:layout_height="wrap_content"
                             android:src="@drawable/doted_line_blue"
-                            android:layout_alignStart="@id/from_icon"
-                            android:layout_alignEnd="@+id/from_icon"
+                            android:layout_marginStart="6dp"
                             android:layout_below="@+id/from_icon"
                             android:layout_above="@id/to_icon"/>
 
@@ -288,8 +295,247 @@
 
             </androidx.cardview.widget.CardView>
 
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="15dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="10dp"
+                app:cardCornerRadius="8dp"
+                app:cardBackgroundColor="@color/white">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="20dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/poppins_semibold"
+                        android:textStyle="normal"
+                        android:textSize="14sp"
+                        android:textColor="#1a1662"
+                        android:lineSpacingExtra="47sp"
+                        android:text="Distance &amp; Delivery Charge"
+                        />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/button_bg"
+                        android:padding="15dp"
+                        android:layout_marginTop="18dp"
+                        android:orientation="horizontal">
+
+                        <LinearLayout
+                            android:id="@+id/distance_layout"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_toStartOf="@+id/divider"
+                            android:layout_alignParentStart="true"
+                            android:gravity="center"
+                            android:layout_marginEnd="10dp"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/poppins_regular"
+                                android:textStyle="normal"
+                                android:textSize="15sp"
+                                android:textColor="#8c8cb2"
+                                tools:text="Distance"
+                                />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/poppins_semibold"
+                                android:textStyle="normal"
+                                android:textSize="18sp"
+                                android:textColor="#1a1662"
+                                tools:text="3.25 Km"
+                                />
+
+                        </LinearLayout>
+
+                        <View
+                            android:id="@+id/divider"
+                            android:layout_width="0.3dp"
+                            android:layout_height="wrap_content"
+                            android:background="@color/gray"
+                            android:layout_alignTop="@+id/distance_layout"
+                            android:layout_alignBottom="@+id/distance_layout"
+                            android:layout_centerHorizontal="true"
+                            />
+
+                        <LinearLayout
+                            android:id="@+id/charge_layout"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_toEndOf="@+id/divider"
+                            android:layout_marginStart="10dp"
+                            android:layout_alignParentEnd="true"
+                            android:gravity="center"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/poppins_regular"
+                                android:textStyle="normal"
+                                android:textSize="15sp"
+                                android:textColor="#8c8cb2"
+                                tools:text="Charge"
+                                />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/poppins_semibold"
+                                android:textStyle="normal"
+                                android:textSize="18sp"
+                                android:textColor="#1a1662"
+                                tools:text="৳94.00"
+                                />
+
+                        </LinearLayout>
+
+                    </RelativeLayout>
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="15dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                app:cardCornerRadius="8dp"
+                app:cardBackgroundColor="@color/white">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="20dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/poppins_semibold"
+                        android:textStyle="normal"
+                        android:textSize="14sp"
+                        android:textColor="#1a1662"
+                        android:lineSpacingExtra="47sp"
+                        android:text="Distance &amp; Delivery Charge"
+                        />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/button_bg"
+                        android:padding="15dp"
+                        android:layout_marginTop="18dp"
+                        android:gravity="center_horizontal"
+                        android:orientation="horizontal">
+
+                        <RadioGroup
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <RadioButton
+                                android:id="@+id/sender"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginEnd="30dp"
+                                android:gravity="center_vertical"
+                                android:fontFamily="@font/poppins_medium"
+                                android:textStyle="normal"
+                                android:checked="true"
+                                android:textSize="15sp"
+                                android:padding="10dp"
+                                android:text="Sender"/>
+
+                            <View
+                                android:id="@+id/divider1"
+                                android:layout_width="0.3dp"
+                                android:layout_height="match_parent"
+                                android:background="@color/gray"
+                                />
+
+                            <RadioButton
+                                android:id="@+id/receiver"
+                                android:gravity="center_vertical"
+                                android:layout_marginStart="30dp"
+                                android:padding="10dp"
+                                android:fontFamily="@font/poppins_medium"
+                                android:textStyle="normal"
+                                android:textSize="15sp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Receiver"/>
+
+                        </RadioGroup>
+
+                    </RelativeLayout>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:drawablePadding="15dp"
+                        android:fontFamily="@font/poppins_medium"
+                        android:textStyle="normal"
+                        android:textSize="15sp"
+                        android:textColor="#0f122f"
+                        android:lineSpacingExtra="8sp"
+                        tools:text="Cash on delivery"
+                        app:drawableStartCompat="@drawable/ic_taka"
+                        app:drawableEndCompat="@drawable/ic_next"
+                        />
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
         </LinearLayout>
 
     </ScrollView>
 
-</LinearLayout>
+    <LinearLayout
+        android:id="@+id/confirm_receiver_address"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@color/white"
+        android:paddingStart="15dp"
+        android:paddingEnd="15dp"
+        android:paddingTop="20dp"
+        android:paddingBottom="20dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fontFamily="@font/poppins_medium"
+            android:background="@drawable/after_button_bg"
+            android:gravity="center_vertical"
+            android:padding="10dp"
+            android:textAlignment="center"
+            android:textStyle="normal"
+            android:textSize="19sp"
+            android:textColor="#ffffff"
+            android:lineSpacingExtra="18sp"
+            android:text="@string/confirm_delivery_request" />
+
+    </LinearLayout>
+
+</RelativeLayout>
