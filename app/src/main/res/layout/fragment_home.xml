@@ -182,7 +182,7 @@
                         android:textSize="16sp"
                         android:textColor="#ffffff"
                         android:lineSpacingExtra="45sp"
-                        android:text="Products"
+                        android:text="Documents"
                         />
 
                     <TextView

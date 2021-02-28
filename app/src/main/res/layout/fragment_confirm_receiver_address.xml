@@ -85,7 +85,7 @@
                                     android:textSize="20sp"
                                     android:textColor="#0f122f"
                                     android:lineSpacingExtra="10sp"
-                                    android:text="Receiver&apos;s Details" />
+                                    android:text="@string/receiver_apos_s_details" />
 
                                 <com.google.android.material.textfield.TextInputLayout
                                     android:layout_width="match_parent"
@@ -174,7 +174,7 @@
                 android:gravity="start"
                 android:textAlignment="center"
                 android:textStyle="normal"
-                android:textSize="19sp"
+                android:textSize="15sp"
                 android:textColor="#ffffff"
                 android:lineSpacingExtra="18sp"
                 android:text="@string/confirm_delivery_request" />

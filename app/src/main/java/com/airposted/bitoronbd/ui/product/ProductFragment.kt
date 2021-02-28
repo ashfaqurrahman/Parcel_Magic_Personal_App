@@ -16,8 +16,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import com.airposted.bitoronbd.R
 import com.airposted.bitoronbd.databinding.FragmentProductBinding
+import com.airposted.bitoronbd.ui.location_set.LocationSetViewModel
+import com.airposted.bitoronbd.ui.location_set.LocationSetViewModelFactory
 import com.airposted.bitoronbd.ui.main.CommunicatorFragmentInterface
 import com.airposted.bitoronbd.utils.dismissDialog
 import com.airposted.bitoronbd.utils.setProgressDialog
@@ -35,6 +38,7 @@ import com.nabinbhandari.android.permissions.PermissionHandler
 import com.nabinbhandari.android.permissions.Permissions
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.x.kodein
+import org.kodein.di.generic.instance
 import java.util.*
 import kotlin.properties.Delegates
 
@@ -42,7 +46,9 @@ class ProductFragment : Fragment(), OnMapReadyCallback, KodeinAware, LocationLis
 
     private lateinit var mMap: GoogleMap
     private lateinit var productBinding: FragmentProductBinding
+    private lateinit var viewModel: LocationSetViewModel
     override val kodein by kodein()
+    private val factory: LocationSetViewModelFactory by instance()
     var myCommunicator: CommunicatorFragmentInterface? = null
     private lateinit var builder: LocationSettingsRequest.Builder
     private lateinit var locationManager: LocationManager
@@ -62,6 +68,7 @@ class ProductFragment : Fragment(), OnMapReadyCallback, KodeinAware, LocationLis
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        viewModel = ViewModelProvider(requireActivity(), factory).get(LocationSetViewModel::class.java)
         bindUI()
     }
 
@@ -69,6 +76,14 @@ class ProductFragment : Fragment(), OnMapReadyCallback, KodeinAware, LocationLis
         myCommunicator = context as CommunicatorFragmentInterface
 
         productBinding.receiverAddress.isEnabled = false
+
+        viewModel.getSetOnMap().observe(viewLifecycleOwner, {
+            if (it){
+                productBinding.marker.visibility = View.VISIBLE
+            } else {
+                productBinding.marker.visibility = View.GONE
+            }
+        })
 
         val mapFragment =
             childFragmentManager.findFragmentById(R.id.mapProduct) as SupportMapFragment
@@ -79,7 +94,6 @@ class ProductFragment : Fragment(), OnMapReadyCallback, KodeinAware, LocationLis
         }
 
         productBinding.myLocation.setOnClickListener {
-            setProgressDialog(requireActivity())
             Permissions.check(
                 requireActivity(),
                 Manifest.permission.ACCESS_FINE_LOCATION,
@@ -186,7 +200,7 @@ class ProductFragment : Fragment(), OnMapReadyCallback, KodeinAware, LocationLis
         }
 
         productBinding.receiverAddress.setOnClickListener {
-            val latLng = LatLng(latitude.toDouble(), longitude.toDouble())
+            val latLng = LatLng(latitude, longitude)
             val points: MutableList<LatLng> = ArrayList()
             points.add(LatLng(23.888112, 90.383920))
             points.add(LatLng(23.834108, 90.344095))
@@ -218,7 +232,6 @@ class ProductFragment : Fragment(), OnMapReadyCallback, KodeinAware, LocationLis
 
     override fun onLocationChanged(location: Location) {
         try {
-            dismissDialog()
             val cameraPosition =
                 CameraPosition.Builder()
                     .target(LatLng(location.latitude, location.longitude))
@@ -275,50 +288,54 @@ class ProductFragment : Fragment(), OnMapReadyCallback, KodeinAware, LocationLis
 
         mMap.uiSettings.isMyLocationButtonEnabled = false
 
-        mMap.setOnCameraIdleListener {
-            val center = mMap.cameraPosition.target
-            val geo = Geocoder(requireActivity(), Locale.getDefault())
-            val addresses = geo.getFromLocation(center.latitude, center.longitude, 1)
-            if (addresses.isEmpty()) {
-                //productBinding.address.text = getString(R.string.searching)
-            } else {
-                var locationString: String
-                locationString = if (addresses[0].featureName == null) {
-                    ""
-                } else {
-                    addresses[0].featureName
+        viewModel.getSetOnMap().observe(viewLifecycleOwner, {
+            if (it){
+                mMap.setOnCameraIdleListener {
+                    val center = mMap.cameraPosition.target
+                    val geo = Geocoder(requireActivity(), Locale.getDefault())
+                    val addresses = geo.getFromLocation(center.latitude, center.longitude, 1)
+                    if (addresses.isEmpty()) {
+                        //productBinding.address.text = getString(R.string.searching)
+                    } else {
+                        var locationString: String
+                        locationString = if (addresses[0].featureName == null) {
+                            ""
+                        } else {
+                            addresses[0].featureName
+                        }
+                        if (addresses[0].thoroughfare == null) {
+                            locationString += ""
+                        } else {
+                            locationString = locationString + ", " + addresses[0].thoroughfare
+                        }
+                        latitude = center.latitude
+                        longitude = center.longitude
+                        productBinding.address.text = locationString
+                        locationName = locationString
+                        productBinding.receiverAddress.background = ContextCompat.getDrawable(
+                            requireActivity(),
+                            R.drawable.after_button_bg
+                        )
+                        productBinding.receiverAddress.isEnabled = true
+                    }
+                    productBinding.receiverAddress.visibility = View.VISIBLE
                 }
-                if (addresses[0].thoroughfare == null) {
-                    locationString += ""
-                } else {
-                    locationString = locationString + ", " + addresses[0].thoroughfare
-                }
-                latitude = center.latitude
-                longitude = center.longitude
-                productBinding.address.text = locationString
-                locationName = locationString
-                productBinding.receiverAddress.background = ContextCompat.getDrawable(
-                    requireActivity(),
-                    R.drawable.after_button_bg
-                )
-                productBinding.receiverAddress.isEnabled = true
-            }
-            productBinding.receiverAddress.visibility = View.VISIBLE
-        }
 
-        mMap.setOnCameraMoveStartedListener { reason ->
-            when (reason) {
-                OnCameraMoveStartedListener.REASON_GESTURE -> {
-                    productBinding.address.text = getString(R.string.searching)
-                    productBinding.receiverAddress.visibility = View.GONE
-                    productBinding.receiverAddress.background = ContextCompat.getDrawable(
-                        requireActivity(),
-                        R.drawable.before_button_bg
-                    )
-                    productBinding.receiverAddress.isEnabled = false
+                mMap.setOnCameraMoveStartedListener { reason ->
+                    when (reason) {
+                        OnCameraMoveStartedListener.REASON_GESTURE -> {
+                            productBinding.address.text = getString(R.string.searching)
+                            productBinding.receiverAddress.visibility = View.GONE
+                            productBinding.receiverAddress.background = ContextCompat.getDrawable(
+                                requireActivity(),
+                                R.drawable.before_button_bg
+                            )
+                            productBinding.receiverAddress.isEnabled = false
+                        }
+                    }
                 }
             }
-        }
+        })
     }
 
     companion object {
