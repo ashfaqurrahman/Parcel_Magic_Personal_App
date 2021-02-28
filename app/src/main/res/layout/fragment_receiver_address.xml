@@ -48,10 +48,10 @@
 
             <com.airbnb.lottie.LottieAnimationView
                 android:id="@+id/loading"
-                android:layout_width="50dp"
+                android:layout_width="40dp"
                 android:layout_alignParentEnd="true"
                 app:lottie_rawRes="@raw/loading"
-                android:layout_height="match_parent"
+                android:layout_height="40dp"
                 android:visibility="gone"
                 app:lottie_loop="true"
                 app:lottie_autoPlay="true"/>
@@ -68,6 +68,8 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerview"
+            android:layout_marginStart="18dp"
+            android:layout_marginEnd="15dp"
             tools:listitem="@layout/item_location_search"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
