@@ -45,7 +45,7 @@
     <string name="enter">Enter verification code sent to \n+880%1$s</string>
     <string name="resend_code">\" Resend Code\"</string>
     <string name="did_not_receive_the_code">Did not receive the code?</string>
-    <string name="search_location">Search Location</string>
+    <string name="search_location">Search Receiver Location</string>
     <string name="not_now">Not Now</string>
     <string name="submit">Submit</string>
     <string name="confirm_delivery_request">Confirm Delivery Request</string>

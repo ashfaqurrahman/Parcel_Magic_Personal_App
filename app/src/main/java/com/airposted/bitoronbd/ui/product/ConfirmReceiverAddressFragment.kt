@@ -1,6 +1,9 @@
 package com.airposted.bitoronbd.ui.product
 
+import android.graphics.Bitmap
+import android.graphics.Canvas
 import android.graphics.Color
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -14,14 +17,12 @@ import com.airposted.bitoronbd.data.network.preferences.PreferenceProvider
 import com.airposted.bitoronbd.databinding.FragmentConfirmReceiverAddressBinding
 import com.airposted.bitoronbd.ui.location_set.LocationSetViewModel
 import com.airposted.bitoronbd.ui.location_set.LocationSetViewModelFactory
+import com.airposted.bitoronbd.ui.main.CommunicatorFragmentInterface
 import com.airposted.bitoronbd.utils.*
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
-import com.google.android.gms.maps.GoogleMap.OnMarkerClickListener
 import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.MarkerOptions
-import com.google.android.gms.maps.model.PolylineOptions
+import com.google.android.gms.maps.model.*
 import kotlinx.coroutines.launch
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.x.kodein
@@ -37,6 +38,7 @@ class ConfirmReceiverAddressFragment : Fragment(), KodeinAware {
     private val factory: LocationSetViewModelFactory by instance()
     private lateinit var viewModel: LocationSetViewModel
     var distance =  0F
+    var myCommunicator: CommunicatorFragmentInterface? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -56,6 +58,7 @@ class ConfirmReceiverAddressFragment : Fragment(), KodeinAware {
     private fun bindUI() {
 
         setProgressDialog(requireActivity())
+        myCommunicator = context as CommunicatorFragmentInterface
 
         mapFragment = childFragmentManager.findFragmentById(R.id.mapReceiverDetails) as SupportMapFragment
         mapFragment.getMapAsync {
@@ -93,7 +96,7 @@ class ConfirmReceiverAddressFragment : Fragment(), KodeinAware {
                     for (i in result.indices){
                         lineoption.addAll(result[i])
                         lineoption.width(6f)
-                        lineoption.color(Color.BLACK)
+                        lineoption.color(resources.getColor(R.color.blue))
                         lineoption.geodesic(true)
                     }
                     googleMap.addPolyline(lineoption)
@@ -101,19 +104,30 @@ class ConfirmReceiverAddressFragment : Fragment(), KodeinAware {
                         distance += list.routes[0].legs[0].steps[i].distance.value
                     }
                     Log.e("Distance: ", (distance / 1000).toString())
+
+                    val circleDrawable = resources.getDrawable(R.drawable.root_start_point)
+                    val markerIcon = getMarkerIconFromDrawable(circleDrawable)
                     googleMap.addMarker(
                         MarkerOptions().position(location1).title(
                             PreferenceProvider(
                                 requireActivity()
-                            ).getSharedPreferences("location_name")
+                            ).getSharedPreferences("currentLocation")
                         )
+                            .icon(markerIcon)
                     ).showInfoWindow()
 
+                    val circleDrawable1 = resources.getDrawable(R.drawable.ic_marker_without_space)
+                    val markerIcon1 = getMarkerIconFromDrawable(circleDrawable1)
                     googleMap.addMarker(
                         MarkerOptions().position(location2)
                             .title(requireArguments().getString("location_name"))
+                            .icon(markerIcon1)
                     ).showInfoWindow()
-                    googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(location1, 13f))
+                    if (distance/1000 > 5){
+                        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(location1, 12f))
+                    } else {
+                        googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(location1, 13f))
+                    }
                     dismissDialog()
                 } catch (e: ApiException) {
                     dismissDialog()
@@ -141,14 +155,31 @@ class ConfirmReceiverAddressFragment : Fragment(), KodeinAware {
                     binding.rootLayout.snackbar("Please enter receiver phone number")
                 }
                 else -> {
-                    binding.rootLayout.snackbar(
-                        ((distance / 1000) * PreferenceProvider(
-                            requireActivity()
-                        ).getSharedPreferences("rate")!!.toFloat()).toString()
-                    )
+                    val fragment = ConfirmDeliveryRequestFragment()
+                    val bundle = Bundle()
+                    bundle.putString("name", binding.receiverName.text.toString())
+                    bundle.putString("phone", binding.receiverPhone.text.toString())
+                    bundle.putString("info", binding.receiverDirection.text.toString())
+                    bundle.putFloat("distance", distance/1000)
+                    bundle.putString("location_name", requireArguments().getString("location_name"))
+                    fragment.arguments = bundle
+                    myCommunicator?.addContentFragment(fragment, false)
                 }
             }
         }
+    }
+
+    private fun getMarkerIconFromDrawable(drawable: Drawable): BitmapDescriptor? {
+        val canvas = Canvas()
+        val bitmap = Bitmap.createBitmap(
+            drawable.intrinsicWidth,
+            drawable.intrinsicHeight,
+            Bitmap.Config.ARGB_8888
+        )
+        canvas.setBitmap(bitmap)
+        drawable.setBounds(0, 0, drawable.intrinsicWidth, drawable.intrinsicHeight)
+        drawable.draw(canvas)
+        return BitmapDescriptorFactory.fromBitmap(bitmap)
     }
 
     private fun getDirectionURL(origin: LatLng, dest: LatLng) : String{

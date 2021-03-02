@@ -93,13 +93,14 @@ class MainRepository(context: Context): SafeApiRequest(), LocationListener {
     }
 
     override fun onLocationChanged(location: Location) {
+        //Log.e("aaaaaa", location.latitude.toString())
 
     }
     override fun onStatusChanged(provider: String, status: Int, extras: Bundle?) {}
     override fun onProviderEnabled(provider: String) {
-        if (provider == LocationManager.GPS_PROVIDER) {
+        /*if (provider == LocationManager.GPS_PROVIDER) {
             locationCallback()
-        }
+        }*/
     }
     override fun onProviderDisabled(provider: String) {
         if (provider == LocationManager.GPS_PROVIDER) {

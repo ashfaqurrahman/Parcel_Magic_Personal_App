@@ -11,6 +11,7 @@ import android.location.LocationListener
 import android.location.LocationManager
 import android.os.Bundle
 import android.provider.Settings
+import android.util.Log
 import android.view.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
@@ -18,12 +19,11 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.airposted.bitoronbd.R
+import com.airposted.bitoronbd.data.network.preferences.PreferenceProvider
 import com.airposted.bitoronbd.databinding.FragmentProductBinding
 import com.airposted.bitoronbd.ui.location_set.LocationSetViewModel
 import com.airposted.bitoronbd.ui.location_set.LocationSetViewModelFactory
 import com.airposted.bitoronbd.ui.main.CommunicatorFragmentInterface
-import com.airposted.bitoronbd.utils.dismissDialog
-import com.airposted.bitoronbd.utils.setProgressDialog
 import com.airposted.bitoronbd.utils.snackbar
 import com.google.android.gms.common.api.ResolvableApiException
 import com.google.android.gms.location.*
@@ -73,12 +73,61 @@ class ProductFragment : Fragment(), OnMapReadyCallback, KodeinAware, LocationLis
     }
 
     private fun bindUI() {
+
+        var gps_enabled: Boolean
+        var network_enabled: Boolean
+
+        val lm = requireActivity().getSystemService(Context.LOCATION_SERVICE) as LocationManager
+
+        gps_enabled = lm.isProviderEnabled(LocationManager.GPS_PROVIDER)
+        network_enabled = lm.isProviderEnabled(LocationManager.NETWORK_PROVIDER)
+
+        var net_loc: Location? = null
+        var gps_loc: Location? = null
+        var finalLoc: Location? = null
+
+        if (ActivityCompat.checkSelfPermission(
+                requireActivity(),
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                requireActivity(),
+                Manifest.permission.ACCESS_COARSE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return
+        }
+        if (gps_enabled) gps_loc = lm.getLastKnownLocation(LocationManager.GPS_PROVIDER)
+        if (network_enabled) net_loc = lm.getLastKnownLocation(LocationManager.NETWORK_PROVIDER)
+
+        if (gps_loc != null && net_loc != null) {
+
+            //smaller the number more accurate result will
+            finalLoc = if (gps_loc.accuracy > net_loc.accuracy) net_loc else gps_loc
+
+            // I used this just to get an idea (if both avail, its upto you which you want to take as I've taken location with more accuracy)
+        } else {
+            if (gps_loc != null) {
+                finalLoc = gps_loc
+            } else if (net_loc != null) {
+                finalLoc = net_loc
+            }
+        }
+
+        Log.e("aaaaaa", finalLoc?.latitude.toString())
+
         myCommunicator = context as CommunicatorFragmentInterface
 
         productBinding.receiverAddress.isEnabled = false
 
         viewModel.getSetOnMap().observe(viewLifecycleOwner, {
-            if (it){
+            if (it) {
                 productBinding.marker.visibility = View.VISIBLE
             } else {
                 productBinding.marker.visibility = View.GONE
@@ -90,6 +139,7 @@ class ProductFragment : Fragment(), OnMapReadyCallback, KodeinAware, LocationLis
         mapFragment.getMapAsync(this)
 
         productBinding.back.setOnClickListener {
+            viewModel.setOnMapFalse()
             requireActivity().onBackPressed()
         }
 
@@ -101,8 +151,9 @@ class ProductFragment : Fragment(), OnMapReadyCallback, KodeinAware, LocationLis
                 object : PermissionHandler() {
                     override fun onGranted() {
 
-                        val manager: LocationManager = requireActivity().getSystemService(Context.LOCATION_SERVICE) as LocationManager
-                        if (manager.isProviderEnabled(LocationManager.GPS_PROVIDER)){
+                        val manager: LocationManager =
+                            requireActivity().getSystemService(Context.LOCATION_SERVICE) as LocationManager
+                        if (manager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
                             getLocation()
                         } else {
                             val request = LocationRequest()
@@ -230,18 +281,6 @@ class ProductFragment : Fragment(), OnMapReadyCallback, KodeinAware, LocationLis
 
     }
 
-    override fun onLocationChanged(location: Location) {
-        try {
-            val cameraPosition =
-                CameraPosition.Builder()
-                    .target(LatLng(location.latitude, location.longitude))
-                    .zoom(16f).build()
-            mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition))
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
-    }
-
     @SuppressLint("MissingPermission")
     private fun getLocation() {
         try {
@@ -264,9 +303,24 @@ class ProductFragment : Fragment(), OnMapReadyCallback, KodeinAware, LocationLis
         }
     }
 
+    override fun onLocationChanged(location: Location) {
+        try {
+            val cameraPosition =
+                CameraPosition.Builder()
+                    .target(LatLng(location.latitude, location.longitude))
+                    .zoom(16f).build()
+            mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition))
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
     override fun onStatusChanged(provider: String, status: Int, extras: Bundle) {}
 
-    override fun onProviderEnabled(provider: String) {}
+    override fun onProviderEnabled(provider: String) {
+        val lm = requireActivity().getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        Log.e("aaaaa", lm.getLastKnownLocation(LocationManager.GPS_PROVIDER)?.latitude.toString())
+    }
 
     override fun onProviderDisabled(provider: String) {}
 
@@ -288,8 +342,47 @@ class ProductFragment : Fragment(), OnMapReadyCallback, KodeinAware, LocationLis
 
         mMap.uiSettings.isMyLocationButtonEnabled = false
 
+        if (!PreferenceProvider(requireActivity()).getSharedPreferences("latitude").isNullOrEmpty()){
+            val cameraPosition =
+                CameraPosition.Builder()
+                    .target(LatLng(PreferenceProvider(requireActivity()).getSharedPreferences("latitude")!!.toDouble(), PreferenceProvider(requireActivity()).getSharedPreferences("longitude")!!.toDouble()))
+                    .zoom(16f).build()
+            mMap.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition))
+        }
+
         viewModel.getSetOnMap().observe(viewLifecycleOwner, {
-            if (it){
+            if (it) {
+                val center = mMap.cameraPosition.target
+                val geo = Geocoder(requireActivity(), Locale.getDefault())
+                val addresses = geo.getFromLocation(center.latitude, center.longitude, 1)
+                if (addresses.isEmpty()) {
+                    //productBinding.address.text = getString(R.string.searching)
+                } else {
+                    var locationString: String
+                    locationString = if (addresses[0].featureName == null) {
+                        ""
+                    } else {
+                        addresses[0].featureName
+                    }
+                    if (addresses[0].thoroughfare == null) {
+                        locationString += ""
+                    } else {
+                        locationString = locationString + ", " + addresses[0].thoroughfare
+                    }
+                    if (addresses[0].featureName == addresses[0].thoroughfare){
+                        locationString = addresses[0].featureName
+                    }
+                    latitude = center.latitude
+                    longitude = center.longitude
+                    productBinding.address.text = locationString
+                    locationName = locationString
+                    productBinding.receiverAddress.background = ContextCompat.getDrawable(
+                        requireActivity(),
+                        R.drawable.after_button_bg
+                    )
+                    productBinding.receiverAddress.isEnabled = true
+                }
+                productBinding.receiverAddress.visibility = View.VISIBLE
                 mMap.setOnCameraIdleListener {
                     val center = mMap.cameraPosition.target
                     val geo = Geocoder(requireActivity(), Locale.getDefault())
@@ -307,6 +400,9 @@ class ProductFragment : Fragment(), OnMapReadyCallback, KodeinAware, LocationLis
                             locationString += ""
                         } else {
                             locationString = locationString + ", " + addresses[0].thoroughfare
+                        }
+                        if (addresses[0].featureName == addresses[0].thoroughfare){
+                            locationString = addresses[0].featureName
                         }
                         latitude = center.latitude
                         longitude = center.longitude

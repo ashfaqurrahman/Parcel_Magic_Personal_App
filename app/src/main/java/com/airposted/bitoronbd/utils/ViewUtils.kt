@@ -27,6 +27,8 @@ import com.google.android.material.snackbar.Snackbar
 import java.io.File
 import java.io.FileInputStream
 import java.io.FileOutputStream
+import java.math.BigDecimal
+import java.math.RoundingMode
 
 
 fun Context.toast(message: String){
@@ -82,6 +84,13 @@ fun zeroRemove(phone: String): String {
         phoneNo = phoneNo.substring(1)
     }
     return phoneNo
+}
+
+fun round(value: Double, places: Int): Double {
+    require(places >= 0)
+    var bd: BigDecimal = BigDecimal.valueOf(value)
+    bd = bd.setScale(places, RoundingMode.HALF_UP)
+    return bd.toDouble()
 }
 
 fun hideKeyboard(activity: Activity) {

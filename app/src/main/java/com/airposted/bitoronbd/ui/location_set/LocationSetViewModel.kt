@@ -17,8 +17,12 @@ class LocationSetViewModel (
         return  setOnMap
     }
 
-    fun setOnMapImp() {
+    fun setOnMapTrue() {
         setOnMap.postValue(true)
+    }
+
+    fun setOnMapFalse() {
+        setOnMap.postValue(false)
     }
 
     suspend fun getLocations(

@@ -21,6 +21,7 @@ import com.airposted.bitoronbd.ui.location_set.CustomClickListener
 import com.airposted.bitoronbd.ui.location_set.LocationSetViewModel
 import com.airposted.bitoronbd.ui.location_set.LocationSetViewModelFactory
 import com.airposted.bitoronbd.ui.location_set.MyRecyclerViewAdapter
+import com.airposted.bitoronbd.ui.main.CommunicatorFragmentInterface
 import com.airposted.bitoronbd.utils.ApiException
 import com.airposted.bitoronbd.utils.NoInternetException
 import com.airposted.bitoronbd.utils.hideKeyboard
@@ -30,6 +31,7 @@ import kotlinx.coroutines.launch
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.x.kodein
 import org.kodein.di.generic.instance
+import kotlin.properties.Delegates
 
 
 class ReceiverAddressFragment : Fragment(), KodeinAware, CustomClickListener {
@@ -38,6 +40,7 @@ class ReceiverAddressFragment : Fragment(), KodeinAware, CustomClickListener {
     override val kodein by kodein()
     private val factory: LocationSetViewModelFactory by instance()
     private lateinit var list: SearchLocation
+    var myCommunicator: CommunicatorFragmentInterface? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -55,13 +58,16 @@ class ReceiverAddressFragment : Fragment(), KodeinAware, CustomClickListener {
     }
 
     private fun bindUI() {
+
+        myCommunicator = context as CommunicatorFragmentInterface
+
         binding.toolbar.toolbarTitle.text = "Where are you sending?"
         binding.toolbar.backImage.setOnClickListener {
             requireActivity().onBackPressed()
         }
 
         binding.map.setOnClickListener {
-            viewModel.setOnMapImp()
+            viewModel.setOnMapTrue()
             requireActivity().onBackPressed()
         }
 
@@ -127,6 +133,14 @@ class ReceiverAddressFragment : Fragment(), KodeinAware, CustomClickListener {
         binding.search.setQuery(location.description, false)
         binding.recyclerview.visibility = View.GONE
         binding.search.clearFocus()
+
+        val fragment = ConfirmReceiverAddressFragment()
+        val bundle = Bundle()
+        bundle.putString("location_name", location.description)
+        bundle.putDouble("latitude", getLatLngFromAddress(location.description)!!.latitude)
+        bundle.putDouble("longitude", getLatLngFromAddress(location.description)!!.longitude)
+        fragment.arguments = bundle
+        myCommunicator?.addContentFragment(fragment, false)
     }
 
     private fun getLatLngFromAddress(address: String): LatLng? {

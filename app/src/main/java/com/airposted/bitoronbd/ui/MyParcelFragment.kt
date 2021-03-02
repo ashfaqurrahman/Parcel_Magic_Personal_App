@@ -11,8 +11,6 @@ class MyParcelFragment : Fragment(R.layout.fragment_my_parcel) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
-        requireActivity().findViewById<BottomNavigationView>(R.id.bottom_navigation).menu.getItem(1).isChecked = true
     }
 
 }

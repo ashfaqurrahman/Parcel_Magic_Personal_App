@@ -1,15 +1,16 @@
 package com.airposted.bitoronbd.ui.home
 
+import android.app.Dialog
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
+import android.os.Build
 import android.os.Bundle
-import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
+import androidx.annotation.RequiresApi
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentContainerView
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.fragment.findNavController
 import com.airposted.bitoronbd.R
 import com.airposted.bitoronbd.data.network.preferences.PreferenceProvider
 import com.airposted.bitoronbd.databinding.FragmentHomeBinding
@@ -49,14 +50,19 @@ class HomeFragment : Fragment(R.layout.fragment_home), KodeinAware {
 
     private fun bindUI() = Coroutines.main {
 
-        requireActivity().findViewById<BottomNavigationView>(R.id.bottom_navigation).menu.getItem(0).isChecked = true
+        /*val wp: WindowManager.LayoutParams = requireActivity().window.attributes
+        wp.dimAmount = 0.75f*/
+
         myCommunicator = context as CommunicatorFragmentInterface
 
         //setProgressDialog(requireActivity())
         lifecycleScope.launch {
             try {
                 val settingResponse = viewModel.getSetting()
-                PreferenceProvider(requireActivity()).saveSharedPreferences("rate", settingResponse.rate.perKmPrice.toString())
+                PreferenceProvider(requireActivity()).saveSharedPreferences(
+                    "rate",
+                    settingResponse.rate.perKmPrice.toString()
+                )
                 //dismissDialog()
             } catch (e: ApiException) {
                 //dismissDialog()
@@ -73,7 +79,6 @@ class HomeFragment : Fragment(R.layout.fragment_home), KodeinAware {
 
         homeBinding.address.setOnClickListener {
             myCommunicator?.addContentFragment(LocationSetFragment(), true)
-            //findNavController().navigate(R.id.action_homeFragment_to_locationSetFragment)
         }
 
         homeBinding.productBtn.setOnClickListener{

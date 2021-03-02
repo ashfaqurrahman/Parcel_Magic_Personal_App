@@ -63,7 +63,6 @@ class MoreFragment : Fragment(), KodeinAware {
 
     private fun bindUI() = Coroutines.main {
 
-        requireActivity().findViewById<BottomNavigationView>(R.id.bottom_navigation).menu.getItem(2).isChecked = true
         Glide.with(requireActivity()).load(
             PersistentUser.getInstance().getUserImage(requireActivity())
         ).placeholder(R.drawable.sample_pro_pic).error(

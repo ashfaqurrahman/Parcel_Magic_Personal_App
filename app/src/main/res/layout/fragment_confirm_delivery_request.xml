@@ -163,6 +163,7 @@
                                 />
 
                             <TextView
+                                android:id="@+id/name"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/poppins_semibold"
@@ -193,6 +194,7 @@
                                 />
 
                             <TextView
+                                android:id="@+id/phone"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/poppins_semibold"
@@ -250,6 +252,8 @@
                                 android:fontFamily="@font/poppins_semibold"
                                 android:textStyle="normal"
                                 android:textSize="14sp"
+                                android:maxLines="2"
+                                android:ellipsize="end"
                                 android:textColor="#1a1662"
                                 android:text="@string/house_43_road_1_block_i_banani_dhaka_1213"
                                 />
@@ -265,6 +269,8 @@
                                 android:fontFamily="@font/poppins_semibold"
                                 android:textStyle="normal"
                                 android:textSize="14sp"
+                                android:maxLines="2"
+                                android:ellipsize="end"
                                 android:textColor="#1a1662"
                                 android:text="@string/house_43_road_1_block_i_banani_dhaka_1213"
                                 />
@@ -362,6 +368,7 @@
                                     />
 
                                 <TextView
+                                    android:id="@+id/distance"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:fontFamily="@font/poppins_semibold"
@@ -404,6 +411,7 @@
                                     />
 
                                 <TextView
+                                    android:id="@+id/charge"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:fontFamily="@font/poppins_semibold"
@@ -445,7 +453,7 @@
                             android:textSize="14sp"
                             android:textColor="#1a1662"
                             android:lineSpacingExtra="47sp"
-                            android:text="Distance &amp; Delivery Charge"
+                            android:text="Who will Pay?"
                             />
 
                         <RelativeLayout
