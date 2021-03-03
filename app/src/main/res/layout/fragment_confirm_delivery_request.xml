@@ -6,7 +6,6 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#fcfcff"
         tools:context=".ui.product.ConfirmDeliveryRequestFragment">
 
         <include layout="@layout/custom_toolbar_blue"
@@ -16,11 +15,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/toolbar"
+            android:layout_above="@+id/confirm_receiver_address"
             android:scrollbars="none">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="#fcfcff"
                 android:orientation="vertical">
 
                 <androidx.cardview.widget.CardView
@@ -30,7 +31,10 @@
                     android:layout_marginEnd="15dp"
                     android:layout_marginTop="20dp"
                     android:layout_marginBottom="10dp"
-                    app:cardCornerRadius="8dp"
+                    app:cardCornerRadius="15dp"
+                    app:cardElevation="2dp"
+                    android:elevation="1dp"
+                    app:cardMaxElevation="30dp"
                     app:cardBackgroundColor="@color/white">
 
                     <LinearLayout
@@ -103,14 +107,28 @@
                                 android:text="25 cm &amp; 01 kg"
                                 />
 
-                            <Spinner
-                                android:id="@+id/spinner"
-                                android:layout_width="wrap_content"
+                            <com.skydoves.powerspinner.PowerSpinnerView
+                                android:id="@+id/spinnerView"
+                                android:layout_width="130dp"
                                 android:layout_height="wrap_content"
-                                android:padding="5dp"
-                                android:background="@drawable/spinner_bg"
                                 android:layout_alignParentEnd="true"
-                                android:layout_centerVertical="true"/>
+                                android:background="@drawable/spinner_bg"
+                                android:paddingStart="15dp"
+                                android:paddingEnd="15dp"
+                                android:paddingTop="8dp"
+                                android:paddingBottom="8dp"
+                                android:textColor="#0f122f"
+                                android:textColorHint="#0f122f"
+                                android:textSize="15sp"
+                                app:spinner_arrow_gravity="end"
+                                app:spinner_arrow_show="true"
+                                app:spinner_arrow_tint="@color/black"
+                                app:spinner_divider_color="@color/gray"
+                                app:spinner_divider_show="true"
+                                app:spinner_divider_size="0.4dp"
+                                app:spinner_popup_animation="dropdown"
+                                app:spinner_popup_background="@color/white"
+                                app:spinner_popup_elevation="14dp" />
 
                         </RelativeLayout>
 
@@ -125,7 +143,124 @@
                     android:layout_marginEnd="15dp"
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="10dp"
-                    app:cardCornerRadius="8dp"
+                    app:cardCornerRadius="15dp"
+                    app:cardBackgroundColor="@color/white">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="20dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/poppins_semibold"
+                            android:textStyle="normal"
+                            android:textSize="14sp"
+                            android:textColor="#1a1662"
+                            android:lineSpacingExtra="47sp"
+                            android:text="Distance &amp; Delivery Charge"
+                            />
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/button_bg"
+                            android:padding="15dp"
+                            android:layout_marginTop="18dp"
+                            android:orientation="horizontal">
+
+                            <LinearLayout
+                                android:id="@+id/distance_layout"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_toStartOf="@+id/divider"
+                                android:layout_alignParentStart="true"
+                                android:gravity="center"
+                                android:layout_marginEnd="10dp"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="@font/poppins_regular"
+                                    android:textStyle="normal"
+                                    android:textSize="15sp"
+                                    android:textColor="#8c8cb2"
+                                    android:text="Distance"
+                                    />
+
+                                <TextView
+                                    android:id="@+id/distance"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="@font/poppins_semibold"
+                                    android:textStyle="normal"
+                                    android:textSize="18sp"
+                                    android:textColor="#1a1662"
+                                    android:text="3.25 Km"
+                                    />
+
+                            </LinearLayout>
+
+                            <View
+                                android:id="@+id/divider"
+                                android:layout_width="0.3dp"
+                                android:layout_height="wrap_content"
+                                android:background="@color/gray"
+                                android:layout_alignTop="@+id/distance_layout"
+                                android:layout_alignBottom="@+id/distance_layout"
+                                android:layout_centerHorizontal="true"
+                                />
+
+                            <LinearLayout
+                                android:id="@+id/charge_layout"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_toEndOf="@+id/divider"
+                                android:layout_marginStart="10dp"
+                                android:layout_alignParentEnd="true"
+                                android:gravity="center"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="@font/poppins_regular"
+                                    android:textStyle="normal"
+                                    android:textSize="15sp"
+                                    android:textColor="#8c8cb2"
+                                    android:text="Charge"
+                                    />
+
+                                <TextView
+                                    android:id="@+id/charge"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="@font/poppins_semibold"
+                                    android:textStyle="normal"
+                                    android:textSize="18sp"
+                                    android:textColor="#1a1662"
+                                    android:text="৳94.00"
+                                    />
+
+                            </LinearLayout>
+
+                        </RelativeLayout>
+
+                    </LinearLayout>
+
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginEnd="15dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    app:cardCornerRadius="15dp"
                     app:cardBackgroundColor="@color/white">
 
                     <LinearLayout
@@ -317,126 +452,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="15dp"
                     android:layout_marginEnd="15dp"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginBottom="10dp"
-                    app:cardCornerRadius="8dp"
-                    app:cardBackgroundColor="@color/white">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:padding="20dp"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/poppins_semibold"
-                            android:textStyle="normal"
-                            android:textSize="14sp"
-                            android:textColor="#1a1662"
-                            android:lineSpacingExtra="47sp"
-                            android:text="Distance &amp; Delivery Charge"
-                            />
-
-                        <RelativeLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:background="@drawable/button_bg"
-                            android:padding="15dp"
-                            android:layout_marginTop="18dp"
-                            android:orientation="horizontal">
-
-                            <LinearLayout
-                                android:id="@+id/distance_layout"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_toStartOf="@+id/divider"
-                                android:layout_alignParentStart="true"
-                                android:gravity="center"
-                                android:layout_marginEnd="10dp"
-                                android:orientation="vertical">
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:fontFamily="@font/poppins_regular"
-                                    android:textStyle="normal"
-                                    android:textSize="15sp"
-                                    android:textColor="#8c8cb2"
-                                    android:text="Distance"
-                                    />
-
-                                <TextView
-                                    android:id="@+id/distance"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:fontFamily="@font/poppins_semibold"
-                                    android:textStyle="normal"
-                                    android:textSize="18sp"
-                                    android:textColor="#1a1662"
-                                    android:text="3.25 Km"
-                                    />
-
-                            </LinearLayout>
-
-                            <View
-                                android:id="@+id/divider"
-                                android:layout_width="0.3dp"
-                                android:layout_height="wrap_content"
-                                android:background="@color/gray"
-                                android:layout_alignTop="@+id/distance_layout"
-                                android:layout_alignBottom="@+id/distance_layout"
-                                android:layout_centerHorizontal="true"
-                                />
-
-                            <LinearLayout
-                                android:id="@+id/charge_layout"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_toEndOf="@+id/divider"
-                                android:layout_marginStart="10dp"
-                                android:layout_alignParentEnd="true"
-                                android:gravity="center"
-                                android:orientation="vertical">
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:fontFamily="@font/poppins_regular"
-                                    android:textStyle="normal"
-                                    android:textSize="15sp"
-                                    android:textColor="#8c8cb2"
-                                    android:text="Charge"
-                                    />
-
-                                <TextView
-                                    android:id="@+id/charge"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:fontFamily="@font/poppins_semibold"
-                                    android:textStyle="normal"
-                                    android:textSize="18sp"
-                                    android:textColor="#1a1662"
-                                    android:text="৳94.00"
-                                    />
-
-                            </LinearLayout>
-
-                        </RelativeLayout>
-
-                    </LinearLayout>
-
-                </androidx.cardview.widget.CardView>
-
-                <androidx.cardview.widget.CardView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="15dp"
-                    android:layout_marginEnd="15dp"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="10dp"
                     android:layout_marginBottom="20dp"
-                    app:cardCornerRadius="8dp"
+                    app:cardCornerRadius="15dp"
                     app:cardBackgroundColor="@color/white">
 
                     <LinearLayout
@@ -516,7 +534,7 @@
                             android:textSize="15sp"
                             android:textColor="#0f122f"
                             android:lineSpacingExtra="8sp"
-                            tools:text="Cash on delivery"
+                            android:text="Cash on delivery"
                             app:drawableStartCompat="@drawable/ic_taka"
                             app:drawableEndCompat="@drawable/ic_next"
                             />
@@ -550,7 +568,7 @@
                 android:padding="10dp"
                 android:textAlignment="center"
                 android:textStyle="normal"
-                android:textSize="19sp"
+                android:textSize="15sp"
                 android:textColor="#ffffff"
                 android:lineSpacingExtra="18sp"
                 android:text="@string/confirm_delivery_request" />

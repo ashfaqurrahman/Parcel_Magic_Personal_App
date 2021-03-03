@@ -245,7 +245,7 @@ class ProductFragment : Fragment(), OnMapReadyCallback, KodeinAware, LocationLis
             dialogs.show()*/
 
 
-            myCommunicator?.addContentFragment(ReceiverAddressFragment(), true)
+            myCommunicator?.addContentFragment(ConfirmDeliveryRequestFragment(), true)
 
             //findNavController().navigate(R.id.action_productFragment_to_receiverAddressFragment)
         }

@@ -8,11 +8,14 @@ import android.widget.AdapterView
 import android.widget.AdapterView.OnItemSelectedListener
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.GridLayoutManager
 import com.airposted.bitoronbd.R
 import com.airposted.bitoronbd.data.network.preferences.PreferenceProvider
 import com.airposted.bitoronbd.databinding.FragmentConfirmDeliveryRequestBinding
 import com.airposted.bitoronbd.ui.main.CommunicatorFragmentInterface
 import com.airposted.bitoronbd.utils.round
+import com.skydoves.powerspinner.IconSpinnerAdapter
+import com.skydoves.powerspinner.IconSpinnerItem
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.x.kodein
 import java.util.*
@@ -39,29 +42,20 @@ class ConfirmDeliveryRequestFragment : Fragment(), KodeinAware {
     }
 
     private fun bindUI() {
-        /*mDeliveryList = ArrayList()
-        mDeliveryList!!.add(DeliveryItem("Express", R.drawable.ic_car))
-        mDeliveryList!!.add(DeliveryItem("Quick", R.drawable.ic_car))
-        mAdapter = DeliveryAdapter(requireActivity(), mDeliveryList)
-        binding.spinner.adapter = mAdapter
-        binding.spinner.onItemSelectedListener = object : OnItemSelectedListener {
-            override fun onItemSelected(
-                parent: AdapterView<*>,
-                view: View,
-                position: Int,
-                id: Long
-            ) {
-                val clickedItem: DeliveryItem = parent.getItemAtPosition(position) as DeliveryItem
-                val clickedCountryName: String = clickedItem.countryName
-                Toast.makeText(
-                    requireActivity(),
-                    "$clickedCountryName selected",
-                    Toast.LENGTH_SHORT
-                ).show()
+        binding.spinnerView.apply {
+            setSpinnerAdapter(IconSpinnerAdapter(this))
+            setItems(
+                arrayListOf(
+                    IconSpinnerItem(iconRes = R.drawable.ic_car, text = "Express"),
+                    IconSpinnerItem(iconRes = R.drawable.ic_car, text = "Quick")
+                )
+            )
+            setOnSpinnerItemSelectedListener<IconSpinnerItem> { _, _, _, item ->
+                Toast.makeText(requireContext(), item.text, Toast.LENGTH_SHORT).show()
             }
-
-            override fun onNothingSelected(parent: AdapterView<*>?) {}
-        }*/
+            getSpinnerRecyclerView().layoutManager = GridLayoutManager(requireContext(), 1)
+            selectItemByIndex(0)
+        }
 
         binding.toolbar.backImage.setOnClickListener {
             requireActivity().onBackPressed()
@@ -69,15 +63,15 @@ class ConfirmDeliveryRequestFragment : Fragment(), KodeinAware {
 
         binding.toolbar.toolbarTitle.text = "One Final Step"
 
-        binding.name.text = requireArguments().getString("name")
-        binding.phone.text = requireArguments().getString("phone")
-
-        binding.from.text =  requireArguments().getString("location_name")
-        binding.to.text = PreferenceProvider(
-                requireActivity()
-                ).getSharedPreferences("currentLocation")
-        binding.distance.text = round(requireArguments().getFloat("distance").toDouble(), 2).toString() + " Km"
-        binding.charge.text = "৳" + round((requireArguments().getFloat("distance") * PreferenceProvider(requireActivity()).getSharedPreferences("rate")!!.toFloat()).toDouble(), 2).toString()
+//        binding.name.text = requireArguments().getString("name")
+//        binding.phone.text = requireArguments().getString("phone")
+//
+//        binding.from.text =  requireArguments().getString("location_name")
+//        binding.to.text = PreferenceProvider(
+//                requireActivity()
+//                ).getSharedPreferences("currentLocation")
+//        binding.distance.text = round(requireArguments().getFloat("distance").toDouble(), 2).toString() + " Km"
+//        binding.charge.text = "৳" + round((requireArguments().getFloat("distance") * PreferenceProvider(requireActivity()).getSharedPreferences("rate")!!.toFloat()).toDouble(), 2).toString()
     }
 
 }
