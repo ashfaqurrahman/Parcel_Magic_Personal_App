@@ -26,7 +26,7 @@ class DeliveryAdapter(context: Context?, countryList: ArrayList<DeliveryItem>?) 
         var convertView = convertView
         if (convertView == null) {
             convertView = LayoutInflater.from(context).inflate(
-                R.layout.delivery_type_item, parent, false
+                R.layout.row, parent, false
             )
         }
         val imageViewFlag = convertView.findViewById<ImageView>(R.id.image_view_flag)

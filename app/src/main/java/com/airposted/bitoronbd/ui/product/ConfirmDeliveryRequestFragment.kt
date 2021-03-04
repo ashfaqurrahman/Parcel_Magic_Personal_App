@@ -1,27 +1,23 @@
 package com.airposted.bitoronbd.ui.product
 
-import android.graphics.Color
-import android.graphics.drawable.Drawable
+import android.R
+import android.graphics.PorterDuff
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.AdapterView.OnItemSelectedListener
+import android.widget.ArrayAdapter
 import android.widget.Toast
-import androidx.annotation.DrawableRes
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.GridLayoutManager
-import com.airposted.bitoronbd.R
 import com.airposted.bitoronbd.data.network.preferences.PreferenceProvider
 import com.airposted.bitoronbd.databinding.FragmentConfirmDeliveryRequestBinding
-import com.airposted.bitoronbd.ui.main.CommunicatorFragmentInterface
 import com.airposted.bitoronbd.utils.round
-import com.skydoves.powerspinner.*
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.x.kodein
 import java.util.*
+
 
 class ConfirmDeliveryRequestFragment : Fragment(), KodeinAware {
     override val kodein by kodein()
@@ -45,22 +41,33 @@ class ConfirmDeliveryRequestFragment : Fragment(), KodeinAware {
     }
 
     private fun bindUI() {
+        val deliveryType = arrayOf(
+            "Express",
+            "Quick"
+        )
 
-        binding.spinnerView.apply {
-            setSpinnerAdapter(IconSpinnerAdapter(this))
-            setItems(
-                arrayListOf(
-                    IconSpinnerItem(icon = contextDrawable(R.drawable.ic_car), text = "Express"),
-                    IconSpinnerItem(icon = contextDrawable(R.drawable.ic_car), text = "Quick")
-                )
-            )
-            setOnSpinnerItemSelectedListener<IconSpinnerItem> { _, _, _, item ->
-                Toast.makeText(requireContext(), item.text, Toast.LENGTH_SHORT).show()
+        binding.spinner.background.setColorFilter(resources.getColor(android.R.color.black), PorterDuff.Mode.SRC_ATOP)
+        val adapter = ArrayAdapter(requireContext(), R.layout.row, binding., deliveryType)
+
+        binding.spinner.adapter = adapter
+        binding.spinner.onItemSelectedListener = object : OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>,
+                view: View,
+                position: Int,
+                id: Long
+            ) {
+                Toast.makeText(
+                    context,
+                    parent.selectedItem.toString(),
+                    Toast.LENGTH_SHORT
+                ).show()
             }
-            getSpinnerRecyclerView().layoutManager = GridLayoutManager(requireContext(), 1)
-            selectItemByIndex(0)
-            lifecycleOwner = this@ConfirmDeliveryRequestFragment
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {}
         }
+
+//        binding.spinner.
 
         binding.toolbar.backImage.setOnClickListener {
             requireActivity().onBackPressed()
@@ -73,14 +80,14 @@ class ConfirmDeliveryRequestFragment : Fragment(), KodeinAware {
 
         binding.from.text =  requireArguments().getString("location_name")
         binding.to.text = PreferenceProvider(
-                requireActivity()
-                ).getSharedPreferences("currentLocation")
+            requireActivity()
+        ).getSharedPreferences("currentLocation")
         binding.distance.text = round(requireArguments().getFloat("distance").toDouble(), 2).toString() + " Km"
-        binding.charge.text = "৳" + round((requireArguments().getFloat("distance") * PreferenceProvider(requireActivity()).getSharedPreferences("rate")!!.toFloat()).toDouble(), 2).toString()
-    }
-
-    private fun contextDrawable(@DrawableRes resource: Int): Drawable? {
-        return ContextCompat.getDrawable(requireContext(), resource)
+        binding.charge.text = "৳" + round(
+            (requireArguments().getFloat("distance") * PreferenceProvider(
+                requireActivity()
+            ).getSharedPreferences("rate")!!.toFloat()).toDouble(), 2
+        ).toString()
     }
 
 }

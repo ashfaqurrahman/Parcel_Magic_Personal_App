@@ -115,7 +115,4 @@ dependencies {
 
     //rating
     implementation 'com.github.ome450901:SimpleRatingBar:1.5.1'
-
-    //powerSpinner
-    implementation "com.github.skydoves:powerspinner:1.1.7"
 }
