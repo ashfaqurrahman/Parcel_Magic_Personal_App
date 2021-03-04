@@ -2,7 +2,6 @@ package com.airposted.bitoronbd.ui.product
 
 import android.graphics.Bitmap
 import android.graphics.Canvas
-import android.graphics.Color
 import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.util.Log
@@ -163,7 +162,7 @@ class ConfirmReceiverAddressFragment : Fragment(), KodeinAware {
                     bundle.putFloat("distance", distance/1000)
                     bundle.putString("location_name", requireArguments().getString("location_name"))
                     fragment.arguments = bundle
-                    myCommunicator?.addContentFragment(fragment, false)
+                    myCommunicator?.addContentFragment(fragment, true)
                 }
             }
         }
