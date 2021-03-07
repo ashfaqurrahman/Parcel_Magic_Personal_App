@@ -15,7 +15,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/toolbar"
-            android:layout_above="@+id/confirm_receiver_address"
+            android:layout_above="@+id/confirm_delivery_request_layout"
             android:scrollbars="none">
 
             <LinearLayout
@@ -116,6 +116,7 @@
                                 android:padding="5dp"
                                 android:spinnerMode="dropdown"
                                 android:textSize="15sp"
+                                android:overlapAnchor="false"
                                 android:background="@drawable/spinner_bg"/>
 
                         </RelativeLayout>
@@ -472,6 +473,7 @@
                             android:orientation="horizontal">
 
                             <RadioGroup
+                                android:id="@+id/radioGroup"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:orientation="horizontal">
@@ -512,7 +514,7 @@
 
                         </RelativeLayout>
 
-                        <TextView
+                        <!--<TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="20dp"
@@ -525,7 +527,7 @@
                             android:text="Cash on delivery"
                             app:drawableStartCompat="@drawable/ic_taka"
                             app:drawableEndCompat="@drawable/ic_next"
-                            />
+                            />-->
 
                     </LinearLayout>
 
@@ -536,7 +538,7 @@
         </ScrollView>
 
         <LinearLayout
-            android:id="@+id/confirm_receiver_address"
+            android:id="@+id/confirm_delivery_request_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
@@ -548,13 +550,13 @@
             android:orientation="horizontal">
 
             <TextView
+                android:id="@+id/confirm_delivery_request"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:fontFamily="@font/poppins_medium"
                 android:background="@drawable/after_button_bg"
-                android:gravity="center_vertical"
+                android:gravity="center"
                 android:padding="10dp"
-                android:textAlignment="center"
                 android:textStyle="normal"
                 android:textSize="15sp"
                 android:textColor="#ffffff"

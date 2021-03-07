@@ -60,8 +60,16 @@ class HomeFragment : Fragment(R.layout.fragment_home), KodeinAware {
             try {
                 val settingResponse = viewModel.getSetting()
                 PreferenceProvider(requireActivity()).saveSharedPreferences(
-                    "rate",
+                    "rate_quick",
                     settingResponse.rate.perKmPrice.toString()
+                )
+                PreferenceProvider(requireActivity()).saveSharedPreferences(
+                    "rate_express",
+                    "20"
+                )
+                PreferenceProvider(requireActivity()).saveSharedPreferences(
+                    "base_price_personal",
+                    settingResponse.rate.basePricePersonal.toString()
                 )
                 //dismissDialog()
             } catch (e: ApiException) {

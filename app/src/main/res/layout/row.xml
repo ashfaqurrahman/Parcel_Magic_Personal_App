@@ -1,43 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical"
+    android:padding="10dp">
 
-    <data>
-
-        <variable
-            name="spinner"
-            type="com.airposted.bitoronbd.model.Prediction" />
-
-        <variable
-            name="itemClickListener"
-            type="com.airposted.bitoronbd.ui.product.ConfirmDeliveryRequestFragment" />
-    </data>
-
-    <RelativeLayout
+    <ImageView
+        android:id="@+id/image_view_flag"
         android:layout_width="wrap_content"
-        android:gravity="center_vertical"
-        android:padding="10dp"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/text_view_name"
+        android:layout_alignBottom="@+id/text_view_name"
+        android:src="@drawable/ic_car" />
 
-        <ImageView
-            android:id="@+id/image_view_flag"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignTop="@+id/text_view_name"
-            android:layout_alignBottom="@+id/text_view_name"
-            android:src="@drawable/ic_car" />
-        <TextView
-            android:id="@+id/text_view_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toEndOf="@+id/image_view_flag"
-            android:layout_marginStart="10dp"
-            android:gravity="center"
-            tools:text="Express"
-            android:onClick="@{() -> itemClickListener.onItemClick(spinner)}"
-            android:text="@{spinner.description}"
-            android:textSize="15sp"
-            android:textColor="@android:color/black" />
-    </RelativeLayout>
-
-</layout>
+    <TextView
+        android:id="@+id/text_view_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_toEndOf="@+id/image_view_flag"
+        android:gravity="center"
+        android:textColor="@android:color/black"
+        android:textSize="15sp"
+        tools:text="Express" />
+</RelativeLayout>

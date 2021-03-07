@@ -53,4 +53,7 @@
     <string name="gifts_electronic_food_accessories_etc">Gifts, Electronic, Food, Accessories, Etc....</string>
     <string name="house_43_road_1_block_i_banani_dhaka_1213">House # 43, Road# 1, Block #I, Banani, Dhaka-1213</string>
     <string name="receiver_apos_s_details">Receiver\'s Details</string>
+    <string name="one_final_step">One Final Step</string>
+    <string name="proceed_to_payment">Proceed to Payment</string>
+    <string name="successful_order_text">Your request has been processed &amp; \nwill be delivered within 24 hour. \nYour tracking ID is %1$s.</string>
 </resources>
