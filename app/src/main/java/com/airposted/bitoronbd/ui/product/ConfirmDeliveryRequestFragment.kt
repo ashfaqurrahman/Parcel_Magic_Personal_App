@@ -46,8 +46,8 @@ class ConfirmDeliveryRequestFragment : Fragment(), KodeinAware {
             "Quick"
         )
 
-        binding.spinner.background.setColorFilter(resources.getColor(android.R.color.black), PorterDuff.Mode.SRC_ATOP)
-        val adapter = ArrayAdapter(requireContext(), R.layout.row, binding., deliveryType)
+        binding.spinner.background.setColorFilter(resources.getColor(R.color.black), PorterDuff.Mode.SRC_ATOP)
+        val adapter = ArrayAdapter(requireActivity(), R.layout.row, R.id.text_view_name, deliveryType)
 
         binding.spinner.adapter = adapter
         binding.spinner.onItemSelectedListener = object : OnItemSelectedListener {
