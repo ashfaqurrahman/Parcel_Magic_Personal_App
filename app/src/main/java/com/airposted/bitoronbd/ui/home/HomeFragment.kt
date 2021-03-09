@@ -3,11 +3,9 @@ package com.airposted.bitoronbd.ui.home
 import android.app.Dialog
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
-import android.os.Build
 import android.os.Bundle
 import android.view.*
-import androidx.annotation.RequiresApi
-import androidx.core.view.isVisible
+import android.widget.RelativeLayout
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
@@ -18,7 +16,6 @@ import com.airposted.bitoronbd.ui.location_set.LocationSetFragment
 import com.airposted.bitoronbd.ui.main.CommunicatorFragmentInterface
 import com.airposted.bitoronbd.ui.product.ProductFragment
 import com.airposted.bitoronbd.utils.*
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.coroutines.launch
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.x.kodein
@@ -93,5 +90,31 @@ class HomeFragment : Fragment(R.layout.fragment_home), KodeinAware {
             myCommunicator?.addContentFragment(ProductFragment(), true)
             //findNavController().navigate(R.id.action_homeFragment_to_productFragment)
         }
+
+        homeBinding.notification.setOnClickListener {
+            openNotificationDialog()
+        }
+    }
+
+    private fun openNotificationDialog() {
+        val orderDialog = Dialog(requireContext())
+        orderDialog.setContentView(R.layout.order_dialog)
+
+        val parent = orderDialog.findViewById<RelativeLayout>(R.id.parent)
+
+//        parent.setOnClickListener {
+//            orderDialog.dismiss()
+//        }
+        val window: Window? = orderDialog.getWindow()
+        val wlp = window?.attributes
+
+        wlp?.gravity = Gravity.TOP
+        orderDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        orderDialog.window?.setLayout(
+            ViewGroup.LayoutParams.MATCH_PARENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT
+        )
+        orderDialog.setCancelable(true)
+        orderDialog.show()
     }
 }
