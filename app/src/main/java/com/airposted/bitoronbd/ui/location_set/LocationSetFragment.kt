@@ -10,8 +10,6 @@ import android.provider.Settings
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.Animation
-import android.view.animation.AnimationUtils
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.SearchView
@@ -242,7 +240,7 @@ class LocationSetFragment : Fragment(), KodeinAware, CustomClickListener,
                     binding.loading.visibility = View.GONE
                     btnClose.visibility = View.VISIBLE
                     if (list.predictions.isNotEmpty()) {
-                        val myRecyclerViewAdapter = MyRecyclerViewAdapter(
+                        val myRecyclerViewAdapter = LocationSetRecyclerViewAdapter(
                             list.predictions,
                             this@LocationSetFragment,
                         )

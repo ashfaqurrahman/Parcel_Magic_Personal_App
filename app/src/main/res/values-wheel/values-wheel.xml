@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="CursorWheelLayout">
+        <attr format="float" name="wheelSelectedAngle"/>
+        <attr format="float" name="wheelPaddingRadio"/>
+        <attr format="float" name="wheelCenterRadio"/>
+        <attr format="float" name="wheelItemRadio"/>
+        <attr format="integer" name="wheelFlingValue"/>
+        <attr format="dimension" name="wheelCursorHeight"/>
+        <attr format="color" name="wheelCursorColor"/>
+        <attr format="color" name="wheelBackgroundColor"/>
+        <attr format="enum" name="wheelItemRotateMode">
+            <enum name="none" value="0"/>
+            <enum name="inward" value="1"/>
+            <enum name="outward" value="2"/>
+        </attr>
+        <attr format="dimension" name="wheelGuideLineWidth"/>
+        <attr format="color" name="wheelGuideLineColor"/>
+    </declare-styleable>
+    <item name="id_wheel_menu_center_item" type="id"/>
+    <item name="id_wheel_view_angle" type="id"/>
+</resources>

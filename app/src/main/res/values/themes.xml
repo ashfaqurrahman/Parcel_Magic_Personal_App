@@ -86,4 +86,12 @@
         <item name="android:windowExitAnimation">@anim/slide_bottom</item>
     </style>
 
+    <declare-styleable name="SwitchButton">
+        <attr name="uncheckSrc" format="reference"></attr>
+        <attr name="checkSrc" format="reference"></attr>
+        <attr name="boardWidth" format="dimension"></attr>
+        <attr name="uncheckRevealColor" format="color"></attr>
+        <attr name="checkRevealColor" format="color"></attr>
+    </declare-styleable>
+
 </resources>

@@ -7,9 +7,7 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.*
 import android.location.LocationListener
-import android.os.Build
 import android.os.Bundle
-import android.os.Looper
 import android.provider.Settings
 import android.view.View
 import android.widget.EditText
@@ -239,7 +237,7 @@ class LocationSetActivity : AppCompatActivity(), KodeinAware, CustomClickListene
                     binding.loading.visibility = View.GONE
                     btnClose.visibility = View.VISIBLE
                     if (list.predictions.isNotEmpty()) {
-                        val myRecyclerViewAdapter = MyRecyclerViewAdapter(
+                        val myRecyclerViewAdapter = LocationSetRecyclerViewAdapter(
                             list.predictions,
                             this@LocationSetActivity,
                         )

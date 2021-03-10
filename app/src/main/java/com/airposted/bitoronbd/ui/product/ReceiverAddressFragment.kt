@@ -20,7 +20,7 @@ import com.airposted.bitoronbd.model.SearchLocation
 import com.airposted.bitoronbd.ui.location_set.CustomClickListener
 import com.airposted.bitoronbd.ui.location_set.LocationSetViewModel
 import com.airposted.bitoronbd.ui.location_set.LocationSetViewModelFactory
-import com.airposted.bitoronbd.ui.location_set.MyRecyclerViewAdapter
+import com.airposted.bitoronbd.ui.location_set.LocationSetRecyclerViewAdapter
 import com.airposted.bitoronbd.ui.main.CommunicatorFragmentInterface
 import com.airposted.bitoronbd.utils.ApiException
 import com.airposted.bitoronbd.utils.NoInternetException
@@ -31,7 +31,6 @@ import kotlinx.coroutines.launch
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.x.kodein
 import org.kodein.di.generic.instance
-import kotlin.properties.Delegates
 
 
 class ReceiverAddressFragment : Fragment(), KodeinAware, CustomClickListener {
@@ -102,7 +101,7 @@ class ReceiverAddressFragment : Fragment(), KodeinAware, CustomClickListener {
                     binding.loading.visibility = View.GONE
                     btnClose.visibility = View.VISIBLE
                     if (list.predictions.isNotEmpty()) {
-                        val myRecyclerViewAdapter = MyRecyclerViewAdapter(
+                        val myRecyclerViewAdapter = LocationSetRecyclerViewAdapter(
                             list.predictions,
                             this@ReceiverAddressFragment,
                         )

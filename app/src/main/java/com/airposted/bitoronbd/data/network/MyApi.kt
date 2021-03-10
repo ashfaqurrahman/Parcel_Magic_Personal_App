@@ -2,6 +2,7 @@ package com.airposted.bitoronbd.data.network
 
 import com.airposted.bitoronbd.data.network.responses.AuthResponse
 import com.airposted.bitoronbd.model.GoogleMapDTO
+import com.airposted.bitoronbd.model.OrderListData
 import com.airposted.bitoronbd.model.SearchLocation
 import com.airposted.bitoronbd.model.SettingModel
 import okhttp3.*
@@ -50,6 +51,16 @@ interface MyApi {
         @Part file: MultipartBody.Part,
         @Part("image") requestBody: RequestBody
     ) : Response<AuthResponse>
+
+    @POST("personal/currentorderlist")
+    suspend fun currentOrderList(
+        @Header("Authorization") header: String
+    ) : Response<OrderListData>
+
+    @POST("personal/pendingorderlist")
+    suspend fun pendingOrderList(
+        @Header("Authorization") header: String
+    ) : Response<OrderListData>
 
     @GET
     suspend fun getPlacesNameList(@Url url: String): Response<SearchLocation>

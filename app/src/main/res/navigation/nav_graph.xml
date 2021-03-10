@@ -25,7 +25,7 @@
 
     <fragment
         android:id="@+id/myParcelFragment"
-        android:name="com.airposted.bitoronbd.ui.MyParcelFragment"
+        android:name="com.airposted.bitoronbd.ui.my_parcel.MyParcelFragment"
         tools:layout="@layout/fragment_my_parcel">
 
     </fragment>
