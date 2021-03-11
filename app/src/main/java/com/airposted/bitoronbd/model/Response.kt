@@ -21,7 +21,7 @@ data class Response(
     @SerializedName("invoice_no")
     val invoiceNo: String,
     @SerializedName("item_des")
-    val itemDes: Int,
+    val itemDes: String,
     @SerializedName("item_price")
     val itemPrice: Int,
     @SerializedName("item_qty")
