@@ -9,7 +9,9 @@
         android:background="@color/white"
         android:orientation="vertical"
         tools:context=".ui.my_parcel.MyParcelFragment"
-        android:id="@+id/root_layout">
+        android:id="@+id/root_layout"
+        android:focusableInTouchMode="true"
+        android:clickable="true">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -64,7 +66,6 @@
                     android:background="@null"
                     android:fontFamily="@font/poppins_regular"
                     android:hint="Search your parcel"
-
                     android:textColorHint="#adbbd6" />
 
                 <ImageView
@@ -85,6 +86,15 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             tools:listitem="@layout/my_parcel_list_item" />
+
+        <TextView
+            android:id="@+id/no_order"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textSize="18sp"
+            android:text="No orders"
+            android:visibility="gone"
+            android:gravity="center"/>
 
     </LinearLayout>
 

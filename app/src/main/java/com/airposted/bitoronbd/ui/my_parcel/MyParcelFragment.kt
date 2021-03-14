@@ -5,9 +5,12 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.text.Editable
+import android.text.Selection
 import android.text.TextWatcher
+import android.util.Log
 import android.util.MalformedJsonException
 import android.view.*
+import android.view.View.OnFocusChangeListener
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
@@ -27,7 +30,7 @@ import kotlinx.coroutines.launch
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.x.kodein
 import org.kodein.di.generic.instance
-import kotlin.collections.ArrayList
+
 
 class MyParcelFragment : Fragment(), KodeinAware, CursorWheelLayout.OnMenuSelectedListener {
     override val kodein by kodein()
@@ -60,9 +63,27 @@ class MyParcelFragment : Fragment(), KodeinAware, CursorWheelLayout.OnMenuSelect
         }
         getOrderList(0)
 
+        binding.searchItem.onFocusChangeListener = OnFocusChangeListener { view, hasFocus ->
+            if (hasFocus) {
+                binding.searchItem.setText("#")
+                binding.searchItem.showKeyboard()
+                Selection.setSelection(binding.searchItem.text, binding.searchItem.length())
+            } else {
+                binding.searchItem.hideKeyboard()
+                Log.e("aaaaa", binding.searchItem.text.length.toString())
+                if (binding.searchItem.text.length == 1) {
+                    binding.searchItem.setText("")
+                }
+            }
+        }
+
         binding.searchItem.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable) {
+                if(!s.toString().contains("#")){
+                    binding.searchItem.setText("#")
+                    Selection.setSelection(binding.searchItem.text, binding.searchItem.text.length)
 
+                }
             }
 
             override fun beforeTextChanged(
@@ -75,33 +96,39 @@ class MyParcelFragment : Fragment(), KodeinAware, CursorWheelLayout.OnMenuSelect
                 s: CharSequence, start: Int,
                 before: Int, count: Int
             ) {
-                if (s.toString().isNotEmpty()) {
-                    val listNew: ArrayList<Response> = ArrayList()
-                    for (l in invoice.indices) {
-                        val serviceName: String = invoice[l].invoiceNo
-                        if (serviceName.contains(s.toString())) {
-                            listNew.add(invoice[l])
+                if(s.length > 1) {
+                    binding.orders.layoutManager = GridLayoutManager(
+                        requireActivity(),
+                        1
+                    )
+                    binding.orders.itemAnimator = DefaultItemAnimator()
+                    if (s.toString().isNotEmpty()) {
+                        val listNew: ArrayList<Response> = ArrayList()
+                        for (l in invoice.indices) {
+                            val serviceName: String = invoice[l].invoiceNo
+                            if (serviceName.contains(s.toString())) {
+                                listNew.add(invoice[l])
+                                binding.orders.visibility = View.VISIBLE
+                                binding.noOrder.visibility = View.GONE
+                            }
                         }
+                        if (listNew.isNullOrEmpty()) {
+                            binding.orders.visibility = View.GONE
+                            binding.noOrder.visibility = View.VISIBLE
+                        } else {
+                            val myRecyclerViewAdapter = OrderListRecyclerViewAdapter(
+                                listNew
+                            )
+                            binding.orders.adapter = myRecyclerViewAdapter
+                        }
+                    } else {
+                        binding.orders.visibility = View.VISIBLE
+                        binding.noOrder.visibility = View.GONE
+                        val myRecyclerViewAdapter = OrderListRecyclerViewAdapter(
+                            invoice
+                        )
+                        binding.orders.adapter = myRecyclerViewAdapter
                     }
-                    val myRecyclerViewAdapter = OrderListRecyclerViewAdapter(
-                        listNew
-                    )
-                    binding.orders.layoutManager = GridLayoutManager(
-                        requireActivity(),
-                        1
-                    )
-                    binding.orders.itemAnimator = DefaultItemAnimator()
-                    binding.orders.adapter = myRecyclerViewAdapter
-                } else {
-                    val myRecyclerViewAdapter = OrderListRecyclerViewAdapter(
-                        invoice
-                    )
-                    binding.orders.layoutManager = GridLayoutManager(
-                        requireActivity(),
-                        1
-                    )
-                    binding.orders.itemAnimator = DefaultItemAnimator()
-                    binding.orders.adapter = myRecyclerViewAdapter
                 }
             }
         })
@@ -141,6 +168,7 @@ class MyParcelFragment : Fragment(), KodeinAware, CursorWheelLayout.OnMenuSelect
                     binding.orders.adapter = myRecyclerViewAdapter
                 } else {
                     binding.orders.visibility = View.GONE
+                    binding.noOrder.visibility = View.VISIBLE
                 }
                 dismissDialog()
             } catch (e: MalformedJsonException) {

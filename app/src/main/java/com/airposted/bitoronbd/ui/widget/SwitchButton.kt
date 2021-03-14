@@ -402,8 +402,8 @@ class SwitchButton : View {
         //    private static final int DEFAULT_UNCHECK_REVEAL_COLOR = 0X1D1F22;
         private const val DEFAULT_CHECK_REVEAL_COLOR = -0x3ad6
         private const val DEFAULT_DISABLE_COVER_COLOR = 0x4cffffff
-        private const val DEFAULT_CHECK_DRAWABLE_ID = R.drawable.ic_close_red
-        private const val DEFAULT_UNCHECK_DRAWABLE_ID = R.drawable.ic_close_red
+        private const val DEFAULT_CHECK_DRAWABLE_ID = R.drawable.done
+        private const val DEFAULT_UNCHECK_DRAWABLE_ID = R.drawable.done
         private const val DEFAULT_SIZE = 126 //dp
         fun resolveSizeAndState(desireSize: Int, measureSpec: Int): Int {
             var result = desireSize
