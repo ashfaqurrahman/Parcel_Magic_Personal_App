@@ -6,6 +6,8 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.text.Editable
 import android.text.SpannableStringBuilder
@@ -15,6 +17,7 @@ import android.text.method.LinkMovementMethod
 import android.text.style.ClickableSpan
 import android.text.style.ForegroundColorSpan
 import android.view.View
+import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.ProgressBar
@@ -60,6 +63,11 @@ fun setProgressDialog(context: Context) {
         pDialog!!.setCanceledOnTouchOutside(false)
         pDialog!!.show()
         pDialog!!.setContentView(R.layout.custom_progress_bar)
+        pDialog!!.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        pDialog!!.window?.setLayout(
+            ViewGroup.LayoutParams.WRAP_CONTENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT
+        )
     } catch (ignored: Exception) {
     }
 }
