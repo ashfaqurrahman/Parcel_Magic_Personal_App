@@ -69,7 +69,7 @@
                             android:visibility="visible"
                             android:layout_width="match_parent"
                             android:layout_height="45dp"
-                            android:background="@drawable/rectengle_border">
+                            android:background="@drawable/rectangle_border_bg">
 
                             <ImageView
                                 android:layout_width="13dp"
@@ -116,7 +116,7 @@
                             android:visibility="gone"
                             android:layout_width="match_parent"
                             android:layout_height="45dp"
-                            android:background="@drawable/rectengle_border">
+                            android:background="@drawable/rectangle_border_bg">
 
                             <ImageView
                                 android:layout_width="13dp"
