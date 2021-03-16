@@ -18,13 +18,13 @@
             android:gravity="center_horizontal"
             android:orientation="vertical">
 
-            <ImageView
+            <!--<ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="10dp"
                 android:layout_marginTop="10dp"
                 android:layout_gravity="end"
-                android:src="@drawable/ic_cross_icon" />
+                android:src="@drawable/ic_cross_icon" />-->
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -54,7 +54,7 @@
                 android:layout_marginEnd="35dp"
                 android:fontFamily="@font/poppins_regular"
                 android:gravity="center_horizontal"
-                android:text="Your request has been processed &amp; \nwill be delivered within 24 hour. \nYour tracking ID is #57d716."
+                android:text="@string/successful_order_text"
                 android:textColor="#4c4c4c"
                 android:textSize="13sp"
                 android:textStyle="normal" />
@@ -80,7 +80,7 @@
                     android:paddingTop="13dp"
                     android:paddingEnd="35dp"
                     android:paddingBottom="13dp"
-                    android:text="@string/proceed_to_payment"
+                    android:text="@string/view_this_parcel"
                     android:textColor="@color/white" />
 
             </LinearLayout>

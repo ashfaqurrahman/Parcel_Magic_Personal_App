@@ -10,7 +10,7 @@
         android:layout_centerHorizontal="true"
         android:elevation="10dp"
         app:cardBackgroundColor="@color/white"
-        app:cardCornerRadius="16dp">
+        app:cardCornerRadius="10dp">
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -19,6 +19,7 @@
             android:orientation="vertical">
 
             <ImageView
+                android:id="@+id/close"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="10dp"
@@ -31,9 +32,10 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/poppins_medium"
                 android:textStyle="bold"
+                android:layout_marginStart="60dp"
+                android:layout_marginEnd="60dp"
                 android:textSize="20sp"
                 android:textColor="#0f122f"
-                android:lineSpacingExtra="10sp"
                 android:gravity="center_horizontal"
                 android:text="Please select your\n product type"
                 />
@@ -43,9 +45,11 @@
                 android:layout_height="match_parent"
                 android:layout_marginTop="30dp"
                 android:weightSum="3"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:layout_marginBottom="25dp">
 
                 <androidx.cardview.widget.CardView
+                    android:id="@+id/fragile"
                     android:layout_width="0dp"
                     android:layout_height="85dp"
                     app:cardBackgroundColor="#e8f0fe"
@@ -60,9 +64,10 @@
                         android:layout_height="wrap_content">
 
                         <RelativeLayout
+                            android:id="@+id/fragile_select"
                             android:layout_width="match_parent"
                             android:layout_height="85dp"
-                            android:visibility="visible"
+                            android:visibility="gone"
                             android:background="@drawable/rectangle_border">
 
                             <ImageView
@@ -108,11 +113,12 @@
                 </androidx.cardview.widget.CardView>
 
                 <androidx.cardview.widget.CardView
+                    android:id="@+id/liquid"
                     android:layout_width="0dp"
                     android:layout_height="85dp"
                     app:cardBackgroundColor="#e6f4ea"
                     android:layout_marginStart="7dp"
-                    android:layout_marginEnd="15dp"
+                    android:layout_marginEnd="6dp"
                     app:cardCornerRadius="7dp"
                     app:cardElevation="0dp"
                     android:layout_weight="1">
@@ -122,6 +128,7 @@
                         android:layout_height="wrap_content">
 
                         <RelativeLayout
+                            android:id="@+id/liquid_select"
                             android:layout_width="match_parent"
                             android:layout_height="85dp"
                             android:visibility="gone"
@@ -170,6 +177,7 @@
                 </androidx.cardview.widget.CardView>
 
                 <androidx.cardview.widget.CardView
+                    android:id="@+id/solid"
                     android:layout_width="0dp"
                     android:layout_height="85dp"
                     app:cardBackgroundColor="#fef7e0"
@@ -184,6 +192,7 @@
                         android:layout_height="wrap_content">
 
                         <RelativeLayout
+                            android:id="@+id/solid_select"
                             android:layout_width="match_parent"
                             android:layout_height="85dp"
                             android:visibility="gone"
@@ -234,20 +243,21 @@
             </LinearLayout>
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/product_details_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="15dp"
                 android:layout_marginEnd="15dp"
-                android:layout_marginTop="25dp"
                 style="@style/MyTextInputLayout"
+                android:visibility="gone"
                 app:errorEnabled="false">
 
-                <androidx.appcompat.widget.AppCompatEditText
-                    android:id="@+id/receiver_name"
+                <EditText
+                    android:id="@+id/product_details"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textCapWords"
-                    android:hint="@string/receiver_name"
+                    android:hint="@string/product_details"
                     android:imeOptions="actionNext"
                     style="@style/MyTextInputEditText"
                     android:maxLines="1"/>
@@ -255,11 +265,11 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <LinearLayout
+                android:id="@+id/next_layout"
+                android:visibility="gone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="35dp"
                 android:layout_marginTop="30dp"
-                android:layout_marginEnd="35dp"
                 android:layout_marginBottom="35dp">
 
                 <TextView
@@ -271,10 +281,11 @@
                     android:background="@drawable/after_button_bg"
                     android:gravity="center"
                     android:paddingStart="120dp"
-                    android:paddingTop="13dp"
+                    android:paddingTop="18dp"
                     android:paddingEnd="120dp"
-                    android:paddingBottom="13dp"
-                    android:text="@string/done"
+                    android:paddingBottom="17dp"
+                    android:text="@string/next"
+                    android:textSize="15sp"
                     android:textColor="@color/white" />
 
             </LinearLayout>

@@ -56,6 +56,8 @@ class ProductFragment : Fragment(), OnMapReadyCallback, KodeinAware, LocationLis
     private var latitude by Delegates.notNull<Double>()
     private var longitude by Delegates.notNull<Double>()
     private var locationName = ""
+    private var city = ""
+    private var area = ""
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -119,8 +121,6 @@ class ProductFragment : Fragment(), OnMapReadyCallback, KodeinAware, LocationLis
                 finalLoc = net_loc
             }
         }
-
-        Log.e("aaaaaa", finalLoc?.latitude.toString())
 
         myCommunicator = context as CommunicatorFragmentInterface
 
@@ -272,6 +272,8 @@ class ProductFragment : Fragment(), OnMapReadyCallback, KodeinAware, LocationLis
                 bundle.putString("location_name", locationName)
                 bundle.putDouble("latitude", latitude)
                 bundle.putDouble("longitude", longitude)
+                bundle.putString("city", city)
+                bundle.putString("area", area)
                 fragment.arguments = bundle
                 myCommunicator?.addContentFragment(fragment, true)
             } else {
@@ -319,7 +321,6 @@ class ProductFragment : Fragment(), OnMapReadyCallback, KodeinAware, LocationLis
 
     override fun onProviderEnabled(provider: String) {
         val lm = requireActivity().getSystemService(Context.LOCATION_SERVICE) as LocationManager
-        Log.e("aaaaa", lm.getLastKnownLocation(LocationManager.GPS_PROVIDER)?.latitude.toString())
     }
 
     override fun onProviderDisabled(provider: String) {}
@@ -374,6 +375,12 @@ class ProductFragment : Fragment(), OnMapReadyCallback, KodeinAware, LocationLis
                     }
                     latitude = center.latitude
                     longitude = center.longitude
+                    city = addresses[0].locality
+                    area = if (addresses[0].subLocality == null){
+                        city
+                    }else {
+                        addresses[0].subLocality
+                    }
                     productBinding.address.text = locationString
                     locationName = locationString
                     productBinding.receiverAddress.background = ContextCompat.getDrawable(
@@ -403,6 +410,12 @@ class ProductFragment : Fragment(), OnMapReadyCallback, KodeinAware, LocationLis
                         }
                         if (addresses[0].featureName == addresses[0].thoroughfare){
                             locationString = addresses[0].featureName
+                        }
+                        city = addresses[0].locality
+                        area = if (addresses[0].subLocality == null){
+                            city
+                        }else {
+                            addresses[0].subLocality
                         }
                         latitude = center.latitude
                         longitude = center.longitude

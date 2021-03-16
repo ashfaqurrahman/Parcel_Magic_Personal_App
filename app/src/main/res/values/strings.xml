@@ -56,4 +56,6 @@
     <string name="one_final_step">One Final Step</string>
     <string name="proceed_to_payment">Proceed to Payment</string>
     <string name="successful_order_text">Your request has been processed &amp; \nwill be delivered within 24 hour. \nYour tracking ID is %1$s.</string>
+    <string name="cash_on_delivery">Cash on delivery</string>
+    <string name="product_details">Product details</string>
 </resources>

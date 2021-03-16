@@ -6,7 +6,8 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.product.ConfirmDeliveryRequestFragment">
+        tools:context=".ui.product.ConfirmDeliveryRequestFragment"
+        android:id="@+id/root_layout">
 
         <include layout="@layout/custom_toolbar_blue"
             android:id="@+id/toolbar"/>
@@ -514,7 +515,8 @@
 
                         </RelativeLayout>
 
-                        <!--<TextView
+                        <TextView
+                            android:id="@+id/cash_on_delivery"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="20dp"
@@ -524,10 +526,11 @@
                             android:textSize="15sp"
                             android:textColor="#0f122f"
                             android:lineSpacingExtra="8sp"
-                            android:text="Cash on delivery"
+                            android:text="@string/cash_on_delivery"
+                            android:visibility="gone"
                             app:drawableStartCompat="@drawable/ic_taka"
                             app:drawableEndCompat="@drawable/ic_next"
-                            />-->
+                            />
 
                     </LinearLayout>
 

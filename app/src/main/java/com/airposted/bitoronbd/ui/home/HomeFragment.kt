@@ -5,7 +5,8 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.*
-import android.widget.RelativeLayout
+import android.widget.*
+import androidx.cardview.widget.CardView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
@@ -16,6 +17,7 @@ import com.airposted.bitoronbd.ui.location_set.LocationSetFragment
 import com.airposted.bitoronbd.ui.main.CommunicatorFragmentInterface
 import com.airposted.bitoronbd.ui.product.ProductFragment
 import com.airposted.bitoronbd.utils.*
+import com.google.android.material.textfield.TextInputLayout
 import kotlinx.coroutines.launch
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.x.kodein
@@ -87,7 +89,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), KodeinAware {
         }
 
         homeBinding.productBtn.setOnClickListener{
-            myCommunicator?.addContentFragment(ProductFragment(), true)
+            productTypeDialog()
             //findNavController().navigate(R.id.action_homeFragment_to_productFragment)
         }
 
@@ -116,5 +118,70 @@ class HomeFragment : Fragment(R.layout.fragment_home), KodeinAware {
         )
         orderDialog.setCancelable(true)
         orderDialog.show()
+    }
+
+    private fun productTypeDialog(){
+        val dialogs = Dialog(requireActivity())
+        dialogs.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialogs.setContentView(R.layout.product_type)
+        dialogs.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialogs.window?.setLayout(
+            ViewGroup.LayoutParams.MATCH_PARENT,  //w
+            ViewGroup.LayoutParams.WRAP_CONTENT //h
+        )
+
+        val close = dialogs.findViewById<ImageView>(R.id.close)
+        val fragile = dialogs.findViewById<CardView>(R.id.fragile)
+        val liquid = dialogs.findViewById<CardView>(R.id.liquid)
+        val solid = dialogs.findViewById<CardView>(R.id.solid)
+        val fragileSelect = dialogs.findViewById<RelativeLayout>(R.id.fragile_select)
+        val liquidSelect = dialogs.findViewById<RelativeLayout>(R.id.liquid_select)
+        val solidSelect = dialogs.findViewById<RelativeLayout>(R.id.solid_select)
+        val productDetailsLayout = dialogs.findViewById<TextInputLayout>(R.id.product_details_layout)
+        val productDetails = dialogs.findViewById<EditText>(R.id.product_details)
+        val nextLayout = dialogs.findViewById<LinearLayout>(R.id.next_layout)
+        val proceed = dialogs.findViewById<TextView>(R.id.proceed)
+
+        close.setOnClickListener {
+            dialogs.dismiss()
+        }
+
+        fragile.setOnClickListener {
+            fragileSelect.visibility = View.VISIBLE
+            liquidSelect.visibility = View.GONE
+            solidSelect.visibility = View.GONE
+            productDetailsLayout.visibility = View.VISIBLE
+            nextLayout.visibility = View.VISIBLE
+        }
+
+        liquid.setOnClickListener {
+            fragileSelect.visibility = View.GONE
+            liquidSelect.visibility = View.VISIBLE
+            solidSelect.visibility = View.GONE
+            productDetailsLayout.visibility = View.VISIBLE
+            nextLayout.visibility = View.VISIBLE
+        }
+
+        solid.setOnClickListener {
+            fragileSelect.visibility = View.GONE
+            liquidSelect.visibility = View.GONE
+            solidSelect.visibility = View.VISIBLE
+            productDetailsLayout.visibility = View.VISIBLE
+            nextLayout.visibility = View.VISIBLE
+        }
+
+        proceed.setOnClickListener {
+            if (productDetails.text.toString().isNotEmpty()){
+                dialogs.dismiss()
+                hideKeyboard(requireActivity())
+                myCommunicator?.addContentFragment(ProductFragment(), true)
+            } else {
+                Toast.makeText(requireActivity(), "Please enter product details", Toast.LENGTH_LONG).show()
+            }
+        }
+
+        dialogs.setCancelable(true)
+
+        dialogs.show()
     }
 }

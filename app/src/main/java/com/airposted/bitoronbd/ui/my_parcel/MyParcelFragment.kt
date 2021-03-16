@@ -70,7 +70,6 @@ class MyParcelFragment : Fragment(), KodeinAware, CursorWheelLayout.OnMenuSelect
                 Selection.setSelection(binding.searchItem.text, binding.searchItem.length())
             } else {
                 binding.searchItem.hideKeyboard()
-                Log.e("aaaaa", binding.searchItem.text.length.toString())
                 if (binding.searchItem.text.length == 1) {
                     binding.searchItem.setText("")
                 }
@@ -150,11 +149,7 @@ class MyParcelFragment : Fragment(), KodeinAware, CursorWheelLayout.OnMenuSelect
         setProgressDialog(requireActivity())
         lifecycleScope.launch {
             try {
-                val response = viewModel.getOrderList(
-                    PersistentUser.getInstance().getAccessToken(
-                        requireActivity()
-                    ), order
-                )
+                val response = viewModel.getOrderList(order)
                 invoice = response.response
                 if (response.response.isNotEmpty()) {
                     val myRecyclerViewAdapter = OrderListRecyclerViewAdapter(

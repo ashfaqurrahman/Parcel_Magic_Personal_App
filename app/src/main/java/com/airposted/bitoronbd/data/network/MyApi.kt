@@ -1,11 +1,9 @@
 package com.airposted.bitoronbd.data.network
 
 import com.airposted.bitoronbd.data.network.responses.AuthResponse
-import com.airposted.bitoronbd.model.GoogleMapDTO
-import com.airposted.bitoronbd.model.OrderListData
-import com.airposted.bitoronbd.model.SearchLocation
-import com.airposted.bitoronbd.model.SettingModel
+import com.airposted.bitoronbd.model.*
 import okhttp3.*
+import retrofit2.Call
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -56,6 +54,12 @@ interface MyApi {
     suspend fun currentOrderList(
         @Header("Authorization") header: String
     ) : Response<OrderListData>
+
+    @POST("personal/set_parcel")
+    suspend fun setOrder(
+        @Header("Authorization") header: String,
+        @Body setParcel: SetParcel
+    ): Response<SetParcelResponse>
 
     @POST("personal/pendingorderlist")
     suspend fun pendingOrderList(

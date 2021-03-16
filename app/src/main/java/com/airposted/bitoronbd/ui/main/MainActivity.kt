@@ -53,10 +53,10 @@ class MainActivity : AppCompatActivity(), KodeinAware, CommunicatorFragmentInter
         }
     }
 
-    override fun onStop() {
+    /*override fun onStop() {
         super.onStop()
         finish()
-    }
+    }*/
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu_bottom_navigation, menu)

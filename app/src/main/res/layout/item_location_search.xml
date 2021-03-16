@@ -35,7 +35,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/poppins_regular"
             android:onClick="@{() -> itemClickListener.onItemClick(location)}"
-            android:text="@{location.description}"
+            android:text="@{location.terms[0].value + `, ` + location.terms[1].value}"
             android:textColor="@color/black"
             tools:text="Banani, Dhaka" />
 

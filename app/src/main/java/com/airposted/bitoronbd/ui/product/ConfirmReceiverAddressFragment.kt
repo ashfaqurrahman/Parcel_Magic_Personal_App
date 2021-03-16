@@ -4,10 +4,10 @@ import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.drawable.Drawable
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
@@ -20,6 +20,8 @@ import com.airposted.bitoronbd.ui.main.CommunicatorFragmentInterface
 import com.airposted.bitoronbd.utils.*
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.GoogleMap.InfoWindowAdapter
+import com.google.android.gms.maps.GoogleMap.OnInfoWindowClickListener
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.*
 import kotlinx.coroutines.launch
@@ -102,24 +104,41 @@ class ConfirmReceiverAddressFragment : Fragment(), KodeinAware {
                     for (i in 0 until list.routes[0].legs[0].steps.size){
                         distance += list.routes[0].legs[0].steps[i].distance.value
                     }
-                    Log.e("Distance: ", (distance / 1000).toString())
 
                     val circleDrawable = resources.getDrawable(R.drawable.root_start_point)
                     val markerIcon = getMarkerIconFromDrawable(circleDrawable)
                     googleMap.addMarker(
-                        MarkerOptions().position(location1).title(
-                            PreferenceProvider(
-                                requireActivity()
-                            ).getSharedPreferences("currentLocation")
-                        )
+                        MarkerOptions().position(location1)
                             .icon(markerIcon)
                     ).showInfoWindow()
+
+                    googleMap.setInfoWindowAdapter(object : InfoWindowAdapter {
+                        override fun getInfoWindow(marker: Marker?): View? {
+                            return null
+                        }
+
+                        override fun getInfoContents(marker: Marker): View {
+                            val v: View = layoutInflater.inflate(R.layout.row, null)
+                            val info1 = v.findViewById(R.id.text_view_name) as TextView
+                            info1.text = "Fecha: "
+                            googleMap.setOnInfoWindowClickListener {
+                                val fragmento: Fragment
+                                /*fragmento = HistorialFragment()
+                                val bundle = Bundle()
+                                bundle.putString("title", info1.text.toString())
+                                fragmento.arguments = bundle
+                                getSupportFragmentManager().beginTransaction()
+                                    .replace(R.id.content_principal, fragmento)
+                                    .commit()*/
+                            }
+                            return v
+                        }
+                    })
 
                     val circleDrawable1 = resources.getDrawable(R.drawable.ic_marker_without_space)
                     val markerIcon1 = getMarkerIconFromDrawable(circleDrawable1)
                     googleMap.addMarker(
                         MarkerOptions().position(location2)
-                            .title(requireArguments().getString("location_name"))
                             .icon(markerIcon1)
                     ).showInfoWindow()
                     if (distance/1000 > 5){
@@ -159,8 +178,12 @@ class ConfirmReceiverAddressFragment : Fragment(), KodeinAware {
                     bundle.putString("name", binding.receiverName.text.toString())
                     bundle.putString("phone", binding.receiverPhone.text.toString())
                     bundle.putString("info", binding.receiverDirection.text.toString())
-                    bundle.putFloat("distance", distance/1000)
+                    bundle.putFloat("distance", distance / 1000)
                     bundle.putString("location_name", requireArguments().getString("location_name"))
+                    bundle.putDouble("latitude", requireArguments().getDouble("latitude"))
+                    bundle.putDouble("longitude", requireArguments().getDouble("longitude"))
+                    bundle.putString("city", requireArguments().getString("city"))
+                    bundle.putString("area", requireArguments().getString("area"))
                     fragment.arguments = bundle
                     myCommunicator?.addContentFragment(fragment, true)
                 }
