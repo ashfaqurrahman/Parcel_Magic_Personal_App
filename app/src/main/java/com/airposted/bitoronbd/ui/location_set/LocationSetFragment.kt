@@ -25,6 +25,7 @@ import com.airposted.bitoronbd.data.network.preferences.PreferenceProvider
 import com.airposted.bitoronbd.databinding.FragmentLocationSetBinding
 import com.airposted.bitoronbd.model.Prediction
 import com.airposted.bitoronbd.model.SearchLocation
+import com.airposted.bitoronbd.model.Term
 import com.airposted.bitoronbd.ui.main.MainActivity
 import com.airposted.bitoronbd.utils.ApiException
 import com.airposted.bitoronbd.utils.NoInternetException
@@ -49,6 +50,7 @@ import org.kodein.di.KodeinAware
 import org.kodein.di.android.x.kodein
 import org.kodein.di.generic.instance
 import java.util.*
+import kotlin.collections.ArrayList
 
 class LocationSetFragment : Fragment(), KodeinAware, CustomClickListener,
     OnMapReadyCallback, LocationListener {
@@ -240,8 +242,34 @@ class LocationSetFragment : Fragment(), KodeinAware, CustomClickListener,
                     binding.loading.visibility = View.GONE
                     btnClose.visibility = View.VISIBLE
                     if (list.predictions.isNotEmpty()) {
+
+                        val term = ArrayList<String> ()
+                        for (i in list.predictions.indices){
+                            if (list.predictions[i].terms.size > 1){
+                                var text = ""
+                            for (j in 0 until list.predictions[i].terms.size - 1){
+                                text += if (j > 0){
+                                    ", " + list.predictions[i].terms[j].value
+                                } else {
+                                    list.predictions[i].terms[j].value
+                                }
+                            }
+                            term.add(text)
+                            } else {
+                                var text = ""
+                                for (j in list.predictions[i].terms.indices){
+                                    text += if (j > 0){
+                                        ", " + list.predictions[i].terms[j].value
+                                    } else {
+                                        list.predictions[i].terms[j].value
+                                    }
+                                }
+                                term.add(text)
+                            }
+                        }
+
                         val myRecyclerViewAdapter = LocationSetRecyclerViewAdapter(
-                            list.predictions,
+                            term,
                             this@LocationSetFragment,
                         )
                         binding.recyclerview.layoutManager = GridLayoutManager(
@@ -295,10 +323,10 @@ class LocationSetFragment : Fragment(), KodeinAware, CustomClickListener,
         }
     }
 
-    override fun onItemClick(location: Prediction) {
+    override fun onItemClick(location: String) {
         hideKeyboard(requireActivity())
         binding.recyclerview.visibility = View.GONE
-        val latLong = getLatLngFromAddress(location.description)
+        val latLong = getLatLngFromAddress(location)
         val cameraPosition =
             CameraPosition.Builder().target(latLong)
                 .zoom(16f).build()

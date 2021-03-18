@@ -258,19 +258,19 @@ class ConfirmDeliveryRequestFragment : Fragment(), KodeinAware, SSLCTransactionR
 
     private fun calculatePrice(position: Int): Double {
         return when (position) {
-            0 -> round(
-                ((requireArguments().getFloat("distance") * PreferenceProvider(
-                    requireActivity()
-                ).getSharedPreferences("rate_quick")!!.toFloat()) + PreferenceProvider(
-                    requireActivity()
-                ).getSharedPreferences("base_price_personal")!!.toFloat()).toDouble(), 2
-            )
-            else -> round(
+            0 ->round(
                 ((requireArguments().getFloat("distance") * PreferenceProvider(
                     requireActivity()
                 ).getSharedPreferences("rate_express")!!.toFloat()) + PreferenceProvider(
                     requireActivity()
-                ).getSharedPreferences("base_price_personal")!!.toFloat()).toDouble(), 2
+                ).getSharedPreferences("base_price_express")!!.toFloat()).toDouble(), 2
+            )
+            else -> round(
+                ((requireArguments().getFloat("distance") * PreferenceProvider(
+                    requireActivity()
+                ).getSharedPreferences("rate_quick")!!.toFloat()) + PreferenceProvider(
+                    requireActivity()
+                ).getSharedPreferences("base_price_quick")!!.toFloat()).toDouble(), 2
             )
         }
     }

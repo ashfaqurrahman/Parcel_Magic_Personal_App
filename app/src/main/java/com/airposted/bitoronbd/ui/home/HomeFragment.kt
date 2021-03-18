@@ -64,11 +64,15 @@ class HomeFragment : Fragment(R.layout.fragment_home), KodeinAware {
                 )
                 PreferenceProvider(requireActivity()).saveSharedPreferences(
                     "rate_express",
-                    "20"
+                    settingResponse.rate.perKmPrice.toString()
                 )
                 PreferenceProvider(requireActivity()).saveSharedPreferences(
-                    "base_price_personal",
-                    settingResponse.rate.basePricePersonal.toString()
+                    "base_price_quick",
+                    settingResponse.rate.basePriceQuick.toString()
+                )
+                PreferenceProvider(requireActivity()).saveSharedPreferences(
+                    "base_price_express",
+                    settingResponse.rate.basePriceExpress.toString()
                 )
                 //dismissDialog()
             } catch (e: ApiException) {

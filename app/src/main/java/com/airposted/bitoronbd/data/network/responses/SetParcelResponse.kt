@@ -1,15 +1,11 @@
-package com.airposted.bitoronbd.model
+package com.airposted.bitoronbd.data.network.responses
 
 
 import com.google.gson.annotations.SerializedName
 
-data class SettingModel(
-    @SerializedName("info")
-    val info: Info,
+data class SetParcelResponse(
     @SerializedName("msg")
-    val msg: String,
-    @SerializedName("rate")
-    val rate: Rate,
+    val msg: String?,
     @SerializedName("status")
     val status: Int,
     @SerializedName("success")

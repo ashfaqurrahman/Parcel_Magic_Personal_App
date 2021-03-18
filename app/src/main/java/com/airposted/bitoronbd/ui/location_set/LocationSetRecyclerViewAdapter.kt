@@ -8,9 +8,10 @@ import com.airposted.bitoronbd.BR
 import com.airposted.bitoronbd.R
 import com.airposted.bitoronbd.databinding.ItemLocationSearchBinding
 import com.airposted.bitoronbd.model.Prediction
+import com.airposted.bitoronbd.model.Term
 
 class LocationSetRecyclerViewAdapter(
-    private val dataModelList: List<Prediction>,
+    private val dataModelList: List<String>,
     private val listener: CustomClickListener
 ) : RecyclerView.Adapter<LocationSetRecyclerViewAdapter.ViewHolder>() {
     override fun onCreateViewHolder(

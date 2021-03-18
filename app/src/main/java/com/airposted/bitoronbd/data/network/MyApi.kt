@@ -1,9 +1,10 @@
 package com.airposted.bitoronbd.data.network
 
 import com.airposted.bitoronbd.data.network.responses.AuthResponse
+import com.airposted.bitoronbd.data.network.responses.SetParcelResponse
+import com.airposted.bitoronbd.data.network.responses.SettingResponse
 import com.airposted.bitoronbd.model.*
 import okhttp3.*
-import retrofit2.Call
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -73,7 +74,7 @@ interface MyApi {
     suspend fun getDirectionsList(@Url url: String): Response<GoogleMapDTO>
 
     @GET("app_settings")
-    suspend fun getSetting(): Response<SettingModel>
+    suspend fun getSetting(): Response<SettingResponse>
 
     companion object{
         operator fun invoke(

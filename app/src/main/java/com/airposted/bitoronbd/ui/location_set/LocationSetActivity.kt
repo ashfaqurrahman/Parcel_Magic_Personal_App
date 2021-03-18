@@ -22,7 +22,6 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.GridLayoutManager
 import com.airposted.bitoronbd.databinding.ActivityLocationSetBinding
-import com.airposted.bitoronbd.model.Prediction
 import com.airposted.bitoronbd.model.SearchLocation
 import com.airposted.bitoronbd.utils.*
 import com.google.android.gms.location.*
@@ -237,8 +236,33 @@ class LocationSetActivity : AppCompatActivity(), KodeinAware, CustomClickListene
                     binding.loading.visibility = View.GONE
                     btnClose.visibility = View.VISIBLE
                     if (list.predictions.isNotEmpty()) {
+                        val term = ArrayList<String> ()
+                        for (i in list.predictions.indices){
+                            if (list.predictions[i].terms.size > 1){
+                                var text = ""
+                                for (j in 0 until list.predictions[i].terms.size - 1){
+                                    text += if (j > 0){
+                                        ", " + list.predictions[i].terms[j].value
+                                    } else {
+                                        list.predictions[i].terms[j].value
+                                    }
+                                }
+                                term.add(text)
+                            } else {
+                                var text = ""
+                                for (j in list.predictions[i].terms.indices){
+                                    text += if (j > 0){
+                                        ", " + list.predictions[i].terms[j].value
+                                    } else {
+                                        list.predictions[i].terms[j].value
+                                    }
+                                }
+                                term.add(text)
+                            }
+                        }
+
                         val myRecyclerViewAdapter = LocationSetRecyclerViewAdapter(
-                            list.predictions,
+                            term,
                             this@LocationSetActivity,
                         )
                         binding.recyclerview.layoutManager = GridLayoutManager(
@@ -311,12 +335,12 @@ class LocationSetActivity : AppCompatActivity(), KodeinAware, CustomClickListene
         }
     }
 
-    override fun onItemClick(location: Prediction) {
+    override fun onItemClick(location: String) {
         hideKeyboard(this)
 //        binding.editTextTextLocation.setText(location.description)
         binding.recyclerview.visibility = View.GONE
 
-        val latLong = getLatLngFromAddress(location.description)
+        val latLong = getLatLngFromAddress(location)
 
         val cameraPosition =
             CameraPosition.Builder().target(latLong)

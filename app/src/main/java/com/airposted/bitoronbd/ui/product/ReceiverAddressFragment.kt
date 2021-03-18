@@ -17,6 +17,7 @@ import com.airposted.bitoronbd.R
 import com.airposted.bitoronbd.databinding.FragmentReceiverAddressBinding
 import com.airposted.bitoronbd.model.Prediction
 import com.airposted.bitoronbd.model.SearchLocation
+import com.airposted.bitoronbd.model.Term
 import com.airposted.bitoronbd.ui.location_set.CustomClickListener
 import com.airposted.bitoronbd.ui.location_set.LocationSetViewModel
 import com.airposted.bitoronbd.ui.location_set.LocationSetViewModelFactory
@@ -101,8 +102,33 @@ class ReceiverAddressFragment : Fragment(), KodeinAware, CustomClickListener {
                     binding.loading.visibility = View.GONE
                     btnClose.visibility = View.VISIBLE
                     if (list.predictions.isNotEmpty()) {
+                        val term = ArrayList<String> ()
+                        for (i in list.predictions.indices){
+                            if (list.predictions[i].terms.size > 1){
+                                var text = ""
+                                for (j in 0 until list.predictions[i].terms.size - 1){
+                                    text += if (j > 0){
+                                        ", " + list.predictions[i].terms[j].value
+                                    } else {
+                                        list.predictions[i].terms[j].value
+                                    }
+                                }
+                                term.add(text)
+                            } else {
+                                var text = ""
+                                for (j in list.predictions[i].terms.indices){
+                                    text += if (j > 0){
+                                        ", " + list.predictions[i].terms[j].value
+                                    } else {
+                                        list.predictions[i].terms[j].value
+                                    }
+                                }
+                                term.add(text)
+                            }
+                        }
+
                         val myRecyclerViewAdapter = LocationSetRecyclerViewAdapter(
-                            list.predictions,
+                            term,
                             this@ReceiverAddressFragment,
                         )
                         binding.recyclerview.layoutManager = GridLayoutManager(
@@ -127,17 +153,17 @@ class ReceiverAddressFragment : Fragment(), KodeinAware, CustomClickListener {
         }
     }
 
-    override fun onItemClick(location: Prediction) {
+    override fun onItemClick(location: String) {
         hideKeyboard(requireActivity())
-        binding.search.setQuery(location.description, false)
+        binding.search.setQuery(location, false)
         binding.recyclerview.visibility = View.GONE
         binding.search.clearFocus()
 
         val fragment = ConfirmReceiverAddressFragment()
         val bundle = Bundle()
-        bundle.putString("location_name", location.description)
-        bundle.putDouble("latitude", getLatLngFromAddress(location.description)!!.latitude)
-        bundle.putDouble("longitude", getLatLngFromAddress(location.description)!!.longitude)
+        bundle.putString("location_name", location)
+        bundle.putDouble("latitude", getLatLngFromAddress(location)!!.latitude)
+        bundle.putDouble("longitude", getLatLngFromAddress(location)!!.longitude)
         fragment.arguments = bundle
         myCommunicator?.addContentFragment(fragment, false)
     }
