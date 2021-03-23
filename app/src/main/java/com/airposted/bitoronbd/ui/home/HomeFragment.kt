@@ -3,10 +3,12 @@ package com.airposted.bitoronbd.ui.home
 import android.app.Dialog
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
 import android.view.*
 import android.widget.*
 import androidx.cardview.widget.CardView
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
@@ -15,8 +17,10 @@ import com.airposted.bitoronbd.data.network.preferences.PreferenceProvider
 import com.airposted.bitoronbd.databinding.FragmentHomeBinding
 import com.airposted.bitoronbd.ui.location_set.LocationSetFragment
 import com.airposted.bitoronbd.ui.main.CommunicatorFragmentInterface
+import com.airposted.bitoronbd.ui.my_parcel.MyParcelFragment
 import com.airposted.bitoronbd.ui.product.ProductFragment
 import com.airposted.bitoronbd.utils.*
+import com.google.android.material.navigation.NavigationView
 import com.google.android.material.textfield.TextInputLayout
 import kotlinx.coroutines.launch
 import org.kodein.di.KodeinAware
@@ -24,7 +28,8 @@ import org.kodein.di.android.x.kodein
 import org.kodein.di.generic.instance
 
 
-class HomeFragment : Fragment(R.layout.fragment_home), KodeinAware {
+class HomeFragment : Fragment(R.layout.fragment_home),
+    NavigationView.OnNavigationItemSelectedListener, KodeinAware {
 
     private lateinit var homeBinding: FragmentHomeBinding
     override val kodein by kodein()
@@ -51,6 +56,12 @@ class HomeFragment : Fragment(R.layout.fragment_home), KodeinAware {
 
         /*val wp: WindowManager.LayoutParams = requireActivity().window.attributes
         wp.dimAmount = 0.75f*/
+
+        homeBinding.menu.setOnClickListener {
+            homeBinding.drawerLayout.openDrawer(Gravity.LEFT)
+        }
+
+        homeBinding.navigationView.setNavigationItemSelectedListener(this)
 
         myCommunicator = context as CommunicatorFragmentInterface
 
@@ -86,7 +97,7 @@ class HomeFragment : Fragment(R.layout.fragment_home), KodeinAware {
             }
         }
 
-        homeBinding.address.text = PreferenceProvider(requireActivity()).getSharedPreferences("currentLocation")
+//        homeBinding.address.text = PreferenceProvider(requireActivity()).getSharedPreferences("currentLocation")
 
         homeBinding.address.setOnClickListener {
             myCommunicator?.addContentFragment(LocationSetFragment(), true)
@@ -100,6 +111,18 @@ class HomeFragment : Fragment(R.layout.fragment_home), KodeinAware {
         homeBinding.notification.setOnClickListener {
             openNotificationDialog()
         }
+
+        val gradientDrawable = GradientDrawable(
+            GradientDrawable.Orientation.TOP_BOTTOM, intArrayOf(
+                ContextCompat.getColor(requireActivity(), R.color.color1),
+                ContextCompat.getColor(requireActivity(), R.color.color2),
+                ContextCompat.getColor(requireActivity(), R.color.color3),
+                ContextCompat.getColor(requireActivity(), R.color.color4)
+            )
+        )
+
+        homeBinding.productBtn.background = gradientDrawable
+        homeBinding.documentBtn.background = gradientDrawable
     }
 
     private fun openNotificationDialog() {
@@ -187,5 +210,36 @@ class HomeFragment : Fragment(R.layout.fragment_home), KodeinAware {
         dialogs.setCancelable(true)
 
         dialogs.show()
+    }
+
+    override fun onNavigationItemSelected(item: MenuItem): Boolean {
+        when(item.itemId) {
+            R.id.home -> {
+                homeBinding.drawerLayout.closeDrawers()
+            }
+            R.id.my_parcel -> {
+                myCommunicator?.addContentFragment(ProductFragment(), true)
+            }
+            R.id.parcel_history -> {
+                myCommunicator?.addContentFragment(MyParcelFragment(), true)
+            }
+            R.id.profile -> {
+
+            }
+            R.id.help -> {
+
+            }
+            R.id.settings -> {
+
+            }
+            R.id.terms_condition -> {
+
+            }
+            R.id.sing_out -> {
+
+            }
+        }
+
+        return true
     }
 }

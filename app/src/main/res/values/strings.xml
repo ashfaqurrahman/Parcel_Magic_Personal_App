@@ -27,7 +27,6 @@
     <string name="settings">Settings</string>
     <string name="terms_conditions_privacy"><![CDATA[Terms & Conditions / Privacy]]></string>
     <string name="sign_out">Sign out</string>
-    <string name="my_parcel">My Parcel</string>
     <string name="phone">Phone</string>
     <string name="bkash">Bkash</string>
     <string name="rokect">Rocket</string>
@@ -58,4 +57,10 @@
     <string name="successful_order_text">Your request has been processed &amp; \nwill be delivered within 24 hour. \nYour tracking ID is #%1$s.</string>
     <string name="cash_on_delivery">Cash on delivery</string>
     <string name="product_details">Product details</string>
+    <string name="what_to_send">What to send</string>
+    <string name="my_parcel">My Parcel</string>
+    <string name="quick_delivery_on">Quick Delivery on</string>
+    <string name="the_dhaka_city">the Dhaka city</string>
+    <string name="quick">Quick</string>
+    <string name="express">Express</string>
 </resources>

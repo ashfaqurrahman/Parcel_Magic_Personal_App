@@ -21,6 +21,11 @@
             app:destination="@id/locationSetFragment"
             app:popUpTo="@id/homeFragment" />
 
+        <action
+            android:id="@+id/action_homeFragment_to_my_profile_fragment"
+            app:destination="@id/myParcelFragment"
+            app:popUpTo="@id/homeFragment" />
+
     </fragment>
 
     <fragment

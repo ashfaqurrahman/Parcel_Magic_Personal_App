@@ -1,17 +1,12 @@
 package com.airposted.bitoronbd.ui.main
 
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
-import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavController
-import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.fragment.findNavController
-import androidx.navigation.ui.*
 import com.airposted.bitoronbd.R
 import com.airposted.bitoronbd.databinding.ActivityMainBinding
 import com.airposted.bitoronbd.ui.home.HomeFragment
@@ -34,23 +29,6 @@ class MainActivity : AppCompatActivity(), KodeinAware, CommunicatorFragmentInter
         mainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         viewModel = ViewModelProvider(this, factory).get(MainViewModel::class.java)
 
-        val navHostFragment =
-            supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
-        navController = navHostFragment.findNavController()
-
-        navController.addOnDestinationChangedListener { _, destination, _ ->
-            if (destination.id == R.id.productFragment || destination.id == R.id.locationSetFragment || destination.id == R.id.receiverAddressFragment) {
-                mainBinding.bottomNavigation.visibility = View.GONE
-            } else {
-                mainBinding.bottomNavigation.visibility = View.VISIBLE
-            }
-        }
-
-        mainBinding.bottomNavigation.setupWithNavController(navController)
-
-        mainBinding.bottomNavigation.setOnNavigationItemReselectedListener {
-
-        }
     }
 
     /*override fun onStop() {
@@ -68,7 +46,6 @@ class MainActivity : AppCompatActivity(), KodeinAware, CommunicatorFragmentInter
     }
 
     override fun addContentFragment(fragment: Fragment?, addToBackStack: Boolean) {
-        mainBinding.bottomNavigation.visibility = View.GONE
         if (fragment == null) {
             return
         }
@@ -86,12 +63,5 @@ class MainActivity : AppCompatActivity(), KodeinAware, CommunicatorFragmentInter
         }
         fragmentTransaction.commit()
         fragmentManager.executePendingTransactions()
-    }
-
-    override fun onBackPressed() {
-        super.onBackPressed()
-        if (supportFragmentManager.backStackEntryCount == 0) {
-            mainBinding.bottomNavigation.visibility = View.VISIBLE
-        }
     }
 }
