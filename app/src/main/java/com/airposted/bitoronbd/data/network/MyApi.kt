@@ -51,21 +51,26 @@ interface MyApi {
         @Part("image") requestBody: RequestBody
     ) : Response<AuthResponse>
 
-    @POST("personal/currentorderlist")
-    suspend fun currentOrderList(
-        @Header("Authorization") header: String
-    ) : Response<OrderListData>
-
     @POST("personal/set_parcel")
     suspend fun setOrder(
         @Header("Authorization") header: String,
         @Body setParcel: SetParcel
     ): Response<SetParcelResponse>
 
-    @POST("personal/pendingorderlist")
-    suspend fun pendingOrderList(
+    @POST("personal/currentorderlist")
+    suspend fun currentOrderList(
         @Header("Authorization") header: String
-    ) : Response<OrderListData>
+    ) : Response<CurrentOrder>
+
+    @POST("personal/completeorderlist")
+    suspend fun completeOrderList(
+        @Header("Authorization") header: String
+    ) : Response<CurrentOrder>
+
+    @POST("personal/cancelorderlist")
+    suspend fun cancelOrderList(
+        @Header("Authorization") header: String
+    ) : Response<CurrentOrder>
 
     @GET
     suspend fun getPlacesNameList(@Url url: String): Response<SearchLocation>

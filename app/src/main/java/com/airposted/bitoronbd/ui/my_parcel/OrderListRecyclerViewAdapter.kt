@@ -7,10 +7,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.airposted.bitoronbd.BR
 import com.airposted.bitoronbd.R
 import com.airposted.bitoronbd.databinding.MyParcelListItemBinding
-import com.airposted.bitoronbd.model.Response
+import com.airposted.bitoronbd.model.DataX
 
 class OrderListRecyclerViewAdapter(
-    private val dataModelList: List<Response>,
+    private val dataModelList: List<DataX>,
     //private val listener: CustomClickListener
 ) : RecyclerView.Adapter<OrderListRecyclerViewAdapter.ViewHolder>() {
     override fun onCreateViewHolder(

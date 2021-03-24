@@ -14,7 +14,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.GridLayoutManager
 import com.airposted.bitoronbd.R
-import com.airposted.bitoronbd.databinding.FragmentReceiverAddressBinding
+import com.airposted.bitoronbd.databinding.FragmentSearchReceiverAddressBinding
 import com.airposted.bitoronbd.model.SearchLocation
 import com.airposted.bitoronbd.ui.location_set.CustomClickListener
 import com.airposted.bitoronbd.ui.location_set.LocationSetViewModel
@@ -24,6 +24,7 @@ import com.airposted.bitoronbd.ui.main.CommunicatorFragmentInterface
 import com.airposted.bitoronbd.utils.ApiException
 import com.airposted.bitoronbd.utils.NoInternetException
 import com.airposted.bitoronbd.utils.hideKeyboard
+import com.airposted.bitoronbd.utils.snackbar
 import com.google.android.gms.maps.model.LatLng
 import kotlinx.coroutines.launch
 import org.kodein.di.KodeinAware
@@ -32,7 +33,7 @@ import org.kodein.di.generic.instance
 
 
 class SearchReceiverAddressFragment : Fragment(), KodeinAware, CustomClickListener {
-    private lateinit var binding: FragmentReceiverAddressBinding
+    private lateinit var binding: FragmentSearchReceiverAddressBinding
     private lateinit var viewModel: LocationSetViewModel
     override val kodein by kodein()
     private val factory: LocationSetViewModelFactory by instance()
@@ -43,7 +44,7 @@ class SearchReceiverAddressFragment : Fragment(), KodeinAware, CustomClickListen
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentReceiverAddressBinding.inflate(inflater, container, false)
+        binding = FragmentSearchReceiverAddressBinding.inflate(inflater, container, false)
 
         return binding.root
     }

@@ -116,7 +116,7 @@ class ConfirmDeliveryRequestFragment : Fragment(), KodeinAware, SSLCTransactionR
 
         binding.toolbar.toolbarTitle.text = getString(R.string.one_final_step)
 
-        setParcel.invoice_no = getSaltString()
+        setParcel.invoice_no = "AIR" + getSaltString() + getSaltString()
         setParcel.parcel_type = 2
         setParcel.item_type = 2
         setParcel.special_instruction = "no instruction for now"
@@ -242,10 +242,10 @@ class ConfirmDeliveryRequestFragment : Fragment(), KodeinAware, SSLCTransactionR
     }
 
     private fun getSaltString(): String {
-        val SALTCHARS = "abcdefghijklmnopqrstuvwxyz1234567890"
+        val SALTCHARS = "1234567890"
         val salt = StringBuilder()
         val rnd = Random()
-        while (salt.length < 7) { // length of the random string.
+        while (salt.length < 5) { // length of the random string.
             val index = (rnd.nextFloat() * SALTCHARS.length).toInt()
             salt.append(SALTCHARS[index])
         }

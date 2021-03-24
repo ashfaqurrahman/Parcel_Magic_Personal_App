@@ -7,7 +7,6 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.Selection
 import android.text.TextWatcher
-import android.util.Log
 import android.util.MalformedJsonException
 import android.view.*
 import android.view.View.OnFocusChangeListener
@@ -16,10 +15,9 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.GridLayoutManager
-import com.aapbd.appbajarlib.storage.PersistentUser
 import com.airposted.bitoronbd.R
 import com.airposted.bitoronbd.databinding.FragmentMyParcelBinding
-import com.airposted.bitoronbd.model.Response
+import com.airposted.bitoronbd.model.DataX
 import com.airposted.bitoronbd.ui.adapter.SimpleTextAdapter
 import com.airposted.bitoronbd.ui.data.MenuItemData
 import com.airposted.bitoronbd.ui.widget.CursorWheelLayout
@@ -39,7 +37,7 @@ class MyParcelFragment : Fragment(), KodeinAware, CursorWheelLayout.OnMenuSelect
     private lateinit var viewModel: MyParcelViewModel
     private var currentItemPosition = 0
     private var selectedItemPosition = 0
-    private lateinit var invoice:List<Response>
+    private lateinit var invoice:List<DataX>
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -102,7 +100,7 @@ class MyParcelFragment : Fragment(), KodeinAware, CursorWheelLayout.OnMenuSelect
                     )
                     binding.orders.itemAnimator = DefaultItemAnimator()
                     if (s.toString().isNotEmpty()) {
-                        val listNew: ArrayList<Response> = ArrayList()
+                        val listNew: ArrayList<DataX> = ArrayList()
                         for (l in invoice.indices) {
                             val serviceName: String = invoice[l].invoiceNo
                             if (serviceName.contains(s.toString())) {
@@ -143,17 +141,21 @@ class MyParcelFragment : Fragment(), KodeinAware, CursorWheelLayout.OnMenuSelect
 
     private fun getOrderList(order: Int) {
         when(order){
-            0 -> binding.title.text = "Recent Order"
-            1 -> binding.title.text = "Pending Order"
+            0 -> binding.title.text = "Current Orders"
+            1 -> binding.title.text = "Completed Orders"
+            2 -> binding.title.text = "Cancelled Orders"
+            3 -> binding.title.text = "Current Orders"
+            4 -> binding.title.text = "Completed Orders"
+            5 -> binding.title.text = "Cancelled Orders"
         }
         setProgressDialog(requireActivity())
         lifecycleScope.launch {
             try {
                 val response = viewModel.getOrderList(order)
-                invoice = response.response
-                if (response.response.isNotEmpty()) {
+                invoice = response.data
+                if (response.data.isNotEmpty()) {
                     val myRecyclerViewAdapter = OrderListRecyclerViewAdapter(
-                        response.response
+                        response.data
                     )
                     binding.orders.layoutManager = GridLayoutManager(
                         requireActivity(),
@@ -190,11 +192,12 @@ class MyParcelFragment : Fragment(), KodeinAware, CursorWheelLayout.OnMenuSelect
         val idWheelMenuCenterItem = orderDialog.findViewById<SwitchButton>(R.id.id_wheel_menu_center_item)
 
         val res = arrayOf(
-            "Current Order",
-            "Pending Order",
-            "Unpaid Order",
-            "Delivered Order",
-            "Cancelled Order"
+            "Current Orders",
+            "Completed Orders",
+            "Cancelled Orders",
+            "Current Orders",
+            "Completed Orders",
+            "Cancelled Orders"
         )
         val menuItemDatas: MutableList<MenuItemData> = ArrayList()
         for (i in res.indices) {
@@ -217,6 +220,10 @@ class MyParcelFragment : Fragment(), KodeinAware, CursorWheelLayout.OnMenuSelect
             selectedItemPosition = pos
         }*/
         testCircleMenuLeft.setOnMenuItemClickListener { _, pos ->
+            selectedItemPosition = pos
+        }
+
+        testCircleMenuLeft.setOnMenuSelectedListener { _, view, pos ->
             selectedItemPosition = pos
         }
 
