@@ -103,13 +103,13 @@ class HomeFragment : Fragment(R.layout.fragment_home),
             myCommunicator?.addContentFragment(LocationSetFragment(), true)
         }
 
-        homeBinding.productBtn.setOnClickListener{
+        homeBinding.expressBtn.setOnClickListener{
             productTypeDialog()
             //findNavController().navigate(R.id.action_homeFragment_to_productFragment)
         }
 
-        homeBinding.notification.setOnClickListener {
-            openNotificationDialog()
+        homeBinding.whatToSend.setOnClickListener {
+            openWhatToSendDialog()
         }
 
         val gradientDrawable = GradientDrawable(
@@ -121,28 +121,23 @@ class HomeFragment : Fragment(R.layout.fragment_home),
             )
         )
 
-        homeBinding.productBtn.background = gradientDrawable
-        homeBinding.documentBtn.background = gradientDrawable
+        homeBinding.expressBtn.background = gradientDrawable
+        homeBinding.quickBtn.background = gradientDrawable
     }
 
-    private fun openNotificationDialog() {
+    private fun openWhatToSendDialog() {
         val orderDialog = Dialog(requireContext())
-        orderDialog.setContentView(R.layout.order_dialog)
-
-        val parent = orderDialog.findViewById<RelativeLayout>(R.id.parent)
-
-//        parent.setOnClickListener {
-//            orderDialog.dismiss()
-//        }
-        val window: Window? = orderDialog.getWindow()
-        val wlp = window?.attributes
-
-        wlp?.gravity = Gravity.TOP
+        orderDialog.setContentView(R.layout.what_to_send_dialog)
+        orderDialog.findViewById<TextView>(R.id.got_it).setOnClickListener {
+            orderDialog.dismiss()
+        }
         orderDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         orderDialog.window?.setLayout(
             ViewGroup.LayoutParams.MATCH_PARENT,
             ViewGroup.LayoutParams.WRAP_CONTENT
         )
+        orderDialog.window?.attributes?.windowAnimations = R.style.DialogAnimation_2
+        orderDialog.window?.attributes?.gravity = Gravity.BOTTOM
         orderDialog.setCancelable(true)
         orderDialog.show()
     }
@@ -214,29 +209,33 @@ class HomeFragment : Fragment(R.layout.fragment_home),
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when(item.itemId) {
-            R.id.home -> {
-                homeBinding.drawerLayout.closeDrawers()
-            }
             R.id.my_parcel -> {
                 myCommunicator?.addContentFragment(ProductFragment(), true)
+                homeBinding.drawerLayout.closeDrawers()
             }
             R.id.parcel_history -> {
                 myCommunicator?.addContentFragment(MyParcelFragment(), true)
+                homeBinding.drawerLayout.closeDrawers()
             }
             R.id.profile -> {
 
+                homeBinding.drawerLayout.closeDrawers()
             }
             R.id.help -> {
 
+                homeBinding.drawerLayout.closeDrawers()
             }
             R.id.settings -> {
 
+                homeBinding.drawerLayout.closeDrawers()
             }
             R.id.terms_condition -> {
 
+                homeBinding.drawerLayout.closeDrawers()
             }
-            R.id.sing_out -> {
+            R.id.sign_out -> {
 
+                homeBinding.drawerLayout.closeDrawers()
             }
         }
 

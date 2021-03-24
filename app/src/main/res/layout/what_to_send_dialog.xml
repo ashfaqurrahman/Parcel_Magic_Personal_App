@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/top_radius_button_bg"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:fontFamily="@font/poppins_semibold"
+        android:textAlignment="center"
+        android:textStyle="normal"
+        android:textSize="13sp"
+        android:textColor="#1a1a1a"
+        android:lineSpacingExtra="7sp"
+        android:text="@string/package_guidline"
+        />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.7dp"
+        android:layout_marginTop="20dp"
+        android:background="#808080"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginTop="16.5dp"
+        android:fontFamily="@font/poppins_medium"
+        android:textStyle="normal"
+        android:textSize="14sp"
+        android:textColor="#1a1a1a"
+        android:lineSpacingExtra="12sp"
+        android:text="@string/for_a_successful_delivery_make_sure_your_package_is"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginTop="20dp"
+        android:fontFamily="@font/poppins_medium"
+        android:textStyle="normal"
+        android:textSize="14sp"
+        android:textColor="#1a1a1a"
+        android:lineSpacingExtra="12sp"
+        android:text="@string/_5_kg_or_less"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginTop="20dp"
+        android:fontFamily="@font/poppins_medium"
+        android:textStyle="normal"
+        android:textSize="14sp"
+        android:textColor="#1a1a1a"
+        android:lineSpacingExtra="12sp"
+        android:text="@string/securely_sealed_and_ready_for_curbside_pickup"
+        />
+
+    <LinearLayout
+        android:id="@+id/confirm_delivery_request_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:paddingStart="15dp"
+        android:paddingEnd="15dp"
+        android:paddingTop="20dp"
+        android:paddingBottom="15dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/got_it"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/after_button_bg"
+            android:fontFamily="@font/poppins_medium"
+            android:gravity="center"
+            android:lineSpacingExtra="32sp"
+            android:padding="18dp"
+            android:text="@string/got_it"
+            android:textColor="#ffffff"
+            android:textSize="15sp"
+            android:textStyle="normal" />
+
+    </LinearLayout>
+
+</LinearLayout>

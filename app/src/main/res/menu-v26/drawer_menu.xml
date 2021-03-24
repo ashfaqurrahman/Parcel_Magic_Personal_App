@@ -6,21 +6,25 @@
         <item
             android:id="@+id/my_parcel"
             android:icon="@drawable/ic_my_parcel_icon"
+            android:iconTint="@color/blue"
             android:title="@string/my_parcel" />
 
         <item
             android:id="@+id/parcel_history"
             android:icon="@drawable/ic_parcel_history_icon"
+            android:iconTint="@color/blue"
             android:title="@string/parcel_history" />
 
         <item
             android:id="@+id/profile"
             android:icon="@drawable/ic_user_icon"
+            android:iconTint="@color/blue"
             android:title="@string/profile" />
 
         <item
             android:id="@+id/help"
             android:icon="@drawable/ic_information"
+            android:iconTint="@color/blue"
             android:title="@string/help" />
 
     </group>

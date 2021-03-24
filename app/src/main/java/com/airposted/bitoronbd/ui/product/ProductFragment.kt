@@ -11,7 +11,6 @@ import android.location.LocationListener
 import android.location.LocationManager
 import android.os.Bundle
 import android.provider.Settings
-import android.util.Log
 import android.view.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
@@ -245,7 +244,7 @@ class ProductFragment : Fragment(), OnMapReadyCallback, KodeinAware, LocationLis
             dialogs.show()*/
 
 
-            myCommunicator?.addContentFragment(ReceiverAddressFragment(), true)
+            myCommunicator?.addContentFragment(SearchReceiverAddressFragment(), true)
 
             //findNavController().navigate(R.id.action_productFragment_to_receiverAddressFragment)
         }

@@ -63,8 +63,8 @@
 
     <fragment
         android:id="@+id/receiverAddressFragment"
-        android:name="com.airposted.bitoronbd.ui.product.ReceiverAddressFragment"
-        tools:layout="@layout/fragment_receiver_address" >
+        android:name="com.airposted.bitoronbd.ui.product.SearchReceiverAddressFragment"
+        tools:layout="@layout/fragment_search_receiver_address" >
 
     </fragment>
 </navigation>

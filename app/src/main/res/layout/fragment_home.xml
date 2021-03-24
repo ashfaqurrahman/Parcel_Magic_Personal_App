@@ -48,7 +48,7 @@
                                 />
 
                             <TextView
-                                android:id="@+id/notification"
+                                android:id="@+id/what_to_send"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_alignParentEnd="true"
@@ -73,7 +73,7 @@
                             android:paddingEnd="20dp"
                             android:paddingBottom="113dp"
                             android:layout_below="@+id/toolbar_layout"
-                            android:background="@drawable/bottom_radious_button_bg"
+                            android:background="@drawable/bottom_radius_button_bg"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content">
 
@@ -148,7 +148,7 @@
                                         app:cardCornerRadius="15dp">
 
                                         <LinearLayout
-                                            android:id="@+id/product_btn"
+                                            android:id="@+id/express_btn"
                                             android:layout_width="match_parent"
                                             android:layout_height="match_parent"
                                             android:layout_weight="1"
@@ -185,7 +185,7 @@
                                         app:cardCornerRadius="15dp">
 
                                         <LinearLayout
-                                            android:id="@+id/document_btn"
+                                            android:id="@+id/quick_btn"
                                             android:layout_width="match_parent"
                                             android:layout_height="match_parent"
                                             android:layout_weight="1"
@@ -221,7 +221,7 @@
                         </com.google.android.material.card.MaterialCardView>
 
                         <TextView
-                            android:id="@+id/current_location"
+                            android:id="@+id/current_location_text"
                             android:layout_marginTop="25dp"
                             android:layout_marginStart="20dp"
                             android:layout_marginEnd="20dp"
@@ -238,18 +238,21 @@
 
                         <androidx.cardview.widget.CardView
                             android:id="@+id/address"
-                            android:layout_below="@+id/current_location"
+                            android:layout_below="@+id/current_location_text"
                             android:layout_width="match_parent"
-                            android:layout_height="130dp"
+                            android:layout_height="150dp"
                             app:cardElevation="0dp"
-                            android:layout_margin="20dp"
+                            android:layout_marginStart="20dp"
+                            android:layout_marginEnd="20dp"
+                            android:layout_marginTop="14sp"
+                            android:layout_marginBottom="20dp"
                             app:cardCornerRadius="10dp">
 
-                            <ImageView
+                            <fragment
+                                android:id="@+id/current_location"
+                                android:name="com.google.android.gms.maps.SupportMapFragment"
                                 android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:src="@drawable/map_bg"
-                                android:scaleType="centerCrop"/>
+                                android:layout_height="match_parent"/>
 
                         </androidx.cardview.widget.CardView>
 
@@ -265,6 +268,8 @@
                 android:layout_height="match_parent"
                 android:layout_gravity="start"
                 android:fitsSystemWindows="true"
+                android:divider="@android:color/transparent"
+                android:dividerHeight="0dp"
                 app:headerLayout="@layout/header_layout"
                 app:menu="@menu/drawer_menu" />
 

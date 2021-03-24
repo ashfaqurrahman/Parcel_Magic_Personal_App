@@ -38,9 +38,7 @@
                 android:layout_alignEnd="@+id/next"
                 android:layout_marginBottom="15dp"
                 android:layout_above="@+id/next"
-                android:gravity="center_vertical"
-                android:layout_alignLeft="@+id/next"
-                android:layout_alignRight="@+id/next">
+                android:gravity="center_vertical">
 
                 <TextView
                     android:id="@+id/country_code"

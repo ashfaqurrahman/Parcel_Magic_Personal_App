@@ -63,4 +63,10 @@
     <string name="the_dhaka_city">the Dhaka city</string>
     <string name="quick">Quick</string>
     <string name="express">Express</string>
+    <string name="package_guidline">Package guidline</string>
+    <string name="for_a_successful_delivery_make_sure_your_package_is">For a successful delivery, make sure your package is :</string>
+    <string name="got_it">Got it</string>
+    <string name="securely_sealed_and_ready_for_curbside_pickup">• Securely sealed and ready for curbside pickup</string>
+    <string name="_5_kg_or_less">• 5 kg or less</string>
+    <string name="badol_mondal">Badol Mondal</string>
 </resources>
