@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="20dp"
-    android:background="@drawable/gradian_bg">
+    android:background="@drawable/gradiant_bg">
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/profile_image"

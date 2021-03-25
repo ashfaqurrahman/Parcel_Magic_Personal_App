@@ -168,11 +168,6 @@ class MainActivity : AppCompatActivity(), KodeinAware, CommunicatorFragmentInter
         finish()
     }*/
 
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.menu_bottom_navigation, menu)
-        return true
-    }
-
     override fun onSupportNavigateUp(): Boolean {
         return navController.navigateUp() || super.onSupportNavigateUp()
     }

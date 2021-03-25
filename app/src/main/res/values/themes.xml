@@ -6,7 +6,7 @@
         <item name="colorPrimaryVariant">@color/purple_700</item>
         <item name="colorOnPrimary">@color/white</item>
 <!--        Drawer menu style -->
-        <item name="android:listPreferredItemHeightLarge">50dp</item>
+        <item name="android:listPreferredItemHeightSmall">60dp</item>   <!--(default value is 48dp)-->
         <item name="android:listDivider"> @android:color/transparent </item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/teal_200</item>

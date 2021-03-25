@@ -12,6 +12,7 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import com.airposted.bitoronbd.BuildConfig
 import com.airposted.bitoronbd.R
 import com.airposted.bitoronbd.data.network.preferences.PreferenceProvider
 import com.airposted.bitoronbd.databinding.FragmentHomeBinding
@@ -63,7 +64,9 @@ class HomeFragment : Fragment(R.layout.fragment_home),
         }
 
         homeBinding.navigationView.setNavigationItemSelectedListener(this)
-
+        homeBinding.navigationView.menu.findItem(R.id.version).isEnabled = false
+        homeBinding.navigationView.menu.findItem(R.id.version1).isEnabled = false
+        homeBinding.versionName.text = "Version " + BuildConfig.VERSION_NAME
         myCommunicator = context as CommunicatorFragmentInterface
 
         //setProgressDialog(requireActivity())

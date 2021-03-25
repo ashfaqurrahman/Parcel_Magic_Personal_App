@@ -40,6 +40,14 @@
             android:id="@+id/sign_out"
             android:title="@string/sign_out" />
 
+        <item
+            android:id="@+id/version"
+            android:title="" />
+
+        <item
+            android:id="@+id/version1"
+            android:title="" />
+
     </group>
 
 </menu>
