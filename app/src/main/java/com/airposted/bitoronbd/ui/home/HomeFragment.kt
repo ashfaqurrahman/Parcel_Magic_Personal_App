@@ -19,6 +19,7 @@ import com.airposted.bitoronbd.ui.location_set.LocationSetFragment
 import com.airposted.bitoronbd.ui.main.CommunicatorFragmentInterface
 import com.airposted.bitoronbd.ui.my_parcel.MyParcelFragment
 import com.airposted.bitoronbd.ui.product.ProductFragment
+import com.airposted.bitoronbd.ui.product.ReceiverInfoFragment
 import com.airposted.bitoronbd.utils.*
 import com.google.android.material.navigation.NavigationView
 import com.google.android.material.textfield.TextInputLayout
@@ -104,7 +105,7 @@ class HomeFragment : Fragment(R.layout.fragment_home),
         }
 
         homeBinding.expressBtn.setOnClickListener{
-            productTypeDialog()
+            myCommunicator?.addContentFragment(ReceiverInfoFragment(), true)
             //findNavController().navigate(R.id.action_homeFragment_to_productFragment)
         }
 

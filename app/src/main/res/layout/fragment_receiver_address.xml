@@ -1,158 +1,287 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.product.ReceiverAddressFragment">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <ScrollView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scrollbars="none">
+        android:orientation="vertical"
+        android:background="@color/white"
+        tools:context=".ui.product.ReceiverAddressFragment">
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="15sp"
-            android:layout_marginEnd="15sp"
-            android:orientation="vertical">
+            android:orientation="horizontal"
+            android:id="@+id/top_layout"
+            tools:ignore="RelativeOverlap"
+            android:paddingBottom="25dp"
+            android:background="#f6f6f6">
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/back"
                 android:layout_width="36dp"
                 android:layout_height="36dp"
-                android:padding="12dp"
+                android:layout_marginStart="15dp"
                 android:layout_marginTop="40dp"
-                android:src="@drawable/ic_keyboard_backspace"/>
+                android:padding="12dp"
+                android:src="@drawable/ic_keyboard_backspace" />
 
             <TextView
+                android:id="@+id/toolbar_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
-                android:fontFamily="@font/poppins_semibold"
-                android:textStyle="normal"
-                android:textSize="32sp"
-                android:textColor="#1a1a1a"
-                tools:text="Who&apos;s receiving the Package"
-                />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="13sp"
+                android:layout_alignTop="@id/back"
+                android:layout_alignBottom="@+id/back"
+                android:layout_toEndOf="@+id/back"
+                android:layout_marginStart="25dp"
+                android:layout_centerVertical="true"
                 android:fontFamily="@font/poppins_medium"
                 android:textStyle="normal"
-                android:textSize="14sp"
-                android:textColor="#000000"
-                android:lineSpacingExtra="12sp"
-                tools:text="The driver may contact the recipient to Compete the delivery "
+                android:textSize="20sp"
+                android:textColor="#111329"
+                android:lineSpacingExtra="5sp"
+                android:text="@string/where_s_it_going"
                 />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+            <ImageView
+                android:id="@+id/from_icon"
+                android:layout_marginStart="15dp"
                 android:layout_marginTop="20dp"
-                android:fontFamily="@font/poppins_medium"
-                android:textStyle="normal"
-                android:textSize="14sp"
-                android:textColor="#000000"
-                android:lineSpacingExtra="12sp"
-                tools:text="Full Name"
-                />
+                android:layout_alignTop="@+id/from_layout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_location_icon_solid"/>
 
-            <LinearLayout
+            <ImageView
+                android:layout_width="2dp"
+                android:layout_height="wrap_content"
+                android:src="@drawable/doted_line_blue"
+                android:layout_marginStart="20dp"
+                android:layout_below="@+id/from_icon"
+                android:layout_above="@id/to_icon"/>
+
+            <RelativeLayout
+                android:id="@+id/to_icon"
+                android:layout_marginStart="15dp"
+                android:layout_marginBottom="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:layout_alignBottom="@+id/to_layout">
+
+                <ImageView
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:src="@drawable/circle_with_border"/>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/from_layout"
+                android:layout_below="@+id/back"
+                android:layout_toEndOf="@+id/from_icon"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="15dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="5dp"
+                android:paddingStart="15dp"
+                android:paddingEnd="10dp"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="11dp"
-                android:background="@drawable/input_back"
-                android:gravity="center_vertical">
+                android:background="@drawable/button_bg">
 
-                <EditText
+                <androidx.appcompat.widget.SearchView
+                    android:id="@+id/search_from"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/poppins_regular"
-                    android:inputType="phone"
-                    android:maxLength="11"
-                    android:maxLines="1"
-                    android:background="@null"
-                    android:hint="@string/enter_your_name"
-                    android:textColor="#000"
-                    android:padding="20dp"
-                    android:textSize="14sp"/>
-
-            </LinearLayout>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="17dp"
-                android:fontFamily="@font/poppins_medium"
-                android:textStyle="normal"
-                android:textSize="14sp"
-                android:textColor="#000000"
-                android:lineSpacingExtra="12sp"
-                tools:text="Phone Number"
-                />
-
-            <LinearLayout
-                android:id="@+id/layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="11dp"
-                android:background="@drawable/input_back"
-                android:gravity="center_vertical">
-
-                <TextView
-                    android:id="@+id/country_code"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/poppins_regular"
-                    android:layout_marginStart="15dp"
-                    android:textStyle="normal"
+                    android:inputType="text"
+                    android:layout_toStartOf="@+id/loading_from"
+                    app:closeIcon="@drawable/ic_close_red"
+                    app:searchIcon="@null"
+                    app:iconifiedByDefault="false"
+                    app:queryHint="Current location"
                     android:textSize="14sp"
-                    android:textColor="#56586d"
-                    android:lineSpacingExtra="5sp"
-                    android:text="+88 0"/>
-
-                <View
-                    android:layout_width="1dp"
-                    android:layout_height="20dp"
-                    android:layout_marginStart="15dp"
-                    android:layout_marginEnd="15dp"
-                    android:background="#e2e5ff"/>
-
-                <EditText
-                    android:id="@+id/phone"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
                     android:fontFamily="@font/poppins_regular"
-                    android:inputType="phone"
-                    android:maxLength="11"
-                    android:maxLines="1"
-                    android:background="@null"
-                    android:hint="@string/enter_your_phone_number"
-                    android:textColor="#000"
-                    android:padding="20dp"
-                    android:textSize="14sp"/>
+                    app:queryBackground="@null"
+                    android:textColorHint="@color/black"
+                    android:textColor="@color/black"/>
 
-            </LinearLayout>
+                <com.airbnb.lottie.LottieAnimationView
+                    android:id="@+id/loading_from"
+                    android:layout_width="50dp"
+                    android:layout_alignParentEnd="true"
+                    app:lottie_rawRes="@raw/loading"
+                    android:layout_height="match_parent"
+                    android:visibility="gone"
+                    app:lottie_loop="true"
+                    app:lottie_autoPlay="true"/>
 
-            <TextView
-                android:id="@+id/next"
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/to_layout"
+                android:layout_below="@+id/from_layout"
+                android:layout_toEndOf="@+id/to_icon"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="15dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="5dp"
+                android:paddingStart="15dp"
+                android:paddingEnd="10dp"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:fontFamily="@font/poppins_regular"
-                android:textAlignment="center"
-                android:padding="18dp"
-                android:text="@string/next"
-                android:textColor="#ffffff"
-                android:textSize="15sp"
-                android:background="@drawable/before_button_bg"
-                android:gravity="center_horizontal" />
+                android:background="@drawable/button_bg">
+
+                <androidx.appcompat.widget.SearchView
+                    android:id="@+id/search_to"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text"
+                    android:layout_toStartOf="@+id/loading_to"
+                    app:closeIcon="@drawable/ic_close_red"
+                    app:searchIcon="@null"
+                    app:iconifiedByDefault="false"
+                    app:queryHint="Where to?"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    android:fontFamily="@font/poppins_regular"
+                    app:queryBackground="@null"
+                    android:textColorHint="@color/black"
+                    android:textColor="@color/black"/>
+
+                <com.airbnb.lottie.LottieAnimationView
+                    android:id="@+id/loading_to"
+                    android:layout_width="50dp"
+                    android:layout_alignParentEnd="true"
+                    app:lottie_rawRes="@raw/loading"
+                    android:layout_height="match_parent"
+                    android:visibility="gone"
+                    app:lottie_loop="true"
+                    app:lottie_autoPlay="true"/>
+
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="15dp"
+            android:background="@drawable/button_bg"
+            android:orientation="horizontal"
+            android:paddingBottom="12dp"
+            android:paddingStart="15dp"
+            android:paddingEnd="15dp"
+            android:paddingTop="12dp">
+
+            <TextView
+                android:id="@+id/map"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawablePadding="15dp"
+                android:fontFamily="@font/poppins_medium"
+                android:gravity="center_vertical"
+                android:textColor="#0f122f"
+                android:textSize="19sp"
+                android:textStyle="normal"
+                app:drawableStartCompat="@drawable/ic_current_location_icon"
+                android:text="Set on map" />
 
         </LinearLayout>
 
-    </ScrollView>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginEnd="15dp"
+            android:orientation="vertical">
 
-</LinearLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp">
+
+                <ImageView
+                    android:id="@+id/pin"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:src="@drawable/ic_push_pin"
+                    android:padding="9dp"
+                    android:background="@drawable/circle_solid_braun"/>
+
+                <TextView
+                    android:layout_toEndOf="@+id/pin"
+                    android:layout_alignTop="@id/pin"
+                    android:layout_alignBottom="@+id/pin"
+                    android:gravity="center_vertical"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
+                    android:fontFamily="@font/poppins_medium"
+                    android:textStyle="normal"
+                    android:textSize="14sp"
+                    android:textColor="#000000"
+                    android:lineSpacingExtra="7sp"
+                    android:text="@string/saved_places"
+                    />
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.7dp"
+                android:layout_marginTop="15.5dp"
+                android:background="#d6d6d6"/>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp">
+
+                <ImageView
+                    android:id="@+id/location"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
+                    android:src="@drawable/ic_gps_fixed"
+                    android:padding="9dp"
+                    android:background="@drawable/circle_solid_braun"/>
+
+                <TextView
+                    android:layout_toEndOf="@+id/location"
+                    android:layout_alignTop="@id/location"
+                    android:layout_alignBottom="@+id/location"
+                    android:gravity="center_vertical"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
+                    android:fontFamily="@font/poppins_medium"
+                    android:textStyle="normal"
+                    android:textSize="14sp"
+                    android:textColor="#000000"
+                    android:lineSpacingExtra="7sp"
+                    android:text="@string/set_on_map"
+                    />
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.7dp"
+                android:layout_marginTop="15.5dp"
+                android:background="#d6d6d6"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</layout>

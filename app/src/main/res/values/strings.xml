@@ -69,4 +69,7 @@
     <string name="securely_sealed_and_ready_for_curbside_pickup">• Securely sealed and ready for curbside pickup</string>
     <string name="_5_kg_or_less">• 5 kg or less</string>
     <string name="badol_mondal">Badol Mondal</string>
+    <string name="saved_places">Saved Places</string>
+    <string name="set_on_map">Set on map</string>
+    <string name="where_s_it_going">Where\'s it going?</string>
 </resources>

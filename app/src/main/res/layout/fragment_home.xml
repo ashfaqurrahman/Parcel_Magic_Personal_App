@@ -270,6 +270,9 @@
                 android:fitsSystemWindows="true"
                 android:divider="@android:color/transparent"
                 android:dividerHeight="0dp"
+                app:itemIconPadding="30dp"
+                app:itemHorizontalPadding="30dp"
+                app:itemIconTint="#355290"
                 app:headerLayout="@layout/header_layout"
                 app:menu="@menu/drawer_menu" />
 

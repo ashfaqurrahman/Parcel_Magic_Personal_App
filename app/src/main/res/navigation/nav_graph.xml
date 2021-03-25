@@ -26,19 +26,17 @@
             app:destination="@id/myParcelFragment"
             app:popUpTo="@id/homeFragment" />
 
+        <action
+            android:id="@+id/action_homeFragment_to_receiver_address_fragment"
+            app:destination="@id/receiverInfoFragment"
+            app:popUpTo="@id/homeFragment" />
+
     </fragment>
 
     <fragment
         android:id="@+id/myParcelFragment"
         android:name="com.airposted.bitoronbd.ui.my_parcel.MyParcelFragment"
         tools:layout="@layout/fragment_my_parcel">
-
-    </fragment>
-
-    <fragment
-        android:id="@+id/moreFragment"
-        android:name="com.airposted.bitoronbd.ui.more.MoreFragment"
-        tools:layout="@layout/fragment_more" >
 
     </fragment>
 
@@ -50,9 +48,29 @@
     </fragment>
 
     <fragment
+        android:id="@+id/searchReceiverAddressFragment"
+        android:name="com.airposted.bitoronbd.ui.product.SearchReceiverAddressFragment"
+        tools:layout="@layout/fragment_search_receiver_address" >
+
+    </fragment>
+
+    <fragment
         android:id="@+id/productFragment"
         android:name="com.airposted.bitoronbd.ui.product.ProductFragment"
         tools:layout="@layout/fragment_product" >
+
+        <action
+            android:id="@+id/action_productFragment_to_receiverAddressFragment"
+            app:destination="@id/searchReceiverAddressFragment"
+            app:popUpTo="@id/productFragment"/>
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/receiverInfoFragment"
+        android:name="com.airposted.bitoronbd.ui.product.ReceiverInfoFragment"
+        tools:layout="@layout/fragment_receiver_info" >
+
 
         <action
             android:id="@+id/action_productFragment_to_receiverAddressFragment"
@@ -63,8 +81,8 @@
 
     <fragment
         android:id="@+id/receiverAddressFragment"
-        android:name="com.airposted.bitoronbd.ui.product.SearchReceiverAddressFragment"
-        tools:layout="@layout/fragment_search_receiver_address" >
+        android:name="com.airposted.bitoronbd.ui.product.ReceiverAddressFragment"
+        tools:layout="@layout/fragment_receiver_address" >
 
     </fragment>
 </navigation>
