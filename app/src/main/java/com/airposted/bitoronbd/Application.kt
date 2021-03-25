@@ -8,7 +8,6 @@ import com.airposted.bitoronbd.data.repositories.*
 import com.airposted.bitoronbd.ui.auth.AuthViewModelFactory
 import com.airposted.bitoronbd.ui.home.HomeViewModelFactory
 import com.airposted.bitoronbd.ui.location_set.LocationSetViewModelFactory
-import com.airposted.bitoronbd.ui.main.MainViewModelFactory
 import com.airposted.bitoronbd.ui.more.MoreViewModelFactory
 import com.airposted.bitoronbd.ui.my_parcel.MyParcelViewModelFactory
 import org.kodein.di.Kodein
@@ -36,7 +35,6 @@ class Application : Application(), KodeinAware {
         bind() from singleton { LocationSetRepository(instance()) }
         bind() from provider { AuthViewModelFactory(instance()) }
         bind() from provider { MoreViewModelFactory(instance()) }
-        bind() from provider { MainViewModelFactory(instance()) }
         bind() from provider { HomeViewModelFactory(instance()) }
         bind() from provider { LocationSetViewModelFactory(instance()) }
         bind() from provider { MyParcelViewModelFactory(instance()) }
