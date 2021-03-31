@@ -56,9 +56,9 @@ class MyParcelFragment : Fragment(), KodeinAware, CursorWheelLayout.OnMenuSelect
     }
 
     private fun bindUI() {
-        binding.menu.setOnClickListener {
-            openNotificationDialog()
-        }
+//        binding.menu.setOnClickListener {
+//            openNotificationDialog()
+//        }
         getOrderList(0)
 
         binding.searchItem.onFocusChangeListener = OnFocusChangeListener { view, hasFocus ->

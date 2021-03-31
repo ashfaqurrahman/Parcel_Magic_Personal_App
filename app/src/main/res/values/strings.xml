@@ -72,4 +72,10 @@
     <string name="saved_places">Saved Places</string>
     <string name="set_on_map">Set on map</string>
     <string name="where_s_it_going">Where\'s it going?</string>
+    <string name="recent_order">Recent Order</string>
+
+    <string-array name="delivery_type">
+        <item>Express Delivery</item>
+        <item>Quick Delivery</item>
+    </string-array>
 </resources>
