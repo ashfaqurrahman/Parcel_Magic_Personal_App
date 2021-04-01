@@ -30,9 +30,8 @@ class Application : Application(), KodeinAware {
         bind() from singleton { UserRepository(instance()) }
         bind() from singleton { HomeRepository(instance(), MyApi(instance())) }
         bind() from singleton { MoreRepository(instance(), MyApi(instance())) }
-        bind() from singleton { MainRepository(instance()) }
         bind() from singleton { OrderListRepository(instance(), MyApi(instance())) }
-        bind() from singleton { LocationSetRepository(instance()) }
+        bind() from singleton { LocationSetRepository(instance(), MyApi(instance())) }
         bind() from provider { AuthViewModelFactory(instance()) }
         bind() from provider { MoreViewModelFactory(instance()) }
         bind() from provider { HomeViewModelFactory(instance()) }

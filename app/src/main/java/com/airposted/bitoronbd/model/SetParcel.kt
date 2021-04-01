@@ -13,10 +13,7 @@ class SetParcel: Serializable {
     var pick_zone = ""
     var pick_area = ""
     var pick_address = ""
-    var item_type = 0
-    var item_des = ""
-    var special_instruction = ""
-    var delivery_type = 0
+    var personal_order_type = 0
     var sender_latitude = 0.0
     var sender_longitude = 0.0
     var receiver_latitude = 0.0

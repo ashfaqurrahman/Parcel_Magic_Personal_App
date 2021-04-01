@@ -62,7 +62,7 @@
                 android:id="@+id/current_location"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_above="@+id/another_location"
+                android:layout_above="@+id/bg"
                 android:layout_marginStart="20dp"
                 android:layout_marginEnd="20dp"
                 android:layout_marginBottom="25dp"
@@ -70,23 +70,10 @@
                 android:fontFamily="@font/poppins_regular"
                 android:gravity="center_horizontal"
                 android:padding="18dp"
-                android:text="Use current location"
+                android:text="Give Permission"
                 android:textAlignment="center"
                 android:textColor="#ffffff"
                 android:textSize="15sp" />
-
-            <TextView
-                android:id="@+id/another_location"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_above="@+id/bg"
-                android:layout_marginBottom="10dp"
-                android:fontFamily="@font/poppins_medium"
-                android:text="Select another location"
-                android:textAlignment="center"
-                android:textColor="#3b5998"
-                android:textSize="15sp"
-                android:textStyle="normal" />
 
             <ImageView
                 android:id="@+id/bg"

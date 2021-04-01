@@ -10,6 +10,8 @@ import androidx.fragment.app.Fragment
 import com.airposted.bitoronbd.R
 import com.airposted.bitoronbd.databinding.FragmentReceiverInfoBinding
 import com.airposted.bitoronbd.ui.main.CommunicatorFragmentInterface
+import com.airposted.bitoronbd.utils.snackbar
+import com.airposted.bitoronbd.utils.textWatcher
 
 class ReceiverInfoFragment : Fragment() {
     private lateinit var binding: FragmentReceiverInfoBinding
@@ -30,19 +32,22 @@ class ReceiverInfoFragment : Fragment() {
     private fun bindUI() {
         communicatorFragmentInterface = context as CommunicatorFragmentInterface
         binding.next.setOnClickListener {
-            communicatorFragmentInterface!!.addContentFragment(ReceiverAddressFragment(), true)
+            if(binding.receiverName.text.isNotEmpty()){
+                val fragment = ReceiverAddressFragment()
+                val bundle = Bundle()
+                bundle.putString("receiver_name", binding.receiverName.text.toString())
+                bundle.putString("receiver_phone", binding.receiverPhone.text.toString())
+                fragment.arguments = bundle
+                communicatorFragmentInterface!!.addContentFragment(fragment, true)
+            } else {
+                binding.rootLayout.snackbar("Please enter receiver name")
+            }
         }
-        val gradientDrawable = GradientDrawable(
-            GradientDrawable.Orientation.TOP_BOTTOM, intArrayOf(
-                ContextCompat.getColor(requireActivity(), R.color.color1),
-                ContextCompat.getColor(requireActivity(), R.color.color2),
-                ContextCompat.getColor(requireActivity(), R.color.color3),
-                ContextCompat.getColor(requireActivity(), R.color.color4)
-            )
-        )
-        binding.back.background = gradientDrawable
+
         binding.back.setOnClickListener {
             requireActivity().onBackPressed()
         }
+
+        textWatcher(requireActivity(), 9, binding.receiverPhone, binding.next)
     }
 }

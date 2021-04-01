@@ -1,43 +1,74 @@
 package com.airposted.bitoronbd.ui.home
 
+import android.Manifest
 import android.app.Dialog
+import android.content.Context
+import android.content.IntentSender.SendIntentException
+import android.content.pm.PackageManager
+import android.content.res.Resources
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.GradientDrawable
+import android.location.LocationManager
+import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.*
 import android.widget.*
-import androidx.cardview.widget.CardView
+import androidx.annotation.RequiresApi
+import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import com.aapbd.appbajarlib.storage.PersistentUser
 import com.airposted.bitoronbd.BuildConfig
 import com.airposted.bitoronbd.R
 import com.airposted.bitoronbd.data.network.preferences.PreferenceProvider
 import com.airposted.bitoronbd.databinding.FragmentHomeBinding
-import com.airposted.bitoronbd.ui.location_set.LocationSetFragment
+import com.airposted.bitoronbd.model.LocationDetails
 import com.airposted.bitoronbd.ui.main.CommunicatorFragmentInterface
 import com.airposted.bitoronbd.ui.my_parcel.MyParcelFragment
 import com.airposted.bitoronbd.ui.product.ProductFragment
 import com.airposted.bitoronbd.ui.product.ReceiverInfoFragment
 import com.airposted.bitoronbd.utils.*
+import com.airposted.bitoronbd.utils.ApiException
+import com.bumptech.glide.Glide
+import com.google.android.gms.common.api.*
+import com.google.android.gms.location.*
+import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.OnMapReadyCallback
+import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.CameraPosition
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MapStyleOptions
 import com.google.android.material.navigation.NavigationView
-import com.google.android.material.textfield.TextInputLayout
+import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.coroutines.launch
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.x.kodein
 import org.kodein.di.generic.instance
 
 
-class HomeFragment : Fragment(R.layout.fragment_home),
-    NavigationView.OnNavigationItemSelectedListener, KodeinAware {
+open class HomeFragment : Fragment(R.layout.fragment_home),
+    NavigationView.OnNavigationItemSelectedListener, KodeinAware, OnMapReadyCallback {
 
     private lateinit var homeBinding: FragmentHomeBinding
     override val kodein by kodein()
     private val factory: HomeViewModelFactory by instance()
     private lateinit var viewModel: HomeViewModel
     var myCommunicator: CommunicatorFragmentInterface? = null
+    private lateinit var mMap: GoogleMap
+
+    private val UPDATE_INTERVAL_IN_MILLISECONDS: Long = 10000
+
+    private val FASTEST_UPDATE_INTERVAL_IN_MILLISECONDS: Long = 5000
+
+    private val REQUEST_CHECK_SETTINGS = 0x1
+    private lateinit var googleApiClient: GoogleApiClient
+    private lateinit var locationDetailsImp: LocationDetails
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -48,28 +79,83 @@ class HomeFragment : Fragment(R.layout.fragment_home),
         return homeBinding.root
     }
 
+    @RequiresApi(Build.VERSION_CODES.M)
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProvider(requireActivity(), factory).get(HomeViewModel::class.java)
         bindUI()
     }
 
+    @RequiresApi(Build.VERSION_CODES.M)
     private fun bindUI() = Coroutines.main {
 
-        /*val wp: WindowManager.LayoutParams = requireActivity().window.attributes
-        wp.dimAmount = 0.75f*/
+        setProgressDialog(requireActivity())
+
+        googleApiClient = getAPIClientInstance()
+        googleApiClient.connect()
+
+        viewModel.gps.observe(viewLifecycleOwner, {
+            if (it) {
+                homeBinding.titleLayout.visibility = View.VISIBLE
+                homeBinding.title2Layout.visibility = View.GONE
+
+            } else {
+                homeBinding.titleLayout.visibility = View.GONE
+                homeBinding.title2Layout.visibility = View.VISIBLE
+            }
+        })
+
+        homeBinding.shareLocation.setOnClickListener {
+
+            requestGPSSettings()
+        }
+
+        val mapFragment =
+            childFragmentManager.findFragmentById(R.id.current_location) as SupportMapFragment
+        mapFragment.getMapAsync(this)
 
         homeBinding.menu.setOnClickListener {
             homeBinding.drawerLayout.openDrawer(Gravity.LEFT)
         }
 
         homeBinding.navigationView.setNavigationItemSelectedListener(this)
-        homeBinding.navigationView.menu.findItem(R.id.version).isEnabled = false
-        homeBinding.navigationView.menu.findItem(R.id.version1).isEnabled = false
         homeBinding.versionName.text = "Version " + BuildConfig.VERSION_NAME
         myCommunicator = context as CommunicatorFragmentInterface
 
-        //setProgressDialog(requireActivity())
+        val hView: View = homeBinding.navigationView.getHeaderView(0)
+        val pic = hView.findViewById<CircleImageView>(R.id.profile_image)
+        val name = hView.findViewById<TextView>(R.id.user_name)
+
+        viewModel.getName.await().observe(requireActivity(), {
+            name.text = it
+        })
+
+        Glide.with(requireActivity()).load(
+            PersistentUser.getInstance().getUserImage(requireActivity())
+        ).placeholder(R.mipmap.ic_launcher).error(
+            R.drawable.sample_pro_pic
+        ).into(pic)
+
+        homeBinding.expressBtn.setOnClickListener{
+            myCommunicator?.addContentFragment(ReceiverInfoFragment(), true)
+        }
+
+        homeBinding.whatToSend.setOnClickListener {
+            openWhatToSendDialog()
+        }
+
+        val gradientDrawable = GradientDrawable(
+            GradientDrawable.Orientation.TOP_BOTTOM, intArrayOf(
+                ContextCompat.getColor(requireActivity(), R.color.color1),
+                ContextCompat.getColor(requireActivity(), R.color.color2),
+                ContextCompat.getColor(requireActivity(), R.color.color3),
+                ContextCompat.getColor(requireActivity(), R.color.color4)
+            )
+        )
+
+        homeBinding.expressBtn.background = gradientDrawable
+        homeBinding.quickBtn.background = gradientDrawable
+
         lifecycleScope.launch {
             try {
                 val settingResponse = viewModel.getSetting()
@@ -89,44 +175,71 @@ class HomeFragment : Fragment(R.layout.fragment_home),
                     "base_price_express",
                     settingResponse.rate.basePriceExpress.toString()
                 )
-                //dismissDialog()
+                dismissDialog()
             } catch (e: ApiException) {
-                //dismissDialog()
+                dismissDialog()
                 homeBinding.rootLayout.snackbar(e.message!!)
                 e.printStackTrace()
             } catch (e: NoInternetException) {
-                //dismissDialog()
+                dismissDialog()
                 homeBinding.rootLayout.snackbar(e.message!!)
                 e.printStackTrace()
             }
         }
+    }
 
-//        homeBinding.address.text = PreferenceProvider(requireActivity()).getSharedPreferences("currentLocation")
+    private fun getAPIClientInstance(): GoogleApiClient {
+        return GoogleApiClient.Builder(requireActivity())
+            .addApi(LocationServices.API).build()
+    }
 
-        homeBinding.address.setOnClickListener {
-            myCommunicator?.addContentFragment(LocationSetFragment(), true)
+    private fun requestGPSSettings() {
+        val locationRequest = LocationRequest.create()
+        locationRequest.priority = LocationRequest.PRIORITY_HIGH_ACCURACY
+        locationRequest.interval = UPDATE_INTERVAL_IN_MILLISECONDS
+        locationRequest.fastestInterval = FASTEST_UPDATE_INTERVAL_IN_MILLISECONDS
+        val builder = LocationSettingsRequest.Builder().addLocationRequest(locationRequest)
+        builder.setAlwaysShow(true)
+        val result: PendingResult<LocationSettingsResult> =
+            LocationServices.SettingsApi.checkLocationSettings(googleApiClient, builder.build())
+        result.setResultCallback { result ->
+            val status: Status = result.status
+            when (status.statusCode) {
+                LocationSettingsStatusCodes.SUCCESS -> {
+                    Log.i("", "All location settings are satisfied.")
+                    Toast.makeText(
+                        requireActivity(),
+                        "GPS is already enable",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+                LocationSettingsStatusCodes.RESOLUTION_REQUIRED -> {
+                    Log.i(
+                        "",
+                        "Location settings are not satisfied. Show the user a dialog to" + "upgrade location settings "
+                    )
+                    try {
+                        status.startResolutionForResult(
+                            requireActivity(),
+                            REQUEST_CHECK_SETTINGS
+                        )
+                    } catch (e: SendIntentException) {
+                        Log.e("Applicationsett", e.toString())
+                    }
+                }
+                LocationSettingsStatusCodes.SETTINGS_CHANGE_UNAVAILABLE -> {
+                    Log.i(
+                        "",
+                        "Location settings are inadequate, and cannot be fixed here. Dialog " + "not created."
+                    )
+                    Toast.makeText(
+                        requireActivity(),
+                        "Location settings are inadequate, and cannot be fixed here",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
         }
-
-        homeBinding.expressBtn.setOnClickListener{
-            myCommunicator?.addContentFragment(ReceiverInfoFragment(), true)
-            //findNavController().navigate(R.id.action_homeFragment_to_productFragment)
-        }
-
-        homeBinding.whatToSend.setOnClickListener {
-            openWhatToSendDialog()
-        }
-
-        val gradientDrawable = GradientDrawable(
-            GradientDrawable.Orientation.TOP_BOTTOM, intArrayOf(
-                ContextCompat.getColor(requireActivity(), R.color.color1),
-                ContextCompat.getColor(requireActivity(), R.color.color2),
-                ContextCompat.getColor(requireActivity(), R.color.color3),
-                ContextCompat.getColor(requireActivity(), R.color.color4)
-            )
-        )
-
-        homeBinding.expressBtn.background = gradientDrawable
-        homeBinding.quickBtn.background = gradientDrawable
     }
 
     private fun openWhatToSendDialog() {
@@ -146,75 +259,91 @@ class HomeFragment : Fragment(R.layout.fragment_home),
         orderDialog.show()
     }
 
-    private fun productTypeDialog(){
-        val dialogs = Dialog(requireActivity())
-        dialogs.requestWindowFeature(Window.FEATURE_NO_TITLE)
-        dialogs.setContentView(R.layout.product_type)
-        dialogs.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        dialogs.window?.setLayout(
-            ViewGroup.LayoutParams.MATCH_PARENT,  //w
-            ViewGroup.LayoutParams.WRAP_CONTENT //h
-        )
+    override fun onMapReady(googleMap: GoogleMap) {
+        mMap = googleMap
 
-        val close = dialogs.findViewById<ImageView>(R.id.close)
-        val fragile = dialogs.findViewById<CardView>(R.id.fragile)
-        val liquid = dialogs.findViewById<CardView>(R.id.liquid)
-        val solid = dialogs.findViewById<CardView>(R.id.solid)
-        val fragileSelect = dialogs.findViewById<RelativeLayout>(R.id.fragile_select)
-        val liquidSelect = dialogs.findViewById<RelativeLayout>(R.id.liquid_select)
-        val solidSelect = dialogs.findViewById<RelativeLayout>(R.id.solid_select)
-        val productDetailsLayout = dialogs.findViewById<TextInputLayout>(R.id.product_details_layout)
-        val productDetails = dialogs.findViewById<EditText>(R.id.product_details)
-        val nextLayout = dialogs.findViewById<LinearLayout>(R.id.next_layout)
-        val proceed = dialogs.findViewById<TextView>(R.id.proceed)
+        if (ActivityCompat.checkSelfPermission(
+                requireActivity(),
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                requireActivity(),
+                Manifest.permission.ACCESS_COARSE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
 
-        close.setOnClickListener {
-            dialogs.dismiss()
+            return
         }
+        mMap.isMyLocationEnabled = true
 
-        fragile.setOnClickListener {
-            fragileSelect.visibility = View.VISIBLE
-            liquidSelect.visibility = View.GONE
-            solidSelect.visibility = View.GONE
-            productDetailsLayout.visibility = View.VISIBLE
-            nextLayout.visibility = View.VISIBLE
-        }
+        mMap.uiSettings.isMyLocationButtonEnabled = false
+        mMap.uiSettings.isMapToolbarEnabled = false
+        mMap.uiSettings.isZoomControlsEnabled = false
+        mMap.uiSettings.isZoomGesturesEnabled = false
+        mMap.uiSettings.isScrollGesturesEnabledDuringRotateOrZoom = false
+        mMap.uiSettings.isScrollGesturesEnabled = false
+        mMap.uiSettings.isRotateGesturesEnabled = false
+        mMap.mapType = 1
 
-        liquid.setOnClickListener {
-            fragileSelect.visibility = View.GONE
-            liquidSelect.visibility = View.VISIBLE
-            solidSelect.visibility = View.GONE
-            productDetailsLayout.visibility = View.VISIBLE
-            nextLayout.visibility = View.VISIBLE
-        }
-
-        solid.setOnClickListener {
-            fragileSelect.visibility = View.GONE
-            liquidSelect.visibility = View.GONE
-            solidSelect.visibility = View.VISIBLE
-            productDetailsLayout.visibility = View.VISIBLE
-            nextLayout.visibility = View.VISIBLE
-        }
-
-        proceed.setOnClickListener {
-            if (productDetails.text.toString().isNotEmpty()){
-                dialogs.dismiss()
-                hideKeyboard(requireActivity())
-                myCommunicator?.addContentFragment(ProductFragment(), true)
-            } else {
-                Toast.makeText(requireActivity(), "Please enter product details", Toast.LENGTH_LONG).show()
+        try {
+            // Customise the styling of the base map using a JSON object defined
+            // in a raw resource file.
+            val success = googleMap.setMapStyle(
+                MapStyleOptions.loadRawResourceStyle(
+                    requireActivity(), R.raw.style
+                )
+            )
+            if (!success) {
+                Log.e("TAG", "Style parsing failed.")
             }
+        } catch (e: Resources.NotFoundException) {
+            Log.e("TAG", "Can't find style. Error: ", e)
         }
 
-        dialogs.setCancelable(true)
+        viewModel.gps.observe(viewLifecycleOwner, {
+            if (it) {
+                viewModel.currentLocation.observe(viewLifecycleOwner, { locationDetails ->
+                    locationDetailsImp = locationDetails
+                    Toast.makeText(
+                        requireActivity(),
+                        locationDetails.latitude.toString() + "/" + locationDetails.longitude.toString(),
+                        Toast.LENGTH_LONG
+                    ).show()
 
-        dialogs.show()
+                    val cameraPosition =
+                        CameraPosition.Builder()
+                            .target(
+                                LatLng(
+                                    locationDetailsImp.latitude,
+                                    locationDetailsImp.longitude
+                                )
+                            )
+                            .zoom(15.2f)                   // Sets the zoom
+                            .build()
+                    mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition))
+                })
+
+            } else {
+                if (PreferenceProvider(requireActivity()).getSharedPreferences("latitude") != null){
+                    val cameraPosition =
+                        CameraPosition.Builder()
+                            .target(
+                                LatLng(
+                                    PreferenceProvider(requireActivity()).getSharedPreferences("latitude")!!.toDouble(),
+                                    PreferenceProvider(requireActivity()).getSharedPreferences("longitude")!!.toDouble()
+                                )
+                            )
+                            .zoom(15.2f)                   // Sets the zoom
+                            .build()
+                    mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition))
+                }
+            }
+        })
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when(item.itemId) {
             R.id.my_parcel -> {
-                myCommunicator?.addContentFragment(ProductFragment(), true)
+                myCommunicator?.addContentFragment(MyParcelFragment(), true)
                 homeBinding.drawerLayout.closeDrawers()
             }
             R.id.parcel_history -> {

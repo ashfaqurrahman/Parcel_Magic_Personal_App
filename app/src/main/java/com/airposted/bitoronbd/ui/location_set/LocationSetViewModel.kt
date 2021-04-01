@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.airposted.bitoronbd.data.repositories.LocationSetRepository
+import com.airposted.bitoronbd.model.SetParcel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
@@ -32,4 +33,8 @@ class LocationSetViewModel (
     suspend fun getDirections(
         url: String
     ) = withContext(Dispatchers.IO) { repository.directionSearch(url) }
+
+    suspend fun setOrder(
+        setParcel: SetParcel
+    ) = withContext(Dispatchers.IO) { repository.setOrder(setParcel) }
 }

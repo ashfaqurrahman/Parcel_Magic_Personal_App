@@ -42,7 +42,7 @@
     <string name="view_this_parcel">View This Parcel</string>
 
     <string name="enter">Enter verification code sent to \n+880%1$s</string>
-    <string name="resend_code">\" Resend Code\"</string>
+    <string name="resend_code"> Resend Code</string>
     <string name="did_not_receive_the_code">Did not receive the code?</string>
     <string name="search_location">Search Receiver Location</string>
     <string name="not_now">Not Now</string>
@@ -73,6 +73,9 @@
     <string name="set_on_map">Set on map</string>
     <string name="where_s_it_going">Where\'s it going?</string>
     <string name="recent_order">Recent Order</string>
+
+    <string name="delivery_charge">Delivery Charge</string>
+    <string name="who_will_pay">Who will Pay</string>
 
     <string-array name="delivery_type">
         <item>Express Delivery</item>

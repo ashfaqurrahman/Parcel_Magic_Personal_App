@@ -13,8 +13,7 @@
         <androidx.drawerlayout.widget.DrawerLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/drawer_layout"
-            tools:context=".ui.main.MainActivity">
+            android:id="@+id/drawer_layout">
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -68,43 +67,97 @@
                         </RelativeLayout>
 
                         <RelativeLayout
-                            android:id="@+id/title1"
-                            android:paddingStart="20dp"
-                            android:paddingEnd="20dp"
-                            android:paddingBottom="113dp"
-                            android:layout_below="@+id/toolbar_layout"
-                            android:background="@drawable/bottom_radius_button_bg"
+                            android:id="@+id/title_main_layout"
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content">
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/toolbar_layout">
 
-                            <TextView
-                                android:id="@+id/title"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:fontFamily="@font/poppins_bold"
-                                android:textStyle="bold"
-                                android:textSize="26sp"
-                                android:textColor="#ffffff"
-                                android:lineSpacingExtra="21sp"
-                                android:text="@string/quick_delivery_on"
-                                />
-
-                            <TextView
-                                android:layout_below="@id/title"
+                            <RelativeLayout
+                                android:id="@+id/title_layout"
+                                android:paddingStart="20dp"
+                                android:paddingEnd="20dp"
+                                android:paddingBottom="113dp"
+                                android:background="@drawable/bottom_radius_button_bg"
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:fontFamily="@font/poppins_bold"
-                                android:textSize="36sp"
-                                android:textStyle="bold"
-                                android:textColor="#ffffff"
-                                android:text="@string/the_dhaka_city"
-                                />
+                                android:layout_height="wrap_content">
+
+                                <TextView
+                                    android:id="@+id/title"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="@font/poppins_bold"
+                                    android:textStyle="bold"
+                                    android:textSize="26sp"
+                                    android:textColor="#ffffff"
+                                    android:lineSpacingExtra="21sp"
+                                    android:text="@string/quick_delivery_on"
+                                    />
+
+                                <TextView
+                                    android:layout_below="@id/title"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="@font/poppins_bold"
+                                    android:textSize="36sp"
+                                    android:textStyle="bold"
+                                    android:textColor="#ffffff"
+                                    android:text="@string/the_dhaka_city"
+                                    />
+
+                            </RelativeLayout>
+
+                            <RelativeLayout
+                                android:visibility="gone"
+                                android:id="@+id/title2_layout"
+                                android:paddingStart="20dp"
+                                android:paddingEnd="20dp"
+                                android:paddingBottom="113dp"
+                                android:background="@drawable/bottom_radius_button_bg"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content">
+
+                                <TextView
+                                    android:id="@+id/title2"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="@font/poppins_bold"
+                                    android:textStyle="bold"
+                                    android:textSize="26sp"
+                                    android:textColor="#ffffff"
+                                    android:lineSpacingExtra="21sp"
+                                    android:text="@string/quick_delivery_on"
+                                    />
+
+                                <TextView
+                                    android:id="@+id/title3"
+                                    android:layout_below="@id/title2"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="@font/poppins_bold"
+                                    android:textSize="36sp"
+                                    android:textStyle="bold"
+                                    android:textColor="#ffffff"
+                                    android:text="@string/the_dhaka_city"
+                                    />
+
+                                <TextView
+                                    android:id="@+id/share_location"
+                                    android:layout_below="@id/title3"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:fontFamily="@font/poppins_bold"
+                                    android:textSize="14sp"
+                                    android:textColor="#ffffff"
+                                    android:text="Share location"
+                                    />
+
+                            </RelativeLayout>
 
                         </RelativeLayout>
 
                         <com.google.android.material.card.MaterialCardView
                             android:id="@+id/delivery_process"
-                            android:layout_below="@+id/title1"
+                            android:layout_below="@+id/title_main_layout"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="-90dp"
@@ -240,7 +293,7 @@
                             android:id="@+id/address"
                             android:layout_below="@+id/current_location_text"
                             android:layout_width="match_parent"
-                            android:layout_height="150dp"
+                            android:layout_height="200dp"
                             app:cardElevation="0dp"
                             android:layout_marginStart="20dp"
                             android:layout_marginEnd="20dp"
@@ -252,7 +305,7 @@
                                 android:id="@+id/current_location"
                                 android:name="com.google.android.gms.maps.SupportMapFragment"
                                 android:layout_width="match_parent"
-                                android:layout_height="match_parent"/>
+                                android:layout_height="match_parent" />
 
                         </androidx.cardview.widget.CardView>
 
@@ -263,35 +316,56 @@
             </RelativeLayout>
 
             <com.google.android.material.navigation.NavigationView
-                android:id="@+id/navigationView"
+                android:id="@+id/navigation_drawer_container"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_gravity="start"
-                android:fitsSystemWindows="true"
-                android:divider="@android:color/transparent"
-                android:dividerHeight="0dp"
-                app:itemIconPadding="30dp"
-                app:itemHorizontalPadding="30dp"
-                app:itemIconTint="#355290"
-                app:headerLayout="@layout/header_layout"
-                app:menu="@menu/drawer_menu" />
+                android:layout_gravity="start">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="bottom"
-                android:orientation="vertical"
-                android:padding="10dp"
-                android:background="@drawable/gradiant_bg">
-
-                <TextView
-                    android:id="@+id/version_name"
+                <androidx.core.widget.NestedScrollView
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:textColor="@color/white"
-                    tools:text="Version 3.1" />
-            </LinearLayout>
+                    android:layout_height="match_parent"
+                    android:fillViewport="true">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
+
+                        <com.google.android.material.navigation.NavigationView
+                            android:id="@+id/navigationView"
+                            android:layout_width="wrap_content"
+                            android:layout_height="0dp"
+                            android:layout_gravity="top"
+                            android:layout_weight="0.95"
+                            app:headerLayout="@layout/header_layout"
+                            app:menu="@menu/drawer_menu" />
+
+                        <com.google.android.material.navigation.NavigationView
+                            android:id="@+id/navigation_drawer_bottom"
+                            android:layout_width="wrap_content"
+                            android:layout_height="0dp"
+                            android:layout_weight="0.05">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="bottom"
+                                android:orientation="vertical"
+                                android:padding="10dp"
+                                android:background="@drawable/gradiant_bg">
+
+                                <TextView
+                                    android:id="@+id/version_name"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center"
+                                    android:textColor="@color/white"
+                                    android:text="Version 3.1" />
+                            </LinearLayout>
+                        </com.google.android.material.navigation.NavigationView>
+                    </LinearLayout>
+                </androidx.core.widget.NestedScrollView>
+            </com.google.android.material.navigation.NavigationView>
 
         </androidx.drawerlayout.widget.DrawerLayout>
 

@@ -3,7 +3,6 @@ package com.airposted.bitoronbd.ui.home
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.airposted.bitoronbd.data.repositories.HomeRepository
-import com.airposted.bitoronbd.data.repositories.MainRepository
 
 @Suppress("UNCHECKED_CAST")
 class HomeViewModelFactory(
