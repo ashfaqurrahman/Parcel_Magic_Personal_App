@@ -76,73 +76,114 @@
                                     android:layout_gravity="center_horizontal"
                                     android:background="@drawable/button_bg"/>-->
 
-                                <TextView
-                                    android:layout_width="wrap_content"
+                                <RelativeLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginTop="15dp"
+                                        android:layout_alignParentStart="true"
+                                        android:fontFamily="@font/poppins_semibold"
+                                        android:textStyle="normal"
+                                        android:textSize="14sp"
+                                        android:textColor="#0f122f"
+                                        android:lineSpacingExtra="10sp"
+                                        android:text="@string/delivery_charge" />
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_alignParentEnd="true"
+                                        android:layout_marginTop="15dp"
+                                        android:fontFamily="@font/poppins_semibold"
+                                        android:textStyle="normal"
+                                        android:textSize="14sp"
+                                        android:textColor="#0f122f"
+                                        android:lineSpacingExtra="10sp"
+                                        android:text="BDT 114.33" />
+
+                                </RelativeLayout>
+
+                                <RelativeLayout
+                                    android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginTop="15dp"
+                                    android:background="@drawable/button_bg"
+                                    android:layout_marginTop="18dp"
+                                    android:padding="15dp"
+                                    android:orientation="horizontal">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:fontFamily="@font/poppins_semibold"
+                                        android:textStyle="normal"
+                                        android:textSize="14sp"
+                                        android:textColor="#1a1a1a"
+                                        android:lineSpacingExtra="47sp"
+                                        android:text="@string/who_will_pay"
+                                        />
+
+                                    <RadioGroup
+                                        android:id="@+id/radioGroup"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginTop="18dp"
+                                        android:orientation="horizontal">
+
+                                        <RadioButton
+                                            android:id="@+id/sender"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginEnd="30dp"
+                                            android:gravity="center_vertical"
+                                            android:fontFamily="@font/poppins_medium"
+                                            android:textStyle="normal"
+                                            android:checked="true"
+                                            android:textSize="15sp"
+                                            android:padding="10dp"
+                                            android:text="Sender"/>
+
+                                        <View
+                                            android:id="@+id/divider1"
+                                            android:layout_width="0.3dp"
+                                            android:layout_height="match_parent"
+                                            android:background="@color/gray"
+                                            />
+
+                                        <RadioButton
+                                            android:id="@+id/receiver"
+                                            android:gravity="center_vertical"
+                                            android:layout_marginStart="30dp"
+                                            android:padding="10dp"
+                                            android:fontFamily="@font/poppins_medium"
+                                            android:textStyle="normal"
+                                            android:textSize="15sp"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="Receiver"/>
+
+                                    </RadioGroup>
+
+                                </RelativeLayout>
+
+                                <TextView
+                                    android:id="@+id/cash_on_delivery"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="20dp"
+                                    android:drawablePadding="15dp"
                                     android:fontFamily="@font/poppins_medium"
                                     android:textStyle="normal"
-                                    android:textSize="20sp"
+                                    android:textSize="15sp"
                                     android:textColor="#0f122f"
-                                    android:lineSpacingExtra="10sp"
-                                    android:text="@string/receiver_apos_s_details" />
-
-                                <com.google.android.material.textfield.TextInputLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginTop="10dp"
-                                    style="@style/MyTextInputLayout"
-                                    app:errorEnabled="false">
-
-                                    <androidx.appcompat.widget.AppCompatEditText
-                                        android:id="@+id/receiver_name"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:inputType="textCapWords"
-                                        android:hint="@string/receiver_name"
-                                        android:imeOptions="actionNext"
-                                        style="@style/MyTextInputEditText"
-                                        android:maxLines="1"/>
-
-                                </com.google.android.material.textfield.TextInputLayout>
-
-                                <com.google.android.material.textfield.TextInputLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginTop="10dp"
-                                    style="@style/MyTextInputLayout"
-                                    app:errorEnabled="false">
-
-                                    <androidx.appcompat.widget.AppCompatEditText
-                                        android:id="@+id/receiver_phone"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:inputType="phone"
-                                        android:hint="@string/receiver_phone_number"
-                                        android:imeOptions="actionNext"
-                                        style="@style/MyTextInputEditText"
-                                        android:maxLines="1"/>
-
-                                </com.google.android.material.textfield.TextInputLayout>
-
-                                <com.google.android.material.textfield.TextInputLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginTop="10dp"
-                                    style="@style/MyTextInputLayout"
-                                    app:errorEnabled="false">
-
-                                    <androidx.appcompat.widget.AppCompatEditText
-                                        android:id="@+id/receiver_direction"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:inputType="text"
-                                        android:hint="@string/additional_direction"
-                                        android:imeOptions="actionDone"
-                                        style="@style/MyTextInputEditText"
-                                        android:maxLines="1"/>
-
-                                </com.google.android.material.textfield.TextInputLayout>
+                                    android:lineSpacingExtra="8sp"
+                                    android:text="@string/cash_on_delivery"
+                                    android:visibility="visible"
+                                    app:drawableStartCompat="@drawable/ic_taka"
+                                    app:drawableEndCompat="@drawable/ic_next"
+                                    />
 
                             </LinearLayout>
 
@@ -171,8 +212,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/poppins_medium"
-                android:gravity="start"
-                android:textAlignment="center"
+                android:gravity="center"
                 android:textStyle="normal"
                 android:textSize="15sp"
                 android:textColor="#ffffff"
