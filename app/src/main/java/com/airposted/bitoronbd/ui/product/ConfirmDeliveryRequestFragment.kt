@@ -83,9 +83,9 @@ class ConfirmDeliveryRequestFragment : Fragment(), KodeinAware, SSLCTransactionR
                 id: Long
             ) {
                 if (position == 0) {
-                    setParcel.delivery_type = 1
+                    //setParcel.delivery_type = 1
                 } else {
-                    setParcel.delivery_type = 2
+                    //setParcel.delivery_type = 2
                 }
                 finalCost = "৳" + calculatePrice(position)
                 setParcel.delivery_charge = calculatePrice(position)
@@ -118,9 +118,6 @@ class ConfirmDeliveryRequestFragment : Fragment(), KodeinAware, SSLCTransactionR
 
         setParcel.invoice_no = "AIR" + getSaltString() + getSaltString()
         setParcel.parcel_type = 2
-        setParcel.item_type = 2
-        setParcel.special_instruction = "no instruction for now"
-        setParcel.item_des = "this is good product"
         setParcel.recp_name = requireArguments().getString("name")!!
         setParcel.recp_phone = requireArguments().getString("phone")!!
         setParcel.recp_city = requireArguments().getString("city")!!
