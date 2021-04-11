@@ -26,9 +26,13 @@ class QuickDeliveryFragment : Fragment() {
     }
 
     private fun bindUI() {
-        communicatorFragmentInterface = context as CommunicatorFragmentInterface
-        binding.gotIt.setOnClickListener {
-            communicatorFragmentInterface!!.addContentFragment(HomeFragment(), false)
+
+    }
+
+    override fun setUserVisibleHint(isVisibleToUser: Boolean) {
+        super.setUserVisibleHint(isVisibleToUser)
+        if (isVisibleToUser) {
+            requireFragmentManager().beginTransaction().detach(this).attach(this).commit()
         }
     }
 }

@@ -23,10 +23,7 @@ import com.airposted.bitoronbd.R
 import com.airposted.bitoronbd.data.network.preferences.PreferenceProvider
 import com.airposted.bitoronbd.databinding.FragmentReceiverAddressBinding
 import com.airposted.bitoronbd.model.SearchLocation
-import com.airposted.bitoronbd.ui.location_set.CustomClickListener
-import com.airposted.bitoronbd.ui.location_set.LocationSetRecyclerViewAdapter
-import com.airposted.bitoronbd.ui.location_set.LocationSetViewModel
-import com.airposted.bitoronbd.ui.location_set.LocationSetViewModelFactory
+import com.airposted.bitoronbd.ui.location_set.*
 import com.airposted.bitoronbd.ui.main.CommunicatorFragmentInterface
 import com.airposted.bitoronbd.utils.*
 import com.google.android.gms.maps.model.LatLng
@@ -51,7 +48,6 @@ class ReceiverAddressFragment : Fragment(), KodeinAware, CustomClickListener {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        // Inflate the layout for this fragment
         binding = FragmentReceiverAddressBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -64,17 +60,13 @@ class ReceiverAddressFragment : Fragment(), KodeinAware, CustomClickListener {
 
     private fun bindUI() {
         communicatorFragmentInterface = context as CommunicatorFragmentInterface
-        val gradientDrawable = GradientDrawable(
-            GradientDrawable.Orientation.TOP_BOTTOM, intArrayOf(
-                ContextCompat.getColor(requireActivity(), R.color.color1),
-                ContextCompat.getColor(requireActivity(), R.color.color2),
-                ContextCompat.getColor(requireActivity(), R.color.color3),
-                ContextCompat.getColor(requireActivity(), R.color.color4)
-            )
-        )
-        binding.back.background = gradientDrawable
+
         binding.back.setOnClickListener {
             requireActivity().onBackPressed()
+        }
+
+        binding.map.setOnClickListener {
+            communicatorFragmentInterface!!.addContentFragment(LocationSetFragment(), true)
         }
 
         if (PreferenceProvider(requireActivity()).getSharedPreferences("latitude") == null){

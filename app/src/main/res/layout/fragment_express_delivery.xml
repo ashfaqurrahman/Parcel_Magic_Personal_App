@@ -76,34 +76,6 @@
 
         </LinearLayout>
 
-        <LinearLayout
-            android:id="@+id/confirm_delivery_request_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:background="@color/white"
-            android:paddingStart="15dp"
-            android:paddingEnd="15dp"
-            android:paddingTop="20dp"
-            android:paddingBottom="15dp"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/got_it"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@drawable/after_button_bg"
-                android:fontFamily="@font/poppins_medium"
-                android:gravity="center"
-                android:lineSpacingExtra="32sp"
-                android:padding="18dp"
-                android:text="@string/got_it"
-                android:textColor="#ffffff"
-                android:textSize="15sp"
-                android:textStyle="normal" />
-
-        </LinearLayout>
-
     </RelativeLayout>
 
 </layout>

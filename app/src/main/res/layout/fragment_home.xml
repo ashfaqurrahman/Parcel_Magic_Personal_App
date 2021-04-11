@@ -143,12 +143,17 @@
                                 <TextView
                                     android:id="@+id/share_location"
                                     android:layout_below="@id/title3"
-                                    android:layout_width="match_parent"
+                                    android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
+                                    android:paddingTop="10dp"
+                                    android:paddingBottom="10dp"
+                                    android:paddingStart="20dp"
+                                    android:paddingEnd="20dp"
+                                    android:background="@drawable/share_location_bg"
                                     android:fontFamily="@font/poppins_bold"
-                                    android:textSize="14sp"
+                                    android:textSize="13sp"
                                     android:textColor="#ffffff"
-                                    android:text="Share location"
+                                    android:text="Turn on locaion"
                                     />
 
                             </RelativeLayout>
@@ -298,7 +303,6 @@
                             android:layout_marginStart="20dp"
                             android:layout_marginEnd="20dp"
                             android:layout_marginTop="14sp"
-                            android:layout_marginBottom="20dp"
                             app:cardCornerRadius="10dp">
 
                             <fragment
@@ -308,6 +312,79 @@
                                 android:layout_height="match_parent" />
 
                         </androidx.cardview.widget.CardView>
+
+                        <TextView
+                            android:id="@+id/coupons"
+                            android:layout_below="@+id/address"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="25dp"
+                            android:layout_marginStart="20dp"
+                            android:layout_marginEnd="20dp"
+                            android:fontFamily="@font/poppins_semibold"
+                            android:textStyle="bold"
+                            android:textSize="16sp"
+                            android:textColor="#1a1a1a"
+                            android:lineSpacingExtra="22sp"
+                            android:text="My Coupons"
+                            />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:layout_marginBottom="30dp"
+                            android:layout_marginStart="20dp"
+                            android:layout_marginEnd="20dp"
+                            android:layout_below="@+id/coupons"
+                            android:background="@drawable/ic_coupons"
+                            android:gravity="center">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:shadowColor="#29000000"
+                                android:shadowDy="3"
+                                android:shadowRadius="6"
+                                android:fontFamily="@font/poppins_semibold"
+                                android:textStyle="normal"
+                                android:textSize="20sp"
+                                android:textColor="#ffffff"
+                                android:gravity="center_horizontal"
+                                android:text="Enjoy 20% discount on\n first 3 orders"
+                                />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:shadowColor="#29000000"
+                                android:shadowDy="3"
+                                android:shadowRadius="6"
+                                android:fontFamily="@font/poppins_regular"
+                                android:textStyle="normal"
+                                android:textSize="14sp"
+                                android:layout_marginTop="20dp"
+                                android:textColor="#ffffff"
+                                android:lineSpacingExtra="10sp"
+                                android:text="Use coupon code:"
+                                />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="30dp"
+                                android:fontFamily="@font/poppins_semibold"
+                                android:lineSpacingExtra="10sp"
+                                android:shadowColor="#29000000"
+                                android:shadowDy="3"
+                                android:shadowRadius="6"
+                                android:textIsSelectable="true"
+                                android:text="ASDDUDD20"
+                                android:textColor="#ffffff"
+                                android:textSize="14sp"
+                                android:textStyle="bold" />
+
+                        </LinearLayout>
 
                     </RelativeLayout>
 

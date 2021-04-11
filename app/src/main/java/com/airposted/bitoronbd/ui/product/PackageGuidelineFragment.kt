@@ -20,15 +20,10 @@ class PackageGuidelineFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentPackageGuidelineBinding.inflate(inflater, container, false)
-        return binding.root
-    }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        bindUI()
-    }
-
-    private fun bindUI() {
+        binding.gotIt.setOnClickListener {
+            requireActivity().onBackPressed()
+        }
         tabLayout = binding.tabs
         viewPager = binding.pager
         val adapter = TabAdapter(requireFragmentManager(), tabLayout!!.tabCount)
@@ -47,5 +42,16 @@ class PackageGuidelineFragment : Fragment() {
 
             }
         })
+
+        return binding.root
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        bindUI()
+    }
+
+    private fun bindUI() {
+
     }
 }

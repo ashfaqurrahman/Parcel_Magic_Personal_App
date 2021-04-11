@@ -26,6 +26,7 @@ import com.airposted.bitoronbd.databinding.FragmentLocationSetBinding
 import com.airposted.bitoronbd.model.Prediction
 import com.airposted.bitoronbd.model.SearchLocation
 import com.airposted.bitoronbd.model.Term
+import com.airposted.bitoronbd.ui.main.CommunicatorFragmentInterface
 import com.airposted.bitoronbd.ui.main.MainActivity
 import com.airposted.bitoronbd.utils.ApiException
 import com.airposted.bitoronbd.utils.NoInternetException
@@ -66,6 +67,7 @@ class LocationSetFragment : Fragment(), KodeinAware, CustomClickListener,
     private var locationName = ""
     private lateinit var locationManager: LocationManager
     private lateinit var builder: LocationSettingsRequest.Builder
+    private var communicatorFragmentInterface: CommunicatorFragmentInterface? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -73,6 +75,7 @@ class LocationSetFragment : Fragment(), KodeinAware, CustomClickListener,
     ): View {
         binding = FragmentLocationSetBinding.inflate(inflater, container, false)
 
+        communicatorFragmentInterface = context as CommunicatorFragmentInterface
 
         viewModel = ViewModelProvider(this, factory).get(LocationSetViewModel::class.java)
 
@@ -209,9 +212,10 @@ class LocationSetFragment : Fragment(), KodeinAware, CustomClickListener,
                 )
                 PreferenceProvider(requireActivity()).saveSharedPreferences("latitude", latitude)
                 PreferenceProvider(requireActivity()).saveSharedPreferences("longitude", longitude)
-                val intent = Intent(requireActivity(), MainActivity::class.java)
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
-                startActivity(intent)
+//                val intent = Intent(requireActivity(), MainActivity::class.java)
+//                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+//                startActivity(intent)
+//                communicatorFragmentInterface!!.addContentFragment()
             } else {
                 binding.rootLayout.snackbar("Sorry!! We are currently not providing our service to this area")
             }
