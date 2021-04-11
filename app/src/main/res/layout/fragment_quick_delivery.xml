@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.product.QuickDeliveryFragment">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginStart="15dp"
+            android:layout_marginEnd="15dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_semibold"
+                android:textStyle="normal"
+                android:textSize="16sp"
+                android:layout_marginTop="20dp"
+                android:textColor="#1a1a1a"
+                android:lineSpacingExtra="9sp"
+                android:text="What is Quick Delivery ?"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_medium"
+                android:textStyle="normal"
+                android:textSize="14sp"
+                android:layout_marginTop="12dp"
+                android:textColor="#1a1a1a"
+                android:lineSpacingExtra="12sp"
+                android:text="Delivery within 48 hours."
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_semibold"
+                android:textStyle="normal"
+                android:textSize="16sp"
+                android:layout_marginTop="20dp"
+                android:textColor="#000000"
+                android:lineSpacingExtra="10sp"
+                android:text="For a successful delivery,  make sure your package is :"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_medium"
+                android:textStyle="normal"
+                android:textSize="14sp"
+                android:layout_marginTop="20dp"
+                android:textColor="#1a1a1a"
+                android:lineSpacingExtra="12sp"
+                android:text="• 5 kg or less"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_medium"
+                android:textStyle="normal"
+                android:textSize="14sp"
+                android:layout_marginTop="6dp"
+                android:textColor="#1a1a1a"
+                android:lineSpacingExtra="12sp"
+                android:text="• Securely sealed and ready for curbside pickup"
+                />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/confirm_delivery_request_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:background="@color/white"
+            android:paddingStart="15dp"
+            android:paddingEnd="15dp"
+            android:paddingTop="20dp"
+            android:paddingBottom="15dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/got_it"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/after_button_bg"
+                android:fontFamily="@font/poppins_medium"
+                android:gravity="center"
+                android:lineSpacingExtra="32sp"
+                android:padding="18dp"
+                android:text="@string/got_it"
+                android:textColor="#ffffff"
+                android:textSize="15sp"
+                android:textStyle="normal" />
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+</layout>

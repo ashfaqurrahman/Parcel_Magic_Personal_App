@@ -2,14 +2,12 @@ package com.airposted.bitoronbd.ui.home
 
 import android.Manifest
 import android.app.Dialog
-import android.content.Context
 import android.content.IntentSender.SendIntentException
 import android.content.pm.PackageManager
 import android.content.res.Resources
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.GradientDrawable
-import android.location.LocationManager
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -18,7 +16,6 @@ import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
@@ -30,7 +27,8 @@ import com.airposted.bitoronbd.databinding.FragmentHomeBinding
 import com.airposted.bitoronbd.model.LocationDetails
 import com.airposted.bitoronbd.ui.main.CommunicatorFragmentInterface
 import com.airposted.bitoronbd.ui.my_parcel.MyParcelFragment
-import com.airposted.bitoronbd.ui.product.ProductFragment
+import com.airposted.bitoronbd.ui.product.PackageGuidelineFragment
+import com.airposted.bitoronbd.ui.product.ParcelTypeFragment
 import com.airposted.bitoronbd.ui.product.ReceiverInfoFragment
 import com.airposted.bitoronbd.utils.*
 import com.airposted.bitoronbd.utils.ApiException
@@ -137,11 +135,23 @@ open class HomeFragment : Fragment(R.layout.fragment_home),
         ).into(pic)
 
         homeBinding.expressBtn.setOnClickListener{
-            myCommunicator?.addContentFragment(ReceiverInfoFragment(), true)
+            val fragment = ParcelTypeFragment()
+            val bundle = Bundle()
+            bundle.putString("delivery_type", "express")
+            fragment.arguments = bundle
+            myCommunicator?.addContentFragment(fragment, true)
+        }
+
+        homeBinding.quickBtn.setOnClickListener{
+            val fragment = ParcelTypeFragment()
+            val bundle = Bundle()
+            bundle.putString("delivery_type", "quick")
+            fragment.arguments = bundle
+            myCommunicator?.addContentFragment(fragment, true)
         }
 
         homeBinding.whatToSend.setOnClickListener {
-            openWhatToSendDialog()
+            myCommunicator?.addContentFragment(PackageGuidelineFragment(), true)
         }
 
         val gradientDrawable = GradientDrawable(
