@@ -5,6 +5,7 @@ import android.graphics.drawable.GradientDrawable
 import android.location.Address
 import android.location.Geocoder
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -65,10 +66,7 @@ class ReceiverAddressFragment : Fragment(), KodeinAware, CustomClickListener {
             requireActivity().onBackPressed()
         }
 
-        binding.map.setOnClickListener {
-            communicatorFragmentInterface!!.addContentFragment(LocationSetFragment(), true)
-        }
-
+        // for dialog
         if (PreferenceProvider(requireActivity()).getSharedPreferences("latitude") == null){
             val editText =
                 binding.searchFrom.findViewById(androidx.appcompat.R.id.search_src_text) as EditText
@@ -83,7 +81,15 @@ class ReceiverAddressFragment : Fragment(), KodeinAware, CustomClickListener {
                 binding.searchTo.findViewById(androidx.appcompat.R.id.search_src_text) as EditText
             editText.requestFocus()
         }
-
+        binding.map.setOnClickListener {
+            val fragment = LocationSetFragment()
+            val bundle = Bundle()
+            bundle.putString("sender_location_name", binding.searchFrom.query.toString())
+            bundle.putString("receiver_name", requireArguments().getString("receiver_name"))
+            bundle.putString("receiver_phone", requireArguments().getString("receiver_phone"))
+            fragment.arguments = bundle
+            communicatorFragmentInterface?.addContentFragment(fragment, true)
+        }
         binding.searchFrom.setOnQueryTextListener(object : SearchView.OnQueryTextListener,
             androidx.appcompat.widget.SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String): Boolean {
@@ -97,7 +103,6 @@ class ReceiverAddressFragment : Fragment(), KodeinAware, CustomClickListener {
                 return false
             }
         })
-
         binding.searchTo.setOnQueryTextListener(object : SearchView.OnQueryTextListener,
             androidx.appcompat.widget.SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String): Boolean {

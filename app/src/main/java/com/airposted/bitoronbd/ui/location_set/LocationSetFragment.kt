@@ -28,10 +28,8 @@ import com.airposted.bitoronbd.model.SearchLocation
 import com.airposted.bitoronbd.model.Term
 import com.airposted.bitoronbd.ui.main.CommunicatorFragmentInterface
 import com.airposted.bitoronbd.ui.main.MainActivity
-import com.airposted.bitoronbd.utils.ApiException
-import com.airposted.bitoronbd.utils.NoInternetException
-import com.airposted.bitoronbd.utils.hideKeyboard
-import com.airposted.bitoronbd.utils.snackbar
+import com.airposted.bitoronbd.ui.product.ConfirmReceiverAddressFragment
+import com.airposted.bitoronbd.utils.*
 import com.google.android.gms.common.api.ResolvableApiException
 import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationServices
@@ -210,8 +208,30 @@ class LocationSetFragment : Fragment(), KodeinAware, CustomClickListener,
                     "currentLocation",
                     locationName
                 )
-                PreferenceProvider(requireActivity()).saveSharedPreferences("latitude", latitude)
-                PreferenceProvider(requireActivity()).saveSharedPreferences("longitude", longitude)
+//                PreferenceProvider(requireActivity()).saveSharedPreferences("latitude", latitude)
+//                PreferenceProvider(requireActivity()).saveSharedPreferences("longitude", longitude)
+                val fragment = ConfirmReceiverAddressFragment()
+                val bundle = Bundle()
+                val geo = Geocoder(requireActivity(), Locale.getDefault())
+                val addresses = geo.getFromLocation(latitude.toDouble(), longitude.toDouble(), 1)
+                if (addresses.isNotEmpty()) {
+                    bundle.putString("city", addresses[0].locality)
+                    if (addresses[0].subLocality != null){
+                        bundle.putString("area", addresses[0].subLocality)
+                        bundle.putString("city", addresses[0].subLocality)
+                    } else {
+                        bundle.putString("area", addresses[0].locality)
+                        bundle.putString("city", addresses[0].locality)
+                    }
+                }
+                bundle.putString("sender_location_name", requireArguments().getString("sender_location_name"))
+                bundle.putString("receiver_location_name", binding.search.query.toString())
+                bundle.putDouble("latitude", latitude.toDouble())
+                bundle.putDouble("longitude", longitude.toDouble())
+                bundle.putString("receiver_name", requireArguments().getString("receiver_name"))
+                bundle.putString("receiver_phone", requireArguments().getString("receiver_phone"))
+                fragment.arguments = bundle
+                communicatorFragmentInterface?.addContentFragment(fragment, true)
 //                val intent = Intent(requireActivity(), MainActivity::class.java)
 //                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
 //                startActivity(intent)

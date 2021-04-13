@@ -74,6 +74,7 @@
 
                             <RelativeLayout
                                 android:id="@+id/title_layout"
+                                android:visibility="gone"
                                 android:paddingStart="20dp"
                                 android:paddingEnd="20dp"
                                 android:paddingBottom="113dp"
@@ -107,7 +108,7 @@
                             </RelativeLayout>
 
                             <RelativeLayout
-                                android:visibility="gone"
+                                android:visibility="visible"
                                 android:id="@+id/title2_layout"
                                 android:paddingStart="20dp"
                                 android:paddingEnd="20dp"
