@@ -125,31 +125,19 @@
                                     android:textStyle="bold"
                                     android:textSize="26sp"
                                     android:textColor="#ffffff"
-                                    android:lineSpacingExtra="21sp"
-                                    android:text="@string/quick_delivery_on"
-                                    />
-
-                                <TextView
-                                    android:id="@+id/title3"
-                                    android:layout_below="@id/title2"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:fontFamily="@font/poppins_bold"
-                                    android:textSize="36sp"
-                                    android:textStyle="bold"
-                                    android:textColor="#ffffff"
-                                    android:text="@string/the_dhaka_city"
+                                    android:text="To find your pickup \nlocation automatically\n turn on location services"
                                     />
 
                                 <TextView
                                     android:id="@+id/share_location"
-                                    android:layout_below="@id/title3"
+                                    android:layout_below="@id/title2"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:paddingTop="10dp"
                                     android:paddingBottom="10dp"
                                     android:paddingStart="20dp"
                                     android:paddingEnd="20dp"
+                                    android:layout_marginTop="20dp"
                                     android:background="@drawable/share_location_bg"
                                     android:fontFamily="@font/poppins_bold"
                                     android:textSize="13sp"
