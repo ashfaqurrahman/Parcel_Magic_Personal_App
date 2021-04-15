@@ -25,7 +25,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import com.airposted.bitoronbd.R
-import com.airposted.bitoronbd.ui.WebviewActivity
+import com.airposted.bitoronbd.ui.WebViewActivity
 import com.google.android.material.snackbar.Snackbar
 import java.io.File
 import java.io.FileInputStream
@@ -189,7 +189,7 @@ fun customTextView(view: TextView, context: Context) {
             AppHelper.webviewTitle = context.getString(R.string.terms_of_service)
             val bundle = Bundle()
             bundle.putString(AppHelper.DETAILS_KEY, AppHelper.TERMS)
-            val intent = Intent(context, WebviewActivity::class.java)
+            val intent = Intent(context, WebViewActivity::class.java)
             intent.putExtras(bundle)
             context.startActivity(intent)
         }
@@ -215,7 +215,7 @@ fun customTextView(view: TextView, context: Context) {
             AppHelper.webviewTitle = context.getString(R.string.privacy_policy)
             val bundle = Bundle()
             bundle.putString(AppHelper.DETAILS_KEY, AppHelper.PEIVACY_POLICY)
-            val intent = Intent(context, WebviewActivity::class.java)
+            val intent = Intent(context, WebViewActivity::class.java)
             intent.putExtras(bundle)
             context.startActivity(intent)
         }

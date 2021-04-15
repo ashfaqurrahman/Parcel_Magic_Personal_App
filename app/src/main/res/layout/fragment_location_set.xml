@@ -26,6 +26,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:visibility="gone"
             android:id="@+id/edit_layout"
             android:background="@color/white">
 
@@ -100,6 +101,7 @@
             android:layout_centerInParent="true"/>
 
         <androidx.recyclerview.widget.RecyclerView
+            android:visibility="gone"
             android:id="@+id/recyclerview"
             tools:listitem="@layout/item_location_search"
             android:layout_width="match_parent"

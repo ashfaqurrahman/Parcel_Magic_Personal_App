@@ -12,11 +12,11 @@ import androidx.appcompat.widget.AppCompatTextView
 import com.airposted.bitoronbd.R
 import com.airposted.bitoronbd.utils.AppHelper
 
-class WebviewActivity : AppCompatActivity() {
+class WebViewActivity : AppCompatActivity() {
     var url = ""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_webview)
+        setContentView(R.layout.activity_web_view)
 
         val title = findViewById<TextView>(R.id.web_title)
         val webView = findViewById<WebView>(R.id.webView)

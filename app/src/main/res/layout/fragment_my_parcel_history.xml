@@ -8,10 +8,11 @@
         android:layout_height="match_parent"
         android:background="@color/white"
         android:orientation="vertical"
-        tools:context=".ui.my_parcel.MyParcelFragment"
+        tools:context=".ui.history.MyParcelHistoryFragment"
         android:id="@+id/root_layout"
         android:focusableInTouchMode="true"
-        android:clickable="true">
+        android:clickable="true"
+        android:focusable="true">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -42,7 +43,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/poppins_medium"
-                    android:text="@string/recent_order"
+                    android:text="@string/parcel_history"
                     android:textColor="#ffffff"
                     android:textSize="22sp"
                     android:textStyle="normal" />

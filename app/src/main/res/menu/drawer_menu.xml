@@ -13,10 +13,10 @@
             android:icon="@drawable/ic_parcel_history_icon"
             android:title="@string/parcel_history" />
 
-        <item
+        <!--<item
             android:id="@+id/profile"
             android:icon="@drawable/ic_user_icon"
-            android:title="@string/profile" />
+            android:title="@string/profile" />-->
 
         <item
             android:id="@+id/help"

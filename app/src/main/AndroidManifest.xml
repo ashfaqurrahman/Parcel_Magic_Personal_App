@@ -25,7 +25,7 @@
         <activity android:name=".ui.location_set.LocationSetActivity"
             android:windowSoftInputMode="adjustPan|adjustResize"/>
         <activity android:name=".ui.permission.PermissionActivity" />
-        <activity android:name=".ui.WebviewActivity" />
+        <activity android:name=".ui.WebViewActivity" />
         <activity android:name=".ui.auth.SignInSignUpActivity" />
         <activity android:name=".ui.IntroActivity" />
         <activity

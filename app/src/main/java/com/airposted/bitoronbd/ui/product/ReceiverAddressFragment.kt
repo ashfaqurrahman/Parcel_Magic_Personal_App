@@ -66,6 +66,14 @@ class ReceiverAddressFragment : Fragment(), KodeinAware, CustomClickListener {
             requireActivity().onBackPressed()
         }
 
+        binding.searchFrom.setOnClickListener {
+            Log.e("Editor", "from")
+        }
+
+        if (binding.searchTo.requestFocus()) {
+            Log.e("Editor", "to")
+        }
+
         // for dialog
         if (PreferenceProvider(requireActivity()).getSharedPreferences("latitude") == null){
             val editText =
