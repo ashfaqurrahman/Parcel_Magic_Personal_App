@@ -230,7 +230,7 @@ class ConfirmDeliveryRequestFragment : Fragment(), KodeinAware, SSLCTransactionR
                     }
                 }
 
-                dialogs.setCancelable(false)
+                dialogs.setCancelable(true)
 
                 dialogs.show()
             }

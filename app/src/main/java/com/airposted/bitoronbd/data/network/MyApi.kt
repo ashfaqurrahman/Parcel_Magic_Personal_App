@@ -11,7 +11,6 @@ import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.*
 import java.util.concurrent.TimeUnit
 
-
 interface MyApi {
 
     @FormUrlEncoded
@@ -57,20 +56,25 @@ interface MyApi {
         @Body setParcel: SetParcel
     ): Response<SetParcelResponse>
 
-    @POST("personal/currentorderlist")
-    suspend fun currentOrderList(
+    @POST("personal/currentorderlistquick")
+    suspend fun currentOrderListQuick(
         @Header("Authorization") header: String
-    ) : Response<CurrentOrder>
+    ) : Response<OrderList>
 
-    @POST("personal/completeorderlist")
-    suspend fun completeOrderList(
+    @POST("personal/currentorderlistexpress")
+    suspend fun currentOrderListExpress(
         @Header("Authorization") header: String
-    ) : Response<CurrentOrder>
+    ) : Response<OrderList>
 
-    @POST("personal/cancelorderlist")
-    suspend fun cancelOrderList(
+    @POST("personal/historyorderlistexpress")
+    suspend fun historyOrderListExpress(
         @Header("Authorization") header: String
-    ) : Response<CurrentOrder>
+    ) : Response<OrderList>
+
+    @POST("personal/historyorderlistquick")
+    suspend fun historyOrderListQuick(
+        @Header("Authorization") header: String
+    ) : Response<OrderList>
 
     @GET
     suspend fun getPlacesNameList(@Url url: String): Response<SearchLocation>

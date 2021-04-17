@@ -7,9 +7,11 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.Selection
 import android.text.TextWatcher
+import android.util.Log
 import android.util.MalformedJsonException
 import android.view.*
 import android.view.View.OnFocusChangeListener
+import androidx.annotation.Nullable
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
@@ -24,6 +26,7 @@ import com.airposted.bitoronbd.ui.widget.CursorWheelLayout
 import com.airposted.bitoronbd.ui.widget.SimpleTextCursorWheelLayout
 import com.airposted.bitoronbd.ui.widget.SwitchButton
 import com.airposted.bitoronbd.utils.*
+import com.skydoves.powerspinner.OnSpinnerItemSelectedListener
 import kotlinx.coroutines.launch
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.x.kodein
@@ -62,7 +65,15 @@ class MyParcelFragment : Fragment(), KodeinAware, CursorWheelLayout.OnMenuSelect
 
         getOrderList(0)
 
-        binding.searchItem.onFocusChangeListener = OnFocusChangeListener { view, hasFocus ->
+        binding.expressQuick.setOnSpinnerItemSelectedListener(OnSpinnerItemSelectedListener<String> { oldIndex, oldItem, newIndex, newItem ->
+            run {
+                if (oldIndex != newIndex) {
+                    getOrderList(newIndex)
+                }
+            }
+        })
+
+        /*binding.searchItem.onFocusChangeListener = OnFocusChangeListener { view, hasFocus ->
             if (hasFocus) {
                 binding.searchItem.setText("#")
                 binding.searchItem.showKeyboard()
@@ -73,15 +84,14 @@ class MyParcelFragment : Fragment(), KodeinAware, CursorWheelLayout.OnMenuSelect
                     binding.searchItem.setText("")
                 }
             }
-        }
+        }*/
 
         binding.searchItem.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable) {
-                if(!s.toString().contains("#")){
+                /*if (!s.toString().contains("#")) {
                     binding.searchItem.setText("#")
                     Selection.setSelection(binding.searchItem.text, binding.searchItem.text.length)
-
-                }
+                }*/
             }
 
             override fun beforeTextChanged(
@@ -94,39 +104,38 @@ class MyParcelFragment : Fragment(), KodeinAware, CursorWheelLayout.OnMenuSelect
                 s: CharSequence, start: Int,
                 before: Int, count: Int
             ) {
-                if(s.length > 1) {
-                    binding.orders.layoutManager = GridLayoutManager(
-                        requireActivity(),
-                        1
-                    )
-                    binding.orders.itemAnimator = DefaultItemAnimator()
-                    if (s.toString().isNotEmpty()) {
-                        val listNew: ArrayList<DataX> = ArrayList()
-                        for (l in invoice.indices) {
-                            val serviceName: String = invoice[l].invoiceNo
-                            if (serviceName.contains(s.toString())) {
-                                listNew.add(invoice[l])
-                                binding.orders.visibility = View.VISIBLE
-                                binding.noOrder.visibility = View.GONE
-                            }
+
+                binding.orders.layoutManager = GridLayoutManager(
+                    requireActivity(),
+                    1
+                )
+                binding.orders.itemAnimator = DefaultItemAnimator()
+                if (s.toString().isNotEmpty()) {
+                    val listNew: ArrayList<DataX> = ArrayList()
+                    for (l in invoice.indices) {
+                        val serviceName: String = invoice[l].invoice_no
+                        if (serviceName.contains(s.toString())) {
+                            listNew.add(invoice[l])
+                            binding.orders.visibility = View.VISIBLE
+                            binding.noOrder.visibility = View.GONE
                         }
-                        if (listNew.isNullOrEmpty()) {
-                            binding.orders.visibility = View.GONE
-                            binding.noOrder.visibility = View.VISIBLE
-                        } else {
-                            val myRecyclerViewAdapter = OrderListRecyclerViewAdapter(
-                                listNew
-                            )
-                            binding.orders.adapter = myRecyclerViewAdapter
-                        }
+                    }
+                    if (listNew.isNullOrEmpty()) {
+                        binding.orders.visibility = View.GONE
+                        binding.noOrder.visibility = View.VISIBLE
                     } else {
-                        binding.orders.visibility = View.VISIBLE
-                        binding.noOrder.visibility = View.GONE
                         val myRecyclerViewAdapter = OrderListRecyclerViewAdapter(
-                            invoice
+                            listNew
                         )
                         binding.orders.adapter = myRecyclerViewAdapter
                     }
+                } else {
+                    binding.orders.visibility = View.VISIBLE
+                    binding.noOrder.visibility = View.GONE
+                    val myRecyclerViewAdapter = OrderListRecyclerViewAdapter(
+                        invoice
+                    )
+                    binding.orders.adapter = myRecyclerViewAdapter
                 }
             }
         })
@@ -143,11 +152,9 @@ class MyParcelFragment : Fragment(), KodeinAware, CursorWheelLayout.OnMenuSelect
     private fun getOrderList(order: Int) {
         when(order){
             0 -> binding.title.text = "Current Orders"
-            1 -> binding.title.text = "Completed Orders"
-            2 -> binding.title.text = "Cancelled Orders"
-            3 -> binding.title.text = "Current Orders"
-            4 -> binding.title.text = "Completed Orders"
-            5 -> binding.title.text = "Cancelled Orders"
+            1 -> binding.title.text = "Current Orders"
+            2 -> binding.title.text = "Order History"
+            3 -> binding.title.text = "Order History"
         }
         setProgressDialog(requireActivity())
         lifecycleScope.launch {
@@ -155,6 +162,8 @@ class MyParcelFragment : Fragment(), KodeinAware, CursorWheelLayout.OnMenuSelect
                 val response = viewModel.getOrderList(order)
                 invoice = response.data
                 if (response.data.isNotEmpty()) {
+                    binding.orders.visibility = View.VISIBLE
+                    binding.noOrder.visibility = View.GONE
                     val myRecyclerViewAdapter = OrderListRecyclerViewAdapter(
                         response.data
                     )
@@ -228,7 +237,7 @@ class MyParcelFragment : Fragment(), KodeinAware, CursorWheelLayout.OnMenuSelect
             selectedItemPosition = pos
         }
 
-        idWheelMenuCenterItem.setOnClickListener {
+        /*idWheelMenuCenterItem.setOnClickListener {
             if (currentItemPosition == selectedItemPosition){
                 orderDialog.dismiss()
             } else {
@@ -236,7 +245,7 @@ class MyParcelFragment : Fragment(), KodeinAware, CursorWheelLayout.OnMenuSelect
                 currentItemPosition = selectedItemPosition
                 getOrderList(selectedItemPosition)
             }
-        }
+        }*/
 
         val window: Window? = orderDialog.window
         val wlp = window?.attributes

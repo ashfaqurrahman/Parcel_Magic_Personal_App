@@ -37,6 +37,8 @@ class ReceiverInfoFragment : Fragment() {
                 val bundle = Bundle()
                 bundle.putString("receiver_name", binding.receiverName.text.toString())
                 bundle.putString("receiver_phone", binding.receiverPhone.text.toString())
+                bundle.putString("delivery_type", requireArguments().getString("delivery_type"))
+                bundle.putString("parcel_type", requireArguments().getString("parcel_type"))
                 fragment.arguments = bundle
                 communicatorFragmentInterface!!.addContentFragment(fragment, true)
             } else {

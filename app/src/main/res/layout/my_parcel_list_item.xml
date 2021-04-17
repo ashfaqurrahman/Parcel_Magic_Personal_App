@@ -60,7 +60,7 @@
                     android:layout_alignParentEnd="true"
                     android:fontFamily="@font/poppins_medium"
                     android:lineSpacingExtra="10sp"
-                    android:text="@{`#` + order.invoiceNo}"
+                    android:text="@{`#` + order.invoice_no}"
                     android:textColor="#1a1662"
                     android:textSize="15sp"
                     android:textStyle="normal" />

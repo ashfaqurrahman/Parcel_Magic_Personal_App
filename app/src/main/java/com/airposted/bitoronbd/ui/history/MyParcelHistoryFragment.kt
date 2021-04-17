@@ -89,7 +89,7 @@ class MyParcelHistoryFragment : Fragment(), KodeinAware {
                     if (s.toString().isNotEmpty()) {
                         val listNew: ArrayList<DataX> = ArrayList()
                         for (l in invoice.indices) {
-                            val serviceName: String = invoice[l].invoiceNo
+                            val serviceName: String = invoice[l].invoice_no
                             if (serviceName.contains(s.toString())) {
                                 listNew.add(invoice[l])
                                 binding.orders.visibility = View.VISIBLE
