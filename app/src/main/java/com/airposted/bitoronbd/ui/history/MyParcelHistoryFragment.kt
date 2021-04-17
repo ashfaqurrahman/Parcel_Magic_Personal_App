@@ -44,6 +44,7 @@ class MyParcelHistoryFragment : Fragment(), KodeinAware {
     private fun bindUI() {
         binding.back.setOnClickListener {
             requireActivity().onBackPressed()
+            binding.orderType.dismiss()
         }
 
         getOrderList(1)

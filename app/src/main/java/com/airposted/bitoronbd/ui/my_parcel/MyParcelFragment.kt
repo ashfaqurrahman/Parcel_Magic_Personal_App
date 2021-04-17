@@ -61,6 +61,7 @@ class MyParcelFragment : Fragment(), KodeinAware, CursorWheelLayout.OnMenuSelect
     private fun bindUI() {
         binding.back.setOnClickListener {
             requireActivity().onBackPressed()
+            binding.expressQuick.dismiss()
         }
 
         getOrderList(0)
