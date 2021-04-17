@@ -6,12 +6,10 @@ import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
-import android.view.View.OnFocusChangeListener
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.SearchView
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
@@ -30,7 +28,6 @@ import org.kodein.di.KodeinAware
 import org.kodein.di.android.x.kodein
 import org.kodein.di.generic.instance
 import java.util.*
-import kotlin.math.log10
 
 
 class ReceiverAddressFragment : Fragment(), KodeinAware, CustomClickListener {
@@ -54,7 +51,8 @@ class ReceiverAddressFragment : Fragment(), KodeinAware, CustomClickListener {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(requireActivity(), factory).get(LocationSetViewModel::class.java)
+        viewModel =
+            ViewModelProvider(requireActivity(), factory).get(LocationSetViewModel::class.java)
         bindUI()
     }
 
@@ -67,11 +65,11 @@ class ReceiverAddressFragment : Fragment(), KodeinAware, CustomClickListener {
 
         binding.searchFrom.findFocus()
         // for dialog
-        if (PreferenceProvider(requireActivity()).getSharedPreferences("latitude") == null){
+        if (PreferenceProvider(requireActivity()).getSharedPreferences("latitude") == null) {
             val editText =
                 binding.searchFrom.findViewById(androidx.appcompat.R.id.search_src_text) as EditText
             editText.requestFocus()
-        }else {
+        } else {
             val geo = Geocoder(requireActivity(), Locale.getDefault())
             val addresses = geo.getFromLocation(
                 PreferenceProvider(requireActivity()).getSharedPreferences(
@@ -96,12 +94,7 @@ class ReceiverAddressFragment : Fragment(), KodeinAware, CustomClickListener {
         binding.searchFrom.setOnQueryTextFocusChangeListener { view, isFocused ->
             if (isFocused) {
                 focus = "from"
-                binding.searchFrom.setQuery(senderLocation, false)
                 Log.e("a", "sff")
-            }
-            else {
-                binding.searchFrom.setQuery(senderLocation, false)
-                Log.e("b", "sfnf")
             }
         }
 
@@ -110,18 +103,12 @@ class ReceiverAddressFragment : Fragment(), KodeinAware, CustomClickListener {
                 focus = "to"
                 Log.e("c", "stf")
             }
-            else {
-                Log.e("d", "stnf")
-            }
         }
 
         binding.map.setOnClickListener {
             val fragment = LocationSetFragment()
             val bundle = Bundle()
-            if (focus == "from")
-                bundle.putString("focus", "from")
-            else
-                bundle.putString("focus", "to")
+            bundle.putString("focus", focus)
             bundle.putString("sender_location_name", binding.searchFrom.query.toString())
             bundle.putString("receiver_name", requireArguments().getString("receiver_name"))
             bundle.putString("receiver_phone", requireArguments().getString("receiver_phone"))
@@ -174,12 +161,12 @@ class ReceiverAddressFragment : Fragment(), KodeinAware, CustomClickListener {
                     binding.loadingFrom.visibility = View.GONE
                     btnClose.visibility = View.VISIBLE
                     if (list.predictions.isNotEmpty()) {
-                        val term = ArrayList<String> ()
-                        for (i in list.predictions.indices){
-                            if (list.predictions[i].terms.size > 1){
+                        val term = ArrayList<String>()
+                        for (i in list.predictions.indices) {
+                            if (list.predictions[i].terms.size > 1) {
                                 var text = ""
-                                for (j in 0 until list.predictions[i].terms.size - 1){
-                                    text += if (j > 0){
+                                for (j in 0 until list.predictions[i].terms.size - 1) {
+                                    text += if (j > 0) {
                                         ", " + list.predictions[i].terms[j].value
                                     } else {
                                         list.predictions[i].terms[j].value
@@ -188,8 +175,8 @@ class ReceiverAddressFragment : Fragment(), KodeinAware, CustomClickListener {
                                 term.add(text)
                             } else {
                                 var text = ""
-                                for (j in list.predictions[i].terms.indices){
-                                    text += if (j > 0){
+                                for (j in list.predictions[i].terms.indices) {
+                                    text += if (j > 0) {
                                         ", " + list.predictions[i].terms[j].value
                                     } else {
                                         list.predictions[i].terms[j].value
@@ -242,12 +229,12 @@ class ReceiverAddressFragment : Fragment(), KodeinAware, CustomClickListener {
                     binding.loadingTo.visibility = View.GONE
                     btnClose.visibility = View.VISIBLE
                     if (list.predictions.isNotEmpty()) {
-                        val term = ArrayList<String> ()
-                        for (i in list.predictions.indices){
-                            if (list.predictions[i].terms.size > 1){
+                        val term = ArrayList<String>()
+                        for (i in list.predictions.indices) {
+                            if (list.predictions[i].terms.size > 1) {
                                 var text = ""
-                                for (j in 0 until list.predictions[i].terms.size - 1){
-                                    text += if (j > 0){
+                                for (j in 0 until list.predictions[i].terms.size - 1) {
+                                    text += if (j > 0) {
                                         ", " + list.predictions[i].terms[j].value
                                     } else {
                                         list.predictions[i].terms[j].value
@@ -256,8 +243,8 @@ class ReceiverAddressFragment : Fragment(), KodeinAware, CustomClickListener {
                                 term.add(text)
                             } else {
                                 var text = ""
-                                for (j in list.predictions[i].terms.indices){
-                                    text += if (j > 0){
+                                for (j in list.predictions[i].terms.indices) {
+                                    text += if (j > 0) {
                                         ", " + list.predictions[i].terms[j].value
                                     } else {
                                         list.predictions[i].terms[j].value
@@ -297,10 +284,10 @@ class ReceiverAddressFragment : Fragment(), KodeinAware, CustomClickListener {
         setProgressDialog(requireActivity())
         hideKeyboard(requireActivity())
         binding.recyclerview.visibility = View.GONE
-        if (from){
+        if (from) {
             binding.searchFrom.setQuery(location, false)
             binding.searchFrom.clearFocus()
-            if (binding.searchTo.query.isNotEmpty()){
+            if (binding.searchTo.query.isNotEmpty()) {
                 val fragment = ConfirmReceiverAddressFragment()
                 val bundle = Bundle()
                 val geo = Geocoder(requireActivity(), Locale.getDefault())
@@ -311,7 +298,7 @@ class ReceiverAddressFragment : Fragment(), KodeinAware, CustomClickListener {
                 );
                 if (addresses.isNotEmpty()) {
                     bundle.putString("city", addresses[0].locality)
-                    if (addresses[0].subLocality != null){
+                    if (addresses[0].subLocality != null) {
                         bundle.putString("area", addresses[0].subLocality)
                         bundle.putString("city", addresses[0].subLocality)
                     } else {
@@ -338,7 +325,7 @@ class ReceiverAddressFragment : Fragment(), KodeinAware, CustomClickListener {
             binding.searchTo.setQuery(location, false)
             binding.searchTo.clearFocus()
 
-            if (binding.searchFrom.query.isNotEmpty()){
+            if (binding.searchFrom.query.isNotEmpty()) {
                 val fragment = ConfirmReceiverAddressFragment()
                 val bundle = Bundle()
                 val geo = Geocoder(requireActivity(), Locale.getDefault())
@@ -349,7 +336,7 @@ class ReceiverAddressFragment : Fragment(), KodeinAware, CustomClickListener {
                 );
                 if (addresses.isNotEmpty()) {
                     bundle.putString("city", addresses[0].locality)
-                    if (addresses[0].subLocality != null){
+                    if (addresses[0].subLocality != null) {
                         bundle.putString("area", addresses[0].subLocality)
                         bundle.putString("city", addresses[0].subLocality)
                     } else {

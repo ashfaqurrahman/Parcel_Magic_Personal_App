@@ -225,7 +225,7 @@ class LocationSetFragment : Fragment(), KodeinAware, CustomClickListener,
                     bundle.putString("receiver_name", requireArguments().getString("receiver_name"))
                     bundle.putString("receiver_phone", requireArguments().getString("receiver_phone"))
                     fragment.arguments = bundle
-                    communicatorFragmentInterface?.addContentFragment(fragment, false)
+                    communicatorFragmentInterface?.addContentFragment(fragment, true)
                 }
                 else {
                     val fragment = ConfirmReceiverAddressFragment()
@@ -378,6 +378,20 @@ class LocationSetFragment : Fragment(), KodeinAware, CustomClickListener,
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
 
+        if (PreferenceProvider(requireActivity()).getSharedPreferences("latitude") != null){
+            val cameraPosition =
+                CameraPosition.Builder()
+                    .target(
+                        LatLng(
+                            PreferenceProvider(requireActivity()).getSharedPreferences("latitude")!!.toDouble(),
+                            PreferenceProvider(requireActivity()).getSharedPreferences("longitude")!!.toDouble()
+                        )
+                    )
+                    .zoom(15.2f)                   // Sets the zoom
+                    .build()
+            mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition))
+        }
+
         mMap.setOnCameraIdleListener {
             val center = mMap.cameraPosition.target
             val addresses = getAddressFromLatLng(LatLng(center.latitude, center.longitude))
@@ -396,6 +410,7 @@ class LocationSetFragment : Fragment(), KodeinAware, CustomClickListener,
                     locationString = locationString + ", " + addresses.thoroughfare
                 }
                 binding.search.setQuery(locationString, false)
+                binding.address.text = locationString
                 latitude = center.latitude.toString()
                 longitude = center.longitude.toString()
                 binding.setLocation.background = ContextCompat.getDrawable(
@@ -419,6 +434,7 @@ class LocationSetFragment : Fragment(), KodeinAware, CustomClickListener,
                         requireActivity(),
                         R.drawable.before_button_bg
                     )
+                    binding.address.text = "Loading..."
                     binding.setLocation.isEnabled = false
                 }
             }

@@ -76,6 +76,7 @@
 
     <string name="delivery_charge">Delivery Charge</string>
     <string name="who_will_pay">Who will Pay</string>
+    <string name="search">Search</string>
 
     <string-array name="delivery_type">
         <item>Express Delivery</item>
