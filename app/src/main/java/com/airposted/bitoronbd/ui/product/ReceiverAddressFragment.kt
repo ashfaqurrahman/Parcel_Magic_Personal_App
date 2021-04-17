@@ -1,20 +1,17 @@
 package com.airposted.bitoronbd.ui.product
 
-import android.content.Context
-import android.graphics.drawable.GradientDrawable
 import android.location.Address
 import android.location.Geocoder
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.OnFocusChangeListener
 import android.view.ViewGroup
-import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.SearchView
-import androidx.core.content.ContextCompat
-import androidx.core.content.ContextCompat.getSystemService
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
@@ -29,11 +26,11 @@ import com.airposted.bitoronbd.ui.main.CommunicatorFragmentInterface
 import com.airposted.bitoronbd.utils.*
 import com.google.android.gms.maps.model.LatLng
 import kotlinx.coroutines.launch
-import org.kodein.di.Kodein
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.x.kodein
 import org.kodein.di.generic.instance
 import java.util.*
+import kotlin.math.log10
 
 
 class ReceiverAddressFragment : Fragment(), KodeinAware, CustomClickListener {
@@ -44,6 +41,8 @@ class ReceiverAddressFragment : Fragment(), KodeinAware, CustomClickListener {
     private lateinit var viewModel: LocationSetViewModel
     private lateinit var list: SearchLocation
     private var from = false
+    private var focus = ""
+    private var senderLocation = ""
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -66,14 +65,7 @@ class ReceiverAddressFragment : Fragment(), KodeinAware, CustomClickListener {
             requireActivity().onBackPressed()
         }
 
-        binding.searchFrom.setOnClickListener {
-            Log.e("Editor", "from")
-        }
-
-        if (binding.searchTo.requestFocus()) {
-            Log.e("Editor", "to")
-        }
-
+        binding.searchFrom.findFocus()
         // for dialog
         if (PreferenceProvider(requireActivity()).getSharedPreferences("latitude") == null){
             val editText =
@@ -81,23 +73,62 @@ class ReceiverAddressFragment : Fragment(), KodeinAware, CustomClickListener {
             editText.requestFocus()
         }else {
             val geo = Geocoder(requireActivity(), Locale.getDefault())
-            val addresses = geo.getFromLocation(PreferenceProvider(requireActivity()).getSharedPreferences("latitude")!!.toDouble(), PreferenceProvider(requireActivity()).getSharedPreferences("longitude")!!.toDouble(), 1);
+            val addresses = geo.getFromLocation(
+                PreferenceProvider(requireActivity()).getSharedPreferences(
+                    "latitude"
+                )!!.toDouble(),
+                PreferenceProvider(requireActivity()).getSharedPreferences("longitude")!!
+                    .toDouble(),
+                1
+            );
             if (addresses.isNotEmpty()) {
-                binding.searchFrom.setQuery(addresses[0].featureName + ", " + addresses[0].thoroughfare, false)
+                senderLocation = addresses[0].featureName + ", " + addresses[0].thoroughfare
+                binding.searchFrom.setQuery(
+                    addresses[0].featureName + ", " + addresses[0].thoroughfare,
+                    false
+                )
             }
             val editText =
                 binding.searchTo.findViewById(androidx.appcompat.R.id.search_src_text) as EditText
             editText.requestFocus()
         }
+
+        binding.searchFrom.setOnQueryTextFocusChangeListener { view, isFocused ->
+            if (isFocused) {
+                focus = "from"
+                binding.searchFrom.setQuery(senderLocation, false)
+                Log.e("a", "sff")
+            }
+            else {
+                binding.searchFrom.setQuery(senderLocation, false)
+                Log.e("b", "sfnf")
+            }
+        }
+
+        binding.searchTo.setOnQueryTextFocusChangeListener { view, isFocused ->
+            if (isFocused) {
+                focus = "to"
+                Log.e("c", "stf")
+            }
+            else {
+                Log.e("d", "stnf")
+            }
+        }
+
         binding.map.setOnClickListener {
             val fragment = LocationSetFragment()
             val bundle = Bundle()
+            if (focus == "from")
+                bundle.putString("focus", "from")
+            else
+                bundle.putString("focus", "to")
             bundle.putString("sender_location_name", binding.searchFrom.query.toString())
             bundle.putString("receiver_name", requireArguments().getString("receiver_name"))
             bundle.putString("receiver_phone", requireArguments().getString("receiver_phone"))
             fragment.arguments = bundle
             communicatorFragmentInterface?.addContentFragment(fragment, true)
         }
+
         binding.searchFrom.setOnQueryTextListener(object : SearchView.OnQueryTextListener,
             androidx.appcompat.widget.SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String): Boolean {
@@ -111,6 +142,7 @@ class ReceiverAddressFragment : Fragment(), KodeinAware, CustomClickListener {
                 return false
             }
         })
+
         binding.searchTo.setOnQueryTextListener(object : SearchView.OnQueryTextListener,
             androidx.appcompat.widget.SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String): Boolean {
@@ -272,7 +304,11 @@ class ReceiverAddressFragment : Fragment(), KodeinAware, CustomClickListener {
                 val fragment = ConfirmReceiverAddressFragment()
                 val bundle = Bundle()
                 val geo = Geocoder(requireActivity(), Locale.getDefault())
-                val addresses = geo.getFromLocation(getLatLngFromAddress(location)!!.latitude, getLatLngFromAddress(location)!!.longitude, 1);
+                val addresses = geo.getFromLocation(
+                    getLatLngFromAddress(location)!!.latitude, getLatLngFromAddress(
+                        location
+                    )!!.longitude, 1
+                );
                 if (addresses.isNotEmpty()) {
                     bundle.putString("city", addresses[0].locality)
                     if (addresses[0].subLocality != null){
@@ -306,7 +342,11 @@ class ReceiverAddressFragment : Fragment(), KodeinAware, CustomClickListener {
                 val fragment = ConfirmReceiverAddressFragment()
                 val bundle = Bundle()
                 val geo = Geocoder(requireActivity(), Locale.getDefault())
-                val addresses = geo.getFromLocation(getLatLngFromAddress(location)!!.latitude, getLatLngFromAddress(location)!!.longitude, 1);
+                val addresses = geo.getFromLocation(
+                    getLatLngFromAddress(location)!!.latitude, getLatLngFromAddress(
+                        location
+                    )!!.longitude, 1
+                );
                 if (addresses.isNotEmpty()) {
                     bundle.putString("city", addresses[0].locality)
                     if (addresses[0].subLocality != null){

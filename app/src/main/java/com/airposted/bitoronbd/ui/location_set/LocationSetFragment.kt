@@ -29,6 +29,7 @@ import com.airposted.bitoronbd.model.Term
 import com.airposted.bitoronbd.ui.main.CommunicatorFragmentInterface
 import com.airposted.bitoronbd.ui.main.MainActivity
 import com.airposted.bitoronbd.ui.product.ConfirmReceiverAddressFragment
+import com.airposted.bitoronbd.ui.product.ReceiverAddressFragment
 import com.airposted.bitoronbd.utils.*
 import com.google.android.gms.common.api.ResolvableApiException
 import com.google.android.gms.location.LocationRequest
@@ -113,8 +114,9 @@ class LocationSetFragment : Fragment(), KodeinAware, CustomClickListener,
                 object : PermissionHandler() {
                     override fun onGranted() {
 
-                        val manager:LocationManager = requireActivity().getSystemService(Context.LOCATION_SERVICE) as LocationManager
-                        if (manager.isProviderEnabled(LocationManager.GPS_PROVIDER)){
+                        val manager: LocationManager =
+                            requireActivity().getSystemService(Context.LOCATION_SERVICE) as LocationManager
+                        if (manager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
                             getLocation()
                         } else {
                             val request = LocationRequest()
@@ -208,34 +210,50 @@ class LocationSetFragment : Fragment(), KodeinAware, CustomClickListener,
                     "currentLocation",
                     locationName
                 )
-//                PreferenceProvider(requireActivity()).saveSharedPreferences("latitude", latitude)
-//                PreferenceProvider(requireActivity()).saveSharedPreferences("longitude", longitude)
-                val fragment = ConfirmReceiverAddressFragment()
-                val bundle = Bundle()
-                val geo = Geocoder(requireActivity(), Locale.getDefault())
-                val addresses = geo.getFromLocation(latitude.toDouble(), longitude.toDouble(), 1)
-                if (addresses.isNotEmpty()) {
-                    bundle.putString("city", addresses[0].locality)
-                    if (addresses[0].subLocality != null){
-                        bundle.putString("area", addresses[0].subLocality)
-                        bundle.putString("city", addresses[0].subLocality)
-                    } else {
-                        bundle.putString("area", addresses[0].locality)
-                        bundle.putString("city", addresses[0].locality)
-                    }
+
+                if (requireArguments().getString("focus") == "from") {
+                    PreferenceProvider(requireActivity()).saveSharedPreferences(
+                        "latitude",
+                        latitude
+                    )
+                    PreferenceProvider(requireActivity()).saveSharedPreferences(
+                        "longitude",
+                        longitude
+                    )
+                    val fragment = ReceiverAddressFragment()
+                    val bundle = Bundle()
+                    bundle.putString("receiver_name", requireArguments().getString("receiver_name"))
+                    bundle.putString("receiver_phone", requireArguments().getString("receiver_phone"))
+                    fragment.arguments = bundle
+                    communicatorFragmentInterface?.addContentFragment(fragment, false)
                 }
-                bundle.putString("sender_location_name", requireArguments().getString("sender_location_name"))
-                bundle.putString("receiver_location_name", binding.search.query.toString())
-                bundle.putDouble("latitude", latitude.toDouble())
-                bundle.putDouble("longitude", longitude.toDouble())
-                bundle.putString("receiver_name", requireArguments().getString("receiver_name"))
-                bundle.putString("receiver_phone", requireArguments().getString("receiver_phone"))
-                fragment.arguments = bundle
-                communicatorFragmentInterface?.addContentFragment(fragment, true)
-//                val intent = Intent(requireActivity(), MainActivity::class.java)
-//                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
-//                startActivity(intent)
-//                communicatorFragmentInterface!!.addContentFragment()
+                else {
+                    val fragment = ConfirmReceiverAddressFragment()
+                    val bundle = Bundle()
+                    val geo = Geocoder(requireActivity(), Locale.getDefault())
+                    val addresses = geo.getFromLocation(latitude.toDouble(), longitude.toDouble(), 1)
+                    if (addresses.isNotEmpty()) {
+                        bundle.putString("city", addresses[0].locality)
+                        if (addresses[0].subLocality != null) {
+                            bundle.putString("area", addresses[0].subLocality)
+                            bundle.putString("city", addresses[0].subLocality)
+                        } else {
+                            bundle.putString("area", addresses[0].locality)
+                            bundle.putString("city", addresses[0].locality)
+                        }
+                    }
+                    bundle.putString(
+                        "sender_location_name",
+                        requireArguments().getString("sender_location_name")
+                    )
+                    bundle.putString("receiver_location_name", binding.search.query.toString())
+                    bundle.putDouble("latitude", latitude.toDouble())
+                    bundle.putDouble("longitude", longitude.toDouble())
+                    bundle.putString("receiver_name", requireArguments().getString("receiver_name"))
+                    bundle.putString("receiver_phone", requireArguments().getString("receiver_phone"))
+                    fragment.arguments = bundle
+                    communicatorFragmentInterface?.addContentFragment(fragment, true)
+                }
             } else {
                 binding.rootLayout.snackbar("Sorry!! We are currently not providing our service to this area")
             }
@@ -267,22 +285,22 @@ class LocationSetFragment : Fragment(), KodeinAware, CustomClickListener,
                     btnClose.visibility = View.VISIBLE
                     if (list.predictions.isNotEmpty()) {
 
-                        val term = ArrayList<String> ()
-                        for (i in list.predictions.indices){
-                            if (list.predictions[i].terms.size > 1){
+                        val term = ArrayList<String>()
+                        for (i in list.predictions.indices) {
+                            if (list.predictions[i].terms.size > 1) {
                                 var text = ""
-                            for (j in 0 until list.predictions[i].terms.size - 1){
-                                text += if (j > 0){
-                                    ", " + list.predictions[i].terms[j].value
-                                } else {
-                                    list.predictions[i].terms[j].value
+                                for (j in 0 until list.predictions[i].terms.size - 1) {
+                                    text += if (j > 0) {
+                                        ", " + list.predictions[i].terms[j].value
+                                    } else {
+                                        list.predictions[i].terms[j].value
+                                    }
                                 }
-                            }
-                            term.add(text)
+                                term.add(text)
                             } else {
                                 var text = ""
-                                for (j in list.predictions[i].terms.indices){
-                                    text += if (j > 0){
+                                for (j in list.predictions[i].terms.indices) {
+                                    text += if (j > 0) {
                                         ", " + list.predictions[i].terms[j].value
                                     } else {
                                         list.predictions[i].terms[j].value
@@ -414,7 +432,8 @@ class LocationSetFragment : Fragment(), KodeinAware, CustomClickListener,
                 requireActivity().getSystemService(Context.LOCATION_SERVICE) as LocationManager
             if (manager.isProviderEnabled(LocationManager.GPS_PROVIDER) || manager.isProviderEnabled(
                     LocationManager.NETWORK_PROVIDER
-                )) {
+                )
+            ) {
                 getLocation()
             }
         }

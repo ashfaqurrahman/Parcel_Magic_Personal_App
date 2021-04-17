@@ -1,13 +1,10 @@
 package com.airposted.bitoronbd.ui.product
 
-import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import com.airposted.bitoronbd.R
 import com.airposted.bitoronbd.databinding.FragmentReceiverInfoBinding
 import com.airposted.bitoronbd.ui.main.CommunicatorFragmentInterface
 import com.airposted.bitoronbd.utils.snackbar
