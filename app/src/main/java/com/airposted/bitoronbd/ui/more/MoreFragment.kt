@@ -61,7 +61,9 @@ class MoreFragment : Fragment(), KodeinAware {
     }
 
     private fun bindUI() = Coroutines.main {
-
+        moreBinding.back.setOnClickListener {
+            requireActivity().onBackPressed()
+        }
         Glide.with(requireActivity()).load(
             PersistentUser.getInstance().getUserImage(requireActivity())
         ).placeholder(R.drawable.sample_pro_pic).error(
