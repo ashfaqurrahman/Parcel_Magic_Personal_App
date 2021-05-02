@@ -16,8 +16,8 @@ class UserRepository(
         return apiRequest { api.numberCheck(mobile) }
     }
 
-    suspend fun locationSearch(mobile: String): SearchLocation {
-        return apiRequest { api.getPlacesNameList(mobile) }
+    suspend fun locationSearch(place: String): SearchLocation {
+        return apiRequest { api.getPlacesNameList(place) }
     }
 
     /*suspend fun userLogin(email: String, password: String): AuthResponse {
