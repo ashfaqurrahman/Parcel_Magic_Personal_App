@@ -30,12 +30,14 @@ import com.airposted.bitoronbd.model.LocationDetails
 import com.airposted.bitoronbd.model.LocationDetailsWithName
 import com.airposted.bitoronbd.ui.WebViewFragment
 import com.airposted.bitoronbd.ui.auth.SignInSignUpActivity
+import com.airposted.bitoronbd.ui.help.HelpFragment
 import com.airposted.bitoronbd.ui.history.MyParcelHistoryFragment
 import com.airposted.bitoronbd.ui.main.CommunicatorFragmentInterface
 import com.airposted.bitoronbd.ui.more.MoreFragment
 import com.airposted.bitoronbd.ui.my_parcel.MyParcelFragment
 import com.airposted.bitoronbd.ui.product.PackageGuidelineFragment
 import com.airposted.bitoronbd.ui.product.ParcelTypeFragment
+import com.airposted.bitoronbd.ui.termsconditions.TermsConditionsFragment
 import com.airposted.bitoronbd.utils.*
 import com.airposted.bitoronbd.utils.ApiException
 import com.bumptech.glide.Glide
@@ -363,7 +365,7 @@ open class HomeFragment : Fragment(R.layout.fragment_home),
                 homeBinding.drawerLayout.closeDrawers()
             }
             R.id.help -> {
-
+                myCommunicator?.addContentFragment(HelpFragment(), true)
                 homeBinding.drawerLayout.closeDrawers()
             }
             R.id.settings -> {
@@ -372,11 +374,11 @@ open class HomeFragment : Fragment(R.layout.fragment_home),
             }
             R.id.terms_condition -> {
                 homeBinding.drawerLayout.closeDrawers()
-                val fragment = WebViewFragment()
-                val bundle = Bundle()
-                bundle.putString("url", "https://airposted.com/page/terms-of-service#:~:text=Airposted%20Referral%20Program%20Terms%20and%20Conditions%2A%20Airposted%20Referral,it%20as%20a%20traveler%20or%20shopper%20or%20buyer.")
-                fragment.arguments = bundle
-                myCommunicator?.addContentFragment(fragment, true)
+//                val fragment = WebViewFragment()
+//                val bundle = Bundle()
+//                bundle.putString("url", "https://airposted.com/page/terms-of-service#:~:text=Airposted%20Referral%20Program%20Terms%20and%20Conditions%2A%20Airposted%20Referral,it%20as%20a%20traveler%20or%20shopper%20or%20buyer.")
+//                fragment.arguments = bundle
+                myCommunicator?.addContentFragment(TermsConditionsFragment(), true)
             }
             R.id.sign_out -> {
                 homeBinding.drawerLayout.closeDrawers()

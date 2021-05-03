@@ -38,7 +38,7 @@
             android:paddingStart="15dp"
             android:paddingEnd="15dp"
             android:gravity="center"
-            android:text="Fastest Delivery In \nBangladesh"
+            android:text="Send parcel whenever you want!"
             />
 
         <TextView
@@ -53,7 +53,7 @@
             android:textSize="14sp"
             android:textColor="#ffffff"
             android:gravity="center"
-            android:text="Blazing fast courier and parcel delivery service in Bangladesh. One stop delivery solution for your growing business."
+            android:text="Need to send something in less than 24 hours? Don’t worry Airposted parcel has got you covered. Our service is absolutely hassle-free and wallet friendly!"
             />
 
     </LinearLayout>

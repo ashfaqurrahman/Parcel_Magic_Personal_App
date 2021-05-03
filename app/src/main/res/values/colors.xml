@@ -53,5 +53,6 @@
     <color name="color2">#e3e3e3</color>
     <color name="color3">#ebebeb</color>
     <color name="color4">#cccccc</color>
+    <color name="bg">#fcfcff</color>
 
 </resources>

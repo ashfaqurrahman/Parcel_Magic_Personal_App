@@ -108,6 +108,8 @@ class ConfirmReceiverAddressFragment : Fragment(), KodeinAware, SSLCTransactionR
                 requireArguments().getDouble("receiver_longitude")
             )
 
+            Log.e("LLLLL", location1.latitude.toString() + " " + location1.longitude + " " + location2.latitude + " " + location2.longitude)
+
             lifecycleScope.launch {
                 try {
                     val url = getDirectionURL(location1, location2)
@@ -170,7 +172,7 @@ class ConfirmReceiverAddressFragment : Fragment(), KodeinAware, SSLCTransactionR
                         }
                     })
 
-                    val circleDrawable1 = resources.getDrawable(R.drawable.ic_marker_without_space)
+                    val circleDrawable1 = resources.getDrawable(R.drawable.ic_map)
                     val markerIcon1 = getMarkerIconFromDrawable(circleDrawable1)
                     googleMap.addMarker(
                         MarkerOptions().position(location2)
