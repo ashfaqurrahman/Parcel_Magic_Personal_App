@@ -14,6 +14,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.*
 import android.widget.*
+import androidx.activity.OnBackPressedCallback
 import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -26,6 +27,7 @@ import com.airposted.bitoronbd.R
 import com.airposted.bitoronbd.data.network.preferences.PreferenceProvider
 import com.airposted.bitoronbd.databinding.FragmentHomeBinding
 import com.airposted.bitoronbd.model.LocationDetails
+import com.airposted.bitoronbd.model.LocationDetailsWithName
 import com.airposted.bitoronbd.ui.WebViewFragment
 import com.airposted.bitoronbd.ui.auth.SignInSignUpActivity
 import com.airposted.bitoronbd.ui.history.MyParcelHistoryFragment
@@ -70,7 +72,7 @@ open class HomeFragment : Fragment(R.layout.fragment_home),
 
     private val REQUEST_CHECK_SETTINGS = 0x1
     private lateinit var googleApiClient: GoogleApiClient
-    private lateinit var locationDetailsImp: LocationDetails
+    private lateinit var locationDetailsImp: LocationDetailsWithName
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -141,7 +143,7 @@ open class HomeFragment : Fragment(R.layout.fragment_home),
         homeBinding.expressBtn.setOnClickListener{
             val fragment = ParcelTypeFragment()
             val bundle = Bundle()
-            bundle.putString("delivery_type", "express")
+            bundle.putInt("delivery_type", 2)
             fragment.arguments = bundle
             myCommunicator?.addContentFragment(fragment, true)
         }
@@ -149,7 +151,7 @@ open class HomeFragment : Fragment(R.layout.fragment_home),
         homeBinding.quickBtn.setOnClickListener{
             val fragment = ParcelTypeFragment()
             val bundle = Bundle()
-            bundle.putString("delivery_type", "quick")
+            bundle.putInt("delivery_type", 1)
             fragment.arguments = bundle
             myCommunicator?.addContentFragment(fragment, true)
         }
@@ -174,11 +176,7 @@ open class HomeFragment : Fragment(R.layout.fragment_home),
             try {
                 val settingResponse = viewModel.getSetting()
                 PreferenceProvider(requireActivity()).saveSharedPreferences(
-                    "rate_quick",
-                    settingResponse.rate.perKmPrice.toString()
-                )
-                PreferenceProvider(requireActivity()).saveSharedPreferences(
-                    "rate_express",
+                    "per_km_price",
                     settingResponse.rate.perKmPrice.toString()
                 )
                 PreferenceProvider(requireActivity()).saveSharedPreferences(
@@ -315,11 +313,11 @@ open class HomeFragment : Fragment(R.layout.fragment_home),
 
         viewModel.gps.observe(viewLifecycleOwner, {
             if (it) {
-                viewModel.currentLocation.observe(viewLifecycleOwner, { locationDetails ->
-                    locationDetailsImp = locationDetails
+                viewModel.currentLocation.observe(viewLifecycleOwner, { locationDetailsWithName ->
+                    locationDetailsImp = locationDetailsWithName
                     Toast.makeText(
                         requireActivity(),
-                        locationDetails.latitude.toString() + "/" + locationDetails.longitude.toString(),
+                        locationDetailsWithName.locationName,
                         Toast.LENGTH_LONG
                     ).show()
 

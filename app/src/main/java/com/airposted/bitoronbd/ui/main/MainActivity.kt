@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import com.airposted.bitoronbd.R
 import com.airposted.bitoronbd.databinding.ActivityMainBinding
 import com.airposted.bitoronbd.ui.home.HomeFragment
+import com.airposted.bitoronbd.ui.my_parcel.MyParcelFragment
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.kodein
 

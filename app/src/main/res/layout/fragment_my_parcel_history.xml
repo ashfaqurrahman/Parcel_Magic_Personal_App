@@ -49,7 +49,7 @@
                     android:textStyle="normal" />
 
                 <com.skydoves.powerspinner.PowerSpinnerView
-                    android:id="@+id/order_type"
+                    android:id="@+id/express_quick"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"

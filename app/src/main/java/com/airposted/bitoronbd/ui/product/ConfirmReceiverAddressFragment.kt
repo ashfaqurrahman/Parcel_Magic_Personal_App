@@ -7,6 +7,7 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
 import android.os.Bundle
+import android.util.Log
 import android.util.MalformedJsonException
 import android.view.LayoutInflater
 import android.view.View
@@ -59,7 +60,7 @@ class ConfirmReceiverAddressFragment : Fragment(), KodeinAware, SSLCTransactionR
     override val kodein by kodein()
     private val factory: LocationSetViewModelFactory by instance()
     private lateinit var viewModel: LocationSetViewModel
-    var distance =  0F
+    var distance =  0
     var myCommunicator: CommunicatorFragmentInterface? = null
     private var setParcel = SetParcel()
 
@@ -98,18 +99,19 @@ class ConfirmReceiverAddressFragment : Fragment(), KodeinAware, SSLCTransactionR
             }
 //            googleMap.isMyLocationEnabled = true
             val location1 = LatLng(
-                PreferenceProvider(requireActivity()).getSharedPreferences("latitude")!!.toDouble(),
-                PreferenceProvider(requireActivity()).getSharedPreferences("longitude")!!.toDouble()
+                requireArguments().getDouble("sender_latitude"),
+                requireArguments().getDouble("sender_longitude")
             )
 
             val location2 = LatLng(
-                requireArguments().getDouble("latitude"),
-                requireArguments().getDouble("longitude")
+                requireArguments().getDouble("receiver_latitude"),
+                requireArguments().getDouble("receiver_longitude")
             )
 
             lifecycleScope.launch {
                 try {
                     val url = getDirectionURL(location1, location2)
+                    Log.e("vvvvv", url)
                     val list = viewModel.getDirections(url)
                     val result =  ArrayList<List<LatLng>>()
                     val path =  ArrayList<LatLng>()
@@ -125,9 +127,18 @@ class ConfirmReceiverAddressFragment : Fragment(), KodeinAware, SSLCTransactionR
                         lineoption.geodesic(true)
                     }
                     googleMap.addPolyline(lineoption)
-                    for (i in 0 until list.routes[0].legs[0].steps.size){
+                    /*for (i in 0 until list.routes[0].legs[0].steps.size){
                         distance += list.routes[0].legs[0].steps[i].distance.value
-                    }
+                    }*/
+                    distance = list.routes[0].legs[0].distance.value
+
+
+                    setParcel.distance = round((distance/1000).toDouble(), 2)
+                    setParcel.delivery_charge = calculatePrice(requireArguments().getInt("delivery_type"))
+                    binding.charge.text = "৳" + calculatePrice(requireArguments().getInt("delivery_type"))
+
+                    Log.e("aaaaa", (distance/1000).toString())
+                    Log.e("aaaaa", calculatePrice(requireArguments().getInt("delivery_type")).toString())
 
                     val circleDrawable = resources.getDrawable(R.drawable.root_start_point)
                     val markerIcon = getMarkerIconFromDrawable(circleDrawable)
@@ -144,7 +155,7 @@ class ConfirmReceiverAddressFragment : Fragment(), KodeinAware, SSLCTransactionR
                         override fun getInfoContents(marker: Marker): View {
                             val v: View = layoutInflater.inflate(R.layout.row, null)
                             val info1 = v.findViewById(R.id.text_view_name) as TextView
-                            info1.text = "Fecha: "
+                            info1.text = requireArguments().getString("receiver_location_name")
                             googleMap.setOnInfoWindowClickListener {
                                 val fragmento: Fragment
                                 /*fragmento = HistorialFragment()
@@ -272,7 +283,7 @@ class ConfirmReceiverAddressFragment : Fragment(), KodeinAware, SSLCTransactionR
                     }
                 }
 
-                dialogs.setCancelable(false)
+                dialogs.setCancelable(true)
 
                 dialogs.show()
             }
@@ -317,25 +328,22 @@ class ConfirmReceiverAddressFragment : Fragment(), KodeinAware, SSLCTransactionR
         }
 
         setParcel.invoice_no = "AIR" + getSaltString() + getSaltString()
-        setParcel.parcel_type = 2
-        setParcel.personal_order_type = 1
+        setParcel.item_type = requireArguments().getInt("parcel_type")
+        setParcel.personal_order_type = requireArguments().getInt("delivery_type")
         setParcel.recp_name = requireArguments().getString("receiver_name")!!
         setParcel.recp_phone = requireArguments().getString("receiver_phone")!!
-        setParcel.recp_city = requireArguments().getString("city")!!
-        setParcel.recp_zone = requireArguments().getString("area")!!
-        setParcel.recp_area = requireArguments().getString("area")!!
-        setParcel.receiver_latitude = requireArguments().getDouble("latitude")
-        setParcel.receiver_longitude = requireArguments().getDouble("longitude")
+//        setParcel.recp_city = requireArguments().getString("city")!!
+//        setParcel.recp_zone = requireArguments().getString("area")!!
+//        setParcel.recp_area = requireArguments().getString("area")!!
+        setParcel.receiver_latitude = requireArguments().getDouble("receiver_latitude")
+        setParcel.receiver_longitude = requireArguments().getDouble("receiver_longitude")
         setParcel.recp_address = requireArguments().getString("receiver_location_name")!!
-        setParcel.pick_city = requireArguments().getString("city")!!
-        setParcel.pick_zone = requireArguments().getString("area")!!
-        setParcel.pick_area = requireArguments().getString("area")!!
-        setParcel.sender_latitude = requireArguments().getDouble("latitude")
-        setParcel.sender_longitude = requireArguments().getDouble("longitude")
-        setParcel.pick_address = requireArguments().getString("sender_location_name").toString()
-        setParcel.distance = round(distance.toDouble()/1000, 2)
-        setParcel.delivery_charge = calculatePrice(1)
-        binding.charge.text = "৳" + calculatePrice(1)
+//        setParcel.pick_city = requireArguments().getString("city")!!
+//        setParcel.pick_zone = requireArguments().getString("area")!!
+//        setParcel.pick_area = requireArguments().getString("area")!!
+        setParcel.sender_latitude = requireArguments().getDouble("sender_latitude")
+        setParcel.sender_longitude = requireArguments().getDouble("sender_longitude")
+        setParcel.pick_address = requireArguments().getString("sender_location_name")!!
     }
 
     private fun getSaltString(): String {
@@ -349,25 +357,25 @@ class ConfirmReceiverAddressFragment : Fragment(), KodeinAware, SSLCTransactionR
         return salt.toString()
     }
 
-    private fun distance(): String {
+    /*private fun distance(): String {
         return round(requireArguments().getFloat("distance").toDouble(), 2).toString() + " Km"
-    }
+    }*/
 
     private fun calculatePrice(position: Int): Double {
         return when (position) {
-            0 ->round(
-                ((requireArguments().getFloat("distance") * PreferenceProvider(
+            1 ->round(
+                ((distance/1000 * PreferenceProvider(
                     requireActivity()
-                ).getSharedPreferences("rate_express")!!.toFloat()) + PreferenceProvider(
+                ).getSharedPreferences("per_km_price")!!.toInt()) + PreferenceProvider(
                     requireActivity()
-                ).getSharedPreferences("base_price_express")!!.toFloat()).toDouble(), 2
+                ).getSharedPreferences("base_price_quick")!!.toInt()).toDouble(), 2
             )
             else -> round(
-                ((requireArguments().getFloat("distance") * PreferenceProvider(
+                ((distance/1000 * PreferenceProvider(
                     requireActivity()
-                ).getSharedPreferences("rate_quick")!!.toFloat()) + PreferenceProvider(
+                ).getSharedPreferences("per_km_price")!!.toInt()) + PreferenceProvider(
                     requireActivity()
-                ).getSharedPreferences("base_price_quick")!!.toFloat()).toDouble(), 2
+                ).getSharedPreferences("base_price_express")!!.toInt()).toDouble(), 2
             )
         }
     }

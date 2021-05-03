@@ -130,6 +130,7 @@
             android:layout_height="match_parent"
             android:textSize="18sp"
             android:text="No orders"
+            android:textColor="@color/black"
             android:visibility="gone"
             android:gravity="center"/>
 

@@ -21,7 +21,8 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.BitoronBD">
+        android:theme="@style/Theme.BitoronBD"
+        android:usesCleartextTraffic="true">
         <activity android:name=".ui.location_set.LocationSetActivity"
             android:windowSoftInputMode="adjustPan|adjustResize"/>
         <activity android:name=".ui.permission.PermissionActivity" />

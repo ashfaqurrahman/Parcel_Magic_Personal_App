@@ -9,6 +9,7 @@ import com.airposted.bitoronbd.databinding.FragmentReceiverInfoBinding
 import com.airposted.bitoronbd.ui.main.CommunicatorFragmentInterface
 import com.airposted.bitoronbd.utils.snackbar
 import com.airposted.bitoronbd.utils.textWatcher
+import com.airposted.bitoronbd.utils.zeroRemove
 
 class ReceiverInfoFragment : Fragment() {
     private lateinit var binding: FragmentReceiverInfoBinding
@@ -30,12 +31,13 @@ class ReceiverInfoFragment : Fragment() {
         communicatorFragmentInterface = context as CommunicatorFragmentInterface
         binding.next.setOnClickListener {
             if(binding.receiverName.text.isNotEmpty()){
+                val phone = zeroRemove(binding.receiverPhone.text.toString())
                 val fragment = ReceiverAddressFragment()
                 val bundle = Bundle()
                 bundle.putString("receiver_name", binding.receiverName.text.toString())
-                bundle.putString("receiver_phone", binding.receiverPhone.text.toString())
-                bundle.putString("delivery_type", requireArguments().getString("delivery_type"))
-                bundle.putString("parcel_type", requireArguments().getString("parcel_type"))
+                bundle.putString("receiver_phone", "+880$phone")
+                bundle.putInt("delivery_type", requireArguments().getInt("delivery_type"))
+                bundle.putInt("parcel_type", requireArguments().getInt("parcel_type"))
                 fragment.arguments = bundle
                 communicatorFragmentInterface!!.addContentFragment(fragment, true)
             } else {

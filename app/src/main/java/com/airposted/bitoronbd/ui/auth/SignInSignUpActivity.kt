@@ -391,6 +391,8 @@ class SignInSignUpActivity : AppCompatActivity(), KodeinAware {
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
 
+                    timer?.cancel()
+
                     if (isAvailable){
                         dismissDialog()
                         toast("Login Successful")

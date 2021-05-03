@@ -4,6 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.airposted.bitoronbd.data.repositories.LocationSetRepository
+import com.airposted.bitoronbd.model.LocationDetails
+import com.airposted.bitoronbd.model.LocationDetailsWithName
 import com.airposted.bitoronbd.model.SetParcel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -25,6 +27,9 @@ class LocationSetViewModel (
     fun setOnMapFalse() {
         setOnMap.postValue(false)
     }
+
+    val from = repository.getFromAddress()
+    val to = repository.getToAddress()
 
     suspend fun getLocations(
         url: String

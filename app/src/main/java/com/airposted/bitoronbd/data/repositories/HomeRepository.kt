@@ -26,6 +26,7 @@ import com.airposted.bitoronbd.data.network.responses.SettingResponse
 import com.airposted.bitoronbd.data.network.SafeApiRequest
 import com.airposted.bitoronbd.data.network.preferences.PreferenceProvider
 import com.airposted.bitoronbd.model.LocationDetails
+import com.airposted.bitoronbd.model.LocationDetailsWithName
 import com.google.android.gms.location.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -50,7 +51,7 @@ class HomeRepository(context: Context, private val api: MyApi): SafeApiRequest()
 
     private val gps = MutableLiveData<Boolean>()
     private val network = MutableLiveData<Boolean>()
-    private val currentLocation = MutableLiveData<LocationDetails>()
+    private val currentLocation = MutableLiveData<LocationDetailsWithName>()
 
     init {
         mLocationManager = appContext.getSystemService(Context.LOCATION_SERVICE) as LocationManager
@@ -143,18 +144,17 @@ class HomeRepository(context: Context, private val api: MyApi): SafeApiRequest()
             if (locationList.size > 0) {
                 val location = locationList[locationList.size - 1]
                 mLastLocation = location
-                currentLocation.postValue(LocationDetails(location.latitude, location.longitude))
                 PreferenceProvider(appContext).saveSharedPreferences("latitude", location.latitude.toString())
                 PreferenceProvider(appContext).saveSharedPreferences("longitude", location.longitude.toString())
-                /*val geo = Geocoder(appContext, Locale.getDefault())
+                val geo = Geocoder(appContext, Locale.getDefault())
                 val addresses = geo.getFromLocation(location.latitude, location.longitude, 1);
                 if (addresses.isEmpty()) {
-                    currentLocation.postValue(appContext.getString(R.string.searching))
+
                 }
                 else {
                     gps.postValue(true)
-                    currentLocation.postValue(addresses[0].featureName + ", " + addresses[0].thoroughfare)
-                }*/
+                    currentLocation.postValue(LocationDetailsWithName(addresses[0].featureName + ", " + addresses[0].thoroughfare,location.latitude, location.longitude))
+                }
             }
         }
     }
@@ -165,7 +165,7 @@ class HomeRepository(context: Context, private val api: MyApi): SafeApiRequest()
         }
     }
 
-    fun currentLocation(): LiveData<LocationDetails> {
+    fun currentLocation(): LiveData<LocationDetailsWithName> {
         gps.postValue(true)
         locationCallback()
         return currentLocation

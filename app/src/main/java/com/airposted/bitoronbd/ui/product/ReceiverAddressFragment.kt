@@ -3,6 +3,7 @@ package com.airposted.bitoronbd.ui.product
 import android.location.Address
 import android.location.Geocoder
 import android.os.Bundle
+import android.text.InputType
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -10,6 +11,7 @@ import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.SearchView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
@@ -19,9 +21,13 @@ import com.airposted.bitoronbd.R
 import com.airposted.bitoronbd.data.network.preferences.PreferenceProvider
 import com.airposted.bitoronbd.databinding.FragmentReceiverAddressBinding
 import com.airposted.bitoronbd.model.SearchLocation
+import com.airposted.bitoronbd.ui.home.HomeViewModel
+import com.airposted.bitoronbd.ui.home.HomeViewModelFactory
 import com.airposted.bitoronbd.ui.location_set.*
 import com.airposted.bitoronbd.ui.main.CommunicatorFragmentInterface
 import com.airposted.bitoronbd.utils.*
+import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
 import kotlinx.coroutines.launch
 import org.kodein.di.KodeinAware
@@ -35,9 +41,11 @@ class ReceiverAddressFragment : Fragment(), KodeinAware, CustomClickListener {
     var communicatorFragmentInterface: CommunicatorFragmentInterface? = null
     override val kodein by kodein()
     private val factory: LocationSetViewModelFactory by instance()
+    private val factory1: HomeViewModelFactory by instance()
     private lateinit var viewModel: LocationSetViewModel
+    private lateinit var homeViewModel: HomeViewModel
     private lateinit var list: SearchLocation
-    private var from = false
+    private var from = true
     private var focus = ""
     private var senderLocation = ""
 
@@ -51,8 +59,8 @@ class ReceiverAddressFragment : Fragment(), KodeinAware, CustomClickListener {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel =
-            ViewModelProvider(requireActivity(), factory).get(LocationSetViewModel::class.java)
+        viewModel = ViewModelProvider(requireActivity(), factory).get(LocationSetViewModel::class.java)
+        homeViewModel = ViewModelProvider(requireActivity(), factory1).get(HomeViewModel::class.java)
         bindUI()
     }
 
@@ -63,12 +71,49 @@ class ReceiverAddressFragment : Fragment(), KodeinAware, CustomClickListener {
             requireActivity().onBackPressed()
         }
 
-        binding.searchFrom.findFocus()
+        val editText =
+            binding.searchFrom.findViewById(androidx.appcompat.R.id.search_src_text) as EditText
+        editText.requestFocus()
+        editText.showKeyboard()
+        val editText1 =
+            binding.searchTo.findViewById(androidx.appcompat.R.id.search_src_text) as EditText
+        //disableInput(editText1)
+
+        homeViewModel.currentLocation.observe(viewLifecycleOwner, { locationDetailsWithName ->
+            val locationDetailsImp = locationDetailsWithName
+
+            binding.searchFrom.setQuery(locationDetailsImp.locationName, false)
+            from = false
+            binding.recyclerview.visibility = View.GONE
+
+            val editText =
+                binding.searchTo.findViewById(androidx.appcompat.R.id.search_src_text) as EditText
+            editText.requestFocus()
+            editText.showKeyboard()
+            //enableInput(editText)
+
+            /*val cameraPosition =
+                CameraPosition.Builder()
+                    .target(
+                        LatLng(
+                            locationDetailsImp.latitude,
+                            locationDetailsImp.longitude
+                        )
+                    )
+                    .zoom(15.2f)                   // Sets the zoom
+                    .build()
+            mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition))*/
+        })
+
+        //binding.searchFrom.findFocus()
         // for dialog
-        if (PreferenceProvider(requireActivity()).getSharedPreferences("latitude") == null) {
+        /*if (PreferenceProvider(requireActivity()).getSharedPreferences("latitude") == null) {
             val editText =
                 binding.searchFrom.findViewById(androidx.appcompat.R.id.search_src_text) as EditText
             editText.requestFocus()
+            val editText1 =
+                binding.searchTo.findViewById(androidx.appcompat.R.id.search_src_text) as EditText
+            disableInput(editText1)
         } else {
             val geo = Geocoder(requireActivity(), Locale.getDefault())
             val addresses = geo.getFromLocation(
@@ -78,7 +123,7 @@ class ReceiverAddressFragment : Fragment(), KodeinAware, CustomClickListener {
                 PreferenceProvider(requireActivity()).getSharedPreferences("longitude")!!
                     .toDouble(),
                 1
-            );
+            )
             if (addresses.isNotEmpty()) {
                 senderLocation = addresses[0].featureName + ", " + addresses[0].thoroughfare
                 binding.searchFrom.setQuery(
@@ -89,23 +134,23 @@ class ReceiverAddressFragment : Fragment(), KodeinAware, CustomClickListener {
             val editText =
                 binding.searchTo.findViewById(androidx.appcompat.R.id.search_src_text) as EditText
             editText.requestFocus()
-        }
+        }*/
 
         binding.searchFrom.setOnQueryTextFocusChangeListener { view, isFocused ->
             if (isFocused) {
                 focus = "from"
-                Log.e("a", "sff")
+                from = true
             }
         }
 
         binding.searchTo.setOnQueryTextFocusChangeListener { view, isFocused ->
             if (isFocused) {
                 focus = "to"
-                Log.e("c", "stf")
+                from = false
             }
         }
 
-        binding.map.setOnClickListener {
+        /*binding.map.setOnClickListener {
             val fragment = LocationSetFragment()
             val bundle = Bundle()
             bundle.putString("focus", focus)
@@ -114,7 +159,7 @@ class ReceiverAddressFragment : Fragment(), KodeinAware, CustomClickListener {
             bundle.putString("receiver_phone", requireArguments().getString("receiver_phone"))
             fragment.arguments = bundle
             communicatorFragmentInterface?.addContentFragment(fragment, true)
-        }
+        }*/
 
         binding.searchFrom.setOnQueryTextListener(object : SearchView.OnQueryTextListener,
             androidx.appcompat.widget.SearchView.OnQueryTextListener {
@@ -124,7 +169,6 @@ class ReceiverAddressFragment : Fragment(), KodeinAware, CustomClickListener {
             }
 
             override fun onQueryTextChange(newText: String): Boolean {
-                from = true
                 locationFrom(newText)
                 return false
             }
@@ -142,6 +186,22 @@ class ReceiverAddressFragment : Fragment(), KodeinAware, CustomClickListener {
                 return false
             }
         })
+    }
+
+    fun disableInput(editText: EditText) {
+        editText.inputType = InputType.TYPE_NULL
+        editText.setTextIsSelectable(false)
+        editText.setOnKeyListener { v, keyCode, event ->
+            true // Blocks input from hardware keyboards.
+        }
+    }
+
+    fun enableInput(editText: EditText) {
+        editText.inputType = InputType.TYPE_CLASS_TEXT
+        editText.setTextIsSelectable(true)
+        editText.setOnKeyListener { v, keyCode, event ->
+            false // Blocks input from hardware keyboards.
+        }
     }
 
     private fun locationFrom(location: String) {
@@ -283,10 +343,10 @@ class ReceiverAddressFragment : Fragment(), KodeinAware, CustomClickListener {
     override fun onItemClick(location: String) {
         setProgressDialog(requireActivity())
         hideKeyboard(requireActivity())
-        binding.recyclerview.visibility = View.GONE
         if (from) {
             binding.searchFrom.setQuery(location, false)
             binding.searchFrom.clearFocus()
+            binding.recyclerview.visibility = View.GONE
             if (binding.searchTo.query.isNotEmpty()) {
                 val fragment = ConfirmReceiverAddressFragment()
                 val bundle = Bundle()
@@ -308,8 +368,12 @@ class ReceiverAddressFragment : Fragment(), KodeinAware, CustomClickListener {
                 }
                 bundle.putString("sender_location_name", binding.searchFrom.query.toString())
                 bundle.putString("receiver_location_name", binding.searchTo.query.toString())
-                bundle.putDouble("latitude", getLatLngFromAddress(location)!!.latitude)
-                bundle.putDouble("longitude", getLatLngFromAddress(location)!!.longitude)
+                bundle.putDouble("sender_latitude", getLatLngFromAddress(binding.searchFrom.query.toString())!!.latitude)
+                bundle.putDouble("sender_longitude", getLatLngFromAddress(binding.searchFrom.query.toString())!!.longitude)
+                bundle.putDouble("receiver_latitude", getLatLngFromAddress(binding.searchTo.query.toString())!!.latitude)
+                bundle.putDouble("receiver_longitude", getLatLngFromAddress(binding.searchTo.query.toString())!!.longitude)
+                bundle.putInt("delivery_type", requireArguments().getInt("delivery_type"))
+                bundle.putInt("parcel_type", requireArguments().getInt("parcel_type"))
                 bundle.putString("receiver_name", requireArguments().getString("receiver_name"))
                 bundle.putString("receiver_phone", requireArguments().getString("receiver_phone"))
                 fragment.arguments = bundle
@@ -319,11 +383,13 @@ class ReceiverAddressFragment : Fragment(), KodeinAware, CustomClickListener {
                 val editText =
                     binding.searchTo.findViewById(androidx.appcompat.R.id.search_src_text) as EditText
                 editText.requestFocus()
+                editText.showKeyboard()
                 dismissDialog()
             }
         } else {
             binding.searchTo.setQuery(location, false)
             binding.searchTo.clearFocus()
+            binding.recyclerview.visibility = View.GONE
 
             if (binding.searchFrom.query.isNotEmpty()) {
                 val fragment = ConfirmReceiverAddressFragment()
@@ -346,8 +412,12 @@ class ReceiverAddressFragment : Fragment(), KodeinAware, CustomClickListener {
                 }
                 bundle.putString("sender_location_name", binding.searchFrom.query.toString())
                 bundle.putString("receiver_location_name", binding.searchTo.query.toString())
-                bundle.putDouble("latitude", getLatLngFromAddress(location)!!.latitude)
-                bundle.putDouble("longitude", getLatLngFromAddress(location)!!.longitude)
+                bundle.putDouble("sender_latitude", getLatLngFromAddress(binding.searchFrom.query.toString())!!.latitude)
+                bundle.putDouble("sender_longitude", getLatLngFromAddress(binding.searchFrom.query.toString())!!.longitude)
+                bundle.putDouble("receiver_latitude", getLatLngFromAddress(binding.searchTo.query.toString())!!.latitude)
+                bundle.putDouble("receiver_longitude", getLatLngFromAddress(binding.searchTo.query.toString())!!.longitude)
+                bundle.putInt("delivery_type", requireArguments().getInt("delivery_type"))
+                bundle.putInt("parcel_type", requireArguments().getInt("parcel_type"))
                 bundle.putString("receiver_name", requireArguments().getString("receiver_name"))
                 bundle.putString("receiver_phone", requireArguments().getString("receiver_phone"))
                 fragment.arguments = bundle
@@ -357,6 +427,7 @@ class ReceiverAddressFragment : Fragment(), KodeinAware, CustomClickListener {
                 val editText =
                     binding.searchFrom.findViewById(androidx.appcompat.R.id.search_src_text) as EditText
                 editText.requestFocus()
+                editText.showKeyboard()
                 dismissDialog()
             }
         }

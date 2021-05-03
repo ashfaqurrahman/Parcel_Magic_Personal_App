@@ -33,12 +33,12 @@ class ParcelTypeFragment : Fragment() {
         binding.back.setOnClickListener {
             requireActivity().onBackPressed()
         }
-        when(requireArguments().getString("delivery_type")) {
-            "express" -> {
+        when(requireArguments().getInt("delivery_type")) {
+            2 -> {
                 binding.deliveryType.text = getString(R.string.express)
                 binding.deliveryIcon.setBackgroundResource(R.drawable.ic_express_icon)
             }
-            "quick" -> {
+            1 -> {
                 binding.deliveryType.text = getString(R.string.quick)
                 binding.deliveryIcon.setBackgroundResource(R.drawable.ic_quick_icon)
             }
@@ -48,8 +48,8 @@ class ParcelTypeFragment : Fragment() {
         binding.fragileBtn.setOnClickListener {
             val fragment = ReceiverInfoFragment()
             val bundle = Bundle()
-            bundle.putString("parcel_type", "fragile")
-            bundle.putString("delivery_type", requireArguments().getString("delivery_type"))
+            bundle.putInt("parcel_type", 1)
+            bundle.putInt("delivery_type", requireArguments().getInt("delivery_type"))
             fragment.arguments = bundle
             communicatorFragmentInterface?.addContentFragment(fragment, true)
         }
@@ -57,17 +57,8 @@ class ParcelTypeFragment : Fragment() {
         binding.liquidBtn.setOnClickListener {
             val fragment = ReceiverInfoFragment()
             val bundle = Bundle()
-            bundle.putString("parcel_type", "liquid")
-            bundle.putString("delivery_type", requireArguments().getString("delivery_type"))
-            fragment.arguments = bundle
-            communicatorFragmentInterface?.addContentFragment(fragment, true)
-        }
-
-        binding.docsBtn.setOnClickListener {
-            val fragment = ReceiverInfoFragment()
-            val bundle = Bundle()
-            bundle.putString("parcel_type", "document")
-            bundle.putString("delivery_type", requireArguments().getString("delivery_type"))
+            bundle.putInt("parcel_type", 2)
+            bundle.putInt("delivery_type", requireArguments().getInt("delivery_type"))
             fragment.arguments = bundle
             communicatorFragmentInterface?.addContentFragment(fragment, true)
         }
@@ -75,8 +66,17 @@ class ParcelTypeFragment : Fragment() {
         binding.solidBtn.setOnClickListener {
             val fragment = ReceiverInfoFragment()
             val bundle = Bundle()
-            bundle.putString("parcel_type", "solid")
-            bundle.putString("delivery_type", requireArguments().getString("delivery_type"))
+            bundle.putInt("parcel_type", 3)
+            bundle.putInt("delivery_type", requireArguments().getInt("delivery_type"))
+            fragment.arguments = bundle
+            communicatorFragmentInterface?.addContentFragment(fragment, true)
+        }
+
+        binding.docsBtn.setOnClickListener {
+            val fragment = ReceiverInfoFragment()
+            val bundle = Bundle()
+            bundle.putInt("parcel_type", 4)
+            bundle.putInt("delivery_type", requireArguments().getInt("delivery_type"))
             fragment.arguments = bundle
             communicatorFragmentInterface?.addContentFragment(fragment, true)
         }

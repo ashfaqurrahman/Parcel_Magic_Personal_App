@@ -6,7 +6,6 @@ import com.airposted.bitoronbd.data.network.NetworkConnectionInterceptor
 import com.airposted.bitoronbd.data.network.preferences.PreferenceProvider
 import com.airposted.bitoronbd.data.repositories.*
 import com.airposted.bitoronbd.ui.auth.AuthViewModelFactory
-import com.airposted.bitoronbd.ui.history.MyParcelHistoryViewModelFactory
 import com.airposted.bitoronbd.ui.home.HomeViewModelFactory
 import com.airposted.bitoronbd.ui.location_set.LocationSetViewModelFactory
 import com.airposted.bitoronbd.ui.more.MoreViewModelFactory
@@ -32,13 +31,11 @@ class Application : Application(), KodeinAware {
         bind() from singleton { HomeRepository(instance(), MyApi(instance())) }
         bind() from singleton { MoreRepository(instance(), MyApi(instance())) }
         bind() from singleton { OrderListRepository(instance(), MyApi(instance())) }
-        bind() from singleton { OrderHistoryListRepository(instance(), MyApi(instance())) }
         bind() from singleton { LocationSetRepository(instance(), MyApi(instance())) }
         bind() from provider { AuthViewModelFactory(instance()) }
         bind() from provider { HomeViewModelFactory(instance()) }
         bind() from provider { LocationSetViewModelFactory(instance()) }
         bind() from provider { MyParcelViewModelFactory(instance()) }
-        bind() from provider { MyParcelHistoryViewModelFactory(instance()) }
         bind() from provider { MoreViewModelFactory(instance()) }
 
 
