@@ -21,6 +21,7 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.RecyclerView
 import com.aapbd.appbajarlib.storage.PersistentUser
 import com.airposted.bitoronbd.BuildConfig
 import com.airposted.bitoronbd.R
@@ -67,15 +68,12 @@ open class HomeFragment : Fragment(R.layout.fragment_home),
     private lateinit var viewModel: HomeViewModel
     var myCommunicator: CommunicatorFragmentInterface? = null
     private lateinit var mMap: GoogleMap
-
     private val UPDATE_INTERVAL_IN_MILLISECONDS: Long = 10000
-
     private val FASTEST_UPDATE_INTERVAL_IN_MILLISECONDS: Long = 5000
-
     private val REQUEST_CHECK_SETTINGS = 0x1
     private lateinit var googleApiClient: GoogleApiClient
     private lateinit var locationDetailsImp: LocationDetailsWithName
-
+    private lateinit var dialogs: Dialog
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -374,21 +372,33 @@ open class HomeFragment : Fragment(R.layout.fragment_home),
             }
             R.id.terms_condition -> {
                 homeBinding.drawerLayout.closeDrawers()
-//                val fragment = WebViewFragment()
-//                val bundle = Bundle()
-//                bundle.putString("url", "https://airposted.com/page/terms-of-service#:~:text=Airposted%20Referral%20Program%20Terms%20and%20Conditions%2A%20Airposted%20Referral,it%20as%20a%20traveler%20or%20shopper%20or%20buyer.")
-//                fragment.arguments = bundle
                 myCommunicator?.addContentFragment(TermsConditionsFragment(), true)
             }
             R.id.sign_out -> {
                 homeBinding.drawerLayout.closeDrawers()
-                PersistentUser.getInstance().logOut(context)
-                val intent = Intent(requireContext(), SignInSignUpActivity::class.java)
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
-                startActivity(intent)
+                dialogs = Dialog(requireActivity())
+                dialogs.requestWindowFeature(Window.FEATURE_NO_TITLE)
+                dialogs.setContentView(R.layout.sign_out_dialog)
+                dialogs.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+                dialogs.window?.setLayout(
+                    ViewGroup.LayoutParams.WRAP_CONTENT,  //w
+                    ViewGroup.LayoutParams.MATCH_PARENT //h
+                )
+                val cancel = dialogs.findViewById<TextView>(R.id.cancel)
+                val ok = dialogs.findViewById<TextView>(R.id.ok)
+                cancel.setOnClickListener {
+                    dialogs.dismiss()
+                }
+                ok.setOnClickListener {
+                    PersistentUser.getInstance().logOut(context)
+                    val intent = Intent(requireContext(), SignInSignUpActivity::class.java)
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                    startActivity(intent)
+                }
+                dialogs.setCancelable(false)
+                dialogs.show()
             }
         }
-
         return true
     }
 }
