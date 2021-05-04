@@ -56,7 +56,7 @@ interface MyApi {
         @Body setParcel: SetParcel
     ): Response<SetParcelResponse>
 
-    @POST("personal/currentorderlistquick")
+    @POST("personal/currentorderlistinstant")
     suspend fun currentOrderListQuick(
         @Header("Authorization") header: String
     ) : Response<OrderList>
@@ -66,12 +66,12 @@ interface MyApi {
         @Header("Authorization") header: String
     ) : Response<OrderList>
 
-    @POST("personal/historyorderlistexpress")
+    @POST("personal/completeorderlistexpress")
     suspend fun historyOrderListExpress(
         @Header("Authorization") header: String
     ) : Response<OrderList>
 
-    @POST("personal/historyorderlistquick")
+    @POST("personal/completeorderlistinstant")
     suspend fun historyOrderListQuick(
         @Header("Authorization") header: String
     ) : Response<OrderList>

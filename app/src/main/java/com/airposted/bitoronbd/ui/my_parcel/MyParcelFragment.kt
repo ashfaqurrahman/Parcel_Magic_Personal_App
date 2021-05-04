@@ -5,13 +5,9 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.text.Editable
-import android.text.Selection
 import android.text.TextWatcher
-import android.util.Log
 import android.util.MalformedJsonException
 import android.view.*
-import android.view.View.OnFocusChangeListener
-import androidx.annotation.Nullable
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
@@ -126,7 +122,8 @@ class MyParcelFragment : Fragment(), KodeinAware, CursorWheelLayout.OnMenuSelect
                         binding.noOrder.visibility = View.VISIBLE
                     } else {
                         val myRecyclerViewAdapter = OrderListRecyclerViewAdapter(
-                            listNew
+                            listNew,
+                            requireActivity()
                         )
                         binding.orders.adapter = myRecyclerViewAdapter
                     }
@@ -134,7 +131,8 @@ class MyParcelFragment : Fragment(), KodeinAware, CursorWheelLayout.OnMenuSelect
                     binding.orders.visibility = View.VISIBLE
                     binding.noOrder.visibility = View.GONE
                     val myRecyclerViewAdapter = OrderListRecyclerViewAdapter(
-                        invoice
+                        invoice,
+                        requireActivity()
                     )
                     binding.orders.adapter = myRecyclerViewAdapter
                 }
@@ -166,7 +164,8 @@ class MyParcelFragment : Fragment(), KodeinAware, CursorWheelLayout.OnMenuSelect
                     binding.orders.visibility = View.VISIBLE
                     binding.noOrder.visibility = View.GONE
                     val myRecyclerViewAdapter = OrderListRecyclerViewAdapter(
-                        response.data
+                        response.data,
+                        requireActivity()
                     )
                     binding.orders.layoutManager = GridLayoutManager(
                         requireActivity(),

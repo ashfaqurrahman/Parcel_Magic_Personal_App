@@ -264,11 +264,11 @@
 
             </RelativeLayout>-->
 
-            <View
+            <!--<View
                 android:layout_width="match_parent"
                 android:layout_height="0.7dp"
                 android:layout_marginTop="15.5dp"
-                android:background="#d6d6d6"/>
+                android:background="#d6d6d6"/>-->
 
         </LinearLayout>
 

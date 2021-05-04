@@ -5,8 +5,8 @@ import com.aapbd.appbajarlib.storage.PersistentUser
 import com.airposted.bitoronbd.data.network.MyApi
 import com.airposted.bitoronbd.data.network.SafeApiRequest
 import com.airposted.bitoronbd.model.SetParcel
-import com.airposted.bitoronbd.data.network.responses.SetParcelResponse
 import com.airposted.bitoronbd.model.OrderList
+import com.airposted.bitoronbd.data.network.responses.SetParcelResponse
 
 class OrderListRepository(context: Context, private val api: MyApi) : SafeApiRequest() {
     private val appContext = context.applicationContext

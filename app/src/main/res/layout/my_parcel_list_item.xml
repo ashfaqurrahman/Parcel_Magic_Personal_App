@@ -28,11 +28,16 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <ImageView
+            <fragment
+                android:id="@+id/mapReceiverDetails"
+                android:name="com.google.android.gms.maps.SupportMapFragment"
                 android:layout_width="match_parent"
-                android:layout_height="120dp"
-                android:scaleType="centerCrop"
-                android:src="@drawable/map_bg" />
+                android:layout_height="120dp"/>
+
+            <!--<com.google.android.gms.maps.MapView
+                android:id="@+id/mapView"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"/>-->
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -48,7 +53,7 @@
                     android:drawablePadding="10dp"
                     android:fontFamily="@font/poppins_medium"
                     android:lineSpacingExtra="8sp"
-                    android:text="Quick Delivery"
+                    android:text="@{order.personal_order_type + ` Delivery`}"
                     android:textColor="#1a1662"
                     android:textSize="15sp"
                     android:textStyle="normal"
@@ -98,7 +103,7 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:weightSum="3">
+                            android:weightSum="4">
 
                             <RelativeLayout
                                 android:layout_width="0dp"
@@ -107,35 +112,7 @@
                                 android:gravity="center">
 
                                 <ImageView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:background="@drawable/status_circle_solid_white"
-                                    android:padding="6dp"
-                                    android:src="@drawable/ic_status_icon" />
-
-                                <ImageView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:background="@drawable/circle_solid_green"
-                                    android:padding="6dp"
-                                    android:src="@drawable/ic_status_icon" />
-
-                            </RelativeLayout>
-
-                            <RelativeLayout
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:gravity="center">
-
-                                <ImageView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:background="@drawable/status_circle_solid_white"
-                                    android:padding="6dp"
-                                    android:src="@drawable/ic_status_icon" />
-
-                                <ImageView
+                                    android:id="@+id/img_pending"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:alpha="0.3"
@@ -152,13 +129,41 @@
                                 android:gravity="center">
 
                                 <ImageView
+                                    android:id="@+id/img_accept"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:background="@drawable/status_circle_solid_white"
+                                    android:alpha="0.3"
+                                    android:background="@drawable/circle_solid_green"
                                     android:padding="6dp"
                                     android:src="@drawable/ic_status_icon" />
 
+                            </RelativeLayout>
+
+                            <RelativeLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="center">
+
                                 <ImageView
+                                    android:id="@+id/img_collected"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:alpha="0.3"
+                                    android:background="@drawable/circle_solid_green"
+                                    android:padding="6dp"
+                                    android:src="@drawable/ic_status_icon" />
+
+                            </RelativeLayout>
+
+                            <RelativeLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:gravity="center">
+
+                                <ImageView
+                                    android:id="@+id/img_delivered"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:alpha="0.3"
@@ -177,34 +182,52 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/status_layout"
                         android:layout_marginTop="10dp"
-                        android:weightSum="3">
+                        android:weightSum="4">
 
                         <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:fontFamily="@font/poppins_medium"
-                            android:lineSpacingExtra="7sp"
-                            android:text="Pending"
-                            android:textAlignment="center"
-                            android:textColor="#111329"
-                            android:textSize="13sp"
-                            android:textStyle="normal" />
-
-                        <TextView
+                            android:id="@+id/tv_pending"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:alpha="0.3"
                             android:fontFamily="@font/poppins_medium"
                             android:lineSpacingExtra="7sp"
-                            android:text="On the way"
+                            android:text="Pending"
                             android:textAlignment="center"
                             android:textColor="#111329"
-                            android:textSize="13sp"
+                            android:textSize="12sp"
                             android:textStyle="normal" />
 
                         <TextView
+                            android:id="@+id/tv_accept"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:alpha="0.3"
+                            android:fontFamily="@font/poppins_medium"
+                            android:lineSpacingExtra="7sp"
+                            android:text="Accepted"
+                            android:textAlignment="center"
+                            android:textColor="#111329"
+                            android:textSize="12sp"
+                            android:textStyle="normal" />
+
+                        <TextView
+                            android:id="@+id/tv_collected"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:alpha="0.3"
+                            android:fontFamily="@font/poppins_medium"
+                            android:lineSpacingExtra="7sp"
+                            android:text="Collected"
+                            android:textAlignment="center"
+                            android:textColor="#111329"
+                            android:textSize="12sp"
+                            android:textStyle="normal" />
+
+                        <TextView
+                            android:id="@+id/tv_delivered"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
@@ -214,7 +237,7 @@
                             android:text="Delivered"
                             android:textAlignment="center"
                             android:textColor="#111329"
-                            android:textSize="13sp"
+                            android:textSize="12sp"
                             android:textStyle="normal" />
 
                     </LinearLayout>

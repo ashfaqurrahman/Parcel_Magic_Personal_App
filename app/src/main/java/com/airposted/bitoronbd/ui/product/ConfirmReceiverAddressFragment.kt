@@ -108,12 +108,9 @@ class ConfirmReceiverAddressFragment : Fragment(), KodeinAware, SSLCTransactionR
                 requireArguments().getDouble("receiver_longitude")
             )
 
-            Log.e("LLLLL", location1.latitude.toString() + " " + location1.longitude + " " + location2.latitude + " " + location2.longitude)
-
             lifecycleScope.launch {
                 try {
                     val url = getDirectionURL(location1, location2)
-                    Log.e("vvvvv", url)
                     val list = viewModel.getDirections(url)
                     val result =  ArrayList<List<LatLng>>()
                     val path =  ArrayList<LatLng>()
