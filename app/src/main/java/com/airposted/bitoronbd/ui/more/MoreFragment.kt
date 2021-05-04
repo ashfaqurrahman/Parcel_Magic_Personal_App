@@ -14,6 +14,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import androidx.annotation.RequiresApi
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
@@ -81,22 +83,31 @@ class MoreFragment : Fragment(), KodeinAware {
             moreBinding.profileName.text = it
         })
 
+        if (moreBinding.profileName.text.toString().isEmpty()) {
+            moreBinding.profileName.text = "No Name"
+        }
+
         moreBinding.phone.text = PersistentUser.getInstance().getPhoneNumber(requireActivity())
 
-        moreBinding.editName.setOnClickListener  {
-            if (!edit){
-                moreBinding.editProfileName.setText(PersistentUser.getInstance().getFullName(requireActivity()))
+        moreBinding.editName.setOnClickListener {
+            if (!edit) {
+                moreBinding.editProfileName.setText(
+                    PersistentUser.getInstance().getFullName(requireActivity())
+                )
                 moreBinding.profileName.visibility = View.GONE
                 moreBinding.editProfileName.visibility = View.VISIBLE
                 moreBinding.editProfileName.requestFocus()
-                val imm = requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                val imm =
+                    requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
                 imm.showSoftInput(moreBinding.editProfileName, InputMethodManager.SHOW_IMPLICIT)
                 moreBinding.editName.setImageResource(R.drawable.ic_done)
                 edit = true
             } else {
 
                 hideKeyboard(requireActivity())
-                if (moreBinding.editProfileName.text.toString() != "" && moreBinding.editProfileName.text.toString() != PersistentUser.getInstance().getFullName(requireActivity())){
+                if (moreBinding.editProfileName.text.toString() != "" && moreBinding.editProfileName.text.toString() != PersistentUser.getInstance()
+                        .getFullName(requireActivity())
+                ) {
                     setProgressDialog(requireActivity())
                     lifecycleScope.launch {
                         try {
@@ -106,6 +117,12 @@ class MoreFragment : Fragment(), KodeinAware {
                                 ), moreBinding.editProfileName.text.toString()
                             )
                             dismissDialog()
+                            moreBinding.profileName.text =
+                                moreBinding.editProfileName.text.toString()
+                            PersistentUser.getInstance().setFullname(
+                                requireContext(),
+                                moreBinding.editProfileName.text.toString()
+                            )
                             moreBinding.profileName.visibility = View.VISIBLE
                             moreBinding.editProfileName.visibility = View.GONE
                             moreBinding.editName.setImageResource(R.drawable.ic_edit)
@@ -133,25 +150,45 @@ class MoreFragment : Fragment(), KodeinAware {
                 }
             }
         }
+
+        moreBinding.imageUpload.setOnClickListener {
+            uploadImage()
+        }
     }
 
-    @RequiresApi(Build.VERSION_CODES.M)
+    private fun uploadImage() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (ContextCompat.checkSelfPermission(
+                    requireActivity(),
+                    Manifest.permission.READ_EXTERNAL_STORAGE
+                ) !=
+                PackageManager.PERMISSION_GRANTED
+            ) {
+                ActivityCompat.requestPermissions(
+                    requireActivity(),
+                    arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
+                    1
+                )
+            } else {
+                imagePick()
+            }
+        } else {
+            imagePick()
+        }
+    }
+
+    private fun imagePick() {
+        CropImage.activity()
+            .setGuidelines(CropImageView.Guidelines.ON)
+            .setAspectRatio(1, 1)
+            .start(requireContext(), this)
+    }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == CropImage.PICK_IMAGE_CHOOSER_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
-            val imageUri = CropImage.getPickImageResultUri(requireActivity(), data)
-            if (CropImage.isReadExternalStoragePermissionsRequired(requireActivity(), imageUri)) {
-                cropImageUri = imageUri
-                requestPermissions(arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE), 0)
-            } else {
-                startCropImageActivity(imageUri)
-            }
-        }
-
         if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
             val result = CropImage.getActivityResult(data)
             if (resultCode == Activity.RESULT_OK) {
-                moreBinding.profileImage.setImageURI(result.uri)
                 cropImageUri = result.uri
                 setProgressDialog(requireActivity())
                 lifecycleScope.launch {
@@ -176,11 +213,14 @@ class MoreFragment : Fragment(), KodeinAware {
                                 requireActivity()
                             ), part, photoName
                         )
-                        if (response.success){
+                        if (response.success) {
                             PersistentUser.getInstance().setUserImage(
                                 requireActivity(),
                                 response.user?.image
                             )
+                            moreBinding.profileImage.setImageURI(cropImageUri)
+                            PersistentUser.getInstance()
+                                .setUserImage(requireContext(), cropImageUri!!.path.toString())
                             dismissDialog()
                             moreBinding.rootLayout.snackbar(response.msg)
                         } else {
@@ -201,28 +241,9 @@ class MoreFragment : Fragment(), KodeinAware {
                     }
                 }
             } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
-                requireActivity().toast("Cropping failed: " + result.error)
+                val error = result.error
+                moreBinding.main.snackbar(error.toString())
             }
         }
-    }
-
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<String>,
-        grantResults: IntArray
-    ) {
-        if (cropImageUri != null && grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-            startCropImageActivity(cropImageUri!!)
-        } else {
-            requireActivity().toast("Cancelling, required permissions are not granted")
-        }
-    }
-
-    private fun startCropImageActivity(imageUri: Uri?) {
-        CropImage.activity(imageUri)
-            .setGuidelines(CropImageView.Guidelines.ON)
-            .setMultiTouchEnabled(true)
-            .setAspectRatio(1, 1)
-            .start(requireContext(), this)
     }
 }

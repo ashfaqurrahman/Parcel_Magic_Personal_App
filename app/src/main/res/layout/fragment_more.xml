@@ -88,28 +88,25 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/poppins_regular"
-                    android:text="Badol Mondal"
+                    tools:text="Badol Mondal"
                     android:textColor="@color/text_color"
                     android:textSize="18sp"
                     android:textStyle="normal"
-                    android:visibility="visible"
-                    android:paddingEnd="20dp"/>
+                    android:visibility="visible"/>
 
                 <EditText
                     android:id="@+id/edit_profile_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:hint="@string/enter_your_name"
+                    android:hint="@string/your_name"
                     android:textColor="@color/text_color"
                     android:fontFamily="@font/poppins_regular"
                     android:textSize="18sp"
                     android:visibility="gone"
                     android:textColorHint="#808080"
                     android:textCursorDrawable="@null"
-                    android:layout_marginBottom="-10dp"
                     android:layout_marginTop="-10dp"
-                    android:layout_marginStart="-4dp"
-                    android:layout_marginEnd="-30dp"/>
+                    android:layout_marginStart="-4dp"/>
 
                 <ImageView
                     android:id="@+id/edit_name"
@@ -117,7 +114,6 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
                     android:padding="2dp"
-                    android:layout_marginBottom="5dp"
                     android:src="@drawable/ic_edit" />
 
             </LinearLayout>
