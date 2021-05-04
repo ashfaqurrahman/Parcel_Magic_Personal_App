@@ -172,7 +172,7 @@ class ConfirmReceiverAddressFragment : Fragment(), KodeinAware, SSLCTransactionR
                         }
                     })
 
-                    val circleDrawable1 = resources.getDrawable(R.drawable.ic_map)
+                    val circleDrawable1 = resources.getDrawable(R.drawable.ic_map__1___1_)
                     val markerIcon1 = getMarkerIconFromDrawable(circleDrawable1)
                     googleMap.addMarker(
                         MarkerOptions().position(location2)
