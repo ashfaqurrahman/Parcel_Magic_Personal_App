@@ -103,6 +103,9 @@ class ConfirmReceiverAddressFragment : Fragment(), KodeinAware, SSLCTransactionR
                 requireArguments().getDouble("sender_longitude")
             )
 
+            Log.e("SSSS", requireArguments().getDouble("sender_latitude").toString() + " " + requireArguments().getDouble("sender_longitude"))
+            Log.e("RRRR", requireArguments().getDouble("receiver_latitude").toString() + " " + requireArguments().getDouble("receiver_longitude"))
+
             val location2 = LatLng(
                 requireArguments().getDouble("receiver_latitude"),
                 requireArguments().getDouble("receiver_longitude")

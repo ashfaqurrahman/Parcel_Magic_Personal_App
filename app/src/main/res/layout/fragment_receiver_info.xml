@@ -85,7 +85,7 @@
                         android:background="@null"
                         android:fontFamily="@font/poppins_regular"
                         android:hint="@string/enter_your_name"
-                        android:inputType="text"
+                        android:inputType="textCapWords"
                         android:maxLines="1"
                         android:padding="20dp"
                         android:textColor="#000"
