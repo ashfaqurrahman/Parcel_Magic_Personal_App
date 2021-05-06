@@ -461,7 +461,7 @@ class ConfirmReceiverAddressFragment : Fragment(), KodeinAware, SSLCTransactionR
     }
 
     private fun getDirectionURL(origin: LatLng, dest: LatLng) : String{
-        return "https://maps.googleapis.com/maps/api/directions/json?origin=${origin.latitude},${origin.longitude}&destination=${dest.latitude},${dest.longitude}&key=AIzaSyB8gzYgvsy-1TufBYLYaD58EYDTWUZBWZQ&sensor=false&mode=driving"
+        return "https://maps.googleapis.com/maps/api/directions/json?origin=${origin.latitude},${origin.longitude}&destination=${dest.latitude},${dest.longitude}&key=AIzaSyAJnceVASls_tIv4MiZFkzY1ZrVgu6GmW4&sensor=false&mode=driving"
     }
 
     private fun decodePolyline(encoded: String): List<LatLng> {
