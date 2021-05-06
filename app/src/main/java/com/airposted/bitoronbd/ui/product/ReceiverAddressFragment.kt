@@ -215,7 +215,7 @@ class ReceiverAddressFragment : Fragment(), KodeinAware, CustomClickListener {
                     val sb =
                         StringBuilder("https://maps.googleapis.com/maps/api/place/autocomplete/json?")
                     sb.append("input=$location")
-                    sb.append("&key=AIzaSyB8gzYgvsy-1TufBYLYaD58EYDTWUZBWZQ")
+                    sb.append("&key=AIzaSyAJnceVASls_tIv4MiZFkzY1ZrVgu6GmW4")
                     sb.append("&components=country:bd")
                     list = viewModel.getLocations(sb.toString())
                     binding.loadingFrom.visibility = View.GONE
@@ -283,7 +283,7 @@ class ReceiverAddressFragment : Fragment(), KodeinAware, CustomClickListener {
                     val sb =
                         StringBuilder("https://maps.googleapis.com/maps/api/place/autocomplete/json?")
                     sb.append("input=$location")
-                    sb.append("&key=AIzaSyB8gzYgvsy-1TufBYLYaD58EYDTWUZBWZQ")
+                    sb.append("&key=AIzaSyAJnceVASls_tIv4MiZFkzY1ZrVgu6GmW4")
                     sb.append("&components=country:bd")
                     list = viewModel.getLocations(sb.toString())
                     binding.loadingTo.visibility = View.GONE
