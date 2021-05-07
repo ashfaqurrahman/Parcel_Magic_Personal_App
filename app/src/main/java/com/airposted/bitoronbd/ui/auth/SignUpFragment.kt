@@ -53,22 +53,23 @@ class SignUpFragment : Fragment() {
         binding.next.setOnClickListener {
             hideKeyboard(requireActivity())
             val name = binding.name.text.toString()
-            if (mCropImageUri != null) {
-                if (name.isNotEmpty()) {
-                    val fragment = OTPFragment()
-                    val bundle = Bundle()
-                    bundle.putString("imageUri", mCropImageUri?.path)
-                    bundle.putString("phone", requireArguments().getString("phone"))
-                    bundle.putString("name", binding.name.text.toString())
-                    bundle.putBoolean("isAuth", false)
-                    fragment.arguments = bundle
-                    communicatorFragmentInterface?.addContentFragment(fragment, true)
-                } else {
-                    binding.main.snackbar("Username is required")
-                }
+            if (name.isNotEmpty()) {
+                val fragment = OTPFragment()
+                val bundle = Bundle()
+                bundle.putString("imageUri", mCropImageUri?.path)
+                bundle.putString("phone", requireArguments().getString("phone"))
+                bundle.putString("name", binding.name.text.toString())
+                bundle.putBoolean("isAuth", false)
+                fragment.arguments = bundle
+                communicatorFragmentInterface?.addContentFragment(fragment, true)
             } else {
-                binding.main.snackbar("User photo is required")
+                binding.main.snackbar("Username is required")
             }
+//            if (mCropImageUri != null) {
+//
+//            } else {
+//                binding.main.snackbar("User photo is required")
+//            }
         }
     }
 

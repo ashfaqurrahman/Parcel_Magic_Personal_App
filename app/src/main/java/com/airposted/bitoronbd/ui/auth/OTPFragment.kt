@@ -190,72 +190,76 @@ class OTPFragment : Fragment(), KodeinAware {
                             try {
                                 val signupResponse: AuthResponse?
                                 val path = requireArguments().getString("imageUri")
-                                val file = File(path!!)
-                                val compressedImage = reduceImageSize(file)
-                                if (compressedImage != null) {
-                                    val fileReqBody = RequestBody.create(
-                                        MediaType.parse("image/*"),
-                                        compressedImage
-                                    )
-                                    val part = MultipartBody.Part.createFormData(
-                                        "image",
-                                        compressedImage.name,
-                                        fileReqBody
-                                    )
-                                    val photoName = RequestBody.create(
-                                        MediaType.parse("text/plain"),
-                                        "image-type"
-                                    )
-                                    val name = RequestBody.create(
-                                        MediaType.parse("text/plain"),
-                                        requireArguments().getString("name").toString()
-                                    )
-                                    val phone = RequestBody.create(
-                                        MediaType.parse("text/plain"),
+                                if (path != null){
+                                    val file = File(path)
+                                    val compressedImage = reduceImageSize(file)
+                                    if (compressedImage != null){
+                                        val fileReqBody = RequestBody.create(
+                                            MediaType.parse("image/*"),
+                                            compressedImage
+                                        )
+                                        val part = MultipartBody.Part.createFormData(
+                                            "image",
+                                            compressedImage.name,
+                                            fileReqBody
+                                        )
+                                        val photoName = RequestBody.create(
+                                            MediaType.parse("text/plain"),
+                                            "image-type"
+                                        )
+                                        val name = RequestBody.create(
+                                            MediaType.parse("text/plain"),
+                                            requireArguments().getString("name").toString()
+                                        )
+                                        val phone = RequestBody.create(
+                                            MediaType.parse("text/plain"),
+                                            phone!!
+                                        )
+                                        signupResponse = viewModel.userSignupWithPhoto(
+                                            name,
+                                            phone,
+                                            part,
+                                            photoName
+                                        )
+                                    } else {
+                                        val fileReqBody = RequestBody.create(
+                                            MediaType.parse("image/*"),
+                                            file
+                                        )
+                                        val part = MultipartBody.Part.createFormData(
+                                            "image",
+                                            file.name,
+                                            fileReqBody
+                                        )
+                                        val photoName = RequestBody.create(
+                                            MediaType.parse("text/plain"),
+                                            "image-type"
+                                        )
+                                        val name = RequestBody.create(
+                                            MediaType.parse("text/plain"),
+                                            requireArguments().getString("name").toString()
+                                        )
+                                        val phone = RequestBody.create(
+                                            MediaType.parse("text/plain"),
+                                            phone!!
+                                        )
+                                        signupResponse = viewModel.userSignupWithPhoto(
+                                            name,
+                                            phone,
+                                            part,
+                                            photoName
+                                        )
+                                    }
+
+                                } else {
+                                    signupResponse = viewModel.userSignup(
+                                        requireArguments().getString("name").toString(),
                                         phone!!
                                     )
-                                    signupResponse = viewModel.userSignupWithPhoto(
-                                        name,
-                                        phone,
-                                        part,
-                                        photoName
-                                    )
-                                } else {
-                                    val fileReqBody = RequestBody.create(
-                                        MediaType.parse("image/*"),
-                                        file
-                                    )
-                                    val part = MultipartBody.Part.createFormData(
-                                        "image",
-                                        file.name,
-                                        fileReqBody
-                                    )
-                                    val photoName = RequestBody.create(
-                                        MediaType.parse("text/plain"),
-                                        "image-type"
-                                    )
-                                    val name = RequestBody.create(
-                                        MediaType.parse("text/plain"),
-                                        requireArguments().getString("name").toString()
-                                    )
-                                    val phone = RequestBody.create(
-                                        MediaType.parse("text/plain"),
-                                        "+880$phone"
-                                    )
-                                    signupResponse = viewModel.userSignupWithPhoto(
-                                        name,
-                                        phone,
-                                        part,
-                                        photoName
-                                    )
                                 }
-                                if (signupResponse.data != null) {
+                                if (signupResponse.success) {
                                     dismissDialog()
-                                    Toast.makeText(
-                                        requireContext(),
-                                        signupResponse.msg,
-                                        Toast.LENGTH_SHORT
-                                    ).show()
+                                    Toast.makeText(requireContext(), signupResponse.msg, Toast.LENGTH_SHORT).show()
                                     PersistentUser.getInstance().setLogin(requireContext())
                                     PersistentUser.getInstance().setAccessToken(
                                         requireContext(),
@@ -277,15 +281,12 @@ class OTPFragment : Fragment(), KodeinAware {
                                         requireContext(),
                                         signupResponse.user?.image
                                     )
-                                    if (checkPermissions()) {
-                                        val intent = Intent(requireContext(), MainActivity::class.java)
-                                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
-                                        startActivity(intent)
-                                    } else {
-                                        val intent = Intent(requireContext(), PermissionActivity::class.java)
-                                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
-                                        startActivity(intent)
-                                    }
+
+                                    val intent = Intent(requireContext(), PermissionActivity::class.java)
+                                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                                    startActivity(intent)
+                                    requireActivity().finish()
+
                                 } else {
                                     dismissDialog()
                                     binding.main.snackbar(signupResponse.msg)
