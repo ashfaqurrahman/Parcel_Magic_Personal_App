@@ -2,9 +2,12 @@ package com.airposted.bitoronbd.ui.more
 
 import android.Manifest
 import android.app.Activity
+import android.app.Dialog
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -12,8 +15,9 @@ import android.util.MalformedJsonException
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.Window
 import android.view.inputmethod.InputMethodManager
-import androidx.annotation.RequiresApi
+import android.widget.TextView
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -22,8 +26,7 @@ import androidx.lifecycle.lifecycleScope
 import com.aapbd.appbajarlib.storage.PersistentUser
 import com.airposted.bitoronbd.R
 import com.airposted.bitoronbd.databinding.FragmentMoreBinding
-import com.airposted.bitoronbd.ui.auth.SignInSignUpActivity
-import com.airposted.bitoronbd.ui.permission.PermissionActivity
+import com.airposted.bitoronbd.ui.auth.AuthActivity
 import com.airposted.bitoronbd.utils.*
 import com.bumptech.glide.Glide
 import com.theartofdev.edmodo.cropper.CropImage
@@ -73,10 +76,27 @@ class MoreFragment : Fragment(), KodeinAware {
         ).into(moreBinding.profileImage)
 
         moreBinding.singOut.setOnClickListener {
-            PersistentUser.getInstance().logOut(context)
-            val intent = Intent(requireContext(), SignInSignUpActivity::class.java)
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
-            startActivity(intent)
+            val dialogs = Dialog(requireActivity())
+            dialogs.requestWindowFeature(Window.FEATURE_NO_TITLE)
+            dialogs.setContentView(R.layout.sign_out_dialog)
+            dialogs.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+            dialogs.window?.setLayout(
+                ViewGroup.LayoutParams.WRAP_CONTENT,  //w
+                ViewGroup.LayoutParams.MATCH_PARENT //h
+            )
+            val cancel = dialogs.findViewById<TextView>(R.id.cancel)
+            val ok = dialogs.findViewById<TextView>(R.id.ok)
+            cancel.setOnClickListener {
+                dialogs.dismiss()
+            }
+            ok.setOnClickListener {
+                PersistentUser.getInstance().logOut(context)
+                val intent = Intent(requireContext(), AuthActivity::class.java)
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                startActivity(intent)
+            }
+            dialogs.setCancelable(false)
+            dialogs.show()
         }
 
         viewModel.getName.await().observe(requireActivity(), {

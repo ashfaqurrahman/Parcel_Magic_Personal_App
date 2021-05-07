@@ -9,7 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import com.aapbd.appbajarlib.storage.PersistData
 import com.aapbd.appbajarlib.storage.PersistentUser
-import com.airposted.bitoronbd.ui.auth.SignInSignUpActivity
+import com.airposted.bitoronbd.ui.auth.AuthActivity
 import com.airposted.bitoronbd.ui.main.MainActivity
 import com.airposted.bitoronbd.ui.permission.PermissionActivity
 import com.airposted.bitoronbd.utils.AppHelper
@@ -34,7 +34,7 @@ class SplashActivity : AppCompatActivity() {
                     finish()
                 }
             } else {
-                startActivity(Intent(context, SignInSignUpActivity::class.java))
+                startActivity(Intent(context, AuthActivity::class.java))
                 finish()
             }
         } else {

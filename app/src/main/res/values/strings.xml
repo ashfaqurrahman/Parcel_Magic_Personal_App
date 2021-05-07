@@ -8,7 +8,7 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="loading">Loading…</string>
-    <string name="upload_your_photo_optional">Upload your photo (optional)</string>
+    <string name="upload_your_photo_optional">Upload your photo*</string>
     <string name="personal_information">Personal Information</string>
     <string name="toolbar">ToolBar</string>
     <string name="by_useing">By using Airposted, I agree to Airposted\'s</string>
@@ -41,7 +41,7 @@
     <string name="additional_direction">Additional Direction(optional)</string>
     <string name="view_this_parcel">View This Parcel</string>
 
-    <string name="enter">Enter verification code sent to \n+880%1$s</string>
+    <string name="enter">Enter verification code sent to \n</string>
     <string name="resend_code"> Resend Code</string>
     <string name="did_not_receive_the_code">Did not receive the code?</string>
     <string name="search_location">Search Receiver Location</string>
@@ -86,4 +86,5 @@
     <string name="your_name">Your Name</string>
     <string name="cancel">Cancel</string>
     <string name="ok">Ok</string>
+    <string name="sign_in_with_mobile_number">Sign in with mobile number</string>
 </resources>

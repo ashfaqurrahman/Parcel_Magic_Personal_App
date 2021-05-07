@@ -17,7 +17,7 @@ import androidx.viewpager.widget.PagerAdapter
 import androidx.viewpager.widget.ViewPager
 import com.aapbd.appbajarlib.storage.PersistData
 import com.airposted.bitoronbd.R
-import com.airposted.bitoronbd.ui.auth.SignInSignUpActivity
+import com.airposted.bitoronbd.ui.auth.AuthActivity
 import com.airposted.bitoronbd.utils.AppHelper
 
 class IntroActivity : AppCompatActivity() {
@@ -54,9 +54,9 @@ class IntroActivity : AppCompatActivity() {
         viewPager!!.setAdapter(myViewPagerAdapter)
         viewPager!!.addOnPageChangeListener(viewPagerPageChangeListener)
         btnSkip!!.setOnClickListener {
-            startActivity(Intent(context, SignInSignUpActivity::class.java))
+            startActivity(Intent(context, AuthActivity::class.java))
             PersistData.setBooleanData(context, AppHelper.OPEN_SCREEN_LOAD, true)
-            startActivity(Intent(context, SignInSignUpActivity::class.java))
+            startActivity(Intent(context, AuthActivity::class.java))
             finish()
         }
         btnNext!!.setOnClickListener {
@@ -68,7 +68,7 @@ class IntroActivity : AppCompatActivity() {
                 viewPager!!.currentItem = current
             } else {
                 PersistData.setBooleanData(context, AppHelper.OPEN_SCREEN_LOAD, true)
-                startActivity(Intent(context, SignInSignUpActivity::class.java))
+                startActivity(Intent(context, AuthActivity::class.java))
                 finish()
             }
         }

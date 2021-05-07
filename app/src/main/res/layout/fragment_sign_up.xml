@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <LinearLayout
+        android:id="@+id/main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="#fcfcff"
+        tools:context=".ui.auth.SignUpFragment">
+
+        <include layout="@layout/custom_toolbar"
+            android:id="@+id/toolbar"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:layout_alignStart="@+id/card_view"
+                android:fontFamily="@font/poppins_regular"
+                android:textStyle="normal"
+                android:textSize="15sp"
+                android:textColor="#111329"
+                android:lineSpacingExtra="46sp"
+                android:text="@string/personal_information"
+                />
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/card_view"
+                android:layout_below="@+id/text_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="15dp"
+                app:cardCornerRadius="5dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="15dp"
+                    android:background="#ffffff"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/poppins_regular"
+                        android:textStyle="normal"
+                        android:textSize="15sp"
+                        android:textColor="#b5b7dd"
+                        android:lineSpacingExtra="46sp"
+                        android:text="@string/upload_your_photo_optional"
+                        />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <RelativeLayout
+                            android:layout_marginTop="15dp"
+                            android:layout_width="107dp"
+                            android:layout_height="107dp">
+
+                            <de.hdodenhof.circleimageview.CircleImageView
+                                android:id="@+id/profile_image"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:src="@drawable/sample_pro_pic"
+                                app:civ_border_width="2dp"
+                                app:civ_border_color="#ffffff"/>
+
+                            <androidx.appcompat.widget.AppCompatImageView
+                                android:id="@+id/image_upload"
+                                android:layout_alignParentBottom="true"
+                                android:layout_alignParentEnd="true"
+                                android:layout_centerHorizontal="true"
+                                android:layout_width="wrap_content"
+                                android:src="@drawable/ic_edit_profile"
+                                android:layout_height="wrap_content"/>
+                        </RelativeLayout>
+
+
+                    </RelativeLayout>
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <EditText
+                android:id="@+id/name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/card_view"
+                android:background="@drawable/edittext_bg"
+                android:layout_alignStart="@+id/next"
+                android:layout_alignEnd="@+id/next"
+                android:layout_marginBottom="15dp"
+                android:fontFamily="@font/poppins_regular"
+                android:inputType="textCapWords"
+                android:maxLines="1"
+                android:hint="@string/enter_your_name"
+                android:textColor="#000"
+                android:padding="20dp"
+                android:textSize="14sp"/>
+
+
+            <TextView
+                android:id="@+id/next"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/name"
+                android:fontFamily="@font/poppins_regular"
+                android:textAlignment="center"
+                android:padding="18dp"
+                android:text="@string/next"
+                android:textColor="#ffffff"
+                android:textSize="15sp"
+                android:layout_marginStart="15dp"
+                android:layout_marginEnd="15dp"
+                android:background="@drawable/before_button_bg"
+                android:gravity="center_horizontal" />
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="10dp"
+                android:src="@drawable/ic_open_screen_bg"/>
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+</layout>

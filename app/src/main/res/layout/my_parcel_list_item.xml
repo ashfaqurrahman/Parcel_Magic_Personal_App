@@ -118,6 +118,13 @@
                                 android:gravity="center">
 
                                 <ImageView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:background="@drawable/circle_solid_white2"
+                                    android:padding="6dp"
+                                    android:src="@drawable/ic_status_icon" />
+
+                                <ImageView
                                     android:id="@+id/img_pending"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
@@ -133,6 +140,13 @@
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 android:gravity="center">
+
+                                <ImageView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:background="@drawable/circle_solid_white2"
+                                    android:padding="6dp"
+                                    android:src="@drawable/ic_status_icon" />
 
                                 <ImageView
                                     android:id="@+id/img_accept"
@@ -152,6 +166,13 @@
                                 android:gravity="center">
 
                                 <ImageView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:background="@drawable/circle_solid_white2"
+                                    android:padding="6dp"
+                                    android:src="@drawable/ic_status_icon" />
+
+                                <ImageView
                                     android:id="@+id/img_collected"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
@@ -167,6 +188,13 @@
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 android:gravity="center">
+
+                                <ImageView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:background="@drawable/circle_solid_white2"
+                                    android:padding="6dp"
+                                    android:src="@drawable/ic_status_icon" />
 
                                 <ImageView
                                     android:id="@+id/img_delivered"

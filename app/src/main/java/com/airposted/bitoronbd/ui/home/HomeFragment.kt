@@ -14,23 +14,19 @@ import android.os.Bundle
 import android.util.Log
 import android.view.*
 import android.widget.*
-import androidx.activity.OnBackPressedCallback
 import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
-import androidx.recyclerview.widget.RecyclerView
 import com.aapbd.appbajarlib.storage.PersistentUser
 import com.airposted.bitoronbd.BuildConfig
 import com.airposted.bitoronbd.R
 import com.airposted.bitoronbd.data.network.preferences.PreferenceProvider
 import com.airposted.bitoronbd.databinding.FragmentHomeBinding
-import com.airposted.bitoronbd.model.LocationDetails
 import com.airposted.bitoronbd.model.LocationDetailsWithName
-import com.airposted.bitoronbd.ui.WebViewFragment
-import com.airposted.bitoronbd.ui.auth.SignInSignUpActivity
+import com.airposted.bitoronbd.ui.auth.AuthActivity
 import com.airposted.bitoronbd.ui.help.HelpFragment
 import com.airposted.bitoronbd.ui.history.MyParcelHistoryFragment
 import com.airposted.bitoronbd.ui.main.CommunicatorFragmentInterface
@@ -391,7 +387,7 @@ open class HomeFragment : Fragment(R.layout.fragment_home),
                 }
                 ok.setOnClickListener {
                     PersistentUser.getInstance().logOut(context)
-                    val intent = Intent(requireContext(), SignInSignUpActivity::class.java)
+                    val intent = Intent(requireContext(), AuthActivity::class.java)
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
                     startActivity(intent)
                 }

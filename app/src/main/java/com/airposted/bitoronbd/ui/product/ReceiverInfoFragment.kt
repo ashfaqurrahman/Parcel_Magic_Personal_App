@@ -31,11 +31,11 @@ class ReceiverInfoFragment : Fragment() {
         communicatorFragmentInterface = context as CommunicatorFragmentInterface
         binding.next.setOnClickListener {
             if(binding.receiverName.text.isNotEmpty()){
-                val phone = zeroRemove(binding.receiverPhone.text.toString())
+                val phone = binding.receiverPhone.text.toString()
                 val fragment = ReceiverAddressFragment()
                 val bundle = Bundle()
                 bundle.putString("receiver_name", binding.receiverName.text.toString())
-                bundle.putString("receiver_phone", "+880$phone")
+                bundle.putString("receiver_phone", "+8801$phone")
                 bundle.putInt("delivery_type", requireArguments().getInt("delivery_type"))
                 bundle.putInt("parcel_type", requireArguments().getInt("parcel_type"))
                 fragment.arguments = bundle
@@ -49,6 +49,6 @@ class ReceiverInfoFragment : Fragment() {
             requireActivity().onBackPressed()
         }
 
-        textWatcher(requireActivity(), 9, binding.receiverPhone, binding.next)
+        textWatcher(requireActivity(), 8, binding.receiverPhone, binding.next)
     }
 }
