@@ -12,5 +12,7 @@ class User (
     @SerializedName("active")
     val active: Int,
     @SerializedName("image")
-    val image: String
+    val image: String,
+    @SerializedName("verified")
+    val verified: Int?
 )

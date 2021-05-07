@@ -249,7 +249,7 @@ class OTPFragment : Fragment(), KodeinAware {
                                         photoName
                                     )
                                 }
-                                if (signupResponse.success) {
+                                if (signupResponse.data != null) {
                                     dismissDialog()
                                     Toast.makeText(
                                         requireContext(),

@@ -53,18 +53,27 @@ class PhoneNumberFragment : Fragment(), KodeinAware {
             lifecycleScope.launch {
                 try {
                     authResponse = viewModel.checkNumber("+8801$phone")
-                    if (authResponse?.data != null) {
-                        dismissDialog()
-                        val fragment = WelcomeFragment()
-                        val bundle = Bundle()
-                        bundle.putString("phone", authResponse!!.user?.phone)
-                        bundle.putString("token", authResponse!!.data?.token)
-                        bundle.putInt("id", authResponse!!.user!!.id)
-                        bundle.putString("image", authResponse!!.user!!.image)
-                        bundle.putString("name", authResponse!!.user!!.name)
-                        bundle.putBoolean("isAuth", true)
-                        fragment.arguments = bundle
-                        communicatorFragmentInterface?.addContentFragment(fragment, true)
+                    if (authResponse?.user != null) {
+                        if (authResponse?.user!!.verified == null) {
+                            dismissDialog()
+                            val fragment = WelcomeFragment()
+                            val bundle = Bundle()
+                            bundle.putString("phone", authResponse!!.user?.phone)
+                            bundle.putString("token", authResponse!!.data?.token)
+                            bundle.putInt("id", authResponse!!.user!!.id)
+                            bundle.putString("image", authResponse!!.user!!.image)
+                            bundle.putString("name", authResponse!!.user!!.name)
+                            bundle.putBoolean("isAuth", true)
+                            fragment.arguments = bundle
+                            communicatorFragmentInterface?.addContentFragment(fragment, true)
+                        } else {
+                            dismissDialog()
+                            val fragment = SignUpFragment()
+                            val bundle = Bundle()
+                            bundle.putString("phone", "+8801$phone")
+                            fragment.arguments = bundle
+                            communicatorFragmentInterface?.addContentFragment(fragment, true)
+                        }
                     } else {
                         dismissDialog()
                         val fragment = SignUpFragment()
