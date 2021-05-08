@@ -29,6 +29,7 @@ import com.airposted.bitoronbd.utils.*
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
+import com.google.maps.android.PolyUtil
 import kotlinx.coroutines.launch
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.x.kodein
@@ -342,94 +343,150 @@ class ReceiverAddressFragment : Fragment(), KodeinAware, CustomClickListener {
 
     override fun onItemClick(location: String) {
         setProgressDialog(requireActivity())
-        hideKeyboard(requireActivity())
-        if (from) {
-            binding.searchFrom.setQuery(location, false)
-            binding.searchFrom.clearFocus()
-            binding.recyclerview.visibility = View.GONE
-            if (binding.searchTo.query.isNotEmpty()) {
-                val fragment = ConfirmReceiverAddressFragment()
-                val bundle = Bundle()
-                val geo = Geocoder(requireActivity(), Locale.getDefault())
-                val addresses = geo.getFromLocation(
-                    getLatLngFromAddress(location)!!.latitude, getLatLngFromAddress(
-                        location
-                    )!!.longitude, 1
-                );
-                if (addresses.isNotEmpty()) {
-                    bundle.putString("city", addresses[0].locality)
-                    if (addresses[0].subLocality != null) {
-                        bundle.putString("area", addresses[0].subLocality)
-                        bundle.putString("city", addresses[0].subLocality)
+
+        val latLng = LatLng(getLatLngFromAddress(location)!!.latitude, getLatLngFromAddress(
+            location
+        )!!.longitude)
+        val points: MutableList<LatLng> = ArrayList()
+        points.add(LatLng(23.888112, 90.383920))
+        points.add(LatLng(23.834108, 90.344095))
+        points.add(LatLng(23.753687, 90.341691))
+        points.add(LatLng(23.703085, 90.375680))
+        points.add(LatLng(23.685794, 90.463228))
+        points.add(LatLng(23.717859, 90.534295))
+        points.add(LatLng(23.795789, 90.562105))
+        points.add(LatLng(23.845413, 90.519189))
+        points.add(LatLng(23.881833, 90.452585))
+
+        //val polygon: Polygon = mMap.addPolygon(PolygonOptions().addAll(points))
+        val contain = PolyUtil.containsLocation(latLng, points, true)
+
+        if (contain) {
+            hideKeyboard(requireActivity())
+            if (from) {
+                binding.searchFrom.setQuery(location, false)
+                binding.searchFrom.clearFocus()
+                binding.recyclerview.visibility = View.GONE
+                if (binding.searchTo.query.isNotEmpty()) {
+                    if (getLatLngFromAddress(binding.searchFrom.query.toString()) != null){
+                        if (getLatLngFromAddress(binding.searchTo.query.toString()) != null){
+                            val fragment = ConfirmReceiverAddressFragment()
+                            val bundle = Bundle()
+                            /*val geo = Geocoder(requireActivity(), Locale.getDefault())
+                            val addresses = geo.getFromLocation(
+                                getLatLngFromAddress(location)!!.latitude, getLatLngFromAddress(
+                                    location
+                                )!!.longitude, 1
+                            )
+                            if (addresses.isNotEmpty()) {
+                                bundle.putString("city", addresses[0].locality)
+                                if (addresses[0].subLocality != null) {
+                                    bundle.putString("area", addresses[0].subLocality)
+                                    bundle.putString("city", addresses[0].subLocality)
+                                } else {
+                                    bundle.putString("area", addresses[0].locality)
+                                    bundle.putString("city", addresses[0].locality)
+                                }
+                            }*/
+                            bundle.putString("sender_location_name", binding.searchFrom.query.toString())
+                            bundle.putString("receiver_location_name", binding.searchTo.query.toString())
+                            bundle.putDouble("sender_latitude", getLatLngFromAddress(binding.searchFrom.query.toString())!!.latitude)
+                            bundle.putDouble("sender_longitude", getLatLngFromAddress(binding.searchFrom.query.toString())!!.longitude)
+                            bundle.putDouble("receiver_latitude", getLatLngFromAddress(binding.searchTo.query.toString())!!.latitude)
+                            bundle.putDouble("receiver_longitude", getLatLngFromAddress(binding.searchTo.query.toString())!!.longitude)
+                            bundle.putInt("delivery_type", requireArguments().getInt("delivery_type"))
+                            bundle.putInt("parcel_type", requireArguments().getInt("parcel_type"))
+                            bundle.putString("receiver_name", requireArguments().getString("receiver_name"))
+                            bundle.putString("receiver_phone", requireArguments().getString("receiver_phone"))
+                            fragment.arguments = bundle
+                            dismissDialog()
+                            communicatorFragmentInterface?.addContentFragment(fragment, true)
+                        } else {
+                            val editText =
+                                binding.searchTo.findViewById(androidx.appcompat.R.id.search_src_text) as EditText
+                            editText.requestFocus()
+                            editText.showKeyboard()
+                            dismissDialog()
+                        }
                     } else {
-                        bundle.putString("area", addresses[0].locality)
-                        bundle.putString("city", addresses[0].locality)
+                        val editText =
+                            binding.searchFrom.findViewById(androidx.appcompat.R.id.search_src_text) as EditText
+                        editText.requestFocus()
+                        editText.showKeyboard()
+                        dismissDialog()
                     }
+                } else {
+                    val editText =
+                        binding.searchTo.findViewById(androidx.appcompat.R.id.search_src_text) as EditText
+                    editText.requestFocus()
+                    editText.showKeyboard()
+                    dismissDialog()
                 }
-                bundle.putString("sender_location_name", binding.searchFrom.query.toString())
-                bundle.putString("receiver_location_name", binding.searchTo.query.toString())
-                bundle.putDouble("sender_latitude", getLatLngFromAddress(binding.searchFrom.query.toString())!!.latitude)
-                bundle.putDouble("sender_longitude", getLatLngFromAddress(binding.searchFrom.query.toString())!!.longitude)
-                bundle.putDouble("receiver_latitude", getLatLngFromAddress(binding.searchTo.query.toString())!!.latitude)
-                bundle.putDouble("receiver_longitude", getLatLngFromAddress(binding.searchTo.query.toString())!!.longitude)
-                bundle.putInt("delivery_type", requireArguments().getInt("delivery_type"))
-                bundle.putInt("parcel_type", requireArguments().getInt("parcel_type"))
-                bundle.putString("receiver_name", requireArguments().getString("receiver_name"))
-                bundle.putString("receiver_phone", requireArguments().getString("receiver_phone"))
-                fragment.arguments = bundle
-                dismissDialog()
-                communicatorFragmentInterface?.addContentFragment(fragment, true)
             } else {
-                val editText =
-                    binding.searchTo.findViewById(androidx.appcompat.R.id.search_src_text) as EditText
-                editText.requestFocus()
-                editText.showKeyboard()
-                dismissDialog()
+                binding.searchTo.setQuery(location, false)
+                binding.searchTo.clearFocus()
+                binding.recyclerview.visibility = View.GONE
+
+                if (binding.searchFrom.query.isNotEmpty()) {
+
+                    if (getLatLngFromAddress(binding.searchFrom.query.toString()) != null){
+                        if (getLatLngFromAddress(binding.searchTo.query.toString()) != null){
+                            val fragment = ConfirmReceiverAddressFragment()
+                            val bundle = Bundle()
+                            /*val geo = Geocoder(requireActivity(), Locale.getDefault())
+                            val addresses = geo.getFromLocation(
+                                getLatLngFromAddress(location)!!.latitude, getLatLngFromAddress(
+                                    location
+                                )!!.longitude, 1
+                            );
+                            if (addresses.isNotEmpty()) {
+                                bundle.putString("city", addresses[0].locality)
+                                if (addresses[0].subLocality != null) {
+                                    bundle.putString("area", addresses[0].subLocality)
+                                    bundle.putString("city", addresses[0].subLocality)
+                                } else {
+                                    bundle.putString("area", addresses[0].locality)
+                                    bundle.putString("city", addresses[0].locality)
+                                }
+                            }*/
+                            bundle.putString("sender_location_name", binding.searchFrom.query.toString())
+                            bundle.putString("receiver_location_name", binding.searchTo.query.toString())
+                            bundle.putDouble("sender_latitude", getLatLngFromAddress(binding.searchFrom.query.toString())!!.latitude)
+                            bundle.putDouble("sender_longitude", getLatLngFromAddress(binding.searchFrom.query.toString())!!.longitude)
+                            bundle.putDouble("receiver_latitude", getLatLngFromAddress(binding.searchTo.query.toString())!!.latitude)
+                            bundle.putDouble("receiver_longitude", getLatLngFromAddress(binding.searchTo.query.toString())!!.longitude)
+                            bundle.putInt("delivery_type", requireArguments().getInt("delivery_type"))
+                            bundle.putInt("parcel_type", requireArguments().getInt("parcel_type"))
+                            bundle.putString("receiver_name", requireArguments().getString("receiver_name"))
+                            bundle.putString("receiver_phone", requireArguments().getString("receiver_phone"))
+                            fragment.arguments = bundle
+                            dismissDialog()
+                            communicatorFragmentInterface?.addContentFragment(fragment, true)
+                        } else {
+                            val editText =
+                                binding.searchTo.findViewById(androidx.appcompat.R.id.search_src_text) as EditText
+                            editText.requestFocus()
+                            editText.showKeyboard()
+                            dismissDialog()
+                        }
+                    } else {
+                        val editText =
+                            binding.searchFrom.findViewById(androidx.appcompat.R.id.search_src_text) as EditText
+                        editText.requestFocus()
+                        editText.showKeyboard()
+                        dismissDialog()
+                    }
+                } else {
+                    val editText =
+                        binding.searchFrom.findViewById(androidx.appcompat.R.id.search_src_text) as EditText
+                    editText.requestFocus()
+                    editText.showKeyboard()
+                    dismissDialog()
+                }
             }
         } else {
-            binding.searchTo.setQuery(location, false)
-            binding.searchTo.clearFocus()
-            binding.recyclerview.visibility = View.GONE
-
-            if (binding.searchFrom.query.isNotEmpty()) {
-                val fragment = ConfirmReceiverAddressFragment()
-                val bundle = Bundle()
-                val geo = Geocoder(requireActivity(), Locale.getDefault())
-                val addresses = geo.getFromLocation(
-                    getLatLngFromAddress(location)!!.latitude, getLatLngFromAddress(
-                        location
-                    )!!.longitude, 1
-                );
-                if (addresses.isNotEmpty()) {
-                    bundle.putString("city", addresses[0].locality)
-                    if (addresses[0].subLocality != null) {
-                        bundle.putString("area", addresses[0].subLocality)
-                        bundle.putString("city", addresses[0].subLocality)
-                    } else {
-                        bundle.putString("area", addresses[0].locality)
-                        bundle.putString("city", addresses[0].locality)
-                    }
-                }
-                bundle.putString("sender_location_name", binding.searchFrom.query.toString())
-                bundle.putString("receiver_location_name", binding.searchTo.query.toString())
-                bundle.putDouble("sender_latitude", getLatLngFromAddress(binding.searchFrom.query.toString())!!.latitude)
-                bundle.putDouble("sender_longitude", getLatLngFromAddress(binding.searchFrom.query.toString())!!.longitude)
-                bundle.putDouble("receiver_latitude", getLatLngFromAddress(binding.searchTo.query.toString())!!.latitude)
-                bundle.putDouble("receiver_longitude", getLatLngFromAddress(binding.searchTo.query.toString())!!.longitude)
-                bundle.putInt("delivery_type", requireArguments().getInt("delivery_type"))
-                bundle.putInt("parcel_type", requireArguments().getInt("parcel_type"))
-                bundle.putString("receiver_name", requireArguments().getString("receiver_name"))
-                bundle.putString("receiver_phone", requireArguments().getString("receiver_phone"))
-                fragment.arguments = bundle
-                dismissDialog()
-                communicatorFragmentInterface?.addContentFragment(fragment, true)
-            } else {
-                val editText =
-                    binding.searchFrom.findViewById(androidx.appcompat.R.id.search_src_text) as EditText
-                editText.requestFocus()
-                editText.showKeyboard()
-                dismissDialog()
-            }
+            dismissDialog()
+            binding.rootLayout.snackbar("Sorry!! We are currently not providing our service to this area")
         }
     }
 

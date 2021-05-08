@@ -103,9 +103,6 @@ class ConfirmReceiverAddressFragment : Fragment(), KodeinAware, SSLCTransactionR
                 requireArguments().getDouble("sender_longitude")
             )
 
-            Log.e("SSSS", requireArguments().getDouble("sender_latitude").toString() + " " + requireArguments().getDouble("sender_longitude"))
-            Log.e("RRRR", requireArguments().getDouble("receiver_latitude").toString() + " " + requireArguments().getDouble("receiver_longitude"))
-
             val location2 = LatLng(
                 requireArguments().getDouble("receiver_latitude"),
                 requireArguments().getDouble("receiver_longitude")
@@ -424,7 +421,7 @@ class ConfirmReceiverAddressFragment : Fragment(), KodeinAware, SSLCTransactionR
 
         proceed.setOnClickListener {
             dialogs.dismiss()
-            requireActivity().supportFragmentManager.popBackStack(ReceiverInfoFragment::class.java.name, FragmentManager.POP_BACK_STACK_INCLUSIVE)
+            requireActivity().supportFragmentManager.popBackStack(ParcelTypeFragment::class.java.name, FragmentManager.POP_BACK_STACK_INCLUSIVE)
             myCommunicator?.addContentFragment(MyParcelFragment(), true)
 
         }
