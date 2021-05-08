@@ -311,11 +311,6 @@ open class HomeFragment : Fragment(R.layout.fragment_home),
             if (it) {
                 viewModel.currentLocation.observe(viewLifecycleOwner, { locationDetailsWithName ->
                     locationDetailsImp = locationDetailsWithName
-                    Toast.makeText(
-                        requireActivity(),
-                        locationDetailsWithName.locationName,
-                        Toast.LENGTH_LONG
-                    ).show()
 
                     val cameraPosition =
                         CameraPosition.Builder()
