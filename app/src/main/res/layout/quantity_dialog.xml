@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    style="@style/df_dialog_layout"
+    android:id="@+id/dialogParent">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="20dp"
+        android:elevation="10dp"
+        app:cardBackgroundColor="@color/white"
+        android:layout_centerHorizontal="true">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="20dp"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
+            android:layout_marginBottom="20dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="50dp"
+                android:layout_marginEnd="50dp"
+                android:layout_gravity="center"
+                android:textColor="@color/text_color"
+                android:textStyle="bold"
+                android:textSize="24sp"
+                android:text="Parcel Quantity"/>
+
+            <com.skydoves.powerspinner.PowerSpinnerView
+                android:id="@+id/quantity_spinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/quantity_bg"
+                android:gravity="start"
+                android:hint="01"
+                android:layout_marginTop="21dp"
+                android:paddingStart="15dp"
+                android:paddingTop="15dp"
+                android:paddingEnd="15dp"
+                android:paddingBottom="10dp"
+                android:textSize="14.5sp"
+                app:spinner_arrow_gravity="end"
+                app:spinner_arrow_padding="2dp"
+                app:spinner_arrow_show="true"
+                android:textColor="@color/text_color"
+                app:spinner_arrow_tint="@color/text_color"
+                app:spinner_divider_color="#e5e5e5"
+                app:spinner_divider_show="true"
+                app:spinner_divider_size="0.3dp"
+                app:spinner_item_array="@array/parcel_quantity"
+                app:spinner_popup_animation="dropdown"
+                app:spinner_popup_background="@color/white"
+                android:textColorHint="@color/text_color"
+                app:spinner_popup_elevation="14dp" />
+
+            <TextView
+                android:id="@+id/done"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:text="@string/done"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="@color/white"
+                android:paddingStart="20dp"
+                android:paddingEnd="20dp"
+                android:paddingTop="15dp"
+                android:paddingBottom="15dp"
+                android:background="@drawable/button_bg3"/>
+
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+</RelativeLayout>

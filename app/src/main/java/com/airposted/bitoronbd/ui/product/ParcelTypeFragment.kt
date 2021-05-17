@@ -1,15 +1,25 @@
 package com.airposted.bitoronbd.ui.product
 
+import android.app.Dialog
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.Window
+import android.widget.TextView
+import android.widget.Toast
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.FragmentManager
 import com.airposted.bitoronbd.R
 import com.airposted.bitoronbd.databinding.FragmentParcelTypeBinding
 import com.airposted.bitoronbd.ui.main.CommunicatorFragmentInterface
+import com.airposted.bitoronbd.ui.my_parcel.MyParcelFragment
+import com.skydoves.powerspinner.OnSpinnerItemSelectedListener
+import com.skydoves.powerspinner.PowerSpinnerView
 
 class ParcelTypeFragment : Fragment() {
     private lateinit var binding: FragmentParcelTypeBinding
@@ -44,55 +54,50 @@ class ParcelTypeFragment : Fragment() {
             }
         }
 
-
-        binding.fragileBtn.setOnClickListener {
-            val fragment = ReceiverInfoFragment()
-            val bundle = Bundle()
-            bundle.putInt("parcel_type", 1)
-            bundle.putInt("delivery_type", requireArguments().getInt("delivery_type"))
-            fragment.arguments = bundle
-            communicatorFragmentInterface?.addContentFragment(fragment, true)
+        binding.smallBtn.setOnClickListener {
+            showQuantityDialog(1)
         }
 
-        binding.liquidBtn.setOnClickListener {
-            val fragment = ReceiverInfoFragment()
-            val bundle = Bundle()
-            bundle.putInt("parcel_type", 2)
-            bundle.putInt("delivery_type", requireArguments().getInt("delivery_type"))
-            fragment.arguments = bundle
-            communicatorFragmentInterface?.addContentFragment(fragment, true)
+        binding.largeBtn.setOnClickListener {
+            showQuantityDialog(2)
         }
 
-        binding.solidBtn.setOnClickListener {
-            val fragment = ReceiverInfoFragment()
-            val bundle = Bundle()
-            bundle.putInt("parcel_type", 3)
-            bundle.putInt("delivery_type", requireArguments().getInt("delivery_type"))
-            fragment.arguments = bundle
-            communicatorFragmentInterface?.addContentFragment(fragment, true)
+        binding.envelopeBtn.setOnClickListener {
+            showQuantityDialog(3)
         }
+    }
 
-        binding.docsBtn.setOnClickListener {
-            val fragment = ReceiverInfoFragment()
-            val bundle = Bundle()
-            bundle.putInt("parcel_type", 4)
-            bundle.putInt("delivery_type", requireArguments().getInt("delivery_type"))
-            fragment.arguments = bundle
-            communicatorFragmentInterface?.addContentFragment(fragment, true)
-        }
-
-        val gradientDrawable = GradientDrawable(
-            GradientDrawable.Orientation.TOP_BOTTOM, intArrayOf(
-                ContextCompat.getColor(requireActivity(), R.color.color1),
-                ContextCompat.getColor(requireActivity(), R.color.color2),
-                ContextCompat.getColor(requireActivity(), R.color.color3),
-                ContextCompat.getColor(requireActivity(), R.color.color4)
-            )
+    private fun showQuantityDialog(i: Int) {
+        val dialogs = Dialog(requireActivity())
+        dialogs.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialogs.setContentView(R.layout.quantity_dialog)
+        dialogs.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialogs.window?.setLayout(
+            ViewGroup.LayoutParams.WRAP_CONTENT,  //w
+            ViewGroup.LayoutParams.MATCH_PARENT //h
         )
-
-        binding.fragileBtn.background = gradientDrawable
-        binding.liquidBtn.background = gradientDrawable
-        binding.docsBtn.background = gradientDrawable
-        binding.solidBtn.background = gradientDrawable
+        val done = dialogs.findViewById<TextView>(R.id.done)
+        val quantitySpinner = dialogs.findViewById<PowerSpinnerView>(R.id.quantity_spinner)
+        var quantity = 1
+        quantitySpinner.setOnSpinnerItemSelectedListener(OnSpinnerItemSelectedListener<String> { oldIndex, oldItem, newIndex, newItem ->
+            run {
+                if (oldIndex != newIndex) {
+                    Toast.makeText(requireContext(), newItem, Toast.LENGTH_SHORT).show()
+                    quantity = newIndex + 1
+                }
+            }
+        })
+        done.setOnClickListener {
+            dialogs.dismiss()
+            val fragment = ReceiverInfoFragment()
+            val bundle = Bundle()
+            bundle.putInt("parcel_type", i)
+            bundle.putInt("parcel_quantity", quantity)
+            bundle.putInt("delivery_type", requireArguments().getInt("delivery_type"))
+            fragment.arguments = bundle
+            communicatorFragmentInterface?.addContentFragment(fragment, true)
+        }
+        dialogs.setCancelable(true)
+        dialogs.show()
     }
 }

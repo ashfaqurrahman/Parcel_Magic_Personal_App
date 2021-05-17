@@ -111,44 +111,64 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp"
-                    android:weightSum="2"
+                    android:layout_marginTop="18dp"
+                    android:weightSum="3"
                     android:orientation="horizontal">
 
                     <com.google.android.material.card.MaterialCardView
                         android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_marginEnd="10dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="13dp"
                         android:layout_marginStart="5dp"
                         android:layout_marginTop="5dp"
                         android:layout_marginBottom="5dp"
                         android:layout_weight="1"
+                        app:cardBackgroundColor="#f2f2f2"
                         app:cardCornerRadius="15dp">
 
                         <LinearLayout
-                            android:id="@+id/fragile_btn"
+                            android:id="@+id/small_btn"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:gravity="center"
-                            android:padding="37dp"
+                            android:paddingTop="26dp"
+                            android:paddingBottom="26dp"
                             android:orientation="vertical">
-
-                            <ImageView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:src="@drawable/ic_fragile"/>
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="7dp"
-                                android:layout_marginBottom="12dp"
                                 android:fontFamily="@font/poppins_medium"
                                 android:textStyle="normal"
                                 android:textSize="14sp"
                                 android:textColor="#1a1a1a"
-                                android:text="Fragile"
+                                android:lineSpacingExtra="7sp"
+                                android:gravity="center_horizontal"
+                                android:text="Small Box"
+                                />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="5dp"
+                                android:fontFamily="@font/poppins_regular"
+                                android:textStyle="normal"
+                                android:textSize="12sp"
+                                android:textColor="#5a5a5a"
+                                android:lineSpacingExtra="30sp"
+                                android:text="Size: 1-3 Kg"
+                                />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/poppins_regular"
+                                android:textStyle="normal"
+                                android:textSize="12sp"
+                                android:textColor="#5a5a5a"
+                                android:lineSpacingExtra="30sp"
+                                android:text="10-20 Cm"
                                 />
 
                         </LinearLayout>
@@ -157,88 +177,59 @@
 
                     <com.google.android.material.card.MaterialCardView
                         android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_marginEnd="5dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="8dp"
                         android:layout_marginStart="10dp"
                         android:layout_marginTop="5dp"
                         android:layout_marginBottom="5dp"
                         android:layout_weight="1"
+                        app:cardBackgroundColor="#f2f2f2"
                         app:cardCornerRadius="15dp">
 
                         <LinearLayout
-                            android:id="@+id/liquid_btn"
+                            android:id="@+id/large_btn"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
-                            android:padding="12dp"
                             android:gravity="center"
+                            android:paddingTop="26dp"
+                            android:paddingBottom="26dp"
                             android:orientation="vertical">
-
-                            <ImageView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:src="@drawable/ic_liquid"/>
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="7dp"
-                                android:layout_marginBottom="12dp"
                                 android:fontFamily="@font/poppins_medium"
                                 android:textStyle="normal"
                                 android:textSize="14sp"
                                 android:textColor="#1a1a1a"
-                                android:text="Liquid"
+                                android:lineSpacingExtra="7sp"
+                                android:gravity="center_horizontal"
+                                android:text="Large Box"
                                 />
 
-                        </LinearLayout>
-
-                    </com.google.android.material.card.MaterialCardView>
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="50dp"
-                    android:weightSum="2"
-                    android:orientation="horizontal">
-
-                    <com.google.android.material.card.MaterialCardView
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_marginEnd="10dp"
-                        android:layout_marginStart="5dp"
-                        android:layout_marginTop="5dp"
-                        android:layout_marginBottom="5dp"
-                        android:layout_weight="1"
-                        app:cardCornerRadius="15dp">
-
-                        <LinearLayout
-                            android:id="@+id/docs_btn"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:gravity="center"
-                            android:padding="37dp"
-                            android:orientation="vertical">
-
-                            <ImageView
+                            <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:src="@drawable/ic_docs"/>
+                                android:layout_marginTop="5dp"
+                                android:fontFamily="@font/poppins_regular"
+                                android:textStyle="normal"
+                                android:textSize="12sp"
+                                android:textColor="#5a5a5a"
+                                android:lineSpacingExtra="30sp"
+                                android:text="Size: 1-3 Kg"
+                                />
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="7dp"
-                                android:layout_marginBottom="12dp"
-                                android:fontFamily="@font/poppins_medium"
+                                android:layout_marginTop="5dp"
+                                android:fontFamily="@font/poppins_regular"
                                 android:textStyle="normal"
-                                android:textSize="14sp"
-                                android:textColor="#1a1a1a"
-                                android:text="Document"
+                                android:textSize="12sp"
+                                android:textColor="#5a5a5a"
+                                android:lineSpacingExtra="30sp"
+                                android:text="10-20 Cm"
                                 />
 
                         </LinearLayout>
@@ -247,38 +238,59 @@
 
                     <com.google.android.material.card.MaterialCardView
                         android:layout_width="0dp"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_marginEnd="5dp"
-                        android:layout_marginStart="10dp"
+                        android:layout_marginStart="13dp"
                         android:layout_marginTop="5dp"
                         android:layout_marginBottom="5dp"
                         android:layout_weight="1"
+                        app:cardBackgroundColor="#f2f2f2"
                         app:cardCornerRadius="15dp">
 
                         <LinearLayout
-                            android:id="@+id/solid_btn"
+                            android:id="@+id/envelope_btn"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
-                            android:padding="12dp"
                             android:gravity="center"
+                            android:paddingTop="26dp"
+                            android:paddingBottom="26dp"
                             android:orientation="vertical">
-
-                            <ImageView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:src="@drawable/ic_solid"/>
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="7dp"
-                                android:layout_marginBottom="12dp"
                                 android:fontFamily="@font/poppins_medium"
                                 android:textStyle="normal"
                                 android:textSize="14sp"
                                 android:textColor="#1a1a1a"
-                                android:text="Solid"
+                                android:lineSpacingExtra="7sp"
+                                android:gravity="center_horizontal"
+                                android:text="Envelope"
+                                />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="5dp"
+                                android:fontFamily="@font/poppins_regular"
+                                android:textStyle="normal"
+                                android:textSize="12sp"
+                                android:textColor="#5a5a5a"
+                                android:lineSpacingExtra="30sp"
+                                android:text="Size: 1-3 Kg"
+                                />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="5dp"
+                                android:fontFamily="@font/poppins_regular"
+                                android:textStyle="normal"
+                                android:textSize="12sp"
+                                android:textColor="#5a5a5a"
+                                android:lineSpacingExtra="30sp"
+                                android:text="10-20 Cm"
                                 />
 
                         </LinearLayout>
