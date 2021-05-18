@@ -7,9 +7,9 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.airposted.bitoronbd.databinding.FragmentReceiverInfoBinding
 import com.airposted.bitoronbd.ui.main.CommunicatorFragmentInterface
+import com.airposted.bitoronbd.utils.hideKeyboard
 import com.airposted.bitoronbd.utils.snackbar
 import com.airposted.bitoronbd.utils.textWatcher
-import com.airposted.bitoronbd.utils.zeroRemove
 
 class ReceiverInfoFragment : Fragment() {
     private lateinit var binding: FragmentReceiverInfoBinding
@@ -30,6 +30,7 @@ class ReceiverInfoFragment : Fragment() {
     private fun bindUI() {
         communicatorFragmentInterface = context as CommunicatorFragmentInterface
         binding.next.setOnClickListener {
+            hideKeyboard(requireActivity())
             if(binding.receiverName.text.isNotEmpty()){
                 val phone = binding.receiverPhone.text.toString()
                 val fragment = ReceiverAddressFragment()
@@ -46,6 +47,7 @@ class ReceiverInfoFragment : Fragment() {
         }
 
         binding.back.setOnClickListener {
+            hideKeyboard(requireActivity())
             requireActivity().onBackPressed()
         }
 

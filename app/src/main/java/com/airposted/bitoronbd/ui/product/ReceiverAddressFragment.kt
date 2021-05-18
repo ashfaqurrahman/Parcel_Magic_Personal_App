@@ -69,6 +69,7 @@ class ReceiverAddressFragment : Fragment(), KodeinAware, CustomClickListener {
         communicatorFragmentInterface = context as CommunicatorFragmentInterface
 
         binding.back.setOnClickListener {
+            hideKeyboard(requireActivity())
             requireActivity().onBackPressed()
         }
 

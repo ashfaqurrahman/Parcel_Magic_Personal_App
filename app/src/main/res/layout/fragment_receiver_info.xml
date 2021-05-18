@@ -7,163 +7,177 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/white"
+        android:orientation="vertical"
+        android:fitsSystemWindows="true"
         tools:context=".ui.product.ReceiverInfoFragment"
         android:id="@+id/root_layout">
 
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scrollbars="none">
+        <androidx.cardview.widget.CardView
+            android:id="@+id/back"
+            app:cardCornerRadius="18dp"
+            android:backgroundTint="#f3f3f3"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_marginTop="40dp"
+            android:layout_marginStart="15sp"
+            android:layout_marginEnd="15sp">
 
-            <LinearLayout
+            <ImageView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="15sp"
-                android:layout_marginEnd="15sp"
-                android:orientation="vertical">
+                android:layout_height="match_parent"
+                android:src="@drawable/ic_keyboard_backspace"
+                android:padding="9dp"/>
 
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/back"
-                    app:cardCornerRadius="18dp"
-                    android:backgroundTint="#f3f3f3"
-                    android:layout_width="36dp"
-                    android:layout_height="36dp"
-                    android:layout_marginTop="40dp"
-                    android:layout_marginStart="5dp">
+        </androidx.cardview.widget.CardView>
 
-                    <ImageView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:src="@drawable/ic_keyboard_backspace"
-                        android:padding="9dp"/>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15sp"
+            android:layout_marginEnd="15sp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginTop="10dp"
+            android:orientation="vertical">
 
-                </androidx.cardview.widget.CardView>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="24dp"
-                    android:fontFamily="@font/poppins_semibold"
-                    android:textColor="#1a1a1a"
-                    android:textSize="32sp"
-                    android:textStyle="normal"
-                    android:text="Who&apos;s receiving the Package" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="13sp"
-                    android:fontFamily="@font/poppins_medium"
-                    android:lineSpacingExtra="5sp"
-                    android:textColor="#000000"
-                    android:textSize="14sp"
-                    android:textStyle="normal"
-                    android:text="The driver may contact the recipient to Compete the delivery " />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:fontFamily="@font/poppins_medium"
-                    android:lineSpacingExtra="12sp"
-                    android:textColor="#000000"
-                    android:textSize="14sp"
-                    android:textStyle="normal"
-                    android:text="Full Name" />
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scrollbars="none">
 
                 <LinearLayout
+                    android:id="@+id/content_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="11dp"
-                    android:background="@drawable/input_back"
-                    android:gravity="center_vertical">
-
-                    <EditText
-                        android:id="@+id/receiver_name"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@null"
-                        android:fontFamily="@font/poppins_regular"
-                        android:hint="@string/receiver_name"
-                        android:inputType="textCapWords"
-                        android:maxLines="1"
-                        android:padding="20dp"
-                        android:textColor="#000"
-                        android:textSize="14sp" />
-
-                </LinearLayout>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="17dp"
-                    android:fontFamily="@font/poppins_medium"
-                    android:lineSpacingExtra="12sp"
-                    android:textColor="#000000"
-                    android:textSize="14sp"
-                    android:textStyle="normal"
-                    android:text="Phone Number" />
-
-                <LinearLayout
-                    android:id="@+id/layout"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="11dp"
-                    android:background="@drawable/input_back"
-                    android:gravity="center_vertical">
+                    android:paddingBottom="100dp"
+                    android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/country_code"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="15dp"
-                        android:fontFamily="@font/poppins_regular"
+                        android:layout_marginTop="14dp"
+                        android:fontFamily="@font/poppins_semibold"
+                        android:textColor="#1a1a1a"
+                        android:textSize="32sp"
+                        android:textStyle="normal"
+                        android:text="Who&apos;s receiving the Package" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="13sp"
+                        android:fontFamily="@font/poppins_medium"
                         android:lineSpacingExtra="5sp"
-                        android:text="+88 01"
-                        android:textColor="#56586d"
+                        android:textColor="#000000"
                         android:textSize="14sp"
-                        android:textStyle="normal" />
+                        android:textStyle="normal"
+                        android:text="The driver may contact the recipient to Compete the delivery " />
 
-                    <View
-                        android:layout_width="1dp"
-                        android:layout_height="20dp"
-                        android:layout_marginStart="15dp"
-                        android:layout_marginEnd="15dp"
-                        android:background="#e2e5ff" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:fontFamily="@font/poppins_medium"
+                        android:lineSpacingExtra="12sp"
+                        android:textColor="#000000"
+                        android:textSize="14sp"
+                        android:textStyle="normal"
+                        android:text="Full Name" />
 
-                    <EditText
-                        android:id="@+id/receiver_phone"
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="@null"
-                        android:fontFamily="@font/poppins_regular"
-                        android:hint="@string/receiver_phone_number"
-                        android:inputType="phone"
-                        android:maxLength="9"
-                        android:maxLines="1"
-                        android:padding="20dp"
-                        android:textColor="#000"
-                        android:textSize="14sp" />
+                        android:layout_marginTop="11dp"
+                        android:background="@drawable/input_back"
+                        android:gravity="center_vertical">
+
+                        <EditText
+                            android:id="@+id/receiver_name"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@null"
+                            android:fontFamily="@font/poppins_regular"
+                            android:hint="@string/receiver_name"
+                            android:inputType="textCapWords"
+                            android:maxLines="1"
+                            android:padding="20dp"
+                            android:textColor="#000"
+                            android:textSize="14sp" />
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="17dp"
+                        android:fontFamily="@font/poppins_medium"
+                        android:lineSpacingExtra="12sp"
+                        android:textColor="#000000"
+                        android:textSize="14sp"
+                        android:textStyle="normal"
+                        android:text="Phone Number" />
+
+                    <LinearLayout
+                        android:id="@+id/layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="11dp"
+                        android:background="@drawable/input_back"
+                        android:gravity="center_vertical">
+
+                        <TextView
+                            android:id="@+id/country_code"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="15dp"
+                            android:fontFamily="@font/poppins_regular"
+                            android:lineSpacingExtra="5sp"
+                            android:text="+88 01"
+                            android:textColor="#56586d"
+                            android:textSize="14sp"
+                            android:textStyle="normal" />
+
+                        <View
+                            android:layout_width="1dp"
+                            android:layout_height="20dp"
+                            android:layout_marginStart="15dp"
+                            android:layout_marginEnd="15dp"
+                            android:background="#e2e5ff" />
+
+                        <EditText
+                            android:id="@+id/receiver_phone"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@null"
+                            android:fontFamily="@font/poppins_regular"
+                            android:hint="@string/receiver_phone_number"
+                            android:inputType="phone"
+                            android:maxLength="9"
+                            android:maxLines="1"
+                            android:padding="20dp"
+                            android:textColor="#000"
+                            android:textSize="14sp" />
+
+                    </LinearLayout>
 
                 </LinearLayout>
 
-                <TextView
-                    android:id="@+id/next"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:background="@drawable/before_button_bg"
-                    android:fontFamily="@font/poppins_regular"
-                    android:gravity="center_horizontal"
-                    android:padding="18dp"
-                    android:text="@string/next"
-                    android:textAlignment="center"
-                    android:textColor="#ffffff"
-                    android:textSize="15sp" />
+            </ScrollView>
 
-            </LinearLayout>
+            <TextView
+                android:id="@+id/next"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:background="@drawable/before_button_bg"
+                android:fontFamily="@font/poppins_regular"
+                android:gravity="center_horizontal"
+                android:padding="18dp"
+                android:text="@string/next"
+                android:textAlignment="center"
+                android:textColor="#ffffff"
+                android:textSize="15sp" />
 
-        </ScrollView>
+        </RelativeLayout>
 
     </LinearLayout>
 

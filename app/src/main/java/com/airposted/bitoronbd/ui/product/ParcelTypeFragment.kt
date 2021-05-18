@@ -3,7 +3,6 @@ package com.airposted.bitoronbd.ui.product
 import android.app.Dialog
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
-import android.graphics.drawable.GradientDrawable
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -12,12 +11,10 @@ import android.view.ViewGroup
 import android.view.Window
 import android.widget.TextView
 import android.widget.Toast
-import androidx.core.content.ContextCompat
-import androidx.fragment.app.FragmentManager
 import com.airposted.bitoronbd.R
 import com.airposted.bitoronbd.databinding.FragmentParcelTypeBinding
 import com.airposted.bitoronbd.ui.main.CommunicatorFragmentInterface
-import com.airposted.bitoronbd.ui.my_parcel.MyParcelFragment
+import com.airposted.bitoronbd.utils.hideKeyboard
 import com.skydoves.powerspinner.OnSpinnerItemSelectedListener
 import com.skydoves.powerspinner.PowerSpinnerView
 
@@ -41,6 +38,7 @@ class ParcelTypeFragment : Fragment() {
     private fun bindUI() {
         communicatorFragmentInterface = context as CommunicatorFragmentInterface
         binding.back.setOnClickListener {
+            hideKeyboard(requireActivity())
             requireActivity().onBackPressed()
         }
         when(requireArguments().getInt("delivery_type")) {
