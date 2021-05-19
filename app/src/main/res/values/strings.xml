@@ -58,7 +58,7 @@
     <string name="cash_on_delivery">Cash on delivery</string>
     <string name="product_details">Product details</string>
     <string name="what_to_send">What to send</string>
-    <string name="my_parcel">My Current Parcel</string>
+    <string name="my_parcel">Ongoing Order\'s</string>
     <string name="quick_delivery_on">Quick Delivery on</string>
     <string name="the_dhaka_city">the Dhaka city</string>
     <string name="quick">Quick</string>
@@ -100,5 +100,6 @@
     <string name="small_size">Size: 8\"x8\"x8\"</string>
     <string name="sign_in_with_mobile_number">Sign in with mobile number</string>
     <string name="cancel_order">Cancel Order</string>
-    <string name="collected_order">Collected Order</string>
+    <string name="cancelled_order">Cancelled Order\'s</string>
+    <string name="collected_order">Collected Order\'s</string>
 </resources>
