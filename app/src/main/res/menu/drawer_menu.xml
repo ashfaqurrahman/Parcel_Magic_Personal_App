@@ -9,6 +9,16 @@
             android:title="@string/my_parcel" />
 
         <item
+            android:id="@+id/collected_order"
+            android:icon="@drawable/ic_my_parcel_icon"
+            android:title="@string/collected_order" />
+
+        <item
+            android:id="@+id/cancel_order"
+            android:icon="@drawable/ic_my_parcel_icon"
+            android:title="@string/cancel_order" />
+
+        <item
             android:id="@+id/parcel_history"
             android:icon="@drawable/ic_parcel_history_icon"
             android:title="@string/parcel_history" />

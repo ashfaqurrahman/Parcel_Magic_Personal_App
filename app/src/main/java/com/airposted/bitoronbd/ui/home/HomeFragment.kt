@@ -28,10 +28,12 @@ import com.airposted.bitoronbd.databinding.FragmentHomeBinding
 import com.airposted.bitoronbd.model.LocationDetailsWithName
 import com.airposted.bitoronbd.ui.auth.AuthActivity
 import com.airposted.bitoronbd.ui.help.HelpFragment
-import com.airposted.bitoronbd.ui.history.MyParcelHistoryFragment
+import com.airposted.bitoronbd.ui.my_order.MyParcelHistoryFragment
 import com.airposted.bitoronbd.ui.main.CommunicatorFragmentInterface
 import com.airposted.bitoronbd.ui.more.MoreFragment
-import com.airposted.bitoronbd.ui.my_parcel.MyParcelFragment
+import com.airposted.bitoronbd.ui.my_order.CancelOrderFragment
+import com.airposted.bitoronbd.ui.my_order.CollectedOrderFragment
+import com.airposted.bitoronbd.ui.my_order.MyParcelFragment
 import com.airposted.bitoronbd.ui.product.PackageGuidelineFragment
 import com.airposted.bitoronbd.ui.product.ParcelTypeFragment
 import com.airposted.bitoronbd.ui.termsconditions.TermsConditionsFragment
@@ -349,8 +351,16 @@ open class HomeFragment : Fragment(R.layout.fragment_home),
                 myCommunicator?.addContentFragment(MyParcelFragment(), true)
                 homeBinding.drawerLayout.closeDrawers()
             }
+            R.id.collected_order -> {
+                myCommunicator?.addContentFragment(CollectedOrderFragment(), true)
+                homeBinding.drawerLayout.closeDrawers()
+            }
             R.id.parcel_history -> {
                 myCommunicator?.addContentFragment(MyParcelHistoryFragment(), true)
+                homeBinding.drawerLayout.closeDrawers()
+            }
+            R.id.cancel_order -> {
+                myCommunicator?.addContentFragment(CancelOrderFragment(), true)
                 homeBinding.drawerLayout.closeDrawers()
             }
             R.id.help -> {

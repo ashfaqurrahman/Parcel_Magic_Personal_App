@@ -28,8 +28,7 @@ import com.airposted.bitoronbd.model.SetParcel
 import com.airposted.bitoronbd.ui.location_set.LocationSetViewModel
 import com.airposted.bitoronbd.ui.location_set.LocationSetViewModelFactory
 import com.airposted.bitoronbd.ui.main.CommunicatorFragmentInterface
-import com.airposted.bitoronbd.ui.main.MainActivity
-import com.airposted.bitoronbd.ui.my_parcel.MyParcelFragment
+import com.airposted.bitoronbd.ui.my_order.MyParcelFragment
 import com.airposted.bitoronbd.utils.*
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap

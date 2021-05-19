@@ -1,26 +1,20 @@
-package com.airposted.bitoronbd.ui.my_parcel
+package com.airposted.bitoronbd.ui.my_order
 
-import android.app.Dialog
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.MalformedJsonException
-import android.view.*
 import androidx.fragment.app.Fragment
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.GridLayoutManager
-import com.airposted.bitoronbd.R
-import com.airposted.bitoronbd.databinding.FragmentMyParcelBinding
+import com.airposted.bitoronbd.databinding.FragmentCollectedOrderBinding
 import com.airposted.bitoronbd.model.DataX
-import com.airposted.bitoronbd.ui.adapter.SimpleTextAdapter
-import com.airposted.bitoronbd.ui.data.MenuItemData
-import com.airposted.bitoronbd.ui.widget.CursorWheelLayout
-import com.airposted.bitoronbd.ui.widget.SimpleTextCursorWheelLayout
-import com.airposted.bitoronbd.ui.widget.SwitchButton
+import com.airposted.bitoronbd.ui.main.CommunicatorFragmentInterface
 import com.airposted.bitoronbd.utils.*
 import com.skydoves.powerspinner.OnSpinnerItemSelectedListener
 import kotlinx.coroutines.launch
@@ -28,22 +22,20 @@ import org.kodein.di.KodeinAware
 import org.kodein.di.android.x.kodein
 import org.kodein.di.generic.instance
 
-
-class MyParcelFragment : Fragment(), KodeinAware, CursorWheelLayout.OnMenuSelectedListener {
+class CollectedOrderFragment : Fragment(), KodeinAware, OrderClickListener  {
     override val kodein by kodein()
-    private lateinit var binding: FragmentMyParcelBinding
+    private lateinit var binding: FragmentCollectedOrderBinding
     private val factory: MyParcelViewModelFactory by instance()
     private lateinit var viewModel: MyParcelViewModel
+    private lateinit var invoice:List<DataX>
     private var currentItemPosition = 0
     private var selectedItemPosition = 0
-    private lateinit var invoice:List<DataX>
-
+    var communicatorFragmentInterface: CommunicatorFragmentInterface? = null
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
+        inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentMyParcelBinding.inflate(inflater, container, false)
+        binding = FragmentCollectedOrderBinding.inflate(inflater, container, false)
 
         return binding.root
     }
@@ -55,6 +47,7 @@ class MyParcelFragment : Fragment(), KodeinAware, CursorWheelLayout.OnMenuSelect
     }
 
     private fun bindUI() {
+        communicatorFragmentInterface = context as CommunicatorFragmentInterface
         binding.back.setOnClickListener {
             requireActivity().onBackPressed()
             binding.expressQuick.dismiss()
@@ -123,7 +116,8 @@ class MyParcelFragment : Fragment(), KodeinAware, CursorWheelLayout.OnMenuSelect
                     } else {
                         val myRecyclerViewAdapter = OrderListRecyclerViewAdapter(
                             listNew,
-                            requireActivity()
+                            requireActivity(),
+                            this@CollectedOrderFragment
                         )
                         binding.orders.adapter = myRecyclerViewAdapter
                     }
@@ -132,20 +126,13 @@ class MyParcelFragment : Fragment(), KodeinAware, CursorWheelLayout.OnMenuSelect
                     binding.noOrder.visibility = View.GONE
                     val myRecyclerViewAdapter = OrderListRecyclerViewAdapter(
                         invoice,
-                        requireActivity()
+                        requireActivity(),
+                        this@CollectedOrderFragment
                     )
                     binding.orders.adapter = myRecyclerViewAdapter
                 }
             }
         })
-    }
-
-    override fun onItemSelected(
-        parent: CursorWheelLayout?,
-        view: View?,
-        pos: Int
-    ) {
-
     }
 
     private fun getOrderList(order: Int) {
@@ -165,7 +152,8 @@ class MyParcelFragment : Fragment(), KodeinAware, CursorWheelLayout.OnMenuSelect
                     binding.noOrder.visibility = View.GONE
                     val myRecyclerViewAdapter = OrderListRecyclerViewAdapter(
                         response.data,
-                        requireActivity()
+                        requireActivity(),
+                        this@CollectedOrderFragment
                     )
                     binding.orders.layoutManager = GridLayoutManager(
                         requireActivity(),
@@ -194,70 +182,14 @@ class MyParcelFragment : Fragment(), KodeinAware, CursorWheelLayout.OnMenuSelect
         }
     }
 
-    private fun openNotificationDialog() {
-        val orderDialog = Dialog(requireContext())
-        orderDialog.setContentView(R.layout.order_dialog)
-
-        val testCircleMenuLeft = orderDialog.findViewById<SimpleTextCursorWheelLayout>(R.id.test_circle_menu_left)
-        val idWheelMenuCenterItem = orderDialog.findViewById<SwitchButton>(R.id.id_wheel_menu_center_item)
-
-        val res = arrayOf(
-            "Current Orders",
-            "Completed Orders",
-            "Cancelled Orders",
-            "Current Orders",
-            "Completed Orders",
-            "Cancelled Orders"
-        )
-        val menuItemDatas: MutableList<MenuItemData> = ArrayList()
-        for (i in res.indices) {
-            menuItemDatas.add(MenuItemData(res[i]))
-        }
-        val simpleTextAdapter =
-            SimpleTextAdapter(
-                requireActivity(),
-                menuItemDatas,
-                Gravity.TOP or Gravity.END
-            )
-        testCircleMenuLeft.setAdapter(simpleTextAdapter)
-        testCircleMenuLeft.setSelection(currentItemPosition)
-        /*testCircleMenuLeft.setOnMenuSelectedListener { parent, view, pos ->
-            Toast.makeText(
-                requireActivity(),
-                "Top Menu click position:$pos",
-                Toast.LENGTH_SHORT
-            ).show()
-            selectedItemPosition = pos
-        }*/
-        testCircleMenuLeft.setOnMenuItemClickListener { _, pos ->
-            selectedItemPosition = pos
-        }
-
-        testCircleMenuLeft.setOnMenuSelectedListener { _, view, pos ->
-            selectedItemPosition = pos
-        }
-
-        /*idWheelMenuCenterItem.setOnClickListener {
-            if (currentItemPosition == selectedItemPosition){
-                orderDialog.dismiss()
-            } else {
-                orderDialog.dismiss()
-                currentItemPosition = selectedItemPosition
-                getOrderList(selectedItemPosition)
-            }
-        }*/
-
-        val window: Window? = orderDialog.window
-        val wlp = window?.attributes
-
-        wlp?.gravity = Gravity.TOP
-        orderDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        orderDialog.window?.setLayout(
-            ViewGroup.LayoutParams.MATCH_PARENT,
-            ViewGroup.LayoutParams.WRAP_CONTENT
-        )
-        orderDialog.setCancelable(true)
-        orderDialog.show()
+    override fun onItemClick(order: DataX) {
+        val fragment = OrderDetailsFragment()
+        val bundle = Bundle()
+        bundle.putString("this", "Collected")
+        bundle.putInt("current_status", order.current_status)
+        bundle.putInt("price", order.delivery_charge)
+        bundle.putString("invoice", order.invoice_no)
+        fragment.arguments = bundle
+        communicatorFragmentInterface?.addContentFragment(fragment, true)
     }
-
 }

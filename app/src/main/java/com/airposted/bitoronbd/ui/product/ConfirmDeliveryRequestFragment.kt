@@ -15,13 +15,12 @@ import androidx.cardview.widget.CardView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
-import com.aapbd.appbajarlib.storage.PersistentUser
 import com.airposted.bitoronbd.R
 import com.airposted.bitoronbd.data.network.preferences.PreferenceProvider
 import com.airposted.bitoronbd.databinding.FragmentConfirmDeliveryRequestBinding
 import com.airposted.bitoronbd.model.SetParcel
-import com.airposted.bitoronbd.ui.my_parcel.MyParcelViewModel
-import com.airposted.bitoronbd.ui.my_parcel.MyParcelViewModelFactory
+import com.airposted.bitoronbd.ui.my_order.MyParcelViewModel
+import com.airposted.bitoronbd.ui.my_order.MyParcelViewModelFactory
 import com.airposted.bitoronbd.utils.*
 import com.sslwireless.sslcommerzlibrary.model.initializer.SSLCProductInitializer
 import com.sslwireless.sslcommerzlibrary.model.initializer.SSLCShipmentInfoInitializer

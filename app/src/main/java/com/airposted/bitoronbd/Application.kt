@@ -9,7 +9,7 @@ import com.airposted.bitoronbd.ui.auth.AuthViewModelFactory
 import com.airposted.bitoronbd.ui.home.HomeViewModelFactory
 import com.airposted.bitoronbd.ui.location_set.LocationSetViewModelFactory
 import com.airposted.bitoronbd.ui.more.MoreViewModelFactory
-import com.airposted.bitoronbd.ui.my_parcel.MyParcelViewModelFactory
+import com.airposted.bitoronbd.ui.my_order.MyParcelViewModelFactory
 import org.kodein.di.Kodein
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.x.androidXModule

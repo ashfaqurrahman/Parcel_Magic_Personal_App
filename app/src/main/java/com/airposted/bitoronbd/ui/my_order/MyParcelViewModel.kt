@@ -1,4 +1,4 @@
-package com.airposted.bitoronbd.ui.my_parcel
+package com.airposted.bitoronbd.ui.my_order
 
 import androidx.lifecycle.ViewModel
 import com.airposted.bitoronbd.data.repositories.OrderListRepository

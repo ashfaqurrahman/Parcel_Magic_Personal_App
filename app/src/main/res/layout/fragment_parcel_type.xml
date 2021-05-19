@@ -118,6 +118,67 @@
                     <com.google.android.material.card.MaterialCardView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="5dp"
+                        android:layout_marginEnd="5dp"
+                        android:layout_weight="1"
+                        app:cardBackgroundColor="#f2f2f2"
+                        app:cardCornerRadius="15dp">
+
+                        <LinearLayout
+                            android:id="@+id/envelope_btn"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:paddingTop="26dp"
+                            android:paddingBottom="26dp"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/poppins_medium"
+                                android:textStyle="normal"
+                                android:textSize="14sp"
+                                android:textColor="#1a1a1a"
+                                android:lineSpacingExtra="7sp"
+                                android:gravity="center_horizontal"
+                                android:text="Envelope"
+                                />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="5dp"
+                                android:fontFamily="@font/poppins_regular"
+                                android:textStyle="normal"
+                                android:textSize="12sp"
+                                android:textColor="#5a5a5a"
+                                android:lineSpacingExtra="30sp"
+                                android:text="@string/envelope_size"
+                                />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="5dp"
+                                android:fontFamily="@font/poppins_regular"
+                                android:textStyle="normal"
+                                android:textSize="12sp"
+                                android:textAlignment="center"
+                                android:textColor="#5a5a5a"
+                                android:text="0.25kg / 0.5lbs"
+                                />
+
+                        </LinearLayout>
+
+                    </com.google.android.material.card.MaterialCardView>
+
+                    <com.google.android.material.card.MaterialCardView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
                         android:layout_marginEnd="10dp"
                         android:layout_marginTop="5dp"
                         android:layout_marginBottom="5dp"
@@ -168,7 +229,7 @@
                                 android:textSize="12sp"
                                 android:textColor="#5a5a5a"
                                 android:lineSpacingExtra="30sp"
-                                android:text="2kg or 4.4lbs"
+                                android:text="2kg / 4.4lbs"
                                 />
 
                         </LinearLayout>
@@ -229,67 +290,7 @@
                                 android:textSize="12sp"
                                 android:textColor="#5a5a5a"
                                 android:lineSpacingExtra="30sp"
-                                android:text="5kg or 10lbs"
-                                />
-
-                        </LinearLayout>
-
-                    </com.google.android.material.card.MaterialCardView>
-
-                    <com.google.android.material.card.MaterialCardView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="10dp"
-                        android:layout_marginTop="5dp"
-                        android:layout_marginBottom="5dp"
-                        android:layout_weight="1"
-                        app:cardBackgroundColor="#f2f2f2"
-                        app:cardCornerRadius="15dp">
-
-                        <LinearLayout
-                            android:id="@+id/envelope_btn"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:gravity="center"
-                            android:paddingTop="26dp"
-                            android:paddingBottom="26dp"
-                            android:orientation="vertical">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:fontFamily="@font/poppins_medium"
-                                android:textStyle="normal"
-                                android:textSize="14sp"
-                                android:textColor="#1a1a1a"
-                                android:lineSpacingExtra="7sp"
-                                android:gravity="center_horizontal"
-                                android:text="Envelope"
-                                />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="5dp"
-                                android:fontFamily="@font/poppins_regular"
-                                android:textStyle="normal"
-                                android:textSize="12sp"
-                                android:textColor="#5a5a5a"
-                                android:lineSpacingExtra="30sp"
-                                android:text="@string/envelope_size"
-                                />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="5dp"
-                                android:fontFamily="@font/poppins_regular"
-                                android:textStyle="normal"
-                                android:textSize="12sp"
-                                android:textAlignment="center"
-                                android:textColor="#5a5a5a"
-                                android:text="0.25kg or 0.5lbs"
+                                android:text="5kg / 10lbs"
                                 />
 
                         </LinearLayout>

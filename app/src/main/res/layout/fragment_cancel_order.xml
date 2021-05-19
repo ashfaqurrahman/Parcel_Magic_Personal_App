@@ -43,7 +43,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/poppins_medium"
-                    android:text="@string/parcel_history"
+                    android:text="@string/cancel_order"
                     android:textColor="#ffffff"
                     android:textSize="18sp"
                     android:textStyle="normal" />
