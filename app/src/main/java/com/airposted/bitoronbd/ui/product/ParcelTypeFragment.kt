@@ -52,16 +52,16 @@ class ParcelTypeFragment : Fragment() {
             }
         }
 
+        binding.envelopeBtn.setOnClickListener {
+            showQuantityDialog(3)
+        }
+
         binding.smallBtn.setOnClickListener {
             showQuantityDialog(1)
         }
 
         binding.largeBtn.setOnClickListener {
             showQuantityDialog(2)
-        }
-
-        binding.envelopeBtn.setOnClickListener {
-            showQuantityDialog(3)
         }
     }
 

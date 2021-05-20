@@ -7,14 +7,14 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:background="@color/white"
+        android:background="@color/bg"
         tools:context=".ui.product.ParcelTypeFragment">
 
         <RelativeLayout
             android:id="@+id/bg"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/delivery_type_bg">
+            android:background="@color/purple_500">
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/back"
@@ -39,7 +39,7 @@
                 android:paddingStart="20dp"
                 android:paddingEnd="20dp"
                 android:layout_marginTop="20dp"
-                android:layout_marginBottom="15dp"
+                android:paddingBottom="15dp"
                 android:background="@drawable/bottom_radius_button_bg"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
@@ -69,19 +69,17 @@
 
             </RelativeLayout>
 
+            <ImageView
+                android:id="@+id/delivery_icon"
+                android:layout_width="200dp"
+                android:layout_height="170dp"
+                android:layout_marginEnd="-30dp"
+                android:layout_alignBottom="@+id/title_layout"
+                android:elevation="2dp"
+                android:scaleType="fitXY"
+                android:layout_alignParentEnd="true"/>
+
         </RelativeLayout>
-
-
-        <ImageView
-            android:id="@+id/delivery_icon"
-            android:layout_alignBottom="@+id/bg"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_marginBottom="-40dp"
-            android:elevation="2dp"
-            android:scaleType="fitXY"
-            android:layout_marginEnd="15dp"
-            android:layout_alignParentEnd="true"/>
 
         <ScrollView
             android:layout_width="match_parent"
@@ -113,31 +111,43 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="18dp"
                     android:weightSum="3"
-                    android:orientation="horizontal">
+                    android:orientation="vertical">
 
                     <com.google.android.material.card.MaterialCardView
-                        android:layout_width="0dp"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="5dp"
                         android:layout_marginBottom="5dp"
-                        android:layout_marginEnd="5dp"
+                        android:layout_marginEnd="3dp"
+                        android:layout_marginStart="3dp"
+                        app:cardBackgroundColor="@color/white"
                         android:layout_weight="1"
-                        app:cardBackgroundColor="#f2f2f2"
                         app:cardCornerRadius="15dp">
 
-                        <LinearLayout
+                        <RelativeLayout
                             android:id="@+id/envelope_btn"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:gravity="center"
                             android:paddingTop="26dp"
                             android:paddingBottom="26dp"
+                            android:paddingStart="20dp"
+                            android:paddingEnd="20dp"
                             android:orientation="vertical">
 
-                            <TextView
+                            <ImageView
+                                android:id="@+id/icon"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:src="@drawable/ic_envelope_icon"/>
+
+                            <TextView
+                                android:id="@+id/title"
+                                android:layout_toEndOf="@+id/icon"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="15dp"
                                 android:fontFamily="@font/poppins_medium"
                                 android:textStyle="normal"
                                 android:textSize="14sp"
@@ -147,58 +157,79 @@
                                 android:text="Envelope"
                                 />
 
-                            <TextView
-                                android:layout_width="wrap_content"
+                            <RelativeLayout
+                                android:layout_below="@+id/title"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="5dp"
-                                android:fontFamily="@font/poppins_regular"
-                                android:textStyle="normal"
-                                android:textSize="12sp"
-                                android:textColor="#5a5a5a"
-                                android:lineSpacingExtra="30sp"
-                                android:text="@string/envelope_size"
-                                />
+                                android:layout_marginStart="15dp"
+                                android:layout_toEndOf="@+id/icon">
 
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="5dp"
-                                android:fontFamily="@font/poppins_regular"
-                                android:textStyle="normal"
-                                android:textSize="12sp"
-                                android:textAlignment="center"
-                                android:textColor="#5a5a5a"
-                                android:text="0.25kg / 0.5lbs"
-                                />
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignParentStart="true"
+                                    android:layout_marginTop="5dp"
+                                    android:fontFamily="@font/poppins_regular"
+                                    android:textStyle="normal"
+                                    android:textSize="12sp"
+                                    android:textColor="#5a5a5a"
+                                    android:lineSpacingExtra="30sp"
+                                    android:text="Weight: 0.25kg / 0.5lbs"
+                                    />
 
-                        </LinearLayout>
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignParentEnd="true"
+                                    android:layout_marginTop="5dp"
+                                    android:fontFamily="@font/poppins_regular"
+                                    android:textStyle="normal"
+                                    android:textSize="12sp"
+                                    android:textAlignment="center"
+                                    android:textColor="#5a5a5a"
+                                    android:text="@string/envelope_size"
+                                    />
+
+                            </RelativeLayout>
+
+                        </RelativeLayout>
 
                     </com.google.android.material.card.MaterialCardView>
 
                     <com.google.android.material.card.MaterialCardView
-                        android:layout_width="0dp"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="10dp"
-                        android:layout_marginEnd="10dp"
-                        android:layout_marginTop="5dp"
+                        android:layout_marginTop="10dp"
                         android:layout_marginBottom="5dp"
+                        android:layout_marginEnd="3dp"
+                        android:layout_marginStart="3dp"
                         android:layout_weight="1"
-                        app:cardBackgroundColor="#f2f2f2"
                         app:cardCornerRadius="15dp">
 
-                        <LinearLayout
+                        <RelativeLayout
                             android:id="@+id/small_btn"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:gravity="center"
                             android:paddingTop="26dp"
                             android:paddingBottom="26dp"
+                            android:paddingStart="20dp"
+                            android:paddingEnd="20dp"
                             android:orientation="vertical">
 
-                            <TextView
+                            <ImageView
+                                android:id="@+id/small_icon"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:src="@drawable/ic_small_icon"/>
+
+                            <TextView
+                                android:id="@+id/small_title"
+                                android:layout_toEndOf="@+id/small_icon"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="15dp"
                                 android:fontFamily="@font/poppins_medium"
                                 android:textStyle="normal"
                                 android:textSize="14sp"
@@ -208,58 +239,79 @@
                                 android:text="Small Box"
                                 />
 
-                            <TextView
-                                android:layout_width="wrap_content"
+                            <RelativeLayout
+                                android:layout_below="@+id/small_title"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="5dp"
-                                android:fontFamily="@font/poppins_regular"
-                                android:textStyle="normal"
-                                android:textSize="12sp"
-                                android:textColor="#5a5a5a"
-                                android:lineSpacingExtra="30sp"
-                                android:text="@string/small_size"
-                                />
+                                android:layout_marginStart="15dp"
+                                android:layout_toEndOf="@+id/small_icon">
 
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="5dp"
-                                android:fontFamily="@font/poppins_regular"
-                                android:textStyle="normal"
-                                android:textSize="12sp"
-                                android:textColor="#5a5a5a"
-                                android:lineSpacingExtra="30sp"
-                                android:text="2kg / 4.4lbs"
-                                />
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignParentStart="true"
+                                    android:layout_marginTop="5dp"
+                                    android:fontFamily="@font/poppins_regular"
+                                    android:textStyle="normal"
+                                    android:textSize="12sp"
+                                    android:textColor="#5a5a5a"
+                                    android:lineSpacingExtra="30sp"
+                                    android:text="Weight: 2kg / 4.4lbs"
+                                    />
 
-                        </LinearLayout>
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignParentEnd="true"
+                                    android:layout_marginTop="5dp"
+                                    android:fontFamily="@font/poppins_regular"
+                                    android:textStyle="normal"
+                                    android:textSize="12sp"
+                                    android:textAlignment="center"
+                                    android:textColor="#5a5a5a"
+                                    android:text="@string/small_size"
+                                    />
+
+                            </RelativeLayout>
+
+                        </RelativeLayout>
 
                     </com.google.android.material.card.MaterialCardView>
 
                     <com.google.android.material.card.MaterialCardView
-                        android:layout_width="0dp"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginEnd="5dp"
-                        android:layout_marginStart="5dp"
-                        android:layout_marginTop="5dp"
+                        android:layout_marginTop="10dp"
                         android:layout_marginBottom="5dp"
+                        android:layout_marginEnd="3dp"
+                        android:layout_marginStart="3dp"
                         android:layout_weight="1"
-                        app:cardBackgroundColor="#f2f2f2"
                         app:cardCornerRadius="15dp">
 
-                        <LinearLayout
+                        <RelativeLayout
                             android:id="@+id/large_btn"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:gravity="center"
                             android:paddingTop="26dp"
                             android:paddingBottom="26dp"
+                            android:paddingStart="20dp"
+                            android:paddingEnd="20dp"
                             android:orientation="vertical">
 
-                            <TextView
+                            <ImageView
+                                android:id="@+id/large_icon"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:src="@drawable/ic_large_icon"/>
+
+                            <TextView
+                                android:id="@+id/large_title"
+                                android:layout_toEndOf="@+id/large_icon"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="15dp"
                                 android:fontFamily="@font/poppins_medium"
                                 android:textStyle="normal"
                                 android:textSize="14sp"
@@ -269,31 +321,42 @@
                                 android:text="Large Box"
                                 />
 
-                            <TextView
-                                android:layout_width="wrap_content"
+                            <RelativeLayout
+                                android:layout_below="@+id/large_title"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="5dp"
-                                android:fontFamily="@font/poppins_regular"
-                                android:textStyle="normal"
-                                android:textSize="12sp"
-                                android:textColor="#5a5a5a"
-                                android:lineSpacingExtra="30sp"
-                                android:text="@string/large_size"
-                                />
+                                android:layout_marginStart="15dp"
+                                android:layout_toEndOf="@+id/large_icon">
 
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="5dp"
-                                android:fontFamily="@font/poppins_regular"
-                                android:textStyle="normal"
-                                android:textSize="12sp"
-                                android:textColor="#5a5a5a"
-                                android:lineSpacingExtra="30sp"
-                                android:text="5kg / 10lbs"
-                                />
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignParentStart="true"
+                                    android:layout_marginTop="5dp"
+                                    android:fontFamily="@font/poppins_regular"
+                                    android:textStyle="normal"
+                                    android:textSize="12sp"
+                                    android:textColor="#5a5a5a"
+                                    android:lineSpacingExtra="30sp"
+                                    android:text="Weight: 5kg / 10lbs"
+                                    />
 
-                        </LinearLayout>
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignParentEnd="true"
+                                    android:layout_marginTop="5dp"
+                                    android:fontFamily="@font/poppins_regular"
+                                    android:textStyle="normal"
+                                    android:textSize="12sp"
+                                    android:textAlignment="center"
+                                    android:textColor="#5a5a5a"
+                                    android:text="@string/large_size"
+                                    />
+
+                            </RelativeLayout>
+
+                        </RelativeLayout>
 
                     </com.google.android.material.card.MaterialCardView>
 
