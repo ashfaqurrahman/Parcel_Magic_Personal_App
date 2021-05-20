@@ -10,17 +10,17 @@
 
         <item
             android:id="@+id/collected_order"
-            android:icon="@drawable/ic_my_parcel_icon"
+            android:icon="@drawable/ic_collected_order"
             android:title="@string/collected_order" />
 
         <item
             android:id="@+id/cancel_order"
-            android:icon="@drawable/ic_my_parcel_icon"
+            android:icon="@drawable/ic_cancelled_order"
             android:title="@string/cancelled_order" />
 
         <item
             android:id="@+id/parcel_history"
-            android:icon="@drawable/ic_parcel_history_icon"
+            android:icon="@drawable/ic_parcel_history"
             android:title="@string/parcel_history" />
 
         <!--<item

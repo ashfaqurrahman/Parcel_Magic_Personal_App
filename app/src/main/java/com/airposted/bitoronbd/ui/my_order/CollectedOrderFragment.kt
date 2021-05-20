@@ -27,7 +27,7 @@ class CollectedOrderFragment : Fragment(), KodeinAware, OrderClickListener  {
     private lateinit var binding: FragmentCollectedOrderBinding
     private val factory: MyParcelViewModelFactory by instance()
     private lateinit var viewModel: MyParcelViewModel
-    private lateinit var invoice:List<DataX>
+    private lateinit var dataList:List<DataX>
     private var currentItemPosition = 0
     private var selectedItemPosition = 0
     var communicatorFragmentInterface: CommunicatorFragmentInterface? = null
@@ -102,10 +102,10 @@ class CollectedOrderFragment : Fragment(), KodeinAware, OrderClickListener  {
                 binding.orders.itemAnimator = DefaultItemAnimator()
                 if (s.toString().isNotEmpty()) {
                     val listNew: ArrayList<DataX> = ArrayList()
-                    for (l in invoice.indices) {
-                        val serviceName: String = invoice[l].invoice_no
+                    for (l in dataList.indices) {
+                        val serviceName: String = dataList[l].invoice_no
                         if (serviceName.contains(s.toString())) {
-                            listNew.add(invoice[l])
+                            listNew.add(dataList[l])
                             binding.orders.visibility = View.VISIBLE
                             binding.noOrder.visibility = View.GONE
                         }
@@ -125,7 +125,7 @@ class CollectedOrderFragment : Fragment(), KodeinAware, OrderClickListener  {
                     binding.orders.visibility = View.VISIBLE
                     binding.noOrder.visibility = View.GONE
                     val myRecyclerViewAdapter = OrderListRecyclerViewAdapter(
-                        invoice,
+                        dataList,
                         requireActivity(),
                         this@CollectedOrderFragment
                     )
@@ -136,22 +136,31 @@ class CollectedOrderFragment : Fragment(), KodeinAware, OrderClickListener  {
     }
 
     private fun getOrderList(order: Int) {
-        when(order){
-            0 -> binding.title.text = "Current Orders"
-            1 -> binding.title.text = "Current Orders"
-            2 -> binding.title.text = "Order History"
-            3 -> binding.title.text = "Order History"
-        }
+//        when(order){
+//            0 -> binding.title.text = "Current Orders"
+//            1 -> binding.title.text = "Current Orders"
+//            2 -> binding.title.text = "Order History"
+//            3 -> binding.title.text = "Order History"
+//        }
         setProgressDialog(requireActivity())
         lifecycleScope.launch {
             try {
                 val response = viewModel.getOrderList(order)
-                invoice = response.data
-                if (response.data.isNotEmpty()) {
+                dataList = response.data
+                val list: ArrayList<DataX> = ArrayList()
+                for (l in dataList.indices) {
+                    val serviceName: Int = dataList[l].current_status
+                    if (serviceName == 4) {
+                        list.add(dataList[l])
+                        binding.orders.visibility = View.VISIBLE
+                        binding.noOrder.visibility = View.GONE
+                    }
+                }
+                if (list.isNotEmpty()) {
                     binding.orders.visibility = View.VISIBLE
                     binding.noOrder.visibility = View.GONE
                     val myRecyclerViewAdapter = OrderListRecyclerViewAdapter(
-                        response.data,
+                        list,
                         requireActivity(),
                         this@CollectedOrderFragment
                     )
