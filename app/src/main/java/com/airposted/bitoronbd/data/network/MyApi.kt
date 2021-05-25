@@ -66,6 +66,14 @@ interface MyApi {
         @Header("Authorization") header: String
     ) : Response<OrderList>
 
+    @FormUrlEncoded
+    @POST("delivery/orderstatuschange")
+    suspend fun changeStatus(
+        @Header("Authorization") header: String,
+        @Field("invoice_no") invoice: String,
+        @Field("current_status") status: Int
+    ) : Response<StatusChangeModel>
+
     @POST("personal/completeorderlistexpress")
     suspend fun historyOrderListExpress(
         @Header("Authorization") header: String

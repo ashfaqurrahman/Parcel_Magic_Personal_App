@@ -21,6 +21,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import com.aapbd.appbajarlib.storage.PersistentUser
 import com.airposted.bitoronbd.R
 import com.airposted.bitoronbd.data.network.preferences.PreferenceProvider
 import com.airposted.bitoronbd.databinding.FragmentConfirmReceiverAddressBinding
@@ -197,6 +198,8 @@ class ConfirmReceiverAddressFragment : Fragment(), KodeinAware, SSLCTransactionR
             requireActivity().onBackPressed()
         }
 
+        Log.e("QQQ", requireArguments().getString("parcel_quantity")!!)
+
         binding.confirmReceiverAddress.setOnClickListener {
             val radioButtonID = binding.radioGroup.checkedRadioButtonId
             val radioButton: RadioButton = binding.radioGroup.findViewById(radioButtonID)
@@ -328,8 +331,11 @@ class ConfirmReceiverAddressFragment : Fragment(), KodeinAware, SSLCTransactionR
         setParcel.invoice_no = "AIR" + getSaltString() + getSaltString()
         setParcel.item_type = requireArguments().getInt("parcel_type")
         setParcel.personal_order_type = requireArguments().getInt("delivery_type")
+        setParcel.item_qty = requireArguments().getString("parcel_quantity")!!
         setParcel.recp_name = requireArguments().getString("receiver_name")!!
         setParcel.recp_phone = requireArguments().getString("receiver_phone")!!
+        setParcel.pic_name = PersistentUser.getInstance().getFullName(requireContext())
+        setParcel.pic_phone = PersistentUser.getInstance().getFullName(requireContext())
 //        setParcel.recp_city = requireArguments().getString("city")!!
 //        setParcel.recp_zone = requireArguments().getString("area")!!
 //        setParcel.recp_area = requireArguments().getString("area")!!

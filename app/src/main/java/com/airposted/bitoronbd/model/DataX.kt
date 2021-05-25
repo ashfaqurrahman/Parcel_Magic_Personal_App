@@ -14,5 +14,16 @@ data class DataX(
     val order_date: String,
     val personal_order_type: String,
     val ssl_transaction_id: String,
-    val who_will_pay: String
+    val who_will_pay: String,
+    val item_type: Int,
+    val item_qty: String,
+    val distance: Int,
+    val recp_name: String,
+    val recp_phone: String,
+    val recp_address: String,
+    val pick_address: String,
+    val sender_latitude: Double,
+    val sender_longitude: Double,
+    val receiver_latitude: Double,
+    val receiver_longitude: Double
 )

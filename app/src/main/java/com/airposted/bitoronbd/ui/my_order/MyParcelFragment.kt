@@ -154,12 +154,12 @@ class MyParcelFragment : Fragment(), KodeinAware, CursorWheelLayout.OnMenuSelect
     }
 
     private fun getOrderList(order: Int) {
-        when(order){
-            0 -> binding.title.text = "Current Orders"
-            1 -> binding.title.text = "Current Orders"
-            2 -> binding.title.text = "Order History"
-            3 -> binding.title.text = "Order History"
-        }
+//        when(order){
+//            0 -> binding.title.text = "Current Orders"
+//            1 -> binding.title.text = "Current Orders"
+//            2 -> binding.title.text = "Order History"
+//            3 -> binding.title.text = "Order History"
+//        }
         setProgressDialog(requireActivity())
         lifecycleScope.launch {
             try {
@@ -269,9 +269,22 @@ class MyParcelFragment : Fragment(), KodeinAware, CursorWheelLayout.OnMenuSelect
     override fun onItemClick(order: DataX) {
         val fragment = OrderDetailsFragment()
         val bundle = Bundle()
-        bundle.putString("this", "placeOrder")
+        bundle.putString("this", "Collected")
+        bundle.putString("personal_order_type", order.personal_order_type)
+        bundle.putInt("item_type", order.item_type)
+        bundle.putString("item_qty", order.item_qty)
+        bundle.putInt("distance", order.distance)
+        bundle.putString("recp_name", order.recp_name)
+        bundle.putString("recp_phone", order.recp_phone)
+        bundle.putString("recp_address", order.recp_address)
+        bundle.putString("pick_address", order.pick_address)
+        bundle.putDouble("sender_latitude", order.sender_latitude)
+        bundle.putDouble("sender_longitude", order.sender_longitude)
+        bundle.putDouble("receiver_latitude", order.receiver_latitude)
+        bundle.putDouble("receiver_longitude", order.receiver_longitude)
         bundle.putInt("current_status", order.current_status)
         bundle.putInt("price", order.delivery_charge)
+        bundle.putString("order_date", order.order_date)
         bundle.putString("invoice", order.invoice_no)
         fragment.arguments = bundle
         communicatorFragmentInterface?.addContentFragment(fragment, true)

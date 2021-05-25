@@ -7,6 +7,7 @@ import com.airposted.bitoronbd.data.network.SafeApiRequest
 import com.airposted.bitoronbd.model.SetParcel
 import com.airposted.bitoronbd.model.OrderList
 import com.airposted.bitoronbd.data.network.responses.SetParcelResponse
+import com.airposted.bitoronbd.model.StatusChangeModel
 
 class OrderListRepository(context: Context, private val api: MyApi) : SafeApiRequest() {
     private val appContext = context.applicationContext
@@ -49,5 +50,13 @@ class OrderListRepository(context: Context, private val api: MyApi) : SafeApiReq
         return apiRequest { api.setOrder(PersistentUser.getInstance().getAccessToken(
             appContext
         ), setParcel)}
+    }
+
+    suspend fun changeStatus(invoice: String, status: Int): StatusChangeModel {
+        return apiRequest {
+            api.changeStatus(
+                PersistentUser.getInstance().getAccessToken(appContext), invoice, status
+            )
+        }
     }
 }

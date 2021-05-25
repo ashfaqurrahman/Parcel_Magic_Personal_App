@@ -29,6 +29,7 @@ class CancelOrderFragment : Fragment(), KodeinAware, OrderClickListener {
     private var currentItemPosition = 0
     private var selectedItemPosition = 0
     var communicatorFragmentInterface: CommunicatorFragmentInterface? = null
+    private lateinit var dataList:List<DataX>
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -134,22 +135,25 @@ class CancelOrderFragment : Fragment(), KodeinAware, OrderClickListener {
     }
 
     private fun getOrderList(order: Int) {
-        when(order){
-            0 -> binding.title.text = "Current Orders"
-            1 -> binding.title.text = "Current Orders"
-            2 -> binding.title.text = "Order History"
-            3 -> binding.title.text = "Order History"
-        }
         setProgressDialog(requireActivity())
         lifecycleScope.launch {
             try {
                 val response = viewModel.getOrderList(order)
-                invoice = response.data
-                if (response.data.isNotEmpty()) {
+                dataList = response.data
+                val list: ArrayList<DataX> = ArrayList()
+                for (l in dataList.indices) {
+                    val serviceName: Int = dataList[l].current_status
+                    if (serviceName == 13) {
+                        list.add(dataList[l])
+                        binding.orders.visibility = View.VISIBLE
+                        binding.noOrder.visibility = View.GONE
+                    }
+                }
+                if (list.isNotEmpty()) {
                     binding.orders.visibility = View.VISIBLE
                     binding.noOrder.visibility = View.GONE
                     val myRecyclerViewAdapter = OrderListRecyclerViewAdapter(
-                        response.data,
+                        list,
                         requireActivity(),
                         this@CancelOrderFragment
                     )
@@ -183,10 +187,23 @@ class CancelOrderFragment : Fragment(), KodeinAware, OrderClickListener {
     override fun onItemClick(order: DataX) {
         val fragment = OrderDetailsFragment()
         val bundle = Bundle()
-        bundle.putString("this", "Cancel")
+        bundle.putString("this", "Collected")
+        bundle.putString("personal_order_type", order.personal_order_type)
+        bundle.putInt("item_type", order.item_type)
+        bundle.putString("item_qty", order.item_qty)
+        bundle.putInt("distance", order.distance)
+        bundle.putString("recp_name", order.recp_name)
+        bundle.putString("recp_phone", order.recp_phone)
+        bundle.putString("recp_address", order.recp_address)
+        bundle.putString("pick_address", order.pick_address)
+        bundle.putDouble("sender_latitude", order.sender_latitude)
+        bundle.putDouble("sender_longitude", order.sender_longitude)
+        bundle.putDouble("receiver_latitude", order.receiver_latitude)
+        bundle.putDouble("receiver_longitude", order.receiver_longitude)
         bundle.putInt("current_status", order.current_status)
         bundle.putInt("price", order.delivery_charge)
         bundle.putString("invoice", order.invoice_no)
+        bundle.putString("order_date", order.order_date)
         fragment.arguments = bundle
         communicatorFragmentInterface?.addContentFragment(fragment, true)
     }

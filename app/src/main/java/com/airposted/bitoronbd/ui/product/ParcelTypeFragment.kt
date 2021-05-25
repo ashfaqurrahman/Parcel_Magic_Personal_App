@@ -76,12 +76,12 @@ class ParcelTypeFragment : Fragment() {
         )
         val done = dialogs.findViewById<TextView>(R.id.done)
         val quantitySpinner = dialogs.findViewById<PowerSpinnerView>(R.id.quantity_spinner)
-        var quantity = 1
+        var quantity = "01"
         quantitySpinner.setOnSpinnerItemSelectedListener(OnSpinnerItemSelectedListener<String> { oldIndex, oldItem, newIndex, newItem ->
             run {
                 if (oldIndex != newIndex) {
                     Toast.makeText(requireContext(), newItem, Toast.LENGTH_SHORT).show()
-                    quantity = newIndex + 1
+                    quantity = newItem
                 }
             }
         })
@@ -90,7 +90,7 @@ class ParcelTypeFragment : Fragment() {
             val fragment = ReceiverInfoFragment()
             val bundle = Bundle()
             bundle.putInt("parcel_type", i)
-            bundle.putInt("parcel_quantity", quantity)
+            bundle.putString("parcel_quantity", quantity)
             bundle.putInt("delivery_type", requireArguments().getInt("delivery_type"))
             fragment.arguments = bundle
             communicatorFragmentInterface?.addContentFragment(fragment, true)

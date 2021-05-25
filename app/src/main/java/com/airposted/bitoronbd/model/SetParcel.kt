@@ -12,6 +12,8 @@ class SetParcel: Serializable {
 //    var pick_city = ""
 //    var pick_zone = ""
 //    var pick_area = ""
+    var pic_name = ""
+    var pic_phone = ""
     var pick_address = ""
     var personal_order_type = 0
     var sender_latitude = 0.0
@@ -20,6 +22,7 @@ class SetParcel: Serializable {
     var receiver_longitude = 0.0
     var distance = 0.0
     var item_type = 0
+    var item_qty = ""
     var who_will_pay = 0
     var ssl_transaction_id = ""
     var invoice_no = ""

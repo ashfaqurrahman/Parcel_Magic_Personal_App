@@ -17,4 +17,6 @@ class MyParcelViewModel(
     suspend fun setOrder(
         setParcel: SetParcel
     ) = withContext(Dispatchers.IO) { repository.setOrder(setParcel) }
+
+    suspend fun changeStatus(invoice: String, status: Int) = withContext(Dispatchers.IO) { repository.changeStatus(invoice, status) }
 }

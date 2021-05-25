@@ -65,19 +65,21 @@
                             android:layout_marginEnd="15dp">
 
                             <TextView
+                                android:id="@+id/delivery_type"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_alignParentStart="true"
                                 android:drawablePadding="10dp"
                                 android:fontFamily="@font/poppins_medium"
                                 android:lineSpacingExtra="8sp"
-                                android:text="Delivery type"
+                                tools:text="Delivery type"
                                 android:textColor="#1a1662"
                                 android:textSize="15sp"
                                 android:textStyle="normal"
                                 app:drawableStartCompat="@drawable/ic_car" />
 
                             <TextView
+                                android:id="@+id/invoice"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_alignParentEnd="true"
@@ -116,7 +118,7 @@
                             android:id="@+id/icon"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:src="@drawable/ic_document_large_icon"/>
+                            android:background="@drawable/ic_document_large_icon"/>
 
                         <LinearLayout
                             android:id="@+id/weight_layout"
@@ -133,17 +135,18 @@
                                 android:textStyle="normal"
                                 android:textSize="13sp"
                                 android:textColor="#b5b7dd"
-                                android:text="Weight"
+                                android:text="Quantity"
                                 />
 
                             <TextView
+                                android:id="@+id/quantity"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/poppins_semibold"
                                 android:textStyle="normal"
                                 android:textSize="14sp"
                                 android:textColor="#1a1662"
-                                android:text="03 kg"
+                                tools:text="03"
                                 />
 
                         </LinearLayout>
@@ -167,20 +170,21 @@
                                 />
 
                             <TextView
+                                android:id="@+id/size"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/poppins_semibold"
                                 android:textStyle="normal"
                                 android:textSize="14sp"
                                 android:textColor="#1a1662"
-                                android:text="20 cm"
+                                tools:text="8 x 8 x 8"
                                 />
 
                         </LinearLayout>
 
                         <LinearLayout
-                            android:layout_alignParentEnd="true"
-                            android:layout_marginStart="19dp"
+                            android:id="@+id/layout"
+                            android:layout_alignStart="@+id/layout1"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:orientation="vertical">
@@ -196,13 +200,46 @@
                                 />
 
                             <TextView
+                                android:id="@+id/distance"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/poppins_semibold"
                                 android:textStyle="normal"
                                 android:textSize="14sp"
                                 android:textColor="#1a1662"
-                                android:text="7.5 km"
+                                tools:text="7.5 km"
+                                />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/layout1"
+                            android:layout_below="@+id/layout"
+                            android:layout_alignParentEnd="true"
+                            android:layout_marginStart="19dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/poppins_regular"
+                                android:textStyle="normal"
+                                android:textSize="13sp"
+                                android:textColor="#b5b7dd"
+                                android:text="Delivery Charge"
+                                />
+
+                            <TextView
+                                android:id="@+id/charge"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/poppins_semibold"
+                                android:textStyle="normal"
+                                android:textSize="14sp"
+                                android:textColor="#1a1662"
+                                tools:text="BDT 100"
                                 />
 
                         </LinearLayout>
@@ -223,7 +260,7 @@
                                 android:textSize="13sp"
                                 android:textColor="#8c8cb2"
                                 android:lineSpacingExtra="48sp"
-                                android:text="Date of delivery"
+                                android:text="Date of order"
                                 />
                             <TextView
                                 android:id="@+id/delivery_date"
@@ -235,7 +272,7 @@
                                 android:textSize="14sp"
                                 android:textColor="#1a1662"
                                 android:lineSpacingExtra="47sp"
-                                android:text="With in 24 hours"
+                                tools:text="10-03-2021 12:10:30"
                                 />
 
                         </RelativeLayout>
@@ -256,10 +293,10 @@
                                 android:textSize="13sp"
                                 android:textColor="#8c8cb2"
                                 android:lineSpacingExtra="48sp"
-                                android:text="Distance"
+                                android:text="Order Status"
                                 />
                             <TextView
-                                android:id="@+id/destence"
+                                android:id="@+id/status"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_alignParentEnd="true"
@@ -268,7 +305,7 @@
                                 android:textSize="14sp"
                                 android:textColor="#1a1662"
                                 android:lineSpacingExtra="47sp"
-                                android:text="7.5 km"
+                                tools:text="Pending"
                                 />
 
                         </RelativeLayout>
@@ -329,7 +366,7 @@
                                 android:textSize="14sp"
                                 android:textColor="#1a1662"
                                 android:lineSpacingExtra="47sp"
-                                android:text="Fahim Rana"
+                                tools:text="Fahim Rana"
                                 />
 
                         </RelativeLayout>
@@ -360,7 +397,7 @@
                                 android:textSize="14sp"
                                 android:textColor="#1a1662"
                                 android:lineSpacingExtra="47sp"
-                                android:text="0174 2618 399"
+                                tools:text="0174 2618 399"
                                 />
 
                         </RelativeLayout>
@@ -409,7 +446,7 @@
                                 android:textSize="14sp"
                                 android:textColor="#1a1662"
                                 android:lineSpacingExtra="47sp"
-                                android:text="Badol Mondal"
+                                tools:text="Badol Mondal"
                                 />
 
                         </RelativeLayout>
@@ -440,7 +477,7 @@
                                 android:textSize="14sp"
                                 android:textColor="#1a1662"
                                 android:lineSpacingExtra="47sp"
-                                android:text="0174 2618 399"
+                                tools:text="0174 2618 399"
                                 />
 
                         </RelativeLayout>
@@ -526,7 +563,7 @@
                             android:textSize="14sp"
                             android:textColor="#1a1662"
                             android:lineSpacingExtra="13sp"
-                            android:text="House # 43, Road# 1, Block #I, Banani, Dhaka-1213"
+                            tools:text="House # 43, Road# 1, Block #I, Banani, Dhaka-1213"
                             />
 
                         <TextView
@@ -542,7 +579,7 @@
                             android:textSize="14sp"
                             android:textColor="#1a1662"
                             android:lineSpacingExtra="13sp"
-                            android:text="House # 43, Road# 1, Block #I, Banani, Dhaka-1213"
+                            tools:text="House # 43, Road# 1, Block #I, Banani, Dhaka-1213"
                             />
 
                     </RelativeLayout>

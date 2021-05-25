@@ -98,8 +98,12 @@
     <string name="envelope_size">Size: 8.5\" x 14\"</string>
     <string name="large_size">Size: 12\" x 12\" x 12\"</string>
     <string name="small_size">Size: 8\" x 8\" x 8\"</string>
+    <string name="envelope_size1">8.5\"x14\"</string>
+    <string name="large_size1">12\"x12\"x12\"</string>
+    <string name="small_size1">8\"x8\"x8\"</string>
     <string name="sign_in_with_mobile_number">Sign in with mobile number</string>
     <string name="cancel_order">Cancel Order</string>
     <string name="cancelled_order">Cancelled Order\'s</string>
     <string name="collected_order">Collected Order\'s</string>
+    <string name="order_detaisl">Order Details</string>
 </resources>
