@@ -169,7 +169,7 @@ class ConfirmReceiverAddressFragment : Fragment(), KodeinAware, SSLCTransactionR
                         }
                     })
 
-                    val circleDrawable1 = resources.getDrawable(R.drawable.ic_map__1___1_)
+                    val circleDrawable1 = resources.getDrawable(R.drawable.ic_marker)
                     val markerIcon1 = getMarkerIconFromDrawable(circleDrawable1)
                     googleMap.addMarker(
                         MarkerOptions().position(location2)
@@ -197,8 +197,6 @@ class ConfirmReceiverAddressFragment : Fragment(), KodeinAware, SSLCTransactionR
         binding.back.setOnClickListener {
             requireActivity().onBackPressed()
         }
-
-        Log.e("QQQ", requireArguments().getString("parcel_quantity")!!)
 
         binding.confirmReceiverAddress.setOnClickListener {
             val radioButtonID = binding.radioGroup.checkedRadioButtonId
@@ -331,7 +329,7 @@ class ConfirmReceiverAddressFragment : Fragment(), KodeinAware, SSLCTransactionR
         setParcel.invoice_no = "AIR" + getSaltString() + getSaltString()
         setParcel.item_type = requireArguments().getInt("parcel_type")
         setParcel.personal_order_type = requireArguments().getInt("delivery_type")
-        setParcel.item_qty = requireArguments().getString("parcel_quantity")!!
+        setParcel.item_qty = requireArguments().getInt("parcel_quantity")
         setParcel.recp_name = requireArguments().getString("receiver_name")!!
         setParcel.recp_phone = requireArguments().getString("receiver_phone")!!
         setParcel.pic_name = PersistentUser.getInstance().getFullName(requireContext())

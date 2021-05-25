@@ -30,6 +30,7 @@
 
             <ImageView
                 android:layout_width="match_parent"
+                android:visibility="gone"
                 android:layout_height="120dp"
                 android:scaleType="centerCrop"
                 android:src="@drawable/map_bg" />
@@ -69,6 +70,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
+                    android:textIsSelectable="true"
                     android:fontFamily="@font/poppins_medium"
                     android:lineSpacingExtra="10sp"
                     android:text="@{`#` + order.invoice_no}"

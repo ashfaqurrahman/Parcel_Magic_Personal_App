@@ -50,9 +50,8 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/poppins_bold"
                     android:textStyle="bold"
-                    android:textSize="26sp"
+                    android:textSize="36sp"
                     android:textColor="#ffffff"
-                    android:lineSpacingExtra="21sp"
                     android:text="Express"
                     />
 

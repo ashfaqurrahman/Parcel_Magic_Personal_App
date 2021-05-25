@@ -22,7 +22,7 @@ class SetParcel: Serializable {
     var receiver_longitude = 0.0
     var distance = 0.0
     var item_type = 0
-    var item_qty = ""
+    var item_qty = 0
     var who_will_pay = 0
     var ssl_transaction_id = ""
     var invoice_no = ""

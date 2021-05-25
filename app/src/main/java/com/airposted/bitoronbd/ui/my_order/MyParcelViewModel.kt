@@ -19,4 +19,8 @@ class MyParcelViewModel(
     ) = withContext(Dispatchers.IO) { repository.setOrder(setParcel) }
 
     suspend fun changeStatus(invoice: String, status: Int) = withContext(Dispatchers.IO) { repository.changeStatus(invoice, status) }
+
+    suspend fun getDirections(
+        url: String
+    ) = withContext(Dispatchers.IO) { repository.directionSearch(url) }
 }

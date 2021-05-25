@@ -30,26 +30,6 @@ class OrderListRecyclerViewAdapter(
         val dataModel = dataModelList[position]
         holder.bind(dataModel)
 
-        /*val mapView = holder.binding.mapView
-        //mapView.onResume() // needed to get the map to display immediately
-
-        try {
-            MapsInitializer.initialize(context.applicationContext)
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
-
-        mapView.getMapAsync { mMap ->
-
-            val currentLatLng = LatLng(23.786474, 90.403455)
-            mMap!!.addMarker(MarkerOptions().position(currentLatLng).title("Test"))
-
-
-            // For zooming automatically to the location of the marker
-            val cameraPosition = CameraPosition.Builder().target(currentLatLng).zoom(14f).build()
-            mMap.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition))
-        }*/
-
         when(dataModel.current_status){
             2 -> {
                 holder.binding.imgPending.alpha = 1F

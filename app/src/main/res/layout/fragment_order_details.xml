@@ -39,11 +39,11 @@
                         android:layout_height="wrap_content"
                         android:orientation="vertical">
 
-                        <ImageView
+                        <fragment
+                            android:id="@+id/mapReceiverDetails"
+                            android:name="com.google.android.gms.maps.SupportMapFragment"
                             android:layout_width="match_parent"
-                            android:layout_height="120dp"
-                            android:scaleType="centerCrop"
-                            android:src="@drawable/map_bg" />
+                            android:layout_height="150dp"/>
 
                         <!--<fragment
                             android:id="@+id/mapReceiverDetails"

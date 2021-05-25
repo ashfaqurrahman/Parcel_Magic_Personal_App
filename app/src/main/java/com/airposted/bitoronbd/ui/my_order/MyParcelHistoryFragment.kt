@@ -276,7 +276,6 @@ class MyParcelHistoryFragment : Fragment(), KodeinAware, CursorWheelLayout.OnMen
     override fun onItemClick(order: DataX) {
         val fragment = OrderDetailsFragment()
         val bundle = Bundle()
-        bundle.putString("this", "Collected")
         bundle.putString("personal_order_type", order.personal_order_type)
         bundle.putInt("item_type", order.item_type)
         bundle.putString("item_qty", order.item_qty)

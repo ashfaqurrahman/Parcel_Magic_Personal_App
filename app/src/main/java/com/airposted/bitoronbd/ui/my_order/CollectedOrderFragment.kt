@@ -194,7 +194,6 @@ class CollectedOrderFragment : Fragment(), KodeinAware, OrderClickListener  {
     override fun onItemClick(order: DataX) {
         val fragment = OrderDetailsFragment()
         val bundle = Bundle()
-        bundle.putString("this", "Collected")
         bundle.putString("personal_order_type", order.personal_order_type)
         bundle.putInt("item_type", order.item_type)
         bundle.putString("item_qty", order.item_qty)
@@ -208,7 +207,7 @@ class CollectedOrderFragment : Fragment(), KodeinAware, OrderClickListener  {
         bundle.putDouble("receiver_latitude", order.receiver_latitude)
         bundle.putDouble("receiver_longitude", order.receiver_longitude)
         bundle.putInt("current_status", order.current_status)
-        bundle.putInt("price", order.delivery_charge)
+        bundle.putInt("delivery_charge", order.delivery_charge)
         bundle.putString("invoice", order.invoice_no)
         bundle.putString("order_date", order.order_date)
         fragment.arguments = bundle

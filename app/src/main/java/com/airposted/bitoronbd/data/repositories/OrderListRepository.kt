@@ -7,6 +7,7 @@ import com.airposted.bitoronbd.data.network.SafeApiRequest
 import com.airposted.bitoronbd.model.SetParcel
 import com.airposted.bitoronbd.model.OrderList
 import com.airposted.bitoronbd.data.network.responses.SetParcelResponse
+import com.airposted.bitoronbd.model.GoogleMapDTO
 import com.airposted.bitoronbd.model.StatusChangeModel
 
 class OrderListRepository(context: Context, private val api: MyApi) : SafeApiRequest() {
@@ -58,5 +59,9 @@ class OrderListRepository(context: Context, private val api: MyApi) : SafeApiReq
                 PersistentUser.getInstance().getAccessToken(appContext), invoice, status
             )
         }
+    }
+
+    suspend fun directionSearch(url: String): GoogleMapDTO {
+        return apiRequest { api.getDirectionsList(url)}
     }
 }
