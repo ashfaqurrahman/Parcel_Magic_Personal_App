@@ -333,7 +333,7 @@ class ConfirmReceiverAddressFragment : Fragment(), KodeinAware, SSLCTransactionR
         setParcel.recp_name = requireArguments().getString("receiver_name")!!
         setParcel.recp_phone = requireArguments().getString("receiver_phone")!!
         setParcel.pic_name = PersistentUser.getInstance().getFullName(requireContext())
-        setParcel.pic_phone = PersistentUser.getInstance().getFullName(requireContext())
+        setParcel.pic_phone = PersistentUser.getInstance().getPhoneNumber(requireContext())
 //        setParcel.recp_city = requireArguments().getString("city")!!
 //        setParcel.recp_zone = requireArguments().getString("area")!!
 //        setParcel.recp_area = requireArguments().getString("area")!!
