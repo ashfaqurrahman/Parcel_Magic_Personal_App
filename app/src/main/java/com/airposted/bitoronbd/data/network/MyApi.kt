@@ -84,6 +84,26 @@ interface MyApi {
         @Header("Authorization") header: String
     ) : Response<OrderList>
 
+    @POST("personal/collectedorderlistquick")
+    suspend fun collectedOrderListQuick(
+        @Header("Authorization") header: String
+    ) : Response<OrderList>
+
+    @POST("personal/collectedorderlistexpress")
+    suspend fun collectedOrderListExpress(
+        @Header("Authorization") header: String
+    ) : Response<OrderList>
+
+    @POST("personal/cancelorderlistquick")
+    suspend fun canceledOrderListQuick(
+        @Header("Authorization") header: String
+    ) : Response<OrderList>
+
+    @POST("personal/cancelorderlistexpress")
+    suspend fun canceledOrderListExpress(
+        @Header("Authorization") header: String
+    ) : Response<OrderList>
+
     @GET
     suspend fun getPlacesNameList(@Url url: String): Response<SearchLocation>
 

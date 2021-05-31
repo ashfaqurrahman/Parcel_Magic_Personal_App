@@ -80,7 +80,6 @@ class ConfirmReceiverAddressFragment : Fragment(), KodeinAware, SSLCTransactionR
     }
 
     private fun bindUI() {
-
         setParcel.who_will_pay = 1
 
         setProgressDialog(requireActivity())

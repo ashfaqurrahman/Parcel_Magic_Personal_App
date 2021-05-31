@@ -1,20 +1,27 @@
 package com.airposted.bitoronbd.ui.my_order
 
+import android.app.Dialog
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.MalformedJsonException
+import android.view.*
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.GridLayoutManager
+import com.airposted.bitoronbd.R
 import com.airposted.bitoronbd.databinding.FragmentCollectedOrderBinding
 import com.airposted.bitoronbd.model.DataX
+import com.airposted.bitoronbd.ui.adapter.SimpleTextAdapter
+import com.airposted.bitoronbd.ui.data.MenuItemData
 import com.airposted.bitoronbd.ui.main.CommunicatorFragmentInterface
+import com.airposted.bitoronbd.ui.widget.CursorWheelLayout
+import com.airposted.bitoronbd.ui.widget.SimpleTextCursorWheelLayout
+import com.airposted.bitoronbd.ui.widget.SwitchButton
 import com.airposted.bitoronbd.utils.*
 import com.skydoves.powerspinner.OnSpinnerItemSelectedListener
 import kotlinx.coroutines.launch
@@ -30,6 +37,7 @@ class CollectedOrderFragment : Fragment(), KodeinAware, OrderClickListener  {
     private lateinit var dataList:List<DataX>
     private var currentItemPosition = 0
     private var selectedItemPosition = 0
+    private lateinit var invoice:List<DataX>
     var communicatorFragmentInterface: CommunicatorFragmentInterface? = null
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -53,12 +61,12 @@ class CollectedOrderFragment : Fragment(), KodeinAware, OrderClickListener  {
             binding.expressQuick.dismiss()
         }
 
-        getOrderList(0)
+        getOrderList(0+4)
 
         binding.expressQuick.setOnSpinnerItemSelectedListener(OnSpinnerItemSelectedListener<String> { oldIndex, oldItem, newIndex, newItem ->
             run {
                 if (oldIndex != newIndex) {
-                    getOrderList(newIndex)
+                    getOrderList(newIndex+4)
                 }
             }
         })
@@ -102,10 +110,10 @@ class CollectedOrderFragment : Fragment(), KodeinAware, OrderClickListener  {
                 binding.orders.itemAnimator = DefaultItemAnimator()
                 if (s.toString().isNotEmpty()) {
                     val listNew: ArrayList<DataX> = ArrayList()
-                    for (l in dataList.indices) {
-                        val serviceName: String = dataList[l].invoice_no
+                    for (l in invoice.indices) {
+                        val serviceName: String = invoice[l].invoice_no
                         if (serviceName.contains(s.toString())) {
-                            listNew.add(dataList[l])
+                            listNew.add(invoice[l])
                             binding.orders.visibility = View.VISIBLE
                             binding.noOrder.visibility = View.GONE
                         }
@@ -125,7 +133,7 @@ class CollectedOrderFragment : Fragment(), KodeinAware, OrderClickListener  {
                     binding.orders.visibility = View.VISIBLE
                     binding.noOrder.visibility = View.GONE
                     val myRecyclerViewAdapter = OrderListRecyclerViewAdapter(
-                        dataList,
+                        invoice,
                         requireActivity(),
                         this@CollectedOrderFragment
                     )
@@ -136,31 +144,16 @@ class CollectedOrderFragment : Fragment(), KodeinAware, OrderClickListener  {
     }
 
     private fun getOrderList(order: Int) {
-//        when(order){
-//            0 -> binding.title.text = "Current Orders"
-//            1 -> binding.title.text = "Current Orders"
-//            2 -> binding.title.text = "Order History"
-//            3 -> binding.title.text = "Order History"
-//        }
         setProgressDialog(requireActivity())
         lifecycleScope.launch {
             try {
                 val response = viewModel.getOrderList(order)
-                dataList = response.data
-                val list: ArrayList<DataX> = ArrayList()
-                for (l in dataList.indices) {
-                    val serviceName: Int = dataList[l].current_status
-                    if (serviceName == 4) {
-                        list.add(dataList[l])
-                        binding.orders.visibility = View.VISIBLE
-                        binding.noOrder.visibility = View.GONE
-                    }
-                }
-                if (list.isNotEmpty()) {
+                invoice = response.data
+                if (response.data.isNotEmpty()) {
                     binding.orders.visibility = View.VISIBLE
                     binding.noOrder.visibility = View.GONE
                     val myRecyclerViewAdapter = OrderListRecyclerViewAdapter(
-                        list,
+                        response.data,
                         requireActivity(),
                         this@CollectedOrderFragment
                     )

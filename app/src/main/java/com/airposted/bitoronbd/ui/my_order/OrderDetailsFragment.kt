@@ -66,7 +66,7 @@ class OrderDetailsFragment : Fragment(), KodeinAware {
 
         binding.deliveryType.text = requireArguments().getString("personal_order_type").toString() + " Delivery"
         binding.invoice.text = "#" + requireArguments().getString("invoice")
-        binding.quantity.text = requireArguments().getString("item_qty")
+        binding.quantity.text = "0" + requireArguments().getString("item_qty")
         binding.distance.text = requireArguments().getInt("distance").toString() + " km"
         binding.charge.text = "BDT " + requireArguments().getInt("delivery_charge").toString()
         binding.deliveryDate.text = requireArguments().getString("order_date")

@@ -40,6 +40,30 @@ class OrderListRepository(context: Context, private val api: MyApi) : SafeApiReq
                         appContext
                     ))}
             }
+            4-> {
+                response = apiRequest { api.collectedOrderListExpress(
+                    PersistentUser.getInstance().getAccessToken(
+                        appContext
+                    ))}
+            }
+            5-> {
+                response = apiRequest { api.collectedOrderListQuick(
+                    PersistentUser.getInstance().getAccessToken(
+                        appContext
+                    ))}
+            }
+            6-> {
+                response = apiRequest { api.canceledOrderListExpress(
+                    PersistentUser.getInstance().getAccessToken(
+                        appContext
+                    ))}
+            }
+            7-> {
+                response = apiRequest { api.canceledOrderListQuick(
+                    PersistentUser.getInstance().getAccessToken(
+                        appContext
+                    ))}
+            }
         }
 
         return response!!
