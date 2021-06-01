@@ -52,12 +52,12 @@ class CancelOrderFragment : Fragment(), KodeinAware, OrderClickListener {
             binding.expressQuick.dismiss()
         }
 
-        getOrderList(0)
+        getOrderList(0+6)
 
         binding.expressQuick.setOnSpinnerItemSelectedListener(OnSpinnerItemSelectedListener<String> { oldIndex, oldItem, newIndex, newItem ->
             run {
                 if (oldIndex != newIndex) {
-                    getOrderList(newIndex)
+                    getOrderList(newIndex+6)
                 }
             }
         })
@@ -139,21 +139,12 @@ class CancelOrderFragment : Fragment(), KodeinAware, OrderClickListener {
         lifecycleScope.launch {
             try {
                 val response = viewModel.getOrderList(order)
-                dataList = response.data
-                val list: ArrayList<DataX> = ArrayList()
-                for (l in dataList.indices) {
-                    val serviceName: Int = dataList[l].current_status
-                    if (serviceName == 13) {
-                        list.add(dataList[l])
-                        binding.orders.visibility = View.VISIBLE
-                        binding.noOrder.visibility = View.GONE
-                    }
-                }
-                if (list.isNotEmpty()) {
+                invoice = response.data
+                if (response.data.isNotEmpty()) {
                     binding.orders.visibility = View.VISIBLE
                     binding.noOrder.visibility = View.GONE
                     val myRecyclerViewAdapter = OrderListRecyclerViewAdapter(
-                        list,
+                        response.data,
                         requireActivity(),
                         this@CancelOrderFragment
                     )

@@ -21,6 +21,7 @@ import com.skydoves.powerspinner.PowerSpinnerView
 class ParcelTypeFragment : Fragment() {
     private lateinit var binding: FragmentParcelTypeBinding
     private var communicatorFragmentInterface: CommunicatorFragmentInterface? = null
+    var quantity = 1
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -76,12 +77,11 @@ class ParcelTypeFragment : Fragment() {
         )
         val done = dialogs.findViewById<TextView>(R.id.done)
         val quantitySpinner = dialogs.findViewById<PowerSpinnerView>(R.id.quantity_spinner)
-        var quantity = 1
         quantitySpinner.setOnSpinnerItemSelectedListener(OnSpinnerItemSelectedListener<String> { oldIndex, oldItem, newIndex, newItem ->
             run {
                 if (oldIndex != newIndex) {
-                    Toast.makeText(requireContext(), newItem, Toast.LENGTH_SHORT).show()
-                    quantity = newIndex
+                    quantity = newIndex + 1
+                    Toast.makeText(requireContext(), quantity.toString(), Toast.LENGTH_SHORT).show()
                 }
             }
         })
