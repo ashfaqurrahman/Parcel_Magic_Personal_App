@@ -5,13 +5,7 @@ import java.io.Serializable
 class SetParcel: Serializable {
     var recp_name = ""
     var recp_phone = ""
-//    var recp_city = ""
-//    var recp_zone = ""
-//    var recp_area = ""
     var recp_address = ""
-//    var pick_city = ""
-//    var pick_zone = ""
-//    var pick_area = ""
     var pic_name = ""
     var pic_phone = ""
     var pick_address = ""

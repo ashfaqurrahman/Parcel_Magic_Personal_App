@@ -392,7 +392,7 @@ class ConfirmReceiverAddressFragment : Fragment(), KodeinAware, SSLCTransactionR
                     successDialog(setParcel.invoice_no)
                 }
 
-            } catch (e: MalformedJsonException) {
+            } catch (e: com.google.gson.stream.MalformedJsonException) {
                 dismissDialog()
                 binding.rootLayout.snackbar(e.message!!)
                 e.printStackTrace()
