@@ -113,6 +113,18 @@ interface MyApi {
     @GET("app_settings")
     suspend fun getSetting(): Response<SettingResponse>
 
+    @FormUrlEncoded
+    @POST("personal/addfcmtoken")
+    suspend fun saveFcmToken(
+        @Header("Authorization") header: String,
+        @Field("fcm_token") fcm_token: String,
+    ): Response<SetParcelResponse>
+
+    @GET("personal/deletefcmtoken")
+    suspend fun deleteFcmToken(
+        @Header("Authorization") header: String
+    ): Response<SetParcelResponse>
+
     companion object{
         operator fun invoke(
             networkConnectionInterceptor: NetworkConnectionInterceptor

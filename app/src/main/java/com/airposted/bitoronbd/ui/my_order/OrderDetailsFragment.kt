@@ -83,7 +83,7 @@ class OrderDetailsFragment : Fragment(), KodeinAware {
             googleMap.uiSettings.isZoomControlsEnabled = false
             googleMap.uiSettings.isZoomGesturesEnabled = false
             googleMap.uiSettings.isRotateGesturesEnabled = false
-            googleMap.uiSettings.isScrollGesturesEnabled = true
+            googleMap.uiSettings.isScrollGesturesEnabled = false
 
             googleMap.setOnMarkerClickListener {
                 false
@@ -98,6 +98,10 @@ class OrderDetailsFragment : Fragment(), KodeinAware {
                 requireArguments().getDouble("receiver_latitude"),
                 requireArguments().getDouble("receiver_longitude")
             )
+
+            val bounds = LatLngBounds.Builder()
+            bounds.include(location1)
+            bounds.include(location2)
 
             lifecycleScope.launch {
                 try {
@@ -123,7 +127,7 @@ class OrderDetailsFragment : Fragment(), KodeinAware {
 
                     distance = list.routes[0].legs[0].distance.value
 
-                    val circleDrawable = resources.getDrawable(R.drawable.root_start_point)
+                    /*val circleDrawable = resources.getDrawable(R.drawable.root_start_point)
                     val markerIcon = getMarkerIconFromDrawable(circleDrawable)
                     googleMap.addMarker(
                         MarkerOptions().position(location1)
@@ -141,13 +145,13 @@ class OrderDetailsFragment : Fragment(), KodeinAware {
                             info1.text = requireArguments().getString("recp_address")
                             googleMap.setOnInfoWindowClickListener {
                                 val fragmento: Fragment
-                                /*fragmento = HistorialFragment()
+                                *//*fragmento = HistorialFragment()
                                 val bundle = Bundle()
                                 bundle.putString("title", info1.text.toString())
                                 fragmento.arguments = bundle
                                 getSupportFragmentManager().beginTransaction()
                                     .replace(R.id.content_principal, fragmento)
-                                    .commit()*/
+                                    .commit()*//*
                             }
                             return v
                         }
@@ -158,12 +162,22 @@ class OrderDetailsFragment : Fragment(), KodeinAware {
                     googleMap.addMarker(
                         MarkerOptions().position(location2)
                             .icon(markerIcon1)
-                    ).showInfoWindow()
-                    if (distance/1000 > 5){
+                    ).showInfoWindow()*/
+
+                    googleMap.moveCamera(
+                        CameraUpdateFactory.newLatLngBounds(
+                            bounds.build(),
+                            mapFragment.requireView().width,
+                            mapFragment.requireView().height,
+                            (mapFragment.requireView().height * 0.05f).toInt()
+                        )
+                    )
+
+                    /*if (distance/1000 > 5){
                         googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(location1, 10f))
                     } else {
                         googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(location1, 13f))
-                    }
+                    }*/
                     dismissDialog()
                 } catch (e: ApiException) {
                     dismissDialog()

@@ -25,6 +25,7 @@ import com.airposted.bitoronbd.data.network.MyApi
 import com.airposted.bitoronbd.data.network.responses.SettingResponse
 import com.airposted.bitoronbd.data.network.SafeApiRequest
 import com.airposted.bitoronbd.data.network.preferences.PreferenceProvider
+import com.airposted.bitoronbd.data.network.responses.SetParcelResponse
 import com.airposted.bitoronbd.model.LocationDetails
 import com.airposted.bitoronbd.model.LocationDetailsWithName
 import com.google.android.gms.location.*
@@ -186,4 +187,17 @@ class HomeRepository(context: Context, private val api: MyApi): SafeApiRequest()
         return apiRequest { api.getSetting() }
     }
 
+    suspend fun saveFcmToken(fcm_token: String): SetParcelResponse {
+        return apiRequest { api.saveFcmToken(
+            PersistentUser.getInstance().getAccessToken(
+                appContext
+            ), fcm_token) }
+    }
+
+    suspend fun deleteFcmToken(): SetParcelResponse {
+        return apiRequest { api.deleteFcmToken(
+            PersistentUser.getInstance().getAccessToken(
+                appContext
+            )) }
+    }
 }

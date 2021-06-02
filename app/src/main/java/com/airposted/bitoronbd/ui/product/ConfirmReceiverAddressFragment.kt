@@ -91,7 +91,7 @@ class ConfirmReceiverAddressFragment : Fragment(), KodeinAware, SSLCTransactionR
             googleMap.uiSettings.isZoomControlsEnabled = false
             googleMap.uiSettings.isZoomGesturesEnabled = false
             googleMap.uiSettings.isRotateGesturesEnabled = false
-            googleMap.uiSettings.isScrollGesturesEnabled = true
+            googleMap.uiSettings.isScrollGesturesEnabled = false
 
             googleMap.setOnMarkerClickListener {
                 false
@@ -106,6 +106,11 @@ class ConfirmReceiverAddressFragment : Fragment(), KodeinAware, SSLCTransactionR
                 requireArguments().getDouble("receiver_latitude"),
                 requireArguments().getDouble("receiver_longitude")
             )
+
+
+            val bounds = LatLngBounds.Builder()
+            bounds.include(location1)
+            bounds.include(location2)
 
             lifecycleScope.launch {
                 try {
@@ -134,9 +139,6 @@ class ConfirmReceiverAddressFragment : Fragment(), KodeinAware, SSLCTransactionR
                     setParcel.distance = round((distance/1000).toDouble(), 2)
                     setParcel.delivery_charge = calculatePrice(requireArguments().getInt("delivery_type"))
                     binding.charge.text = "৳" + calculatePrice(requireArguments().getInt("delivery_type"))
-
-                    Log.e("aaaaa", (distance/1000).toString())
-                    Log.e("aaaaa", calculatePrice(requireArguments().getInt("delivery_type")).toString())
 
                     val circleDrawable = resources.getDrawable(R.drawable.root_start_point)
                     val markerIcon = getMarkerIconFromDrawable(circleDrawable)
@@ -174,11 +176,21 @@ class ConfirmReceiverAddressFragment : Fragment(), KodeinAware, SSLCTransactionR
                         MarkerOptions().position(location2)
                             .icon(markerIcon1)
                     ).showInfoWindow()
-                    if (distance/1000 > 5){
+
+                    googleMap.moveCamera(
+                        CameraUpdateFactory.newLatLngBounds(
+                            bounds.build(),
+                            mapFragment.requireView().width,
+                            mapFragment.requireView().height,
+                            (mapFragment.requireView().height * 0.05f).toInt()
+                        )
+                    )
+
+                    /*if (distance/1000 > 5){
                         googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(location1, 12f))
                     } else {
                         googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(location1, 13f))
-                    }
+                    }*/
                     dismissDialog()
                 } catch (e: ApiException) {
                     dismissDialog()
@@ -365,18 +377,18 @@ class ConfirmReceiverAddressFragment : Fragment(), KodeinAware, SSLCTransactionR
     private fun calculatePrice(position: Int): Double {
         return when (position) {
             1 ->round(
-                ((distance/1000 * PreferenceProvider(
+                (requireArguments().getInt("parcel_quantity") *  ((distance/1000 * PreferenceProvider(
                     requireActivity()
-                ).getSharedPreferences("per_km_price")!!.toInt()) + PreferenceProvider(
+                ).getSharedPreferences("per_km_price_quick")!!.toInt()) + PreferenceProvider(
                     requireActivity()
-                ).getSharedPreferences("base_price_quick")!!.toInt()).toDouble(), 2
+                ).getSharedPreferences("base_price_quick")!!.toInt())).toDouble(), 2
             )
             else -> round(
-                ((distance/1000 * PreferenceProvider(
+                (requireArguments().getInt("parcel_quantity") *  ((distance/1000 * PreferenceProvider(
                     requireActivity()
-                ).getSharedPreferences("per_km_price")!!.toInt()) + PreferenceProvider(
+                ).getSharedPreferences("per_km_price_express")!!.toInt()) + PreferenceProvider(
                     requireActivity()
-                ).getSharedPreferences("base_price_express")!!.toInt()).toDouble(), 2
+                ).getSharedPreferences("base_price_express")!!.toInt())).toDouble(), 2
             )
         }
     }

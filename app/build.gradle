@@ -109,6 +109,9 @@ dependencies {
     implementation ('com.github.bumptech.glide:okhttp3-integration:4.7.1'){
         exclude group: 'glide-parent'
     }
+    // Google Maps Location Services
+    implementation 'com.google.android.gms:play-services-location:17.0.0'
+    implementation 'com.google.android.gms:play-services-maps:17.0.0'
     implementation 'com.google.android.libraries.places:places:2.4.0'
     implementation 'com.google.maps.android:android-maps-utils:2.2.0'
 

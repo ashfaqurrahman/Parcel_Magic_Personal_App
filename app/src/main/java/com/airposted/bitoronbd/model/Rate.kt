@@ -26,8 +26,10 @@ data class Rate(
     val merchantOutsideDhaka: Int,
     @SerializedName("package_name")
     val packageName: String,
-    @SerializedName("per_km_price")
-    val perKmPrice: Int,
+    @SerializedName("per_km_price_quick")
+    val perKmPriceQuick: Int,
+    @SerializedName("per_km_price_express")
+    val perKmPriceExpress: Int,
     @SerializedName("weight")
     val weight: Int,
     @SerializedName("width")

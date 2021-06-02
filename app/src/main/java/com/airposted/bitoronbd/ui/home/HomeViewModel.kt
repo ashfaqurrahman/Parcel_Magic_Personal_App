@@ -22,4 +22,7 @@ class HomeViewModel(
 
     val currentLocation = repository.currentLocation()
 
+    suspend fun saveFcmToken(fcm_token: String) = withContext(Dispatchers.IO) { repository.saveFcmToken(fcm_token) }
+    suspend fun deleteFcmToken() = withContext(Dispatchers.IO) { repository.deleteFcmToken() }
+
 }

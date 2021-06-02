@@ -81,7 +81,7 @@ class ParcelTypeFragment : Fragment() {
             run {
                 if (oldIndex != newIndex) {
                     quantity = newIndex + 1
-                    Toast.makeText(requireContext(), quantity.toString(), Toast.LENGTH_SHORT).show()
+                    //Toast.makeText(requireContext(), quantity.toString(), Toast.LENGTH_SHORT).show()
                 }
             }
         })

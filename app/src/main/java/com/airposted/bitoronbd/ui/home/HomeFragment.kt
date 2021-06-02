@@ -2,8 +2,10 @@ package com.airposted.bitoronbd.ui.home
 
 import android.Manifest
 import android.app.Dialog
+import android.content.Context
 import android.content.Intent
 import android.content.IntentSender.SendIntentException
+import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.content.res.Resources
 import android.graphics.Color
@@ -28,19 +30,19 @@ import com.airposted.bitoronbd.databinding.FragmentHomeBinding
 import com.airposted.bitoronbd.model.LocationDetailsWithName
 import com.airposted.bitoronbd.ui.auth.AuthActivity
 import com.airposted.bitoronbd.ui.help.HelpFragment
-import com.airposted.bitoronbd.ui.my_order.MyParcelHistoryFragment
 import com.airposted.bitoronbd.ui.main.CommunicatorFragmentInterface
 import com.airposted.bitoronbd.ui.more.MoreFragment
 import com.airposted.bitoronbd.ui.my_order.CancelOrderFragment
 import com.airposted.bitoronbd.ui.my_order.CollectedOrderFragment
 import com.airposted.bitoronbd.ui.my_order.MyParcelFragment
+import com.airposted.bitoronbd.ui.my_order.MyParcelHistoryFragment
 import com.airposted.bitoronbd.ui.product.PackageGuidelineFragment
 import com.airposted.bitoronbd.ui.product.ParcelTypeFragment
 import com.airposted.bitoronbd.ui.termsconditions.TermsConditionsFragment
 import com.airposted.bitoronbd.utils.*
-import com.airposted.bitoronbd.utils.ApiException
 import com.bumptech.glide.Glide
 import com.google.android.gms.common.api.*
+import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.location.*
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -50,6 +52,7 @@ import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MapStyleOptions
 import com.google.android.material.navigation.NavigationView
+import com.google.firebase.iid.FirebaseInstanceId
 import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.coroutines.launch
 import org.kodein.di.KodeinAware
@@ -174,8 +177,12 @@ open class HomeFragment : Fragment(R.layout.fragment_home),
             try {
                 val settingResponse = viewModel.getSetting()
                 PreferenceProvider(requireActivity()).saveSharedPreferences(
-                    "per_km_price",
-                    settingResponse.rate.perKmPrice.toString()
+                    "per_km_price_quick",
+                    settingResponse.rate.perKmPriceQuick.toString()
+                )
+                PreferenceProvider(requireActivity()).saveSharedPreferences(
+                    "per_km_price_express",
+                    settingResponse.rate.perKmPriceExpress.toString()
                 )
                 PreferenceProvider(requireActivity()).saveSharedPreferences(
                     "base_price_quick",
@@ -185,8 +192,27 @@ open class HomeFragment : Fragment(R.layout.fragment_home),
                     "base_price_express",
                     settingResponse.rate.basePriceExpress.toString()
                 )
-                dismissDialog()
-            } catch (e: ApiException) {
+                FirebaseInstanceId.getInstance().instanceId.addOnSuccessListener { instanceIdResult ->
+                    val token = instanceIdResult.token
+                    lifecycleScope.launch {
+                        try {
+                            val saveFcmTokenResponse = viewModel.saveFcmToken(token)
+                            if (saveFcmTokenResponse.success) {
+                                dismissDialog()
+                            }
+                        } catch (e: com.airposted.bitoronbd.utils.ApiException) {
+                            dismissDialog()
+                            homeBinding.rootLayout.snackbar(e.message!!)
+                            e.printStackTrace()
+                        } catch (e: NoInternetException) {
+                            dismissDialog()
+                            homeBinding.rootLayout.snackbar(e.message!!)
+                            e.printStackTrace()
+                        }
+                    }
+                }
+
+            } catch (e: com.airposted.bitoronbd.utils.ApiException) {
                 dismissDialog()
                 homeBinding.rootLayout.snackbar(e.message!!)
                 e.printStackTrace()
@@ -391,10 +417,28 @@ open class HomeFragment : Fragment(R.layout.fragment_home),
                     dialogs.dismiss()
                 }
                 ok.setOnClickListener {
-                    PersistentUser.getInstance().logOut(context)
-                    val intent = Intent(requireContext(), AuthActivity::class.java)
-                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
-                    startActivity(intent)
+                    setProgressDialog(requireActivity())
+                    lifecycleScope.launch {
+                        try {
+                            val deleteFcmTokenResponse = viewModel.deleteFcmToken()
+                            if (deleteFcmTokenResponse.success) {
+                                dismissDialog()
+                                Toast.makeText(requireActivity(), deleteFcmTokenResponse.msg, Toast.LENGTH_LONG).show()
+                                PersistentUser.getInstance().logOut(context)
+                                val intent = Intent(requireContext(), AuthActivity::class.java)
+                                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                                startActivity(intent)
+                            }
+                        } catch (e: com.airposted.bitoronbd.utils.ApiException) {
+                            dismissDialog()
+                            homeBinding.rootLayout.snackbar(e.message!!)
+                            e.printStackTrace()
+                        } catch (e: NoInternetException) {
+                            dismissDialog()
+                            homeBinding.rootLayout.snackbar(e.message!!)
+                            e.printStackTrace()
+                        }
+                    }
                 }
                 dialogs.setCancelable(false)
                 dialogs.show()
