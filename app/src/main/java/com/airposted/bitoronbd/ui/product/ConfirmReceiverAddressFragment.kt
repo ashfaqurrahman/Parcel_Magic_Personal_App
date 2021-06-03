@@ -180,8 +180,8 @@ class ConfirmReceiverAddressFragment : Fragment(), KodeinAware, SSLCTransactionR
                     googleMap.moveCamera(
                         CameraUpdateFactory.newLatLngBounds(
                             bounds.build(),
-                            mapFragment.requireView().width,
-                            mapFragment.requireView().height,
+                            mapFragment.requireView().width - 100,
+                            mapFragment.requireView().height - 100,
                             (mapFragment.requireView().height * 0.05f).toInt()
                         )
                     )

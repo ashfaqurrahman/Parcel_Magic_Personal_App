@@ -320,7 +320,7 @@ open class HomeFragment : Fragment(R.layout.fragment_home),
         mMap.uiSettings.isRotateGesturesEnabled = false
         mMap.mapType = 1
 
-        try {
+        /*try {
             // Customise the styling of the base map using a JSON object defined
             // in a raw resource file.
             val success = googleMap.setMapStyle(
@@ -333,7 +333,7 @@ open class HomeFragment : Fragment(R.layout.fragment_home),
             }
         } catch (e: Resources.NotFoundException) {
             Log.e("TAG", "Can't find style. Error: ", e)
-        }
+        }*/
 
         viewModel.gps.observe(viewLifecycleOwner, {
             if (it) {

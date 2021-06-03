@@ -100,6 +100,7 @@
                             android:inputType="textCapWords"
                             android:maxLines="1"
                             android:padding="20dp"
+                            android:imeOptions="actionNext"
                             android:textColor="#000"
                             android:textSize="14sp" />
 
@@ -153,6 +154,7 @@
                             android:inputType="phone"
                             android:maxLength="9"
                             android:maxLines="1"
+                            android:imeOptions="actionDone"
                             android:padding="20dp"
                             android:textColor="#000"
                             android:textSize="14sp" />

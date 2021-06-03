@@ -73,7 +73,7 @@ class ParcelTypeFragment : Fragment() {
         dialogs.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         dialogs.window?.setLayout(
             ViewGroup.LayoutParams.WRAP_CONTENT,  //w
-            ViewGroup.LayoutParams.MATCH_PARENT //h
+            ViewGroup.LayoutParams.WRAP_CONTENT //h
         )
         val done = dialogs.findViewById<TextView>(R.id.done)
         val quantitySpinner = dialogs.findViewById<PowerSpinnerView>(R.id.quantity_spinner)
