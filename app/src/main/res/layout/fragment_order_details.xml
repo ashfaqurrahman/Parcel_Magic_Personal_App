@@ -337,7 +337,7 @@
                             android:textSize="14sp"
                             android:textColor="#1a1662"
                             android:lineSpacingExtra="47sp"
-                            android:text="Receiver Details"
+                            android:text="Recipient's Details"
                             />
 
                         <RelativeLayout
@@ -417,7 +417,7 @@
                             android:textSize="14sp"
                             android:textColor="#1a1662"
                             android:lineSpacingExtra="47sp"
-                            android:text="Sender Details"
+                            android:text="Sender's Details"
                             />
 
                         <RelativeLayout
@@ -606,13 +606,13 @@
                 android:id="@+id/cancel_order"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/red_button_bg"
-                android:fontFamily="@font/poppins_regular"
-                android:padding="18dp"
+                android:background="@drawable/after_button_bg"
+                android:fontFamily="@font/poppins_semibold"
+                android:padding="15dp"
                 android:text="@string/cancel_order"
                 android:textAlignment="center"
-                android:textColor="#ffffff"
-                android:textSize="15sp" />
+                android:textColor="#FB825D"
+                android:textSize="18sp" />
 
         </RelativeLayout>
 

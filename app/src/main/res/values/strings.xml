@@ -106,4 +106,5 @@
     <string name="cancelled_order">Cancelled Order\'s</string>
     <string name="collected_order">Collected Order\'s</string>
     <string name="order_detaisl">Order Details</string>
+    <string name="confirm_delivery">Confirmed Delivery</string>
 </resources>

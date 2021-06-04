@@ -112,7 +112,7 @@
                     app:closeIcon="@drawable/ic_close_red"
                     app:searchIcon="@null"
                     app:iconifiedByDefault="false"
-                    app:queryHint="Current location"
+                    app:queryHint="Pic Up location"
                     android:textSize="14sp"
                     android:textStyle="bold"
                     android:fontFamily="@font/poppins_regular"
