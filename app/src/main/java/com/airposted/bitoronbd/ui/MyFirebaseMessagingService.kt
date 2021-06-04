@@ -39,7 +39,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
             wl_cpu.acquire(10000)
         }
 
-        val dataMap: Map<String, String> = remoteMessage.data
+        /*val dataMap: Map<String, String> = remoteMessage.data
         val title = dataMap["title"]
         val body = dataMap["text"]
         val click = dataMap["click_action"]
@@ -77,7 +77,7 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
 
         val notificationManager =
             getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-        notificationManager.notify(id!!, notification)
+        notificationManager.notify(id!!, notification)*/
 
     }
 

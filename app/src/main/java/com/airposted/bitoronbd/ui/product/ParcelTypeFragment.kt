@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import com.airposted.bitoronbd.R
@@ -73,9 +74,10 @@ class ParcelTypeFragment : Fragment() {
         dialogs.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         dialogs.window?.setLayout(
             ViewGroup.LayoutParams.WRAP_CONTENT,  //w
-            ViewGroup.LayoutParams.WRAP_CONTENT //h
+            ViewGroup.LayoutParams.MATCH_PARENT //h
         )
         val done = dialogs.findViewById<TextView>(R.id.done)
+        val close = dialogs.findViewById<ImageView>(R.id.cancel)
         val quantitySpinner = dialogs.findViewById<PowerSpinnerView>(R.id.quantity_spinner)
         quantitySpinner.setOnSpinnerItemSelectedListener(OnSpinnerItemSelectedListener<String> { oldIndex, oldItem, newIndex, newItem ->
             run {
@@ -94,6 +96,9 @@ class ParcelTypeFragment : Fragment() {
             bundle.putInt("delivery_type", requireArguments().getInt("delivery_type"))
             fragment.arguments = bundle
             communicatorFragmentInterface?.addContentFragment(fragment, true)
+        }
+        close.setOnClickListener {
+            dialogs.dismiss()
         }
         dialogs.setCancelable(true)
         dialogs.show()
