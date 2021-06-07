@@ -9,6 +9,8 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:background="#fcfcff"
+        android:clickable="true"
+        android:focusable="true"
         tools:context=".ui.auth.SignUpFragment">
 
         <include layout="@layout/custom_toolbar"

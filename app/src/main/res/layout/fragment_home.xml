@@ -8,6 +8,8 @@
         android:layout_height="wrap_content"
         tools:context=".ui.home.HomeFragment"
         android:background="@color/white"
+        android:clickable="true"
+        android:focusable="true"
         android:id="@+id/root_layout">
 
         <androidx.drawerlayout.widget.DrawerLayout

@@ -9,6 +9,8 @@
         android:background="@color/white"
         android:orientation="vertical"
         android:fitsSystemWindows="true"
+        android:clickable="true"
+        android:focusable="true"
         tools:context=".ui.product.ReceiverInfoFragment"
         android:id="@+id/root_layout">
 

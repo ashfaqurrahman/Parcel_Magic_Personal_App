@@ -11,7 +11,8 @@
         tools:context=".ui.my_order.MyParcelFragment"
         android:id="@+id/root_layout"
         android:focusableInTouchMode="true"
-        android:clickable="true">
+        android:clickable="true"
+        android:focusable="true">
 
         <RelativeLayout
             android:layout_width="match_parent"
