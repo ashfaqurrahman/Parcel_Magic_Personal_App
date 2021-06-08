@@ -53,6 +53,7 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MapStyleOptions
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.iid.FirebaseInstanceId
+import com.google.gson.stream.MalformedJsonException
 import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.coroutines.launch
 import org.kodein.di.KodeinAware
@@ -200,6 +201,10 @@ open class HomeFragment : Fragment(R.layout.fragment_home),
                             if (saveFcmTokenResponse.success) {
                                 dismissDialog()
                             }
+                        } catch (e: MalformedJsonException) {
+                            dismissDialog()
+                            homeBinding.rootLayout.snackbar(e.message!!)
+                            e.printStackTrace()
                         } catch (e: com.airposted.bitoronbd.utils.ApiException) {
                             dismissDialog()
                             homeBinding.rootLayout.snackbar(e.message!!)
@@ -212,7 +217,11 @@ open class HomeFragment : Fragment(R.layout.fragment_home),
                     }
                 }
 
-            } catch (e: com.airposted.bitoronbd.utils.ApiException) {
+            } catch (e: MalformedJsonException) {
+                dismissDialog()
+                homeBinding.rootLayout.snackbar(e.message!!)
+                e.printStackTrace()
+            }catch (e: com.airposted.bitoronbd.utils.ApiException) {
                 dismissDialog()
                 homeBinding.rootLayout.snackbar(e.message!!)
                 e.printStackTrace()

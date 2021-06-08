@@ -153,14 +153,7 @@ class ReceiverAddressFragment : Fragment(), KodeinAware, CustomClickListener {
         }
 
         /*binding.map.setOnClickListener {
-            val fragment = LocationSetFragment()
-            val bundle = Bundle()
-            bundle.putString("focus", focus)
-            bundle.putString("sender_location_name", binding.searchFrom.query.toString())
-            bundle.putString("receiver_name", requireArguments().getString("receiver_name"))
-            bundle.putString("receiver_phone", requireArguments().getString("receiver_phone"))
-            fragment.arguments = bundle
-            communicatorFragmentInterface?.addContentFragment(fragment, true)
+            communicatorFragmentInterface?.addContentFragment(LocationSetFragment(), true)
         }*/
 
         binding.searchFrom.setOnQueryTextListener(object : SearchView.OnQueryTextListener,

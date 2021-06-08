@@ -82,10 +82,10 @@ class LocationSetFragment : Fragment(), KodeinAware, CustomClickListener,
             .findFragmentById(R.id.mapSearch1) as SupportMapFragment
         mapFragment.getMapAsync(this)
 
-        binding.search.setOnQueryTextListener(object : SearchView.OnQueryTextListener,
+        binding.fromSearch.setOnQueryTextListener(object : SearchView.OnQueryTextListener,
             androidx.appcompat.widget.SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String): Boolean {
-                binding.search.isEnabled = false
+                binding.fromSearch.isEnabled = false
                 return false
             }
 
@@ -182,7 +182,7 @@ class LocationSetFragment : Fragment(), KodeinAware, CustomClickListener,
         }
 
         val editText =
-            binding.search.findViewById(androidx.appcompat.R.id.search_src_text) as EditText
+            binding.fromSearch.findViewById(androidx.appcompat.R.id.search_src_text) as EditText
         editText.setHintTextColor(resources.getColor(R.color.gray))
         editText.setTextColor(resources.getColor(R.color.black))
 
@@ -246,7 +246,7 @@ class LocationSetFragment : Fragment(), KodeinAware, CustomClickListener,
                         "sender_location_name",
                         requireArguments().getString("sender_location_name")
                     )
-                    bundle.putString("receiver_location_name", binding.search.query.toString())
+                    bundle.putString("receiver_location_name", binding.fromSearch.query.toString())
                     bundle.putDouble("latitude", latitude.toDouble())
                     bundle.putDouble("longitude", longitude.toDouble())
                     bundle.putString("receiver_name", requireArguments().getString("receiver_name"))
@@ -269,19 +269,19 @@ class LocationSetFragment : Fragment(), KodeinAware, CustomClickListener,
 
     private fun location(location: String) {
         if (location.length > 2) {
-            val btnClose: ImageView = binding.search.findViewById(R.id.search_close_btn)
+            val btnClose: ImageView = binding.fromSearch.findViewById(R.id.search_close_btn)
             btnClose.visibility = View.GONE
-            binding.loading.visibility = View.VISIBLE
+            binding.fromLoading.visibility = View.VISIBLE
             binding.recyclerview.visibility = View.VISIBLE
             lifecycleScope.launch {
                 try {
                     val sb =
                         StringBuilder("https://maps.googleapis.com/maps/api/place/autocomplete/json?")
                     sb.append("input=$location")
-                    sb.append("&key=AIzaSyB8gzYgvsy-1TufBYLYaD58EYDTWUZBWZQ")
+                    sb.append("&key=AIzaSyAJnceVASls_tIv4MiZFkzY1ZrVgu6GmW4")
                     sb.append("&components=country:bd")
                     list = viewModel.getLocations(sb.toString())
-                    binding.loading.visibility = View.GONE
+                    binding.fromLoading.visibility = View.GONE
                     btnClose.visibility = View.VISIBLE
                     if (list.predictions.isNotEmpty()) {
 
@@ -372,13 +372,14 @@ class LocationSetFragment : Fragment(), KodeinAware, CustomClickListener,
         val cameraPosition =
             CameraPosition.Builder().target(latLong)
                 .zoom(16f).build()
-        mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition))
+        mMap.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition))
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
 
         if (PreferenceProvider(requireActivity()).getSharedPreferences("latitude") != null){
+            binding.toSearch.requestFocus()
             val cameraPosition =
                 CameraPosition.Builder()
                     .target(
@@ -389,7 +390,9 @@ class LocationSetFragment : Fragment(), KodeinAware, CustomClickListener,
                     )
                     .zoom(15.2f)                   // Sets the zoom
                     .build()
-            mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition))
+            mMap.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition))
+        } else {
+            binding.fromSearch.requestFocus()
         }
 
         mMap.setOnCameraIdleListener {
@@ -409,8 +412,8 @@ class LocationSetFragment : Fragment(), KodeinAware, CustomClickListener,
                 } else {
                     locationString = locationString + ", " + addresses.thoroughfare
                 }
-                binding.search.setQuery(locationString, false)
-                binding.address.text = locationString
+                binding.fromSearch.setQuery(locationString, false)
+                //binding.address.text = locationString
                 latitude = center.latitude.toString()
                 longitude = center.longitude.toString()
                 binding.setLocation.background = ContextCompat.getDrawable(
@@ -420,8 +423,8 @@ class LocationSetFragment : Fragment(), KodeinAware, CustomClickListener,
                 binding.setLocation.isEnabled = true
                 locationName = locationString
                 binding.recyclerview.visibility = View.GONE
-                binding.loading.visibility = View.GONE
-                binding.search.clearFocus()
+                binding.fromLoading.visibility = View.GONE
+                binding.fromSearch.clearFocus()
             }
         }
 
@@ -434,7 +437,7 @@ class LocationSetFragment : Fragment(), KodeinAware, CustomClickListener,
                         requireActivity(),
                         R.drawable.before_button_bg
                     )
-                    binding.address.text = "Loading..."
+                    //binding.address.text = "Loading..."
                     binding.setLocation.isEnabled = false
                 }
             }
