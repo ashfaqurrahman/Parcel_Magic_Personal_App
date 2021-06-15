@@ -204,7 +204,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/poppins_medium"
-                    android:text="Set Location"
+                    android:text="Next"
                     android:textAlignment="center"
                     android:textColor="#ffffff"
                     android:textSize="16sp"

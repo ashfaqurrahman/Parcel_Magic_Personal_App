@@ -152,9 +152,9 @@ class ReceiverAddressFragment : Fragment(), KodeinAware, CustomClickListener {
             }
         }
 
-        /*binding.map.setOnClickListener {
+        binding.map.setOnClickListener {
             communicatorFragmentInterface?.addContentFragment(LocationSetFragment(), true)
-        }*/
+        }
 
         binding.searchFrom.setOnQueryTextListener(object : SearchView.OnQueryTextListener,
             androidx.appcompat.widget.SearchView.OnQueryTextListener {
