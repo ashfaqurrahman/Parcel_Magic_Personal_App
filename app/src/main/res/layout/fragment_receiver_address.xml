@@ -237,7 +237,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
 
-                <!--<RelativeLayout
+                <RelativeLayout
                     android:id="@+id/map"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -249,7 +249,7 @@
                         android:layout_width="36dp"
                         android:layout_height="36dp"
                         android:padding="2dp"
-                        android:src="@drawable/ic_marker_without_space"
+                        android:src="@drawable/ic_marker"
                         android:background="@drawable/circle_solid_braun"/>
 
                     <TextView
@@ -268,13 +268,14 @@
                         android:text="@string/set_on_map"
                         />
 
-                </RelativeLayout>-->
+                </RelativeLayout>
 
-                <!--<View
+                <View
                     android:layout_width="match_parent"
+                    android:visibility="gone"
                     android:layout_height="0.7dp"
                     android:layout_marginTop="15.5dp"
-                    android:background="#d6d6d6"/>-->
+                    android:background="#d6d6d6"/>
 
             </LinearLayout>
 
