@@ -35,6 +35,7 @@ class MainActivity : AppCompatActivity(), KodeinAware, CommunicatorFragmentInter
         }
 
         val fragmentTransaction = fragmentManager.beginTransaction()
+        fragmentTransaction.setCustomAnimations(R.anim.slide_in_up, 0, 0, R.anim.slide_in_down)
         fragmentTransaction.add(R.id.frameLayout, fragment, fragment.javaClass.name)
         if (addToBackStack) {
             fragmentTransaction.addToBackStack(fragment.javaClass.name)

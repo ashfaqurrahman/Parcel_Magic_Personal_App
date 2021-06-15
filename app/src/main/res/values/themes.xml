@@ -84,10 +84,10 @@
         <item name="android:padding">10dp</item>
     </style>
 
-    <style name="DialogAnimation_2">
+    <!--<style name="DialogAnimation_2">
         <item name="android:windowEnterAnimation">@anim/slide_up</item>
         <item name="android:windowExitAnimation">@anim/slide_bottom</item>
-    </style>
+    </style>-->
 
     <declare-styleable name="SwitchButton">
         <attr name="uncheckSrc" format="reference"></attr>
