@@ -38,6 +38,7 @@ import com.airposted.bitoronbd.ui.my_order.MyParcelFragment
 import com.airposted.bitoronbd.ui.my_order.MyParcelHistoryFragment
 import com.airposted.bitoronbd.ui.product.PackageGuidelineFragment
 import com.airposted.bitoronbd.ui.product.ParcelTypeFragment
+import com.airposted.bitoronbd.ui.product.ReceiverAddressFragment
 import com.airposted.bitoronbd.ui.termsconditions.TermsConditionsFragment
 import com.airposted.bitoronbd.utils.*
 import com.bumptech.glide.Glide

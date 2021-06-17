@@ -5,13 +5,12 @@ import android.location.Geocoder
 import android.os.Bundle
 import android.text.InputType
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.SearchView
-import android.widget.Toast
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
@@ -20,6 +19,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.airposted.bitoronbd.R
 import com.airposted.bitoronbd.data.network.preferences.PreferenceProvider
 import com.airposted.bitoronbd.databinding.FragmentReceiverAddressBinding
+import com.airposted.bitoronbd.model.LocationDetailsWithName
 import com.airposted.bitoronbd.model.SearchLocation
 import com.airposted.bitoronbd.ui.home.HomeViewModel
 import com.airposted.bitoronbd.ui.home.HomeViewModelFactory
@@ -27,17 +27,20 @@ import com.airposted.bitoronbd.ui.location_set.*
 import com.airposted.bitoronbd.ui.main.CommunicatorFragmentInterface
 import com.airposted.bitoronbd.utils.*
 import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.OnMapReadyCallback
+import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.maps.android.PolyUtil
 import kotlinx.coroutines.launch
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.x.kodein
 import org.kodein.di.generic.instance
-import java.util.*
 
 
-class ReceiverAddressFragment : Fragment(), KodeinAware, CustomClickListener {
+class ReceiverAddressFragment : Fragment(), KodeinAware, CustomClickListener, OnMapReadyCallback {
     private lateinit var binding: FragmentReceiverAddressBinding
     var communicatorFragmentInterface: CommunicatorFragmentInterface? = null
     override val kodein by kodein()
@@ -46,9 +49,16 @@ class ReceiverAddressFragment : Fragment(), KodeinAware, CustomClickListener {
     private lateinit var viewModel: LocationSetViewModel
     private lateinit var homeViewModel: HomeViewModel
     private lateinit var list: SearchLocation
+    private lateinit var mMap: GoogleMap
     private var from = true
     private var focus = ""
-    private var senderLocation = ""
+    private var fromLatitude = 0.0
+    private var fromLongitude = 0.0
+    private var fromLocationName = ""
+    private var toLatitude = 0.0
+    private var toLongitude = 0.0
+    private var toLocationName = ""
+    private lateinit var bottomSheetBehavior: BottomSheetBehavior<ConstraintLayout>
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -68,93 +78,117 @@ class ReceiverAddressFragment : Fragment(), KodeinAware, CustomClickListener {
     private fun bindUI() {
         communicatorFragmentInterface = context as CommunicatorFragmentInterface
 
+        val mapFragment = childFragmentManager
+            .findFragmentById(R.id.mapSearch) as SupportMapFragment
+        mapFragment.getMapAsync(this)
+
+        bottomSheetBehavior = BottomSheetBehavior.from(binding.bottomSheet)
+
+        bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
+        bottomSheetBehavior.peekHeight = 200
+
         binding.back.setOnClickListener {
             hideKeyboard(requireActivity())
             requireActivity().onBackPressed()
         }
 
-        val editText =
-            binding.searchFrom.findViewById(androidx.appcompat.R.id.search_src_text) as EditText
-        editText.requestFocus()
-        editText.showKeyboard()
-        val editText1 =
-            binding.searchTo.findViewById(androidx.appcompat.R.id.search_src_text) as EditText
-        //disableInput(editText1)
+        binding.map.setOnClickListener {
+            binding.searchFrom.setQuery(fromLocationName, false)
+            binding.searchTo.setQuery(toLocationName, false)
+            binding.bottomSheet.visibility = View.GONE
+            binding.searchFrom.clearFocus()
+            binding.searchTo.clearFocus()
 
-        homeViewModel.currentLocation.observe(viewLifecycleOwner, { locationDetailsWithName ->
-            val locationDetailsImp = locationDetailsWithName
+        }
 
-            binding.searchFrom.setQuery(locationDetailsImp.locationName, false)
-            from = false
-            binding.recyclerview.visibility = View.GONE
-
-            val editText =
-                binding.searchTo.findViewById(androidx.appcompat.R.id.search_src_text) as EditText
-            editText.requestFocus()
-            editText.showKeyboard()
-            //enableInput(editText)
-
-            /*val cameraPosition =
-                CameraPosition.Builder()
-                    .target(
-                        LatLng(
-                            locationDetailsImp.latitude,
-                            locationDetailsImp.longitude
-                        )
-                    )
-                    .zoom(15.2f)                   // Sets the zoom
-                    .build()
-            mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition))*/
-        })
-
-        //binding.searchFrom.findFocus()
-        // for dialog
-        /*if (PreferenceProvider(requireActivity()).getSharedPreferences("latitude") == null) {
-            val editText =
-                binding.searchFrom.findViewById(androidx.appcompat.R.id.search_src_text) as EditText
-            editText.requestFocus()
-            val editText1 =
-                binding.searchTo.findViewById(androidx.appcompat.R.id.search_src_text) as EditText
-            disableInput(editText1)
-        } else {
-            val geo = Geocoder(requireActivity(), Locale.getDefault())
-            val addresses = geo.getFromLocation(
-                PreferenceProvider(requireActivity()).getSharedPreferences(
-                    "latitude"
-                )!!.toDouble(),
-                PreferenceProvider(requireActivity()).getSharedPreferences("longitude")!!
-                    .toDouble(),
-                1
-            )
-            if (addresses.isNotEmpty()) {
-                senderLocation = addresses[0].featureName + ", " + addresses[0].thoroughfare
-                binding.searchFrom.setQuery(
-                    addresses[0].featureName + ", " + addresses[0].thoroughfare,
-                    false
-                )
-            }
-            val editText =
-                binding.searchTo.findViewById(androidx.appcompat.R.id.search_src_text) as EditText
-            editText.requestFocus()
-        }*/
-
-        binding.searchFrom.setOnQueryTextFocusChangeListener { view, isFocused ->
-            if (isFocused) {
+        binding.searchFrom.setOnQueryTextFocusChangeListener { view, hasFocus ->
+            if (hasFocus) {
+                binding.searchTo.setQuery(toLocationName, false)
+                binding.recyclerview.visibility = View.GONE
+                binding.bottomSheet.visibility = View.VISIBLE
+                bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
                 focus = "from"
                 from = true
             }
         }
 
-        binding.searchTo.setOnQueryTextFocusChangeListener { view, isFocused ->
-            if (isFocused) {
+        binding.searchTo.setOnQueryTextFocusChangeListener { view, hasFocus ->
+            if (hasFocus) {
+                binding.searchFrom.setQuery(fromLocationName, false)
+                binding.recyclerview.visibility = View.GONE
+                binding.bottomSheet.visibility = View.VISIBLE
+                bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
                 focus = "to"
                 from = false
             }
         }
 
-        binding.map.setOnClickListener {
-            communicatorFragmentInterface?.addContentFragment(LocationSetFragment(), true)
+        binding.setLocation.setOnClickListener {
+            if (from){
+                if (binding.searchFrom.query.isNullOrEmpty()) {
+                    binding.searchFrom.requestFocus()
+                } else {
+                    if (binding.searchTo.query.isNullOrEmpty()) {
+                        binding.searchTo.requestFocus()
+                    } else {
+
+                    }
+                }
+            } else {
+                if (binding.searchTo.query.isNullOrEmpty()) {
+                    binding.searchTo.requestFocus()
+                } else {
+                    if (binding.searchFrom.query.isNullOrEmpty()) {
+                        binding.searchFrom.requestFocus()
+                    } else {
+
+                    }
+                }
+            }
         }
+
+        bottomSheetBehavior.addBottomSheetCallback(object :
+            BottomSheetBehavior.BottomSheetCallback() {
+            override fun onSlide(bottomSheet: View, slideOffset: Float) {
+            }
+
+            override fun onStateChanged(bottomSheet: View, newState: Int) {
+                if (newState == BottomSheetBehavior.STATE_DRAGGING) {
+
+                    binding.searchFrom.clearFocus()
+                    binding.searchTo.clearFocus()
+                }
+
+                if (newState == BottomSheetBehavior.STATE_EXPANDED) {
+                    if (from) {
+                        binding.searchFrom.requestFocus()
+                    } else {
+                        binding.searchTo.requestFocus()
+                    }
+                }
+
+            }
+        })
+
+        val editText =
+            binding.searchFrom.findViewById(androidx.appcompat.R.id.search_src_text) as EditText
+        editText.requestFocus()
+        editText.showKeyboard()
+
+        homeViewModel.currentLocation.observe(viewLifecycleOwner, { locationDetailsWithName ->
+            val locationDetailsImp = locationDetailsWithName
+            fromLocationName = locationDetailsImp.locationName
+            fromLatitude = locationDetailsImp.latitude
+            fromLongitude = locationDetailsImp.longitude
+
+            binding.searchFrom.setQuery(locationDetailsImp.locationName, false)
+            from = false
+            binding.recyclerview.visibility = View.GONE
+
+            val editText = binding.searchTo.findViewById(androidx.appcompat.R.id.search_src_text) as EditText
+            editText.requestFocus()
+            editText.showKeyboard()
+        })
 
         binding.searchFrom.setOnQueryTextListener(object : SearchView.OnQueryTextListener,
             androidx.appcompat.widget.SearchView.OnQueryTextListener {
@@ -181,22 +215,6 @@ class ReceiverAddressFragment : Fragment(), KodeinAware, CustomClickListener {
                 return false
             }
         })
-    }
-
-    fun disableInput(editText: EditText) {
-        editText.inputType = InputType.TYPE_NULL
-        editText.setTextIsSelectable(false)
-        editText.setOnKeyListener { v, keyCode, event ->
-            true // Blocks input from hardware keyboards.
-        }
-    }
-
-    fun enableInput(editText: EditText) {
-        editText.inputType = InputType.TYPE_CLASS_TEXT
-        editText.setTextIsSelectable(true)
-        editText.setOnKeyListener { v, keyCode, event ->
-            false // Blocks input from hardware keyboards.
-        }
     }
 
     private fun locationFrom(location: String) {
@@ -358,6 +376,11 @@ class ReceiverAddressFragment : Fragment(), KodeinAware, CustomClickListener {
         if (contain) {
             hideKeyboard(requireActivity())
             if (from) {
+
+                fromLocationName = location
+                fromLatitude = getLatLngFromAddress(location)?.latitude!!
+                fromLongitude = getLatLngFromAddress(location)?.longitude!!
+
                 binding.searchFrom.setQuery(location, false)
                 binding.searchFrom.clearFocus()
                 binding.recyclerview.visibility = View.GONE
@@ -418,6 +441,11 @@ class ReceiverAddressFragment : Fragment(), KodeinAware, CustomClickListener {
                     dismissDialog()
                 }
             } else {
+
+                toLocationName = location
+                toLatitude = getLatLngFromAddress(location)?.latitude!!
+                toLongitude = getLatLngFromAddress(location)?.longitude!!
+
                 binding.searchTo.setQuery(location, false)
                 binding.searchTo.clearFocus()
                 binding.recyclerview.visibility = View.GONE
@@ -483,6 +511,96 @@ class ReceiverAddressFragment : Fragment(), KodeinAware, CustomClickListener {
         } else {
             dismissDialog()
             binding.rootLayout.snackbar("Sorry!! We are currently not providing our service to this area")
+        }
+    }
+
+    override fun onMapReady(googleMap: GoogleMap) {
+        mMap = googleMap
+
+        if (fromLocationName != ""){
+            //binding.searchTo.requestFocus()
+            val cameraPosition =
+                CameraPosition.Builder()
+                    .target(
+                        LatLng(
+                            fromLatitude,
+                            fromLongitude
+                        )
+                    )
+                    .zoom(15.2f)                   // Sets the zoom
+                    .build()
+            mMap.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition))
+        } else {
+            binding.searchFrom.requestFocus()
+        }
+
+        mMap.setOnCameraIdleListener {
+
+        }
+
+        mMap.setOnCameraMoveListener {
+            val center = mMap.cameraPosition.target
+            val addresses = getAddressFromLatLng(LatLng(center.latitude, center.longitude))
+            if (addresses == null) {
+                //binding.editTextTextLocation.setText(getString(R.string.searching))
+            } else {
+                var locationString: String
+                locationString = if (addresses.featureName == null) {
+                    ""
+                } else {
+                    addresses.featureName
+                }
+                if (addresses.thoroughfare == null) {
+                    locationString += ""
+                } else {
+                    locationString = locationString + ", " + addresses.thoroughfare
+                }
+                if (from){
+                    binding.searchFrom.setQuery(locationString, false)
+                    binding.recyclerview.visibility = View.GONE
+                    //binding.address.text = locationString
+                    fromLatitude = center.latitude
+                    fromLongitude = center.longitude
+                    fromLocationName = locationString
+                    binding.searchFrom.clearFocus()
+                    //binding.searchTo.requestFocus()
+                } else {
+                    binding.searchTo.setQuery(locationString, false)
+                    binding.recyclerview.visibility = View.GONE
+                    //binding.address.text = locationString
+                    toLatitude = center.latitude
+                    toLongitude = center.longitude
+                    toLocationName = locationString
+                    binding.searchTo.clearFocus()
+                }
+
+            }
+        }
+
+        mMap.setOnCameraMoveStartedListener { reason ->
+            when (reason) {
+                GoogleMap.OnCameraMoveStartedListener.REASON_GESTURE -> {
+                    //binding.editTextTextLocation.setText(getString(R.string.searching))
+                    //productBinding.receiverAddress.visibility = View.GONE
+                    /*binding.setLocation.background = ContextCompat.getDrawable(
+                        requireActivity(),
+                        R.drawable.before_button_bg
+                    )*/
+                    //binding.address.text = "Loading..."
+                }
+            }
+        }
+    }
+
+    private fun getAddressFromLatLng(latLng: LatLng): Address? {
+        val geoCoder = Geocoder(requireActivity())
+        val addresses: List<Address>?
+        return try {
+            addresses = geoCoder.getFromLocation(latLng.latitude, latLng.longitude, 5)
+            addresses?.get(0)
+        } catch (e: Exception) {
+            e.printStackTrace()
+            null
         }
     }
 

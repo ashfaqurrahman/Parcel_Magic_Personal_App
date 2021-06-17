@@ -46,7 +46,6 @@
             </intent-filter>
         </activity>
         <activity android:name=".ui.main.MainActivity"
-            android:windowSoftInputMode="adjustResize"
             android:screenOrientation="fullSensor"/>
         <activity
             android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
