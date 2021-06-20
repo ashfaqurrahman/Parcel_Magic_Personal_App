@@ -179,7 +179,7 @@
                                     android:textSize="16sp"
                                     android:textColor="#1a1a1a"
                                     android:lineSpacingExtra="22sp"
-                                    android:text="Delivery Process"
+                                    android:text="Delivery Type"
                                     />
 
                                 <LinearLayout

@@ -15,12 +15,15 @@ import android.net.NetworkCapabilities
 import android.os.Build
 import android.os.Bundle
 import android.os.Looper
+import android.util.Log
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.aapbd.appbajarlib.storage.PersistentUser
 import com.airposted.bitoronbd.R
+import com.airposted.bitoronbd.data.db.AppDatabase
+import com.airposted.bitoronbd.data.db.RunDAO
 import com.airposted.bitoronbd.data.network.MyApi
 import com.airposted.bitoronbd.data.network.responses.SettingResponse
 import com.airposted.bitoronbd.data.network.SafeApiRequest
@@ -33,7 +36,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.util.*
 
-class HomeRepository(context: Context, private val api: MyApi): SafeApiRequest(),
+class HomeRepository(context: Context, private val api: MyApi, private val db: AppDatabase): SafeApiRequest(),
     LocationListener {
     private var mLocationManager: LocationManager? = null
     private val appContext = context.applicationContext
@@ -154,7 +157,7 @@ class HomeRepository(context: Context, private val api: MyApi): SafeApiRequest()
                 }
                 else {
                     gps.postValue(true)
-                    currentLocation.postValue(LocationDetailsWithName(addresses[0].featureName + ", " + addresses[0].thoroughfare,location.latitude, location.longitude))
+                    currentLocation.postValue(LocationDetailsWithName(addresses[0].featureName + ", " + addresses[0].thoroughfare + ", " + addresses[0].subLocality + ", " + addresses[0].locality, location.latitude, location.longitude))
                 }
             }
         }
@@ -200,4 +203,10 @@ class HomeRepository(context: Context, private val api: MyApi): SafeApiRequest()
                 appContext
             )) }
     }
+
+    suspend fun saveAddress(location: com.airposted.bitoronbd.data.db.Location) = db.getRunDao().insertRun(location)
+
+    fun getAllLocations() = db.getRunDao().getAllLocations()
+
+    fun getLastLocation() = db.getRunDao().getLastLocation()
 }

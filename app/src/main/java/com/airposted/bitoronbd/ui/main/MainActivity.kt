@@ -20,7 +20,7 @@ class MainActivity : AppCompatActivity(), KodeinAware, CommunicatorFragmentInter
         super.onCreate(savedInstanceState)
         mainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main)
 
-        addContentFragment(ReceiverAddressFragment(), false)
+        addContentFragment(HomeFragment(), false)
 
     }
 

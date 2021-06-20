@@ -25,19 +25,19 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="m">
         <activity android:name=".ui.location_set.LocationSetActivity"
-            android:screenOrientation="fullSensor"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan|adjustResize"/>
         <activity android:name=".ui.permission.PermissionActivity"
-            android:screenOrientation="fullSensor"/>
+            android:screenOrientation="portrait"/>
         <activity android:name=".ui.WebViewActivity"
-            android:screenOrientation="fullSensor"/>
+            android:screenOrientation="portrait"/>
         <activity android:name=".ui.auth.AuthActivity"
-            android:screenOrientation="fullSensor"/>
+            android:screenOrientation="portrait"/>
         <activity android:name=".ui.IntroActivity"
-            android:screenOrientation="fullSensor"/>
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".ui.SplashActivity"
-            android:screenOrientation="fullSensor"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.BitoronBD.Launcher">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -46,7 +46,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".ui.main.MainActivity"
-            android:screenOrientation="fullSensor"/>
+            android:screenOrientation="portrait"/>
         <activity
             android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
             android:theme="@style/Base.Theme.AppCompat"

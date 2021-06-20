@@ -2,6 +2,7 @@ package com.airposted.bitoronbd.ui.location_set
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.content.ClipDescription
 import android.content.Context
 import android.content.Intent
 import android.location.*
@@ -312,6 +313,7 @@ class LocationSetFragment : Fragment(), KodeinAware, CustomClickListener,
 
                         val myRecyclerViewAdapter = LocationSetRecyclerViewAdapter(
                             term,
+                            term,
                             this@LocationSetFragment,
                         )
                         binding.recyclerview.layoutManager = GridLayoutManager(
@@ -365,7 +367,7 @@ class LocationSetFragment : Fragment(), KodeinAware, CustomClickListener,
         }
     }
 
-    override fun onItemClick(location: String) {
+    override fun onItemClick(location: String, description: String) {
         hideKeyboard(requireActivity())
         binding.recyclerview.visibility = View.GONE
         val latLong = getLatLngFromAddress(location)

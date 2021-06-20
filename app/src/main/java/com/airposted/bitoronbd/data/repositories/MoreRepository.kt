@@ -47,7 +47,7 @@ class MoreRepository(context: Context, private val api: MyApi) : SafeApiRequest(
 
     private fun fetchImage(): LiveData<String> {
         userImage.postValue(PersistentUser.getInstance().getUserImage(appContext))
-        return userImage
+        return userImage/
     }*/
 
     suspend fun userImageUpdate(

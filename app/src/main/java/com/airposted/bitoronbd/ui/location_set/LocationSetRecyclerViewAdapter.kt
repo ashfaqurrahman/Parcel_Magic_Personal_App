@@ -12,6 +12,7 @@ import com.airposted.bitoronbd.model.Term
 
 class LocationSetRecyclerViewAdapter(
     private val dataModelList: List<String>,
+    private val description: List<String>,
     private val listener: CustomClickListener
 ) : RecyclerView.Adapter<LocationSetRecyclerViewAdapter.ViewHolder>() {
     override fun onCreateViewHolder(
@@ -28,7 +29,7 @@ class LocationSetRecyclerViewAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val dataModel = dataModelList[position]
         holder.bind(dataModel)
-        holder.itemRowBinding.title.setOnClickListener { listener.onItemClick(dataModel) }
+        holder.itemRowBinding.title.setOnClickListener { listener.onItemClick(dataModel, description[position]) }
     }
 
     override fun getItemCount(): Int {

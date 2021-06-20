@@ -12,11 +12,13 @@ import android.widget.SearchView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.GridLayoutManager
 import com.airposted.bitoronbd.R
+import com.airposted.bitoronbd.data.db.Location
 import com.airposted.bitoronbd.data.network.preferences.PreferenceProvider
 import com.airposted.bitoronbd.databinding.FragmentReceiverAddressBinding
 import com.airposted.bitoronbd.model.LocationDetailsWithName
@@ -59,6 +61,7 @@ class ReceiverAddressFragment : Fragment(), KodeinAware, CustomClickListener, On
     private var toLongitude = 0.0
     private var toLocationName = ""
     private lateinit var bottomSheetBehavior: BottomSheetBehavior<ConstraintLayout>
+    private lateinit var locations: List<String>
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -87,6 +90,21 @@ class ReceiverAddressFragment : Fragment(), KodeinAware, CustomClickListener, On
         bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
         bottomSheetBehavior.peekHeight = 200
 
+        homeViewModel.runs.observe(viewLifecycleOwner, {
+            locations = it
+            val myRecyclerViewAdapter = LocationSetRecyclerViewAdapter(
+                it,
+                it,
+                this@ReceiverAddressFragment,
+            )
+            binding.recyclerview.layoutManager = GridLayoutManager(
+                requireActivity(),
+                1
+            )
+            binding.recyclerview.itemAnimator = DefaultItemAnimator()
+            binding.recyclerview.adapter = myRecyclerViewAdapter
+        })
+
         binding.back.setOnClickListener {
             hideKeyboard(requireActivity())
             requireActivity().onBackPressed()
@@ -104,7 +122,7 @@ class ReceiverAddressFragment : Fragment(), KodeinAware, CustomClickListener, On
         binding.searchFrom.setOnQueryTextFocusChangeListener { view, hasFocus ->
             if (hasFocus) {
                 binding.searchTo.setQuery(toLocationName, false)
-                binding.recyclerview.visibility = View.GONE
+                //binding.recyclerview.visibility = View.GONE
                 binding.bottomSheet.visibility = View.VISIBLE
                 bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
                 focus = "from"
@@ -115,7 +133,7 @@ class ReceiverAddressFragment : Fragment(), KodeinAware, CustomClickListener, On
         binding.searchTo.setOnQueryTextFocusChangeListener { view, hasFocus ->
             if (hasFocus) {
                 binding.searchFrom.setQuery(fromLocationName, false)
-                binding.recyclerview.visibility = View.GONE
+                //binding.recyclerview.visibility = View.GONE
                 binding.bottomSheet.visibility = View.VISIBLE
                 bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
                 focus = "to"
@@ -131,7 +149,22 @@ class ReceiverAddressFragment : Fragment(), KodeinAware, CustomClickListener, On
                     if (binding.searchTo.query.isNullOrEmpty()) {
                         binding.searchTo.requestFocus()
                     } else {
+                        val fragment = ConfirmReceiverAddressFragment()
+                        val bundle = Bundle()
 
+                        bundle.putString("sender_location_name", binding.searchFrom.query.toString())
+                        bundle.putString("receiver_location_name", binding.searchTo.query.toString())
+                        bundle.putDouble("sender_latitude", getLatLngFromAddress(binding.searchFrom.query.toString())!!.latitude)
+                        bundle.putDouble("sender_longitude", getLatLngFromAddress(binding.searchFrom.query.toString())!!.longitude)
+                        bundle.putDouble("receiver_latitude", getLatLngFromAddress(binding.searchTo.query.toString())!!.latitude)
+                        bundle.putDouble("receiver_longitude", getLatLngFromAddress(binding.searchTo.query.toString())!!.longitude)
+                        bundle.putInt("parcel_quantity", requireArguments().getInt("parcel_quantity"))
+                        bundle.putInt("delivery_type", requireArguments().getInt("delivery_type"))
+                        bundle.putInt("parcel_type", requireArguments().getInt("parcel_type"))
+                        bundle.putString("receiver_name", requireArguments().getString("receiver_name"))
+                        bundle.putString("receiver_phone", requireArguments().getString("receiver_phone"))
+                        fragment.arguments = bundle
+                        communicatorFragmentInterface?.addContentFragment(fragment, true)
                     }
                 }
             } else {
@@ -141,7 +174,22 @@ class ReceiverAddressFragment : Fragment(), KodeinAware, CustomClickListener, On
                     if (binding.searchFrom.query.isNullOrEmpty()) {
                         binding.searchFrom.requestFocus()
                     } else {
+                        val fragment = ConfirmReceiverAddressFragment()
+                        val bundle = Bundle()
 
+                        bundle.putString("sender_location_name", binding.searchFrom.query.toString())
+                        bundle.putString("receiver_location_name", binding.searchTo.query.toString())
+                        bundle.putDouble("sender_latitude", getLatLngFromAddress(binding.searchFrom.query.toString())!!.latitude)
+                        bundle.putDouble("sender_longitude", getLatLngFromAddress(binding.searchFrom.query.toString())!!.longitude)
+                        bundle.putDouble("receiver_latitude", getLatLngFromAddress(binding.searchTo.query.toString())!!.latitude)
+                        bundle.putDouble("receiver_longitude", getLatLngFromAddress(binding.searchTo.query.toString())!!.longitude)
+                        bundle.putInt("parcel_quantity", requireArguments().getInt("parcel_quantity"))
+                        bundle.putInt("delivery_type", requireArguments().getInt("delivery_type"))
+                        bundle.putInt("parcel_type", requireArguments().getInt("parcel_type"))
+                        bundle.putString("receiver_name", requireArguments().getString("receiver_name"))
+                        bundle.putString("receiver_phone", requireArguments().getString("receiver_phone"))
+                        fragment.arguments = bundle
+                        communicatorFragmentInterface?.addContentFragment(fragment, true)
                     }
                 }
             }
@@ -218,7 +266,7 @@ class ReceiverAddressFragment : Fragment(), KodeinAware, CustomClickListener, On
     }
 
     private fun locationFrom(location: String) {
-        if (location.length > 2) {
+        if (location.isNotEmpty()) {
             val btnClose: ImageView = binding.searchFrom.findViewById(R.id.search_close_btn)
             btnClose.visibility = View.GONE
             binding.loadingFrom.visibility = View.VISIBLE
@@ -235,7 +283,9 @@ class ReceiverAddressFragment : Fragment(), KodeinAware, CustomClickListener, On
                     btnClose.visibility = View.VISIBLE
                     if (list.predictions.isNotEmpty()) {
                         val term = ArrayList<String>()
+                        val description = ArrayList<String>()
                         for (i in list.predictions.indices) {
+                            description.add(list.predictions[i].description)
                             if (list.predictions[i].terms.size > 1) {
                                 var text = ""
                                 for (j in 0 until list.predictions[i].terms.size - 1) {
@@ -261,6 +311,7 @@ class ReceiverAddressFragment : Fragment(), KodeinAware, CustomClickListener, On
 
                         val myRecyclerViewAdapter = LocationSetRecyclerViewAdapter(
                             term,
+                            description,
                             this@ReceiverAddressFragment,
                         )
                         binding.recyclerview.layoutManager = GridLayoutManager(
@@ -281,12 +332,23 @@ class ReceiverAddressFragment : Fragment(), KodeinAware, CustomClickListener, On
                 }
             }
         } else {
-            binding.recyclerview.visibility = View.GONE
+            //binding.recyclerview.visibility = View.GONE
+            val myRecyclerViewAdapter = LocationSetRecyclerViewAdapter(
+                locations,
+                locations,
+                this@ReceiverAddressFragment,
+            )
+            binding.recyclerview.layoutManager = GridLayoutManager(
+                requireActivity(),
+                1
+            )
+            binding.recyclerview.itemAnimator = DefaultItemAnimator()
+            binding.recyclerview.adapter = myRecyclerViewAdapter
         }
     }
 
     private fun locationTo(location: String) {
-        if (location.length > 2) {
+        if (location.isNotEmpty()) {
             val btnClose: ImageView = binding.searchTo.findViewById(R.id.search_close_btn)
             btnClose.visibility = View.GONE
             binding.loadingTo.visibility = View.VISIBLE
@@ -303,7 +365,11 @@ class ReceiverAddressFragment : Fragment(), KodeinAware, CustomClickListener, On
                     btnClose.visibility = View.VISIBLE
                     if (list.predictions.isNotEmpty()) {
                         val term = ArrayList<String>()
+                        val description = ArrayList<String>()
                         for (i in list.predictions.indices) {
+
+                            description.add(list.predictions[i].description)
+
                             if (list.predictions[i].terms.size > 1) {
                                 var text = ""
                                 for (j in 0 until list.predictions[i].terms.size - 1) {
@@ -329,6 +395,7 @@ class ReceiverAddressFragment : Fragment(), KodeinAware, CustomClickListener, On
 
                         val myRecyclerViewAdapter = LocationSetRecyclerViewAdapter(
                             term,
+                            description,
                             this@ReceiverAddressFragment,
                         )
                         binding.recyclerview.layoutManager = GridLayoutManager(
@@ -349,11 +416,22 @@ class ReceiverAddressFragment : Fragment(), KodeinAware, CustomClickListener, On
                 }
             }
         } else {
-            binding.recyclerview.visibility = View.GONE
+            //binding.recyclerview.visibility = View.GONE
+            val myRecyclerViewAdapter = LocationSetRecyclerViewAdapter(
+                locations,
+                locations,
+                this@ReceiverAddressFragment,
+            )
+            binding.recyclerview.layoutManager = GridLayoutManager(
+                requireActivity(),
+                1
+            )
+            binding.recyclerview.itemAnimator = DefaultItemAnimator()
+            binding.recyclerview.adapter = myRecyclerViewAdapter
         }
     }
 
-    override fun onItemClick(location: String) {
+    override fun onItemClick(location: String, description: String) {
         setProgressDialog(requireActivity())
 
         val latLng = LatLng(getLatLngFromAddress(location)!!.latitude, getLatLngFromAddress(
@@ -375,6 +453,15 @@ class ReceiverAddressFragment : Fragment(), KodeinAware, CustomClickListener, On
 
         if (contain) {
             hideKeyboard(requireActivity())
+            var addressAvailable = false
+            for (i in locations.indices) {
+                addressAvailable = location == locations[i]
+            }
+
+            if (!addressAvailable) {
+                homeViewModel.saveAddress(Location(location, getLatLngFromAddress(location)?.latitude, getLatLngFromAddress(location)?.longitude))
+            }
+
             if (from) {
 
                 fromLocationName = location
@@ -532,6 +619,22 @@ class ReceiverAddressFragment : Fragment(), KodeinAware, CustomClickListener, On
             mMap.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition))
         } else {
             binding.searchFrom.requestFocus()
+
+            homeViewModel.getLastLocation.observe(viewLifecycleOwner, {
+                if(it.isNotEmpty()){
+                    val cameraPosition =
+                        CameraPosition.Builder()
+                            .target(
+                                LatLng(
+                                    it[0].latitude!!,
+                                    it[0].longitude!!
+                                )
+                            )
+                            .zoom(15.2f)                   // Sets the zoom
+                            .build()
+                    mMap.moveCamera(CameraUpdateFactory.newCameraPosition(cameraPosition))
+                }
+            })
         }
 
         mMap.setOnCameraIdleListener {
@@ -544,34 +647,65 @@ class ReceiverAddressFragment : Fragment(), KodeinAware, CustomClickListener, On
             if (addresses == null) {
                 //binding.editTextTextLocation.setText(getString(R.string.searching))
             } else {
-                var locationString: String
-                locationString = if (addresses.featureName == null) {
-                    ""
+
+                val latLng = LatLng(center.latitude, center.longitude)
+                val points: MutableList<LatLng> = ArrayList()
+                points.add(LatLng(23.888112, 90.383920))
+                points.add(LatLng(23.834108, 90.344095))
+                points.add(LatLng(23.753687, 90.341691))
+                points.add(LatLng(23.703085, 90.375680))
+                points.add(LatLng(23.685794, 90.463228))
+                points.add(LatLng(23.717859, 90.534295))
+                points.add(LatLng(23.795789, 90.562105))
+                points.add(LatLng(23.845413, 90.519189))
+                points.add(LatLng(23.881833, 90.452585))
+
+                //val polygon: Polygon = mMap.addPolygon(PolygonOptions().addAll(points))
+                val contain = PolyUtil.containsLocation(latLng, points, true)
+
+                if (contain) {
+                    var locationString: String
+                    locationString = if (addresses.featureName == null) {
+                        ""
+                    } else {
+                        addresses.featureName
+                    }
+                    if (addresses.thoroughfare == null) {
+                        locationString += ""
+                    } else {
+                        locationString = locationString + ", " + addresses.thoroughfare
+                    }
+
+                    var addressAvailable = false
+                    for (i in locations.indices) {
+                        addressAvailable = addresses.getAddressLine(0) == locations[i]
+                    }
+
+                    if (!addressAvailable) {
+                        homeViewModel.saveAddress(Location(addresses.getAddressLine(0), center.latitude, center.longitude))
+                    }
+
+                    if (from){
+                        binding.searchFrom.setQuery(locationString, false)
+                        binding.recyclerview.visibility = View.GONE
+                        //binding.address.text = locationString
+                        fromLatitude = center.latitude
+                        fromLongitude = center.longitude
+                        fromLocationName = locationString
+                        binding.searchFrom.clearFocus()
+                        //binding.searchTo.requestFocus()
+                    } else {
+                        binding.searchTo.setQuery(locationString, false)
+                        binding.recyclerview.visibility = View.GONE
+                        //binding.address.text = locationString
+                        toLatitude = center.latitude
+                        toLongitude = center.longitude
+                        toLocationName = locationString
+                        binding.searchTo.clearFocus()
+                    }
                 } else {
-                    addresses.featureName
-                }
-                if (addresses.thoroughfare == null) {
-                    locationString += ""
-                } else {
-                    locationString = locationString + ", " + addresses.thoroughfare
-                }
-                if (from){
-                    binding.searchFrom.setQuery(locationString, false)
-                    binding.recyclerview.visibility = View.GONE
-                    //binding.address.text = locationString
-                    fromLatitude = center.latitude
-                    fromLongitude = center.longitude
-                    fromLocationName = locationString
-                    binding.searchFrom.clearFocus()
-                    //binding.searchTo.requestFocus()
-                } else {
-                    binding.searchTo.setQuery(locationString, false)
-                    binding.recyclerview.visibility = View.GONE
-                    //binding.address.text = locationString
-                    toLatitude = center.latitude
-                    toLongitude = center.longitude
-                    toLocationName = locationString
-                    binding.searchTo.clearFocus()
+                    dismissDialog()
+                    binding.rootLayout.snackbar("Sorry!! We are currently not providing our service to this area")
                 }
 
             }

@@ -263,6 +263,7 @@ class LocationSetActivity : AppCompatActivity(), KodeinAware, CustomClickListene
 
                         val myRecyclerViewAdapter = LocationSetRecyclerViewAdapter(
                             term,
+                            term,
                             this@LocationSetActivity,
                         )
                         binding.recyclerview.layoutManager = GridLayoutManager(
@@ -335,7 +336,7 @@ class LocationSetActivity : AppCompatActivity(), KodeinAware, CustomClickListene
         }
     }
 
-    override fun onItemClick(location: String) {
+    override fun onItemClick(location: String, description: String) {
         hideKeyboard(this)
 //        binding.editTextTextLocation.setText(location.description)
         binding.recyclerview.visibility = View.GONE

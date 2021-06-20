@@ -387,10 +387,10 @@ open class HomeFragment : Fragment(R.layout.fragment_home),
                 myCommunicator?.addContentFragment(MyParcelFragment(), true)
                 homeBinding.drawerLayout.closeDrawers()
             }
-            R.id.collected_order -> {
+            /*R.id.collected_order -> {
                 myCommunicator?.addContentFragment(CollectedOrderFragment(), true)
                 homeBinding.drawerLayout.closeDrawers()
-            }
+            }*/
             R.id.parcel_history -> {
                 myCommunicator?.addContentFragment(MyParcelHistoryFragment(), true)
                 homeBinding.drawerLayout.closeDrawers()

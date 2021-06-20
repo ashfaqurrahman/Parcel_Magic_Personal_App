@@ -127,6 +127,7 @@ class SearchReceiverAddressFragment : Fragment(), KodeinAware, CustomClickListen
 
                         val myRecyclerViewAdapter = LocationSetRecyclerViewAdapter(
                             term,
+                            term,
                             this@SearchReceiverAddressFragment,
                         )
                         binding.recyclerview.layoutManager = GridLayoutManager(
@@ -151,7 +152,7 @@ class SearchReceiverAddressFragment : Fragment(), KodeinAware, CustomClickListen
         }
     }
 
-    override fun onItemClick(location: String) {
+    override fun onItemClick(location: String, description: String) {
         hideKeyboard(requireActivity())
         binding.search.setQuery(location, false)
         binding.recyclerview.visibility = View.GONE
