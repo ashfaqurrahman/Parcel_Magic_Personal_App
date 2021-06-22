@@ -14,23 +14,45 @@
         tools:context=".ui.product.ReceiverInfoFragment"
         android:id="@+id/root_layout">
 
-        <androidx.cardview.widget.CardView
-            android:id="@+id/back"
-            app:cardCornerRadius="18dp"
-            android:backgroundTint="#f3f3f3"
-            android:layout_width="36dp"
-            android:layout_height="36dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginStart="15sp"
-            android:layout_marginEnd="15sp">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:src="@drawable/ic_keyboard_backspace"
-                android:padding="9dp"/>
+            <androidx.cardview.widget.CardView
+                android:id="@+id/back"
+                app:cardCornerRadius="18dp"
+                android:backgroundTint="#f3f3f3"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginStart="15sp"
+                android:layout_marginEnd="15sp"
+                android:layout_alignParentStart="true">
 
-        </androidx.cardview.widget.CardView>
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/ic_keyboard_backspace"
+                    android:padding="9dp"/>
+
+            </androidx.cardview.widget.CardView>
+
+            <TextView
+                android:id="@+id/contacts"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Contacts"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="15sp"
+                android:drawableStart="@drawable/ic_search"
+                android:textColor="@color/white"
+                android:drawableTint="@color/white"
+                android:drawablePadding="10dp"
+                android:background="@drawable/rounder_blue"
+                android:padding="10dp"/>
+
+        </RelativeLayout>
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -134,7 +156,7 @@
                             android:layout_marginStart="15dp"
                             android:fontFamily="@font/poppins_regular"
                             android:lineSpacingExtra="5sp"
-                            android:text="+88 01"
+                            android:text="+880"
                             android:textColor="#56586d"
                             android:textSize="14sp"
                             android:textStyle="normal" />
@@ -154,7 +176,7 @@
                             android:fontFamily="@font/poppins_regular"
                             android:hint="@string/receiver_phone_number"
                             android:inputType="phone"
-                            android:maxLength="9"
+                            android:maxLength="11"
                             android:maxLines="1"
                             android:imeOptions="actionDone"
                             android:padding="20dp"

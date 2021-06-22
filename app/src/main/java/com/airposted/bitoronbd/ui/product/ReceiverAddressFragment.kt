@@ -23,6 +23,7 @@ import com.airposted.bitoronbd.data.network.preferences.PreferenceProvider
 import com.airposted.bitoronbd.databinding.FragmentReceiverAddressBinding
 import com.airposted.bitoronbd.model.LocationDetailsWithName
 import com.airposted.bitoronbd.model.SearchLocation
+import com.airposted.bitoronbd.ui.adapter.LocationSetRecyclerViewAdapter
 import com.airposted.bitoronbd.ui.home.HomeViewModel
 import com.airposted.bitoronbd.ui.home.HomeViewModelFactory
 import com.airposted.bitoronbd.ui.location_set.*
@@ -675,14 +676,24 @@ class ReceiverAddressFragment : Fragment(), KodeinAware, CustomClickListener, On
                     } else {
                         locationString = locationString + ", " + addresses.thoroughfare
                     }
+                    if (addresses.subLocality == null) {
+                        locationString += ""
+                    } else {
+                        locationString = locationString + ", " + addresses.subLocality
+                    }
+                    if (addresses.locality == null) {
+                        locationString += ""
+                    } else {
+                        locationString = locationString + ", " + addresses.locality
+                    }
 
                     var addressAvailable = false
                     for (i in locations.indices) {
-                        addressAvailable = addresses.getAddressLine(0) == locations[i]
+                        addressAvailable = locationString == locations[i]
                     }
 
                     if (!addressAvailable) {
-                        homeViewModel.saveAddress(Location(addresses.getAddressLine(0), center.latitude, center.longitude))
+                        homeViewModel.saveAddress(Location(locationString, center.latitude, center.longitude))
                     }
 
                     if (from){

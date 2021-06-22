@@ -35,6 +35,7 @@ import kotlinx.coroutines.launch
 import org.kodein.di.KodeinAware
 import com.airposted.bitoronbd.R
 import com.airposted.bitoronbd.data.network.preferences.PreferenceProvider
+import com.airposted.bitoronbd.ui.adapter.LocationSetRecyclerViewAdapter
 import com.airposted.bitoronbd.ui.main.MainActivity
 import com.google.android.gms.common.api.ResolvableApiException
 import com.google.maps.android.PolyUtil

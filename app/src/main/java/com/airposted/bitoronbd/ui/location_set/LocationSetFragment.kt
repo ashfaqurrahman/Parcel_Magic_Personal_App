@@ -2,7 +2,6 @@ package com.airposted.bitoronbd.ui.location_set
 
 import android.Manifest
 import android.annotation.SuppressLint
-import android.content.ClipDescription
 import android.content.Context
 import android.content.Intent
 import android.location.*
@@ -24,11 +23,9 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.airposted.bitoronbd.R
 import com.airposted.bitoronbd.data.network.preferences.PreferenceProvider
 import com.airposted.bitoronbd.databinding.FragmentLocationSetBinding
-import com.airposted.bitoronbd.model.Prediction
 import com.airposted.bitoronbd.model.SearchLocation
-import com.airposted.bitoronbd.model.Term
+import com.airposted.bitoronbd.ui.adapter.LocationSetRecyclerViewAdapter
 import com.airposted.bitoronbd.ui.main.CommunicatorFragmentInterface
-import com.airposted.bitoronbd.ui.main.MainActivity
 import com.airposted.bitoronbd.ui.product.ConfirmReceiverAddressFragment
 import com.airposted.bitoronbd.ui.product.ReceiverAddressFragment
 import com.airposted.bitoronbd.utils.*

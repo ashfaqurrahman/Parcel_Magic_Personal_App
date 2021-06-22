@@ -288,23 +288,6 @@ open class HomeFragment : Fragment(R.layout.fragment_home),
         }
     }
 
-    private fun openWhatToSendDialog() {
-        val orderDialog = Dialog(requireContext())
-        orderDialog.setContentView(R.layout.what_to_send_dialog)
-        orderDialog.findViewById<TextView>(R.id.got_it).setOnClickListener {
-            orderDialog.dismiss()
-        }
-        orderDialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        orderDialog.window?.setLayout(
-            ViewGroup.LayoutParams.MATCH_PARENT,
-            ViewGroup.LayoutParams.WRAP_CONTENT
-        )
-        orderDialog.window?.attributes?.windowAnimations = R.style.DialogAnimation_2
-        orderDialog.window?.attributes?.gravity = Gravity.BOTTOM
-        orderDialog.setCancelable(true)
-        orderDialog.show()
-    }
-
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
 

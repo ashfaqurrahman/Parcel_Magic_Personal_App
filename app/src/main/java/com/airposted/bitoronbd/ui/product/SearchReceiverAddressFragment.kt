@@ -19,7 +19,7 @@ import com.airposted.bitoronbd.model.SearchLocation
 import com.airposted.bitoronbd.ui.location_set.CustomClickListener
 import com.airposted.bitoronbd.ui.location_set.LocationSetViewModel
 import com.airposted.bitoronbd.ui.location_set.LocationSetViewModelFactory
-import com.airposted.bitoronbd.ui.location_set.LocationSetRecyclerViewAdapter
+import com.airposted.bitoronbd.ui.adapter.LocationSetRecyclerViewAdapter
 import com.airposted.bitoronbd.ui.main.CommunicatorFragmentInterface
 import com.airposted.bitoronbd.utils.ApiException
 import com.airposted.bitoronbd.utils.NoInternetException

@@ -1,4 +1,4 @@
-package com.airposted.bitoronbd.ui.location_set
+package com.airposted.bitoronbd.ui.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -7,8 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.airposted.bitoronbd.BR
 import com.airposted.bitoronbd.R
 import com.airposted.bitoronbd.databinding.ItemLocationSearchBinding
-import com.airposted.bitoronbd.model.Prediction
-import com.airposted.bitoronbd.model.Term
+import com.airposted.bitoronbd.ui.location_set.CustomClickListener
 
 class LocationSetRecyclerViewAdapter(
     private val dataModelList: List<String>,

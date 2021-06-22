@@ -7,7 +7,7 @@
 
         <variable
             name="myAdapter"
-            type="com.airposted.bitoronbd.ui.location_set.LocationSetRecyclerViewAdapter" />
+            type="com.airposted.bitoronbd.ui.adapter.LocationSetRecyclerViewAdapter" />
     </data>
 
     <RelativeLayout
