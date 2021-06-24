@@ -14,10 +14,10 @@ class HomeViewModel(
     private val repository: HomeRepository
 ) : ViewModel() {
 
-    private val locations = repository.getAllLocations()
+    val locations = repository.getAllLocations()
     val getLastLocation = repository.getLastLocation()
 
-    val runs = MediatorLiveData<List<String>>()
+    /*val runs = MediatorLiveData<List<Location>>()
 
     init {
         runs.addSource(locations) {
@@ -25,7 +25,7 @@ class HomeViewModel(
                 runs.value = it
             }
         }
-    }
+    }*/
 
     suspend fun getSetting() = withContext(Dispatchers.IO) { repository.getSetting() }
 

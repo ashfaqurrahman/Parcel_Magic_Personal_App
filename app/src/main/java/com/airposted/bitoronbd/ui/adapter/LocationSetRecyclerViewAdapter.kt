@@ -6,12 +6,12 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.airposted.bitoronbd.BR
 import com.airposted.bitoronbd.R
+import com.airposted.bitoronbd.data.db.Location
 import com.airposted.bitoronbd.databinding.ItemLocationSearchBinding
 import com.airposted.bitoronbd.ui.location_set.CustomClickListener
 
 class LocationSetRecyclerViewAdapter(
-    private val dataModelList: List<String>,
-    private val description: List<String>,
+    private val dataModelList: List<Location>,
     private val listener: CustomClickListener
 ) : RecyclerView.Adapter<LocationSetRecyclerViewAdapter.ViewHolder>() {
     override fun onCreateViewHolder(
@@ -28,7 +28,7 @@ class LocationSetRecyclerViewAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val dataModel = dataModelList[position]
         holder.bind(dataModel)
-        holder.itemRowBinding.title.setOnClickListener { listener.onItemClick(dataModel, description[position]) }
+        holder.itemRowBinding.title.setOnClickListener { listener.onItemClick(dataModel) }
     }
 
     override fun getItemCount(): Int {

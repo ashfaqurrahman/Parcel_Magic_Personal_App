@@ -6,7 +6,7 @@
 
         <variable
             name="location"
-            type="String" />
+            type="com.airposted.bitoronbd.data.db.Location" />
 
         <variable
             name="itemClickListener"
@@ -33,7 +33,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/poppins_regular"
-            android:text="@{location}"
+            android:text="@{location.name}"
             android:textColor="@color/black"
             tools:text="Banani, Dhaka" />
 

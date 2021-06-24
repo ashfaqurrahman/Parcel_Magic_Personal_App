@@ -108,6 +108,9 @@ interface MyApi {
     suspend fun getPlacesNameList(@Url url: String): Response<SearchLocation>
 
     @GET
+    suspend fun locationDetails(@Url url: String): Response<LocationDetails>
+
+    @GET
     suspend fun getDirectionsList(@Url url: String): Response<GoogleMapDTO>
 
     @GET("app_settings")

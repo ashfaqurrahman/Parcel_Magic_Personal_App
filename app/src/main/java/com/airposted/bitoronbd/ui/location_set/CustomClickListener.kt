@@ -1,5 +1,7 @@
 package com.airposted.bitoronbd.ui.location_set
 
+import com.airposted.bitoronbd.data.db.Location
+
 interface CustomClickListener {
-    fun onItemClick(location: String, description: String)
+    fun onItemClick(location: Location)
 }

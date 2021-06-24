@@ -21,19 +21,17 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.aapbd.appbajarlib.storage.PersistentUser
-import com.airposted.bitoronbd.R
 import com.airposted.bitoronbd.data.db.AppDatabase
-import com.airposted.bitoronbd.data.db.RunDAO
 import com.airposted.bitoronbd.data.network.MyApi
 import com.airposted.bitoronbd.data.network.responses.SettingResponse
 import com.airposted.bitoronbd.data.network.SafeApiRequest
 import com.airposted.bitoronbd.data.network.preferences.PreferenceProvider
 import com.airposted.bitoronbd.data.network.responses.SetParcelResponse
-import com.airposted.bitoronbd.model.LocationDetails
 import com.airposted.bitoronbd.model.LocationDetailsWithName
 import com.google.android.gms.location.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import java.lang.reflect.InvocationTargetException
 import java.util.*
 
 class HomeRepository(context: Context, private val api: MyApi, private val db: AppDatabase): SafeApiRequest(),
@@ -151,13 +149,17 @@ class HomeRepository(context: Context, private val api: MyApi, private val db: A
                 PreferenceProvider(appContext).saveSharedPreferences("latitude", location.latitude.toString())
                 PreferenceProvider(appContext).saveSharedPreferences("longitude", location.longitude.toString())
                 val geo = Geocoder(appContext, Locale.getDefault())
-                val addresses = geo.getFromLocation(location.latitude, location.longitude, 1);
-                if (addresses.isEmpty()) {
+                try {
+                    val addresses = geo.getFromLocation(location.latitude, location.longitude, 1);
+                    if (addresses.isEmpty()) {
 
-                }
-                else {
-                    gps.postValue(true)
-                    currentLocation.postValue(LocationDetailsWithName(addresses[0].featureName + ", " + addresses[0].thoroughfare + ", " + addresses[0].subLocality + ", " + addresses[0].locality, location.latitude, location.longitude))
+                    }
+                    else {
+                        gps.postValue(true)
+                        currentLocation.postValue(LocationDetailsWithName(addresses[0].featureName + ", " + addresses[0].thoroughfare + ", " + addresses[0].subLocality + ", " + addresses[0].locality, location.latitude, location.longitude))
+                    }
+                } catch (e: InvocationTargetException) {
+                    Log.e("aaaaaa", "Location not found")
                 }
             }
         }

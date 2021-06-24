@@ -34,6 +34,10 @@ class LocationSetRepository (
         return apiRequest { api.getPlacesNameList(url)}
     }
 
+    suspend fun locationDetails(url: String): LocationDetails {
+        return apiRequest { api.locationDetails(url)}
+    }
+
     suspend fun directionSearch(url: String): GoogleMapDTO {
         return apiRequest { api.getDirectionsList(url)}
     }

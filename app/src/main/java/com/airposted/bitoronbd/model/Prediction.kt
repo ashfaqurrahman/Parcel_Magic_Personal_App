@@ -7,4 +7,6 @@ data class Prediction(
     val description: String,
     @SerializedName("terms")
     val terms: List<Term>,
+    @SerializedName("place_id")
+    val placeId: String,
 )

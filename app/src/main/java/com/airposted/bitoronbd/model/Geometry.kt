@@ -3,7 +3,7 @@ package com.airposted.bitoronbd.model
 
 import com.google.gson.annotations.SerializedName
 
-data class LocationDetails(
-    @SerializedName("result")
-    val result: Result
+data class Geometry(
+    @SerializedName("location")
+    val location: LocationLatLong
 )

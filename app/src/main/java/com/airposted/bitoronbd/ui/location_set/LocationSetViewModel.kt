@@ -4,8 +4,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.airposted.bitoronbd.data.repositories.LocationSetRepository
-import com.airposted.bitoronbd.model.LocationDetails
-import com.airposted.bitoronbd.model.LocationDetailsWithName
 import com.airposted.bitoronbd.model.SetParcel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -34,6 +32,10 @@ class LocationSetViewModel (
     suspend fun getLocations(
         url: String
     ) = withContext(Dispatchers.IO) { repository.locationSearch(url) }
+
+    suspend fun getLocationDetails(
+        url: String
+    ) = withContext(Dispatchers.IO) { repository.locationDetails(url) }
 
     suspend fun getDirections(
         url: String
