@@ -6,11 +6,11 @@
 
         <variable
             name="location"
-            type="com.airposted.bitoronbd.data.db.Location" />
+            type="com.airposted.bohon.data.db.Location" />
 
         <variable
             name="itemClickListener"
-            type="com.airposted.bitoronbd.ui.location_set.CustomClickListener" />
+            type="com.airposted.bohon.ui.location_set.CustomClickListener" />
     </data>
 
     <RelativeLayout

@@ -19,7 +19,6 @@
                 android:orientation="horizontal"
                 android:id="@+id/top_layout"
                 tools:ignore="RelativeOverlap"
-                android:paddingBottom="10dp"
                 android:background="#f6f6f6">
 
                 <androidx.cardview.widget.CardView
@@ -106,7 +105,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="40dp"
                         android:inputType="text"
-                        android:layout_toStartOf="@+id/loading_from"
                         app:closeIcon="@drawable/ic_close_red"
                         app:searchIcon="@null"
                         app:iconifiedByDefault="false"
@@ -119,7 +117,7 @@
                         android:textColorHint="@color/black"
                         android:textColor="@color/black"/>
 
-                    <com.airbnb.lottie.LottieAnimationView
+                    <!--<com.airbnb.lottie.LottieAnimationView
                         android:id="@+id/loading_from"
                         android:layout_width="40dp"
                         android:layout_alignParentEnd="true"
@@ -127,7 +125,7 @@
                         android:layout_height="40dp"
                         android:visibility="gone"
                         app:lottie_loop="true"
-                        app:lottie_autoPlay="true"/>
+                        app:lottie_autoPlay="true"/>-->
 
                 </RelativeLayout>
 
@@ -138,7 +136,7 @@
                     android:layout_marginStart="15dp"
                     android:layout_marginEnd="15dp"
                     android:layout_marginTop="5dp"
-                    android:layout_marginBottom="5dp"
+                    android:layout_marginBottom="15dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/button_bg">
@@ -148,7 +146,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="40dp"
                         android:inputType="text"
-                        android:layout_toStartOf="@+id/loading_to"
                         app:closeIcon="@drawable/ic_close_red"
                         app:searchIcon="@null"
                         app:iconifiedByDefault="false"
@@ -161,7 +158,7 @@
                         android:textColorHint="@color/black"
                         android:textColor="@color/black"/>
 
-                    <com.airbnb.lottie.LottieAnimationView
+                    <!--<com.airbnb.lottie.LottieAnimationView
                         android:id="@+id/loading_to"
                         android:layout_width="40dp"
                         android:layout_alignParentEnd="true"
@@ -169,9 +166,18 @@
                         android:layout_height="40dp"
                         android:visibility="gone"
                         app:lottie_loop="true"
-                        app:lottie_autoPlay="true"/>
+                        app:lottie_autoPlay="true"/>-->
 
                 </RelativeLayout>
+
+                <ProgressBar
+                    android:id="@+id/progress"
+                    android:layout_below="@id/to_layout"
+                    android:indeterminate="true"
+                    android:layout_width="match_parent"
+                    android:layout_height="6dp"
+                    android:visibility="gone"
+                    style="@style/Base.Widget.AppCompat.ProgressBar.Horizontal" />
 
             </RelativeLayout>
 

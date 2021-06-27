@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".ui.my_order.MyParcelFragment">
 
-    <com.airposted.bitoronbd.ui.widget.SimpleTextCursorWheelLayout
+    <com.airposted.bohon.ui.widget.SimpleTextCursorWheelLayout
         android:id="@+id/test_circle_menu_left"
         android:layout_width="280dip"
         android:layout_height="280dip"
@@ -16,13 +16,13 @@
         app:wheelItemRotateMode="outward"
         app:wheelSelectedAngle="180">
 
-        <com.airposted.bitoronbd.ui.widget.SwitchButton
+        <com.airposted.bohon.ui.widget.SwitchButton
             android:id="@id/id_wheel_menu_center_item"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:boardWidth="0dip"
             app:uncheckRevealColor="#3B5998"
             app:checkRevealColor="#3B5998"/>
-    </com.airposted.bitoronbd.ui.widget.SimpleTextCursorWheelLayout>
+    </com.airposted.bohon.ui.widget.SimpleTextCursorWheelLayout>
 
 </FrameLayout>

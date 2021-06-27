@@ -7,7 +7,7 @@
 
         <variable
             name="order"
-            type="com.airposted.bitoronbd.model.DataX" />
+            type="com.airposted.bohon.model.DataX" />
 
         <!--<variable
             name="itemClickListener"

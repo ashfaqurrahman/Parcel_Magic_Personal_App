@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.airposted.bitoronbd">
+    package="com.airposted.bohon">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -16,7 +16,7 @@
     <uses-permission android:name="android.permission.READ_CONTACTS" />
 
     <application
-        android:name=".Application"
+        android:name="com.airposted.bohon.Application"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -25,19 +25,16 @@
         android:theme="@style/Theme.BitoronBD"
         android:usesCleartextTraffic="true"
         tools:targetApi="m">
-        <activity android:name=".ui.location_set.LocationSetActivity"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustPan|adjustResize"/>
-        <activity android:name=".ui.permission.PermissionActivity"
+        <activity android:name="com.airposted.bohon.ui.permission.PermissionActivity"
             android:screenOrientation="portrait"/>
-        <activity android:name=".ui.WebViewActivity"
+        <activity android:name="com.airposted.bohon.ui.WebViewActivity"
             android:screenOrientation="portrait"/>
-        <activity android:name=".ui.auth.AuthActivity"
+        <activity android:name="com.airposted.bohon.ui.auth.AuthActivity"
             android:screenOrientation="portrait"/>
-        <activity android:name=".ui.IntroActivity"
+        <activity android:name="com.airposted.bohon.ui.IntroActivity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".ui.SplashActivity"
+            android:name="com.airposted.bohon.ui.SplashActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.BitoronBD.Launcher">
             <intent-filter>
@@ -46,7 +43,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.main.MainActivity"
+        <activity android:name="com.airposted.bohon.ui.main.MainActivity"
             android:screenOrientation="portrait"/>
         <activity
             android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
@@ -57,7 +54,7 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
 
-        <service android:name=".ui.MyFirebaseMessagingService"
+        <service android:name="com.airposted.bohon.ui.MyFirebaseMessagingService"
             android:exported="false">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
