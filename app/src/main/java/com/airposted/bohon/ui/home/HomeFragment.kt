@@ -352,6 +352,18 @@ open class HomeFragment : Fragment(R.layout.fragment_home),
                             .zoom(15.2f)                   // Sets the zoom
                             .build()
                     mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition))
+                } else {
+                    val cameraPosition =
+                        CameraPosition.Builder()
+                            .target(
+                                LatLng(
+                                    23.777176,
+                                    90.399452
+                                )
+                            )
+                            .zoom(11f)                   // Sets the zoom
+                            .build()
+                    mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition))
                 }
             }
         })

@@ -25,7 +25,7 @@
                 android:layout_marginTop="20dp"
                 android:textColor="#1a1a1a"
                 android:lineSpacingExtra="9sp"
-                android:text="What is Quick Delivery ?"
+                android:text="What is Regular Delivery ?"
                 />
 
             <TextView

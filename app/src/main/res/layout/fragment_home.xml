@@ -127,7 +127,7 @@
                                     android:textStyle="bold"
                                     android:textSize="26sp"
                                     android:textColor="#ffffff"
-                                    android:text="To find your pickup \nlocation automatically\n turn on location services"
+                                    android:text="To find your pickup \nlocation automatically\nturn on location services"
                                     />
 
                                 <TextView

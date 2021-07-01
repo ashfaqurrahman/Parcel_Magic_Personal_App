@@ -31,7 +31,7 @@ import com.airposted.bohon.ui.my_order.MyParcelFragment
 import com.airposted.bohon.utils.*
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
-import com.google.android.gms.maps.GoogleMap.InfoWindowAdapter
+import com.google.android.gms.maps.GoogleMap.OnMarkerClickListener
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.*
 import com.sslwireless.sslcommerzlibrary.model.initializer.SSLCProductInitializer
@@ -110,6 +110,10 @@ class ConfirmReceiverAddressFragment : Fragment(), KodeinAware, SSLCTransactionR
             bounds.include(location1)
             bounds.include(location2)
 
+            googleMap.setOnMarkerClickListener {
+                true
+            }
+
             lifecycleScope.launch {
                 try {
                     val url = getDirectionURL(location1, location2)
@@ -143,9 +147,10 @@ class ConfirmReceiverAddressFragment : Fragment(), KodeinAware, SSLCTransactionR
                     googleMap.addMarker(
                         MarkerOptions().position(location1)
                             .icon(markerIcon)
+                            .title(requireArguments().getString("sender_location_name"))
                     ).showInfoWindow()
 
-                    googleMap.setInfoWindowAdapter(object : InfoWindowAdapter {
+                    /*googleMap.setInfoWindowAdapter(object : InfoWindowAdapter {
                         override fun getInfoWindow(marker: Marker?): View? {
                             return null
                         }
@@ -156,30 +161,31 @@ class ConfirmReceiverAddressFragment : Fragment(), KodeinAware, SSLCTransactionR
                             info1.text = requireArguments().getString("receiver_location_name")
                             googleMap.setOnInfoWindowClickListener {
                                 val fragmento: Fragment
-                                /*fragmento = HistorialFragment()
+                                *//*fragmento = HistorialFragment()
                                 val bundle = Bundle()
                                 bundle.putString("title", info1.text.toString())
                                 fragmento.arguments = bundle
                                 getSupportFragmentManager().beginTransaction()
                                     .replace(R.id.content_principal, fragmento)
-                                    .commit()*/
+                                    .commit()*//*
                             }
                             return v
                         }
-                    })
+                    })*/
 
                     val circleDrawable1 = resources.getDrawable(R.drawable.ic_marker)
                     val markerIcon1 = getMarkerIconFromDrawable(circleDrawable1)
                     googleMap.addMarker(
                         MarkerOptions().position(location2)
                             .icon(markerIcon1)
+                            .title(requireArguments().getString("receiver_location_name"))
                     ).showInfoWindow()
 
                     googleMap.moveCamera(
                         CameraUpdateFactory.newLatLngBounds(
                             bounds.build(),
-                            mapFragment.requireView().width - 100,
-                            mapFragment.requireView().height - 100,
+                            mapFragment.requireView().width - 200,
+                            mapFragment.requireView().height - 200,
                             (mapFragment.requireView().height * 0.05f).toInt()
                         )
                     )
@@ -212,7 +218,7 @@ class ConfirmReceiverAddressFragment : Fragment(), KodeinAware, SSLCTransactionR
             val radioButton: RadioButton = binding.radioGroup.findViewById(radioButtonID)
             val selectedtext = radioButton.text
 
-            if (selectedtext == "Receiver"){
+            if (selectedtext == "Recipient"){
                 submitOrder()
             } else {
                 val dialogs = Dialog(requireActivity())

@@ -26,7 +26,7 @@
             android:textSize="32sp"
             android:textColor="#ffffff"
             android:lineSpacingExtra="16sp"
-            android:text="Package guidline"
+            android:text="Package guideline"
             />
 
         <com.google.android.material.tabs.TabLayout
@@ -47,7 +47,7 @@
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content"/>
             <com.google.android.material.tabs.TabItem
-                android:text="Quick Delivery"
+                android:text="Regular Delivery"
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content"/>
 

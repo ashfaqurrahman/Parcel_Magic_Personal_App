@@ -12,10 +12,10 @@ interface RunDAO {
     @Delete
     suspend fun deleteRun(run: Location)
 
-    @Query("SELECT name, latitude, longitude FROM location_table GROUP BY name ORDER BY id DESC LIMIT 5")
+    @Query("SELECT name FROM location_table GROUP BY name ORDER BY id DESC LIMIT 5")
     fun getAllLocations(): LiveData<List<Location>>
 
-    @Query("SELECT name, latitude, longitude FROM location_table ORDER BY id DESC LIMIT 1")
+    @Query("SELECT name FROM location_table ORDER BY id DESC LIMIT 1")
     fun getLastLocation(): LiveData<List<Location>>
 }
 

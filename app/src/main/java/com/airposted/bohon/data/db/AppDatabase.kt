@@ -21,8 +21,8 @@ abstract class AppDatabase : RoomDatabase() {
         private var instance: AppDatabase? = null
         private val LOCK = Any()
 
-        @JvmField
-        val MIGRATION_1_2 = Migration1To2()
+        /*@JvmField
+        val MIGRATION_1_2 = Migration1To2()*/
 
         operator fun invoke(context: Context) = instance ?: synchronized(LOCK) {
             instance ?: buildDatabase(context).also {
@@ -36,11 +36,11 @@ abstract class AppDatabase : RoomDatabase() {
                 AppDatabase::class.java,
                 "location_table.db"
             )
-                .addMigrations(MIGRATION_1_2)
+                //.addMigrations(MIGRATION_1_2)
                 .build()
     }
 
-    class Migration1To2 : Migration(1,2) {
+    /*class Migration1To2 : Migration(1,2) {
         private val TABLE_NAME = "location_table"
 
         override fun migrate(database: SupportSQLiteDatabase) {
@@ -61,5 +61,5 @@ abstract class AppDatabase : RoomDatabase() {
             // 4. Change the table name to the correct one
             database.execSQL("ALTER TABLE $TABLE_NAME_TEMP RENAME TO $TABLE_NAME")
         }
-    }
+    }*/
 }

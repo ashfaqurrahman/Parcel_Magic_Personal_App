@@ -6,8 +6,8 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "location_table")
 data class Location(
     var name: String? = null,
-    var latitude: Double? = null,
-    var longitude: Double? = null
+//    var latitude: Double? = null,
+//    var longitude: Double? = null
 ) {
     @PrimaryKey(autoGenerate = true)
     var id: Int? = null

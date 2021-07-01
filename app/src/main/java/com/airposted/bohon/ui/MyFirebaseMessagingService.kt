@@ -76,7 +76,6 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
             "USER_PREF",
             MODE_PRIVATE
         )
-        Log.e("aaaaaa", fcmToken)
         val editor = prefs.edit()
         editor.putString("FCMToken", fcmToken)
         editor.apply()

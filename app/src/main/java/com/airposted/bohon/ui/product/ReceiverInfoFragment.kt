@@ -162,7 +162,7 @@ class ReceiverInfoFragment : Fragment(), NumberClickListener {
                                 phoneNumber.substring(1).replace("-", "")
                             }
                             phoneNumber.startsWith("+") -> {
-                                phoneNumber.substring(5).replace("-", "")
+                                phoneNumber.substring(4).replace("-", "")
                             }
                             else -> {
                                 phoneNumber
