@@ -54,7 +54,7 @@
                     android:textSize="14sp"
                     android:textColor="#56586d"
                     android:lineSpacingExtra="5sp"
-                    android:text="+88 01" />
+                    android:text="+88 0" />
 
                 <View
                     android:layout_width="1dp"
@@ -69,7 +69,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/poppins_regular"
                     android:inputType="phone"
-                    android:maxLength="9"
+                    android:maxLength="11"
                     android:maxLines="1"
                     android:background="@null"
                     android:hint="@string/enter_your_phone_number"

@@ -81,7 +81,6 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginEnd="5dp"
                         android:textColor="@color/black"
                         android:text="@string/did_not_receive_the_code" />
 
@@ -90,7 +89,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:clickable="false"
-                        android:text="Resend SMS"
+                        android:text=" Resend SMS"
                         android:textColor="@color/black"
                         android:textSize="16sp"
                         android:textStyle="bold" />
