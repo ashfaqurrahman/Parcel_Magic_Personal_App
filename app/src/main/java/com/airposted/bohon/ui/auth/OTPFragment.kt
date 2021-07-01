@@ -6,6 +6,7 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.os.CountDownTimer
+import android.util.MalformedJsonException
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -65,11 +66,7 @@ class OTPFragment : Fragment(), KodeinAware {
     }
 
     private fun bindUI() {
-        binding.toolbar.toolbarTitle.text = getString(R.string.verification)
-        binding.toolbar.backImage.setOnClickListener {
-            requireActivity().onBackPressed()
-        }
-        mAuth = FirebaseAuth.getInstance()
+//        mAuth = FirebaseAuth.getInstance()
         isAuth = requireArguments().getBoolean("isAuth")
         binding.toolbar.toolbarTitle.text = getString(R.string.verification)
         binding.toolbar.backImage.setOnClickListener {
@@ -104,15 +101,171 @@ class OTPFragment : Fragment(), KodeinAware {
         }
 
         binding.verify.setOnClickListener {
-            setProgressDialog(requireContext())
-            val code = otp1
-            val credential = PhoneAuthProvider.getCredential(verificationId!!, code!!)
-            signInWithCredential(credential)
+            verifyOTP()
+//            setProgressDialog(requireContext())
+//            val code = otp1
+//            val credential = PhoneAuthProvider.getCredential(verificationId!!, code!!)
+//            signInWithCredential(credential)
         }
 
         binding.resend.setOnClickListener {
-            timer()
-            sendVerificationCode(phone!!)
+            resendOTP()
+//            timer()
+//            sendVerificationCode(phone!!)
+        }
+    }
+
+    private fun verifyOTP() {
+        if (otp1 == requireArguments().getString("otp")) {
+            timer?.cancel()
+            if (isAuth) {
+                dismissDialog()
+                hideKeyboard(requireActivity())
+                Toast.makeText(requireContext(), "Login Successful", Toast.LENGTH_SHORT)
+                    .show()
+                PersistentUser.getInstance().setLogin(requireContext())
+                PersistentUser.getInstance().setAccessToken(
+                    requireContext(),
+                    "Bearer " + requireArguments().getString("token")
+                )
+                PersistentUser.getInstance()
+                    .setUserID(requireContext(), requireArguments().getInt("id").toString())
+                PersistentUser.getInstance()
+                    .setFullname(requireContext(), requireArguments().getString("name"))
+                PersistentUser.getInstance()
+                    .setPhonenumber(requireContext(), requireArguments().getString("phone"))
+                PersistentUser.getInstance()
+                    .setUserImage(requireContext(), requireArguments().getString("image"))
+                if (checkPermissions()) {
+                    val intent = Intent(requireContext(), MainActivity::class.java)
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                    startActivity(intent)
+                } else {
+                    val intent = Intent(requireContext(), PermissionActivity::class.java)
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                    startActivity(intent)
+                }
+            }
+            else {
+                lifecycleScope.launch {
+                    try {
+                        val signupResponse: AuthResponse?
+                        val path = requireArguments().getString("imageUri")
+                        if (path != null){
+                            val file = File(path)
+                            val compressedImage = reduceImageSize(file)
+                            if (compressedImage != null){
+                                val fileReqBody = RequestBody.create(
+                                    MediaType.parse("image/*"),
+                                    compressedImage
+                                )
+                                val part = MultipartBody.Part.createFormData(
+                                    "image",
+                                    compressedImage.name,
+                                    fileReqBody
+                                )
+                                val photoName = RequestBody.create(
+                                    MediaType.parse("text/plain"),
+                                    "image-type"
+                                )
+                                val name = RequestBody.create(
+                                    MediaType.parse("text/plain"),
+                                    requireArguments().getString("name").toString()
+                                )
+                                val phone = RequestBody.create(
+                                    MediaType.parse("text/plain"),
+                                    phone!!
+                                )
+                                signupResponse = viewModel.userSignupWithPhoto(
+                                    name,
+                                    phone,
+                                    part,
+                                    photoName
+                                )
+                            } else {
+                                val fileReqBody = RequestBody.create(
+                                    MediaType.parse("image/*"),
+                                    file
+                                )
+                                val part = MultipartBody.Part.createFormData(
+                                    "image",
+                                    file.name,
+                                    fileReqBody
+                                )
+                                val photoName = RequestBody.create(
+                                    MediaType.parse("text/plain"),
+                                    "image-type"
+                                )
+                                val name = RequestBody.create(
+                                    MediaType.parse("text/plain"),
+                                    requireArguments().getString("name").toString()
+                                )
+                                val phone = RequestBody.create(
+                                    MediaType.parse("text/plain"),
+                                    phone!!
+                                )
+                                signupResponse = viewModel.userSignupWithPhoto(
+                                    name,
+                                    phone,
+                                    part,
+                                    photoName
+                                )
+                            }
+
+                        } else {
+                            signupResponse = viewModel.userSignup(
+                                requireArguments().getString("name").toString(),
+                                phone!!
+                            )
+                        }
+                        if (signupResponse.success) {
+                            dismissDialog()
+                            Toast.makeText(requireContext(), signupResponse.msg, Toast.LENGTH_SHORT).show()
+                            PersistentUser.getInstance().setLogin(requireContext())
+                            PersistentUser.getInstance().setAccessToken(
+                                requireContext(),
+                                "Bearer " + signupResponse.data?.token
+                            )
+                            PersistentUser.getInstance().setUserID(
+                                requireContext(),
+                                signupResponse.user?.id.toString()
+                            )
+                            PersistentUser.getInstance().setFullname(
+                                requireContext(),
+                                signupResponse.user?.name
+                            )
+                            PersistentUser.getInstance().setPhonenumber(
+                                requireContext(),
+                                signupResponse.user?.phone
+                            )
+                            PersistentUser.getInstance().setUserImage(
+                                requireContext(),
+                                signupResponse.user?.image
+                            )
+
+                            val intent = Intent(requireContext(), PermissionActivity::class.java)
+                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                            startActivity(intent)
+                            requireActivity().finish()
+
+                        } else {
+                            dismissDialog()
+                            binding.main.snackbar(signupResponse.msg)
+                        }
+                    } catch (e: ApiException) {
+                        dismissDialog()
+                        binding.main.snackbar(e.message!!)
+                        e.printStackTrace()
+                    } catch (e: NoInternetException) {
+                        dismissDialog()
+                        binding.main.snackbar(e.message!!)
+                        e.printStackTrace()
+                    }
+                }
+            }
+        }
+        else {
+            binding.main.snackbar("Incorrect OTP")
         }
     }
 
@@ -185,7 +338,8 @@ class OTPFragment : Fragment(), KodeinAware {
                             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
                             startActivity(intent)
                         }
-                    } else {
+                    }
+                    else {
                         lifecycleScope.launch {
                             try {
                                 val signupResponse: AuthResponse?
@@ -321,6 +475,35 @@ class OTPFragment : Fragment(), KodeinAware {
             }
         }
         timer?.start()
+    }
+
+    private fun resendOTP() {
+        setProgressDialog(requireActivity())
+        lifecycleScope.launch {
+            try {
+                val response = viewModel.sendOTP(
+                    requireArguments().getString("phone")!!
+                )
+                if (response.success) {
+                    timer()
+                } else {
+                    binding.main.snackbar(response.msg)
+                }
+                dismissDialog()
+            } catch (e: MalformedJsonException) {
+                dismissDialog()
+                binding.main.snackbar(e.message!!)
+                e.printStackTrace()
+            } catch (e: ApiException) {
+                dismissDialog()
+                binding.main.snackbar(e.message!!)
+                e.printStackTrace()
+            } catch (e: NoInternetException) {
+                dismissDialog()
+                binding.main.snackbar(e.message!!)
+                e.printStackTrace()
+            }
+        }
     }
 
     override fun onDestroy() {

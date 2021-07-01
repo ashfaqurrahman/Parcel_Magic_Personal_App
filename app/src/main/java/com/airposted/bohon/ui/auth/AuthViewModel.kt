@@ -16,6 +16,10 @@ class AuthViewModel(
         mobile: String
     ) = withContext(Dispatchers.IO) { repository.numberCheck(mobile) }
 
+    suspend fun sendOTP(
+        mobile: String
+    ) = withContext(Dispatchers.IO) { repository.sendOTP(mobile) }
+
     suspend fun getLocations(
         mobile: String
     ) = withContext(Dispatchers.IO) { repository.locationSearch(mobile) }

@@ -20,6 +20,12 @@ interface MyApi {
     ) : Response<AuthResponse>
 
     @FormUrlEncoded
+    @POST("send_otp_message")
+    suspend fun sendOTP(
+        @Field("phone_number") phone: String
+    ) : Response<AuthResponse>
+
+    @FormUrlEncoded
     @POST("register_personal")
     suspend fun userSignup(
         @Field("username") name: String,

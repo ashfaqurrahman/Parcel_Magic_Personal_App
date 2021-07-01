@@ -1,0 +1,623 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <RelativeLayout
+        android:id="@+id/root_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/bg"
+        android:clickable="true"
+        android:focusable="true"
+        android:orientation="vertical">
+
+        <include layout="@layout/custom_toolbar"
+            android:id="@+id/toolbar"/>
+
+        <ScrollView
+            android:layout_below="@+id/toolbar"
+            android:layout_above="@+id/cancel_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scrollbars="none">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginEnd="15dp"
+                    android:layout_marginTop="20dp"
+                    app:cardCornerRadius="12dp"
+                    app:cardBackgroundColor="@color/white">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <fragment
+                            android:id="@+id/mapReceiverDetails"
+                            android:name="com.google.android.gms.maps.SupportMapFragment"
+                            android:layout_width="match_parent"
+                            android:layout_height="150dp"/>
+
+                        <!--<fragment
+                            android:id="@+id/mapReceiverDetails"
+                            android:name="com.google.android.gms.maps.SupportMapFragment"
+                            android:layout_width="match_parent"
+                            android:layout_height="120dp"/>-->
+
+                        <!--<com.google.android.gms.maps.MapView
+                            android:id="@+id/mapView"
+                            android:layout_width="match_parent"
+                            android:layout_height="150dp"/>-->
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="15dp"
+                            android:layout_marginTop="16dp"
+                            android:layout_marginBottom="10dp"
+                            android:layout_marginEnd="15dp">
+
+                            <TextView
+                                android:id="@+id/delivery_type"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentStart="true"
+                                android:drawablePadding="10dp"
+                                android:fontFamily="@font/poppins_medium"
+                                android:lineSpacingExtra="8sp"
+                                tools:text="Delivery type"
+                                android:textColor="#1a1662"
+                                android:textSize="15sp"
+                                android:textStyle="normal"
+                                app:drawableStartCompat="@drawable/ic_car" />
+
+                            <TextView
+                                android:id="@+id/invoice"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentEnd="true"
+                                android:fontFamily="@font/poppins_medium"
+                                android:lineSpacingExtra="10sp"
+                                android:text="#AIR5555555"
+                                android:textColor="#1a1662"
+                                android:textSize="15sp"
+                                android:textStyle="normal" />
+
+                        </RelativeLayout>
+
+                    </LinearLayout>
+
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginEnd="15dp"
+                    android:layout_marginTop="20dp"
+                    app:cardCornerRadius="12dp"
+                    app:cardBackgroundColor="@color/white">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingStart="20dp"
+                        android:paddingEnd="20dp"
+                        android:paddingTop="15dp"
+                        android:paddingBottom="15dp"
+                        >
+
+                        <ImageView
+                            android:id="@+id/icon"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/ic_document_large_icon"/>
+
+                        <LinearLayout
+                            android:id="@+id/weight_layout"
+                            android:layout_toEndOf="@+id/icon"
+                            android:layout_marginStart="19dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/poppins_regular"
+                                android:textStyle="normal"
+                                android:textSize="13sp"
+                                android:textColor="#b5b7dd"
+                                android:text="Quantity"
+                                />
+
+                            <TextView
+                                android:id="@+id/quantity"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/poppins_semibold"
+                                android:textStyle="normal"
+                                android:textSize="14sp"
+                                android:textColor="#1a1662"
+                                tools:text="03"
+                                />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_below="@+id/weight_layout"
+                            android:layout_toEndOf="@+id/icon"
+                            android:layout_marginStart="19dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/poppins_regular"
+                                android:textStyle="normal"
+                                android:textSize="13sp"
+                                android:textColor="#b5b7dd"
+                                android:text="Size"
+                                />
+
+                            <TextView
+                                android:id="@+id/size"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/poppins_semibold"
+                                android:textStyle="normal"
+                                android:textSize="14sp"
+                                android:textColor="#1a1662"
+                                tools:text="8 x 8 x 8"
+                                />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/layout"
+                            android:layout_alignStart="@+id/layout1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/poppins_regular"
+                                android:textStyle="normal"
+                                android:textSize="13sp"
+                                android:textColor="#b5b7dd"
+                                android:text="Total Distance"
+                                />
+
+                            <TextView
+                                android:id="@+id/distance"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/poppins_semibold"
+                                android:textStyle="normal"
+                                android:textSize="14sp"
+                                android:textColor="#1a1662"
+                                tools:text="7.5 km"
+                                />
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/layout1"
+                            android:layout_below="@+id/layout"
+                            android:layout_alignParentEnd="true"
+                            android:layout_marginStart="19dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/poppins_regular"
+                                android:textStyle="normal"
+                                android:textSize="13sp"
+                                android:textColor="#b5b7dd"
+                                android:text="Delivery Charge"
+                                />
+
+                            <TextView
+                                android:id="@+id/charge"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="@font/poppins_semibold"
+                                android:textStyle="normal"
+                                android:textSize="14sp"
+                                android:textColor="#1a1662"
+                                tools:text="BDT 100"
+                                />
+
+                        </LinearLayout>
+
+                        <RelativeLayout
+                            android:id="@+id/date_of_delivery_layout"
+                            android:layout_below="@+id/icon"
+                            android:layout_marginTop="20dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentStart="true"
+                                android:fontFamily="@font/poppins_regular"
+                                android:textStyle="normal"
+                                android:textSize="13sp"
+                                android:textColor="#8c8cb2"
+                                android:lineSpacingExtra="48sp"
+                                android:text="Date of order"
+                                />
+                            <TextView
+                                android:id="@+id/delivery_date"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentEnd="true"
+                                android:fontFamily="@font/poppins_semibold"
+                                android:textStyle="normal"
+                                android:textSize="14sp"
+                                android:textColor="#1a1662"
+                                android:lineSpacingExtra="47sp"
+                                tools:text="10-03-2021 12:10:30"
+                                />
+
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:id="@+id/distance_layout"
+                            android:layout_below="@+id/date_of_delivery_layout"
+                            android:layout_marginTop="12dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentStart="true"
+                                android:fontFamily="@font/poppins_regular"
+                                android:textStyle="normal"
+                                android:textSize="13sp"
+                                android:textColor="#8c8cb2"
+                                android:lineSpacingExtra="48sp"
+                                android:text="Order Status"
+                                />
+                            <TextView
+                                android:id="@+id/status"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentEnd="true"
+                                android:fontFamily="@font/poppins_semibold"
+                                android:textStyle="normal"
+                                android:textSize="14sp"
+                                android:textColor="#1a1662"
+                                android:lineSpacingExtra="47sp"
+                                tools:text="Pending"
+                                />
+
+                        </RelativeLayout>
+
+                    </RelativeLayout>
+
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginEnd="15dp"
+                    android:layout_marginTop="20dp"
+                    app:cardCornerRadius="12dp"
+                    app:cardBackgroundColor="@color/white">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="15dp"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/poppins_semibold"
+                            android:textStyle="normal"
+                            android:textSize="14sp"
+                            android:textColor="#1a1662"
+                            android:lineSpacingExtra="47sp"
+                            android:text="Recipient's Details"
+                            />
+
+                        <RelativeLayout
+                            android:layout_marginTop="12dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentStart="true"
+                                android:fontFamily="@font/poppins_regular"
+                                android:textStyle="normal"
+                                android:textSize="13sp"
+                                android:textColor="#8c8cb2"
+                                android:lineSpacingExtra="48sp"
+                                android:text="Name"
+                                />
+                            <TextView
+                                android:id="@+id/receiver_name"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentEnd="true"
+                                android:fontFamily="@font/poppins_semibold"
+                                android:textStyle="normal"
+                                android:textSize="14sp"
+                                android:textColor="#1a1662"
+                                android:lineSpacingExtra="47sp"
+                                tools:text="Fahim Rana"
+                                />
+
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:layout_marginTop="12dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentStart="true"
+                                android:fontFamily="@font/poppins_regular"
+                                android:textStyle="normal"
+                                android:textSize="13sp"
+                                android:textColor="#8c8cb2"
+                                android:lineSpacingExtra="48sp"
+                                android:text="Phone Number"
+                                />
+                            <TextView
+                                android:id="@+id/receiver_phone"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentEnd="true"
+                                android:fontFamily="@font/poppins_semibold"
+                                android:textStyle="normal"
+                                android:textSize="14sp"
+                                android:textColor="#1a1662"
+                                android:lineSpacingExtra="47sp"
+                                tools:text="0174 2618 399"
+                                />
+
+                        </RelativeLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="0.5dp"
+                            android:layout_marginTop="15dp"
+                            android:background="@color/view_color" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="15dp"
+                            android:fontFamily="@font/poppins_semibold"
+                            android:textStyle="normal"
+                            android:textSize="14sp"
+                            android:textColor="#1a1662"
+                            android:lineSpacingExtra="47sp"
+                            android:text="Sender's Details"
+                            />
+
+                        <RelativeLayout
+                            android:layout_marginTop="11dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentStart="true"
+                                android:fontFamily="@font/poppins_regular"
+                                android:textStyle="normal"
+                                android:textSize="13sp"
+                                android:textColor="#8c8cb2"
+                                android:lineSpacingExtra="48sp"
+                                android:text="Name"
+                                />
+                            <TextView
+                                android:id="@+id/sender_name"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentEnd="true"
+                                android:fontFamily="@font/poppins_semibold"
+                                android:textStyle="normal"
+                                android:textSize="14sp"
+                                android:textColor="#1a1662"
+                                android:lineSpacingExtra="47sp"
+                                tools:text="Badol Mondal"
+                                />
+
+                        </RelativeLayout>
+
+                        <RelativeLayout
+                            android:layout_marginTop="12dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentStart="true"
+                                android:fontFamily="@font/poppins_regular"
+                                android:textStyle="normal"
+                                android:textSize="13sp"
+                                android:textColor="#8c8cb2"
+                                android:lineSpacingExtra="48sp"
+                                android:text="Phone Number"
+                                />
+                            <TextView
+                                android:id="@+id/sender_phone"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentEnd="true"
+                                android:fontFamily="@font/poppins_semibold"
+                                android:textStyle="normal"
+                                android:textSize="14sp"
+                                android:textColor="#1a1662"
+                                android:lineSpacingExtra="47sp"
+                                tools:text="0174 2618 399"
+                                />
+
+                        </RelativeLayout>
+
+                    </LinearLayout>
+
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginEnd="15dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="20dp"
+                    app:cardCornerRadius="12dp"
+                    app:cardBackgroundColor="@color/white">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingStart="20dp"
+                        android:paddingEnd="20dp"
+                        android:paddingTop="15dp"
+                        android:paddingBottom="15dp"
+                        >
+
+                        <TextView
+                            android:id="@+id/delivery_details"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/poppins_regular"
+                            android:textStyle="normal"
+                            android:textSize="14sp"
+                            android:textColor="#b5b7dd"
+                            android:lineSpacingExtra="47sp"
+                            android:text="Delivery Details"
+                            />
+
+                        <ImageView
+                            android:id="@+id/from_icon"
+                            android:layout_marginStart="15dp"
+                            android:layout_marginTop="5dp"
+                            android:layout_alignTop="@+id/from"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/ic_location_icon_solid"/>
+
+                        <ImageView
+                            android:layout_width="2dp"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/doted_line_blue"
+                            android:layout_marginStart="21dp"
+                            android:layout_below="@+id/from_icon"
+                            android:layout_above="@id/to_icon"/>
+
+                        <RelativeLayout
+                            android:id="@+id/to_icon"
+                            android:layout_marginStart="15dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:gravity="center_vertical"
+                            android:layout_alignTop="@+id/to">
+
+                            <ImageView
+                                android:layout_width="15dp"
+                                android:layout_height="15dp"
+                                android:src="@drawable/circle_with_border"/>
+
+                        </RelativeLayout>
+
+                        <TextView
+                            android:id="@+id/from"
+                            android:layout_marginTop="15dp"
+                            android:layout_below="@+id/delivery_details"
+                            android:layout_toEndOf="@+id/from_icon"
+                            android:layout_marginStart="20dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/poppins_semibold"
+                            android:textStyle="normal"
+                            android:textSize="14sp"
+                            android:textColor="#1a1662"
+                            android:lineSpacingExtra="13sp"
+                            tools:text="House # 43, Road# 1, Block #I, Banani, Dhaka-1213"
+                            />
+
+                        <TextView
+                            android:id="@+id/to"
+                            android:layout_toEndOf="@+id/to_icon"
+                            android:layout_marginTop="30dp"
+                            android:layout_marginStart="20dp"
+                            android:layout_below="@+id/from"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/poppins_semibold"
+                            android:textStyle="normal"
+                            android:textSize="14sp"
+                            android:textColor="#1a1662"
+                            android:lineSpacingExtra="13sp"
+                            tools:text="House # 43, Road# 1, Block #I, Banani, Dhaka-1213"
+                            />
+
+                    </RelativeLayout>
+
+                </com.google.android.material.card.MaterialCardView>
+
+            </LinearLayout>
+
+        </ScrollView>
+
+        <RelativeLayout
+            android:id="@+id/cancel_layout"
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:paddingEnd="20dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:paddingStart="20dp"
+            android:layout_alignParentBottom="true">
+
+            <TextView
+                android:id="@+id/cancel_order"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/after_button_bg"
+                android:fontFamily="@font/poppins_semibold"
+                android:padding="15dp"
+                android:text="@string/cancel_order"
+                android:textAlignment="center"
+                android:textColor="#FB825D"
+                android:textSize="18sp" />
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+</layout>

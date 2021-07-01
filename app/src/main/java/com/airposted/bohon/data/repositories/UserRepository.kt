@@ -16,6 +16,10 @@ class UserRepository(
         return apiRequest { api.numberCheck(mobile) }
     }
 
+    suspend fun sendOTP(mobile: String): AuthResponse {
+        return apiRequest { api.sendOTP(mobile) }
+    }
+
     suspend fun locationSearch(place: String): SearchLocation {
         return apiRequest { api.getPlacesNameList(place) }
     }
