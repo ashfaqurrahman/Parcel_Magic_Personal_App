@@ -21,7 +21,7 @@
     <string name="sign_up">Sign Up</string>
     <string name="verification">Verification</string>
     <string name="account_settings">Account Settings</string>
-    <string name="parcel_history">Parcel History</string>
+    <string name="parcel_history">Order History</string>
     <string name="profile">Profile</string>
     <string name="help">Help</string>
     <string name="settings">Settings</string>
@@ -58,7 +58,7 @@
     <string name="cash_on_delivery">Cash on delivery</string>
     <string name="product_details">Product details</string>
     <string name="what_to_send">What to send</string>
-    <string name="my_parcel">Order status</string>
+    <string name="my_parcel">Ongoing Order</string>
     <string name="quick_delivery_on">Delivery within</string>
     <string name="the_dhaka_city">Dhaka city</string>
     <string name="quick">Regular</string>
@@ -80,7 +80,7 @@
 
     <string-array name="delivery_type">
         <item>Express Delivery</item>
-        <item>Quick Delivery</item>
+        <item>Regular Delivery</item>
     </string-array>
 
     <string-array name="parcel_quantity">
@@ -103,7 +103,7 @@
     <string name="small_size1">8\"x8\"x8\"</string>
     <string name="sign_in_with_mobile_number">Sign in with mobile number</string>
     <string name="cancel_order">Cancel Order</string>
-    <string name="cancelled_order">Order Cancelled</string>
+    <string name="cancelled_order">Cancel Order</string>
     <string name="collected_order">Collected Order\'s</string>
     <string name="order_detaisl">Order Details</string>
     <string name="confirm_delivery">Confirm Delivery</string>
