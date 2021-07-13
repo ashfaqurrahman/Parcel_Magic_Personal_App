@@ -23,6 +23,7 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.observe
 import com.aapbd.appbajarlib.storage.PersistentUser
 import com.airposted.bohon.R
 import com.airposted.bohon.databinding.FragmentProfileBinding
@@ -71,11 +72,17 @@ class ProfileFragment : Fragment(), KodeinAware {
         moreBinding.back.setOnClickListener {
             requireActivity().onBackPressed()
         }
-        Glide.with(requireActivity()).load(
-            PersistentUser.getInstance().getUserImage(requireActivity())
-        ).placeholder(R.drawable.sample_pro_pic).error(
-            R.drawable.sample_pro_pic
-        ).into(moreBinding.profileImage)
+        viewModel.name.observe(viewLifecycleOwner, ) {
+            moreBinding.profileName.text = it
+        }
+
+        viewModel.image.observe(viewLifecycleOwner, ) {
+            Glide.with(requireActivity()).load(
+                it
+            ).placeholder(R.mipmap.ic_launcher).error(
+                R.drawable.sample_pro_pic
+            ).into(moreBinding.profileImage)
+        }
 
         moreBinding.singOut.setOnClickListener {
             val dialogs = Dialog(requireActivity())
@@ -100,10 +107,6 @@ class ProfileFragment : Fragment(), KodeinAware {
             dialogs.setCancelable(false)
             dialogs.show()
         }
-
-        viewModel.getName.await().observe(requireActivity(), {
-            moreBinding.profileName.text = it
-        })
 
         if (PersistentUser.getInstance().getFullName(requireActivity()).isEmpty()) {
             moreBinding.profileName.text = "No Name"
@@ -268,6 +271,20 @@ class ProfileFragment : Fragment(), KodeinAware {
             } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
                 val error = result.error
                 moreBinding.main.snackbar(error.toString())
+            }
+        }
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<String?>,
+        grantResults: IntArray
+    ) {
+        when (requestCode) {
+            1 -> if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                imagePick()
+            } else {
+
             }
         }
     }

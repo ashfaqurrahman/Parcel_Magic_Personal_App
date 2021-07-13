@@ -33,9 +33,8 @@ class HomeViewModel(
         repository.saveAddress(run)
     }
 
-    val getName by lazyDeferred {
-        repository.getName()
-    }
+    val name = repository.userName
+    val image = repository.userImage
 
     suspend fun userNameUpdate(
         header: String,

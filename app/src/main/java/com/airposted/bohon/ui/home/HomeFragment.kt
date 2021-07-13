@@ -17,8 +17,10 @@ import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.observe
 import com.aapbd.appbajarlib.storage.PersistentUser
 import com.airposted.bohon.BuildConfig
 import com.airposted.bohon.R
@@ -126,15 +128,17 @@ open class HomeFragment : Fragment(R.layout.fragment_home),
         val pic = hView.findViewById<CircleImageView>(R.id.profile_image)
         val name = hView.findViewById<TextView>(R.id.user_name)
 
-        viewModel.getName.await().observe(requireActivity(), {
+        viewModel.name.observe(viewLifecycleOwner, ) {
             name.text = it
-        })
+        }
 
-        Glide.with(requireActivity()).load(
-            PersistentUser.getInstance().getUserImage(requireActivity())
-        ).placeholder(R.mipmap.ic_launcher).error(
-            R.drawable.sample_pro_pic
-        ).into(pic)
+        viewModel.image.observe(viewLifecycleOwner, ) {
+            Glide.with(requireActivity()).load(
+                it
+            ).placeholder(R.mipmap.ic_launcher).error(
+                R.drawable.sample_pro_pic
+            ).into(pic)
+        }
 
         homeBinding.expressBtn.setOnClickListener{
             val fragment = ParcelTypeFragment()

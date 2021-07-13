@@ -42,7 +42,8 @@ class HomeRepository(context: Context, private val api: MyApi, private val db: A
     private var mLocationManager: LocationManager? = null
     private val appContext = context.applicationContext
     private val permissions = arrayOf(Manifest.permission.ACCESS_FINE_LOCATION)
-    private val userName = MutableLiveData<String>()
+    val userName = MutableLiveData<String>()
+    val userImage = MutableLiveData<String>()
 
     var mLocationRequest: LocationRequest? = null
     var mLastLocation: Location? = null
@@ -70,6 +71,9 @@ class HomeRepository(context: Context, private val api: MyApi, private val db: A
                 IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION)
             )
         }
+
+        getName()
+        getImage()
     }
 
     fun location(): LiveData<Boolean> {
@@ -180,15 +184,11 @@ class HomeRepository(context: Context, private val api: MyApi, private val db: A
         return currentLocation
     }
 
-    suspend fun getName(): LiveData<String> {
-        return withContext(Dispatchers.IO) {
-            fetchName()
-        }
-    }
-
-    private fun fetchName(): LiveData<String> {
+    private fun getName() {
         userName.postValue(PersistentUser.getInstance().getFullName(appContext))
-        return userName
+    }
+    private fun getImage() {
+        userImage.postValue(PersistentUser.getInstance().getUserImage(appContext))
     }
 
     suspend fun userNameUpdate(
@@ -208,7 +208,10 @@ class HomeRepository(context: Context, private val api: MyApi, private val db: A
         photo: MultipartBody.Part,
         photo_name: RequestBody
     ) : AuthResponse {
-        return apiRequest { api.userImageUpdate(header, photo, photo_name)}
+        val response = apiRequest { api.userImageUpdate(header, photo, photo_name)}
+        PersistentUser.getInstance().setUserImage(appContext, response.user?.image)
+        userImage.postValue(response.user?.image)
+        return  response
     }
 
     suspend fun getSetting(): SettingResponse {
