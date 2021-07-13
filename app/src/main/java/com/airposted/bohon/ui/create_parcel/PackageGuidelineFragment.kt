@@ -1,4 +1,4 @@
-package com.airposted.bohon.ui.product
+package com.airposted.bohon.ui.create_parcel
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

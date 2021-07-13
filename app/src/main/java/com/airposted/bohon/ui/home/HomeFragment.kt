@@ -28,12 +28,12 @@ import com.airposted.bohon.model.LocationDetailsWithName
 import com.airposted.bohon.ui.auth.AuthActivity
 import com.airposted.bohon.ui.help.HelpFragment
 import com.airposted.bohon.ui.main.CommunicatorFragmentInterface
-import com.airposted.bohon.ui.more.MoreFragment
+import com.airposted.bohon.ui.profile.ProfileFragment
 import com.airposted.bohon.ui.my_order.CancelOrderFragment
 import com.airposted.bohon.ui.my_order.MyParcelFragment
 import com.airposted.bohon.ui.my_order.MyParcelHistoryFragment
-import com.airposted.bohon.ui.product.PackageGuidelineFragment
-import com.airposted.bohon.ui.product.ParcelTypeFragment
+import com.airposted.bohon.ui.create_parcel.PackageGuidelineFragment
+import com.airposted.bohon.ui.create_parcel.ParcelTypeFragment
 import com.airposted.bohon.ui.termsconditions.TermsConditionsFragment
 import com.airposted.bohon.utils.*
 import com.bumptech.glide.Glide
@@ -391,8 +391,8 @@ open class HomeFragment : Fragment(R.layout.fragment_home),
                 myCommunicator?.addContentFragment(HelpFragment(), true)
                 homeBinding.drawerLayout.closeDrawers()
             }
-            R.id.settings -> {
-                myCommunicator?.addContentFragment(MoreFragment(), true)
+            R.id.profile -> {
+                myCommunicator?.addContentFragment(ProfileFragment(), true)
                 homeBinding.drawerLayout.closeDrawers()
             }
             R.id.terms_condition -> {

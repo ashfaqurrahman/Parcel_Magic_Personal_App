@@ -10,7 +10,7 @@
         android:background="@color/white"
         android:clickable="true"
         android:focusable="true"
-        tools:context=".ui.product.SearchReceiverAddressFragment"
+        tools:context=".ui.create_parcel.SearchReceiverAddressFragment"
         android:id="@+id/root_layout">
 
         <include layout="@layout/custom_toolbar"

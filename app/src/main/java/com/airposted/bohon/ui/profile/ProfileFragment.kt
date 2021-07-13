@@ -1,4 +1,4 @@
-package com.airposted.bohon.ui.more
+package com.airposted.bohon.ui.profile
 
 import android.Manifest
 import android.app.Activity
@@ -25,8 +25,10 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.aapbd.appbajarlib.storage.PersistentUser
 import com.airposted.bohon.R
-import com.airposted.bohon.databinding.FragmentMoreBinding
+import com.airposted.bohon.databinding.FragmentProfileBinding
 import com.airposted.bohon.ui.auth.AuthActivity
+import com.airposted.bohon.ui.home.HomeViewModel
+import com.airposted.bohon.ui.home.HomeViewModelFactory
 import com.airposted.bohon.utils.*
 import com.bumptech.glide.Glide
 import com.theartofdev.edmodo.cropper.CropImage
@@ -41,12 +43,12 @@ import org.kodein.di.generic.instance
 import java.io.File
 
 
-class MoreFragment : Fragment(), KodeinAware {
-    private lateinit var moreBinding: FragmentMoreBinding
+class ProfileFragment : Fragment(), KodeinAware {
+    private lateinit var moreBinding: FragmentProfileBinding
     override val kodein by kodein()
 
-    private val factory: MoreViewModelFactory by instance()
-    private lateinit var viewModel: MoreViewModel
+    private val factory: HomeViewModelFactory by instance()
+    private lateinit var viewModel: HomeViewModel
     var edit = false
     private var cropImageUri: Uri? = null
 
@@ -54,14 +56,14 @@ class MoreFragment : Fragment(), KodeinAware {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        moreBinding = FragmentMoreBinding.inflate(inflater, container, false)
+        moreBinding = FragmentProfileBinding.inflate(inflater, container, false)
 
         return moreBinding.root
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(requireActivity(), factory).get(MoreViewModel::class.java)
+        viewModel = ViewModelProvider(requireActivity(), factory).get(HomeViewModel::class.java)
         bindUI()
     }
 
@@ -103,8 +105,10 @@ class MoreFragment : Fragment(), KodeinAware {
             moreBinding.profileName.text = it
         })
 
-        if (moreBinding.profileName.text.toString().isEmpty()) {
+        if (PersistentUser.getInstance().getFullName(requireActivity()).isEmpty()) {
             moreBinding.profileName.text = "No Name"
+        } else {
+            moreBinding.profileName.text = PersistentUser.getInstance().getFullName(requireActivity())
         }
 
         moreBinding.phone.text = PersistentUser.getInstance().getPhoneNumber(requireActivity())
@@ -129,19 +133,20 @@ class MoreFragment : Fragment(), KodeinAware {
                         .getFullName(requireActivity())
                 ) {
                     setProgressDialog(requireActivity())
+                    val name = moreBinding.editProfileName.text.toString().trimEnd()
                     lifecycleScope.launch {
                         try {
                             val response = viewModel.userNameUpdate(
                                 PersistentUser.getInstance().getAccessToken(
                                     requireActivity()
-                                ), moreBinding.editProfileName.text.toString()
+                                ), name
                             )
                             dismissDialog()
                             moreBinding.profileName.text =
-                                moreBinding.editProfileName.text.toString()
+                                name
                             PersistentUser.getInstance().setFullname(
                                 requireContext(),
-                                moreBinding.editProfileName.text.toString()
+                                name
                             )
                             moreBinding.profileName.visibility = View.VISIBLE
                             moreBinding.editProfileName.visibility = View.GONE

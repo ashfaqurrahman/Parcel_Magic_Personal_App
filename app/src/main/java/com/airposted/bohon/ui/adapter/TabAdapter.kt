@@ -3,8 +3,8 @@ package com.airposted.bohon.ui.adapter
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
-import com.airposted.bohon.ui.product.ExpressDeliveryFragment
-import com.airposted.bohon.ui.product.QuickDeliveryFragment
+import com.airposted.bohon.ui.create_parcel.ExpressDeliveryFragment
+import com.airposted.bohon.ui.create_parcel.QuickDeliveryFragment
 
 class TabAdapter(fm: FragmentManager, private var totalTabs: Int) : FragmentPagerAdapter(fm) {
 

@@ -26,11 +26,14 @@ import com.airposted.bohon.data.network.MyApi
 import com.airposted.bohon.data.network.responses.SettingResponse
 import com.airposted.bohon.data.network.SafeApiRequest
 import com.airposted.bohon.data.network.preferences.PreferenceProvider
+import com.airposted.bohon.data.network.responses.AuthResponse
 import com.airposted.bohon.data.network.responses.SetParcelResponse
 import com.airposted.bohon.model.LocationDetailsWithName
 import com.google.android.gms.location.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import java.lang.reflect.InvocationTargetException
 import java.util.*
 
@@ -186,6 +189,26 @@ class HomeRepository(context: Context, private val api: MyApi, private val db: A
     private fun fetchName(): LiveData<String> {
         userName.postValue(PersistentUser.getInstance().getFullName(appContext))
         return userName
+    }
+
+    suspend fun userNameUpdate(
+        header: String,
+        name: String
+    ) : String {
+        val response = apiRequest{ api.userNameUpdate(header, name)}
+        if (response.success){
+            PersistentUser.getInstance().setFullname(appContext, response.user?.name)
+            userName.postValue(response.user?.name)
+        }
+        return response.msg
+    }
+
+    suspend fun userImageUpdate(
+        header: String,
+        photo: MultipartBody.Part,
+        photo_name: RequestBody
+    ) : AuthResponse {
+        return apiRequest { api.userImageUpdate(header, photo, photo_name)}
     }
 
     suspend fun getSetting(): SettingResponse {

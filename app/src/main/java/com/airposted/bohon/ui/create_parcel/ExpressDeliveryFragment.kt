@@ -1,21 +1,21 @@
-package com.airposted.bohon.ui.product
+package com.airposted.bohon.ui.create_parcel
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.airposted.bohon.databinding.FragmentQuickDeliveryBinding
+import com.airposted.bohon.databinding.FragmentExpressDeliveryBinding
 import com.airposted.bohon.ui.main.CommunicatorFragmentInterface
 
-class QuickDeliveryFragment : Fragment() {
-    private lateinit var binding: FragmentQuickDeliveryBinding
+class ExpressDeliveryFragment : Fragment() {
+    private lateinit var binding: FragmentExpressDeliveryBinding
     private var communicatorFragmentInterface: CommunicatorFragmentInterface? = null
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentQuickDeliveryBinding.inflate(inflater, container, false)
+        binding = FragmentExpressDeliveryBinding.inflate(inflater, container, false)
         return binding.root
     }
 

@@ -8,7 +8,7 @@
         android:layout_height="match_parent"
         android:clickable="true"
         android:focusable="true"
-        tools:context=".ui.product.ProductFragment"
+        tools:context=".ui.create_parcel.ProductFragment"
         android:id="@+id/root_layout">
 
         <androidx.cardview.widget.CardView

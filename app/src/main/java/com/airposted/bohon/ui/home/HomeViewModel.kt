@@ -8,6 +8,8 @@ import com.airposted.bohon.utils.lazyDeferred
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 
 class HomeViewModel(
     private val repository: HomeRepository
@@ -16,21 +18,7 @@ class HomeViewModel(
     val locations = repository.getAllLocations()
     val getLastLocation = repository.getLastLocation()
 
-    /*val runs = MediatorLiveData<List<Location>>()
-
-    init {
-        runs.addSource(locations) {
-            it.let {
-                runs.value = it
-            }
-        }
-    }*/
-
     suspend fun getSetting() = withContext(Dispatchers.IO) { repository.getSetting() }
-
-    val getName by lazyDeferred {
-        repository.getName()
-    }
 
     val gps = repository.location()
 
@@ -44,5 +32,20 @@ class HomeViewModel(
     fun saveAddress(run: Location) = viewModelScope.launch {
         repository.saveAddress(run)
     }
+
+    val getName by lazyDeferred {
+        repository.getName()
+    }
+
+    suspend fun userNameUpdate(
+        header: String,
+        name: String
+    ) = withContext(Dispatchers.IO) { repository.userNameUpdate(header, name) }
+
+    suspend fun userImageUpdate(
+        header: String,
+        photo: MultipartBody.Part,
+        photo_name: RequestBody
+    ) = withContext(Dispatchers.IO) { repository.userImageUpdate(header, photo, photo_name) }
 
 }

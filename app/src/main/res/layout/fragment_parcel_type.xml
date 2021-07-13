@@ -10,7 +10,7 @@
         android:background="@color/bg"
         android:clickable="true"
         android:focusable="true"
-        tools:context=".ui.product.ParcelTypeFragment">
+        tools:context=".ui.create_parcel.ParcelTypeFragment">
 
         <RelativeLayout
             android:id="@+id/bg"

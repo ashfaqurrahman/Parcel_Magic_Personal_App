@@ -39,8 +39,8 @@
         android:checkableBehavior="none">
 
         <item
-            android:id="@+id/settings"
-            android:title="@string/settings" />
+            android:id="@+id/profile"
+            android:title="@string/profile" />
 
         <item
             android:id="@+id/terms_condition"

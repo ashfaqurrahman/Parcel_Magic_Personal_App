@@ -1,4 +1,4 @@
-package com.airposted.bohon.ui.product
+package com.airposted.bohon.ui.create_parcel
 
 import android.app.Dialog
 import android.graphics.Bitmap
@@ -31,7 +31,6 @@ import com.airposted.bohon.ui.my_order.MyParcelFragment
 import com.airposted.bohon.utils.*
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
-import com.google.android.gms.maps.GoogleMap.OnMarkerClickListener
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.*
 import com.sslwireless.sslcommerzlibrary.model.initializer.SSLCProductInitializer
@@ -455,11 +454,11 @@ class ConfirmReceiverAddressFragment : Fragment(), KodeinAware, SSLCTransactionR
     }
 
     override fun transactionFail(p0: String?) {
-        TODO("Not yet implemented")
+        binding.rootLayout.snackbar("Create Parcel Failed!")
     }
 
     override fun merchantValidationError(p0: String?) {
-        TODO("Not yet implemented")
+        binding.rootLayout.snackbar("Create Parcel Failed!")
     }
 
     private fun getMarkerIconFromDrawable(drawable: Drawable): BitmapDescriptor? {

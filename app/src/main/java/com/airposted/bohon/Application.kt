@@ -13,7 +13,6 @@ import com.airposted.bohon.data.repositories.*
 import com.airposted.bohon.ui.auth.AuthViewModelFactory
 import com.airposted.bohon.ui.home.HomeViewModelFactory
 import com.airposted.bohon.ui.location_set.LocationSetViewModelFactory
-import com.airposted.bohon.ui.more.MoreViewModelFactory
 import com.airposted.bohon.ui.my_order.MyParcelViewModelFactory
 import org.kodein.di.Kodein
 import org.kodein.di.KodeinAware
@@ -35,14 +34,12 @@ class Application : Application(), KodeinAware {
         bind() from singleton { PreferenceProvider(instance()) }
         bind() from singleton { UserRepository(instance()) }
         bind() from singleton { HomeRepository(instance(), MyApi(instance()), instance()) }
-        bind() from singleton { MoreRepository(instance(), MyApi(instance())) }
         bind() from singleton { OrderListRepository(instance(), MyApi(instance())) }
         bind() from singleton { LocationSetRepository(instance(), MyApi(instance())) }
         bind() from provider { AuthViewModelFactory(instance()) }
         bind() from provider { HomeViewModelFactory(instance()) }
         bind() from provider { LocationSetViewModelFactory(instance()) }
         bind() from provider { MyParcelViewModelFactory(instance()) }
-        bind() from provider { MoreViewModelFactory(instance()) }
 
 
     }

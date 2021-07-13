@@ -7,7 +7,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/white"
-        tools:context=".ui.more.MoreFragment"
+        tools:context=".ui.profile.ProfileFragment"
         android:clickable="true"
         android:focusable="true"
         android:id="@+id/rootLayout">
@@ -36,7 +36,7 @@
                 android:layout_marginTop="40dp"
                 android:fontFamily="@font/poppins_medium"
                 android:lineSpacingExtra="10sp"
-                android:text="@string/settings"
+                android:text="@string/profile"
                 android:textColor="#ffffff"
                 android:textSize="20sp"
                 android:textStyle="normal" />
@@ -106,6 +106,7 @@
                     android:fontFamily="@font/poppins_regular"
                     android:textSize="18sp"
                     android:visibility="gone"
+                    android:inputType="textCapWords"
                     android:textColorHint="#808080"
                     android:textCursorDrawable="@null"
                     android:layout_marginTop="-10dp"

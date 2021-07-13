@@ -10,7 +10,7 @@
         android:background="@color/white"
         android:clickable="true"
         android:focusable="true"
-        tools:context=".ui.product.PackageGuidelineFragment">
+        tools:context=".ui.create_parcel.PackageGuidelineFragment">
 
         <TextView
             android:id="@+id/title"

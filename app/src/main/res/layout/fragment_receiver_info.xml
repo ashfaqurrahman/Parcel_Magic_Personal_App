@@ -11,7 +11,7 @@
         android:fitsSystemWindows="true"
         android:clickable="true"
         android:focusable="true"
-        tools:context=".ui.product.ReceiverInfoFragment"
+        tools:context=".ui.create_parcel.ReceiverInfoFragment"
         android:id="@+id/root_layout">
 
         <RelativeLayout

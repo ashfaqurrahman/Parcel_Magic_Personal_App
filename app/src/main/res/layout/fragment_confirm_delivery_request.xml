@@ -8,7 +8,7 @@
         android:layout_height="match_parent"
         android:clickable="true"
         android:focusable="true"
-        tools:context=".ui.product.ConfirmDeliveryRequestFragment"
+        tools:context=".ui.create_parcel.ConfirmDeliveryRequestFragment"
         android:id="@+id/root_layout">
 
         <include layout="@layout/custom_toolbar_blue"

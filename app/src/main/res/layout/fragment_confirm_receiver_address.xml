@@ -9,7 +9,7 @@
         android:background="@color/white"
         android:clickable="true"
         android:focusable="true"
-        tools:context=".ui.product.ConfirmReceiverAddressFragment"
+        tools:context=".ui.create_parcel.ConfirmReceiverAddressFragment"
         android:id="@+id/root_layout">
 
         <androidx.cardview.widget.CardView
