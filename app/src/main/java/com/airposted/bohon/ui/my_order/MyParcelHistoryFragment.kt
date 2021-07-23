@@ -161,12 +161,6 @@ class MyParcelHistoryFragment : Fragment(), KodeinAware, CursorWheelLayout.OnMen
     }
 
     private fun getOrderList(order: Int) {
-//        when(order){
-//            0 -> binding.title.text = "Current Orders"
-//            1 -> binding.title.text = "Current Orders"
-//            2 -> binding.title.text = "Order History"
-//            3 -> binding.title.text = "Order History"
-//        }
         setProgressDialog(requireActivity())
         lifecycleScope.launch {
             try {
