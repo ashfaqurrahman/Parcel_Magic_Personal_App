@@ -4,6 +4,8 @@ import com.airposted.bohon.data.network.responses.AuthResponse
 import com.airposted.bohon.data.network.responses.SetParcelResponse
 import com.airposted.bohon.data.network.responses.SettingResponse
 import com.airposted.bohon.model.*
+import com.airposted.bohon.model.coupon.UserCoupon
+import com.airposted.bohon.model.rating.RateDeliveryMan
 import okhttp3.*
 import retrofit2.Response
 import retrofit2.Retrofit
@@ -133,6 +135,20 @@ interface MyApi {
     suspend fun deleteFcmToken(
         @Header("Authorization") header: String
     ): Response<SetParcelResponse>
+
+    @GET("personal/userBasedCoupons")
+    suspend fun getUserBasedCoupons(
+        @Header("Authorization") header: String
+    ): Response<UserCoupon>
+
+    @FormUrlEncoded
+    @POST("personal/setRating")
+    suspend fun rating(
+        @Header("Authorization") header: String,
+        @Field("rating") rating: Int,
+        @Field("logisticId") logisticId: Int,
+        @Field("invoice") invoice: String
+    ) : Response<RateDeliveryMan>
 
     companion object{
         operator fun invoke(

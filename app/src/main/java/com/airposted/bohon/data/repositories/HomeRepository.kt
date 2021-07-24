@@ -10,6 +10,7 @@ import android.location.Geocoder
 import android.location.Location
 import android.location.LocationListener
 import android.location.LocationManager
+import android.media.Rating
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Build
@@ -29,6 +30,7 @@ import com.airposted.bohon.data.network.preferences.PreferenceProvider
 import com.airposted.bohon.data.network.responses.AuthResponse
 import com.airposted.bohon.data.network.responses.SetParcelResponse
 import com.airposted.bohon.model.LocationDetailsWithName
+import com.airposted.bohon.model.coupon.UserCoupon
 import com.google.android.gms.location.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -227,6 +229,13 @@ class HomeRepository(context: Context, private val api: MyApi, private val db: A
 
     suspend fun deleteFcmToken(): SetParcelResponse {
         return apiRequest { api.deleteFcmToken(
+            PersistentUser.getInstance().getAccessToken(
+                appContext
+            )) }
+    }
+
+    suspend fun getUserBasedCoupons(): UserCoupon {
+        return apiRequest { api.getUserBasedCoupons(
             PersistentUser.getInstance().getAccessToken(
                 appContext
             )) }

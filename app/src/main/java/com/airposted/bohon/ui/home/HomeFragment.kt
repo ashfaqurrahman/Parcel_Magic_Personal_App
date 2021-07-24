@@ -17,7 +17,6 @@ import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.observe
@@ -33,7 +32,7 @@ import com.airposted.bohon.ui.main.CommunicatorFragmentInterface
 import com.airposted.bohon.ui.profile.ProfileFragment
 import com.airposted.bohon.ui.my_order.CancelOrderFragment
 import com.airposted.bohon.ui.my_order.MyParcelFragment
-import com.airposted.bohon.ui.my_order.MyParcelHistoryFragment
+import com.airposted.bohon.ui.history.MyParcelHistoryFragment
 import com.airposted.bohon.ui.create_parcel.PackageGuidelineFragment
 import com.airposted.bohon.ui.create_parcel.ParcelTypeFragment
 import com.airposted.bohon.ui.termsconditions.TermsConditionsFragment
@@ -60,7 +59,7 @@ import org.kodein.di.generic.instance
 open class HomeFragment : Fragment(R.layout.fragment_home),
     NavigationView.OnNavigationItemSelectedListener, KodeinAware, OnMapReadyCallback {
 
-    private lateinit var homeBinding: FragmentHomeBinding
+    private lateinit var binding: FragmentHomeBinding
     override val kodein by kodein()
     private val factory: HomeViewModelFactory by instance()
     private lateinit var viewModel: HomeViewModel
@@ -76,9 +75,9 @@ open class HomeFragment : Fragment(R.layout.fragment_home),
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        homeBinding = FragmentHomeBinding.inflate(inflater, container, false)
+        binding = FragmentHomeBinding.inflate(inflater, container, false)
 
-        return homeBinding.root
+        return binding.root
     }
 
     @RequiresApi(Build.VERSION_CODES.M)
@@ -98,17 +97,16 @@ open class HomeFragment : Fragment(R.layout.fragment_home),
 
         viewModel.gps.observe(viewLifecycleOwner, {
             if (it) {
-                homeBinding.titleLayout.visibility = View.VISIBLE
-                homeBinding.title2Layout.visibility = View.GONE
+                binding.titleLayout.visibility = View.VISIBLE
+                binding.title2Layout.visibility = View.GONE
 
             } else {
-                homeBinding.titleLayout.visibility = View.GONE
-                homeBinding.title2Layout.visibility = View.VISIBLE
+                binding.titleLayout.visibility = View.GONE
+                binding.title2Layout.visibility = View.VISIBLE
             }
         })
 
-        homeBinding.shareLocation.setOnClickListener {
-
+        binding.shareLocation.setOnClickListener {
             requestGPSSettings()
         }
 
@@ -116,15 +114,15 @@ open class HomeFragment : Fragment(R.layout.fragment_home),
             childFragmentManager.findFragmentById(R.id.current_location) as SupportMapFragment
         mapFragment.getMapAsync(this)
 
-        homeBinding.menu.setOnClickListener {
-            homeBinding.drawerLayout.openDrawer(Gravity.LEFT)
+        binding.menu.setOnClickListener {
+            binding.drawerLayout.openDrawer(Gravity.LEFT)
         }
 
-        homeBinding.navigationView.setNavigationItemSelectedListener(this)
-        homeBinding.versionName.text = "Version " + BuildConfig.VERSION_NAME
+        binding.navigationView.setNavigationItemSelectedListener(this)
+        binding.versionName.text = "Version " + BuildConfig.VERSION_NAME
         myCommunicator = context as CommunicatorFragmentInterface
 
-        val hView: View = homeBinding.navigationView.getHeaderView(0)
+        val hView: View = binding.navigationView.getHeaderView(0)
         val pic = hView.findViewById<CircleImageView>(R.id.profile_image)
         val name = hView.findViewById<TextView>(R.id.user_name)
 
@@ -140,7 +138,7 @@ open class HomeFragment : Fragment(R.layout.fragment_home),
             ).into(pic)
         }
 
-        homeBinding.expressBtn.setOnClickListener{
+        binding.expressBtn.setOnClickListener{
             val fragment = ParcelTypeFragment()
             val bundle = Bundle()
             bundle.putInt("delivery_type", 2)
@@ -148,7 +146,7 @@ open class HomeFragment : Fragment(R.layout.fragment_home),
             myCommunicator?.addContentFragment(fragment, true)
         }
 
-        homeBinding.quickBtn.setOnClickListener{
+        binding.quickBtn.setOnClickListener{
             val fragment = ParcelTypeFragment()
             val bundle = Bundle()
             bundle.putInt("delivery_type", 1)
@@ -156,7 +154,7 @@ open class HomeFragment : Fragment(R.layout.fragment_home),
             myCommunicator?.addContentFragment(fragment, true)
         }
 
-        homeBinding.whatToSend.setOnClickListener {
+        binding.whatToSend.setOnClickListener {
             myCommunicator?.addContentFragment(PackageGuidelineFragment(), true)
         }
 
@@ -169,8 +167,8 @@ open class HomeFragment : Fragment(R.layout.fragment_home),
             )
         )
 
-        homeBinding.expressBtn.background = gradientDrawable
-        homeBinding.quickBtn.background = gradientDrawable
+        binding.expressBtn.background = gradientDrawable
+        binding.quickBtn.background = gradientDrawable
 
         lifecycleScope.launch {
             try {
@@ -191,41 +189,70 @@ open class HomeFragment : Fragment(R.layout.fragment_home),
                     "base_price_express",
                     settingResponse.rate.basePriceExpress.toString()
                 )
-                FirebaseInstanceId.getInstance().instanceId.addOnSuccessListener { instanceIdResult ->
-                    val token = instanceIdResult.token
-                    lifecycleScope.launch {
-                        try {
-                            val saveFcmTokenResponse = viewModel.saveFcmToken(token)
-                            if (saveFcmTokenResponse.success) {
-                                dismissDialog()
+
+                lifecycleScope.launch {
+                    try {
+                        val response = viewModel.getUserBasedCoupons()
+                        binding.coupon.text = response.coupons[0].coupon_text
+                        binding.couponTitle.text = response.coupons[0].coupon_title
+                        PreferenceProvider(requireActivity()).saveSharedPreferences(
+                            "discount_amount",
+                            response.coupons[0].discount_amount
+                        )
+                        PreferenceProvider(requireActivity()).saveSharedPreferences(
+                            "coupon_text",
+                            response.coupons[0].coupon_text
+                        )
+                        FirebaseInstanceId.getInstance().instanceId.addOnSuccessListener { instanceIdResult ->
+                            val token = instanceIdResult.token
+                            lifecycleScope.launch {
+                                try {
+                                    val saveFcmTokenResponse = viewModel.saveFcmToken(token)
+                                    if (saveFcmTokenResponse.success) {
+                                        dismissDialog()
+                                    }
+                                } catch (e: MalformedJsonException) {
+                                    dismissDialog()
+                                    binding.rootLayout.snackbar(e.message!!)
+                                    e.printStackTrace()
+                                } catch (e: com.airposted.bohon.utils.ApiException) {
+                                    dismissDialog()
+                                    binding.rootLayout.snackbar(e.message!!)
+                                    e.printStackTrace()
+                                } catch (e: NoInternetException) {
+                                    dismissDialog()
+                                    binding.rootLayout.snackbar(e.message!!)
+                                    e.printStackTrace()
+                                }
                             }
-                        } catch (e: MalformedJsonException) {
-                            dismissDialog()
-                            homeBinding.rootLayout.snackbar(e.message!!)
-                            e.printStackTrace()
-                        } catch (e: com.airposted.bohon.utils.ApiException) {
-                            dismissDialog()
-                            homeBinding.rootLayout.snackbar(e.message!!)
-                            e.printStackTrace()
-                        } catch (e: NoInternetException) {
-                            dismissDialog()
-                            homeBinding.rootLayout.snackbar(e.message!!)
-                            e.printStackTrace()
                         }
+
+                    } catch (e: MalformedJsonException) {
+                        dismissDialog()
+                        binding.rootLayout.snackbar(e.message!!)
+                        e.printStackTrace()
+                    } catch (e: com.airposted.bohon.utils.ApiException) {
+                        dismissDialog()
+                        binding.rootLayout.snackbar(e.message!!)
+                        e.printStackTrace()
+                    } catch (e: NoInternetException) {
+                        dismissDialog()
+                        binding.rootLayout.snackbar(e.message!!)
+                        e.printStackTrace()
                     }
                 }
 
             } catch (e: MalformedJsonException) {
                 dismissDialog()
-                homeBinding.rootLayout.snackbar(e.message!!)
+                binding.rootLayout.snackbar(e.message!!)
                 e.printStackTrace()
             }catch (e: com.airposted.bohon.utils.ApiException) {
                 dismissDialog()
-                homeBinding.rootLayout.snackbar(e.message!!)
+                binding.rootLayout.snackbar(e.message!!)
                 e.printStackTrace()
             } catch (e: NoInternetException) {
                 dismissDialog()
-                homeBinding.rootLayout.snackbar(e.message!!)
+                binding.rootLayout.snackbar(e.message!!)
                 e.printStackTrace()
             }
         }
@@ -377,34 +404,34 @@ open class HomeFragment : Fragment(R.layout.fragment_home),
         when(item.itemId) {
             R.id.my_parcel -> {
                 myCommunicator?.addContentFragment(MyParcelFragment(), true)
-                homeBinding.drawerLayout.closeDrawers()
+                binding.drawerLayout.closeDrawers()
             }
             /*R.id.collected_order -> {
                 myCommunicator?.addContentFragment(CollectedOrderFragment(), true)
-                homeBinding.drawerLayout.closeDrawers()
+                binding.drawerLayout.closeDrawers()
             }*/
             R.id.parcel_history -> {
                 myCommunicator?.addContentFragment(MyParcelHistoryFragment(), true)
-                homeBinding.drawerLayout.closeDrawers()
+                binding.drawerLayout.closeDrawers()
             }
             R.id.cancel_order -> {
                 myCommunicator?.addContentFragment(CancelOrderFragment(), true)
-                homeBinding.drawerLayout.closeDrawers()
+                binding.drawerLayout.closeDrawers()
             }
             R.id.help -> {
                 myCommunicator?.addContentFragment(HelpFragment(), true)
-                homeBinding.drawerLayout.closeDrawers()
+                binding.drawerLayout.closeDrawers()
             }
             R.id.profile -> {
                 myCommunicator?.addContentFragment(ProfileFragment(), true)
-                homeBinding.drawerLayout.closeDrawers()
+                binding.drawerLayout.closeDrawers()
             }
             R.id.terms_condition -> {
-                homeBinding.drawerLayout.closeDrawers()
+                binding.drawerLayout.closeDrawers()
                 myCommunicator?.addContentFragment(TermsConditionsFragment(), true)
             }
             R.id.sign_out -> {
-                homeBinding.drawerLayout.closeDrawers()
+                binding.drawerLayout.closeDrawers()
                 dialogs = Dialog(requireActivity())
                 dialogs.requestWindowFeature(Window.FEATURE_NO_TITLE)
                 dialogs.setContentView(R.layout.sign_out_dialog)
@@ -433,11 +460,11 @@ open class HomeFragment : Fragment(R.layout.fragment_home),
                             }
                         } catch (e: com.airposted.bohon.utils.ApiException) {
                             dismissDialog()
-                            homeBinding.rootLayout.snackbar(e.message!!)
+                            binding.rootLayout.snackbar(e.message!!)
                             e.printStackTrace()
                         } catch (e: NoInternetException) {
                             dismissDialog()
-                            homeBinding.rootLayout.snackbar(e.message!!)
+                            binding.rootLayout.snackbar(e.message!!)
                             e.printStackTrace()
                         }
                     }

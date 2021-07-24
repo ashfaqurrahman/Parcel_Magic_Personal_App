@@ -1,4 +1,4 @@
-package com.airposted.bohon.ui.my_order
+package com.airposted.bohon.ui.history
 
 import android.app.Dialog
 import android.graphics.Color
@@ -6,8 +6,12 @@ import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.util.MalformedJsonException
 import android.view.*
+import android.widget.RatingBar
+import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
@@ -19,17 +23,20 @@ import com.airposted.bohon.model.DataX
 import com.airposted.bohon.ui.adapter.SimpleTextAdapter
 import com.airposted.bohon.ui.data.MenuItemData
 import com.airposted.bohon.ui.main.CommunicatorFragmentInterface
+import com.airposted.bohon.ui.my_order.*
 import com.airposted.bohon.ui.widget.CursorWheelLayout
 import com.airposted.bohon.ui.widget.SimpleTextCursorWheelLayout
 import com.airposted.bohon.ui.widget.SwitchButton
 import com.airposted.bohon.utils.*
 import com.skydoves.powerspinner.OnSpinnerItemSelectedListener
+import com.willy.ratingbar.ScaleRatingBar
 import kotlinx.coroutines.launch
 import org.kodein.di.KodeinAware
 import org.kodein.di.android.x.kodein
 import org.kodein.di.generic.instance
 
-class MyParcelHistoryFragment : Fragment(), KodeinAware, CursorWheelLayout.OnMenuSelectedListener , OrderClickListener{
+class MyParcelHistoryFragment : Fragment(), KodeinAware, CursorWheelLayout.OnMenuSelectedListener ,
+    OrderHistoryClickListener {
     override val kodein by kodein()
     private lateinit var binding: FragmentMyParcelHistoryBinding
     private val factory: MyParcelViewModelFactory by instance()
@@ -131,7 +138,7 @@ class MyParcelHistoryFragment : Fragment(), KodeinAware, CursorWheelLayout.OnMen
                         binding.orders.visibility = View.GONE
                         binding.noOrder.visibility = View.VISIBLE
                     } else {
-                        val myRecyclerViewAdapter = OrderListRecyclerViewAdapter(
+                        val myRecyclerViewAdapter = HistoryListRecyclerViewAdapter(
                             listNew,
                             requireActivity(),
                             this@MyParcelHistoryFragment
@@ -141,7 +148,7 @@ class MyParcelHistoryFragment : Fragment(), KodeinAware, CursorWheelLayout.OnMen
                 } else {
                     binding.orders.visibility = View.VISIBLE
                     binding.noOrder.visibility = View.GONE
-                    val myRecyclerViewAdapter = OrderListRecyclerViewAdapter(
+                    val myRecyclerViewAdapter = HistoryListRecyclerViewAdapter(
                         invoice,
                         requireActivity(),
                         this@MyParcelHistoryFragment
@@ -169,7 +176,7 @@ class MyParcelHistoryFragment : Fragment(), KodeinAware, CursorWheelLayout.OnMen
                 if (response.data.isNotEmpty()) {
                     binding.orders.visibility = View.VISIBLE
                     binding.noOrder.visibility = View.GONE
-                    val myRecyclerViewAdapter = OrderListRecyclerViewAdapter(
+                    val myRecyclerViewAdapter = HistoryListRecyclerViewAdapter(
                         response.data,
                         requireActivity(),
                         this@MyParcelHistoryFragment
@@ -288,6 +295,63 @@ class MyParcelHistoryFragment : Fragment(), KodeinAware, CursorWheelLayout.OnMen
         bundle.putString("order_date", order.order_date)
         fragment.arguments = bundle
         communicatorFragmentInterface?.addContentFragment(fragment, true)
+    }
+
+    override fun onRatingClick(order: DataX) {
+        val dialogs = Dialog(requireActivity())
+        dialogs.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialogs.setContentView(R.layout.rating_dialog)
+        dialogs.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialogs.window?.setLayout(
+            ViewGroup.LayoutParams.WRAP_CONTENT,  //w
+            ViewGroup.LayoutParams.MATCH_PARENT //h
+        )
+
+        val submit = dialogs.findViewById<TextView>(R.id.submit)
+        val cancel = dialogs.findViewById<TextView>(R.id.cancel)
+        val rating = dialogs.findViewById<ScaleRatingBar>(R.id.rating)
+
+        submit.setOnClickListener {
+            Log.e("RRRR", rating.rating.toString())
+            if (rating.rating.toInt() != 0) {
+                dialogs.dismiss()
+                rating(order, rating.rating.toInt())
+            } else {
+                Toast.makeText(requireContext(), "Rate Delivery Man Please!", Toast.LENGTH_LONG)
+            }
+        }
+
+        cancel.setOnClickListener {
+            dialogs.dismiss()
+        }
+
+        dialogs.setCancelable(true)
+
+        dialogs.show()
+    }
+
+    private fun rating(model: DataX, rating: Int) {
+        setProgressDialog(requireActivity())
+        lifecycleScope.launch {
+            try {
+                val response = viewModel.rating(rating, model.logistics_user_info!!.id, model.invoice_no)
+                communicatorFragmentInterface?.addContentFragment(MyParcelHistoryFragment(), true)
+                dismissDialog()
+//                binding.rootLayout.snackbar(response.message)
+            } catch (e: MalformedJsonException) {
+                dismissDialog()
+                binding.rootLayout.snackbar(e.message!!)
+                e.printStackTrace()
+            } catch (e: ApiException) {
+                dismissDialog()
+                binding.rootLayout.snackbar(e.message!!)
+                e.printStackTrace()
+            } catch (e: NoInternetException) {
+                dismissDialog()
+                binding.rootLayout.snackbar(e.message!!)
+                e.printStackTrace()
+            }
+        }
     }
 
 }

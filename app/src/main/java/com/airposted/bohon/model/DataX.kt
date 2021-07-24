@@ -7,6 +7,7 @@ data class DataX(
     val current_status_msg: String,
     val delivery_charge: Int,
     val id: Int,
+    val isRated: Int,
     val invoice_no: String,
     val logistics_charge: Double,
     val logistics_tracking: LogisticsTracking?,

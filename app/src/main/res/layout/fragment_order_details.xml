@@ -604,7 +604,7 @@
                 android:padding="15dp"
                 android:text="@string/cancel_order"
                 android:textAlignment="center"
-                android:textColor="#FB825D"
+                android:textColor="@color/white"
                 android:textSize="18sp" />
 
         </RelativeLayout>

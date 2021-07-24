@@ -138,8 +138,24 @@ class ConfirmReceiverAddressFragment : Fragment(), KodeinAware, SSLCTransactionR
 
 
                     setParcel.distance = round((distance/1000).toDouble(), 2)
-                    setParcel.delivery_charge = calculatePrice(requireArguments().getInt("delivery_type"))
-                    binding.charge.text = "৳" + calculatePrice(requireArguments().getInt("delivery_type"))
+                    var charge = calculatePrice(requireArguments().getInt("delivery_type"))
+                    setParcel.delivery_charge = charge
+                    binding.charge.text = "BDT $charge"
+
+                    binding.apply.setOnClickListener {
+                        if (binding.couponText.text.toString() == PreferenceProvider(requireActivity()).getSharedPreferences("coupon_text")) {
+                            val newCharge = calculatePrice(requireArguments().getInt("delivery_type")) - PreferenceProvider(requireActivity()).getSharedPreferences("discount_amount")!!.toInt()
+                            setParcel.delivery_charge = newCharge
+                            binding.charge.text = "BDT $newCharge"
+                            binding.oldCharge.text = "BDT $charge"
+                            binding.oldCharge.visibility = View.VISIBLE
+                        } else {
+                            charge = calculatePrice(requireArguments().getInt("delivery_type"))
+                            setParcel.delivery_charge = charge
+                            binding.charge.text = "BDT $charge"
+                            binding.oldCharge.visibility = View.GONE
+                        }
+                    }
 
                     val circleDrawable = resources.getDrawable(R.drawable.root_start_point)
                     val markerIcon = getMarkerIconFromDrawable(circleDrawable)

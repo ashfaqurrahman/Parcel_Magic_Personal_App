@@ -1,14 +1,13 @@
 package com.airposted.bohon.data.repositories
 
 import android.content.Context
+import android.media.Rating
 import com.aapbd.appbajarlib.storage.PersistentUser
 import com.airposted.bohon.data.network.MyApi
 import com.airposted.bohon.data.network.SafeApiRequest
-import com.airposted.bohon.model.SetParcel
-import com.airposted.bohon.model.OrderList
 import com.airposted.bohon.data.network.responses.SetParcelResponse
-import com.airposted.bohon.model.GoogleMapDTO
-import com.airposted.bohon.model.StatusChangeModel
+import com.airposted.bohon.model.*
+import com.airposted.bohon.model.rating.RateDeliveryMan
 
 class OrderListRepository(context: Context, private val api: MyApi) : SafeApiRequest() {
     private val appContext = context.applicationContext
@@ -87,5 +86,12 @@ class OrderListRepository(context: Context, private val api: MyApi) : SafeApiReq
 
     suspend fun directionSearch(url: String): GoogleMapDTO {
         return apiRequest { api.getDirectionsList(url)}
+    }
+
+    suspend fun rating(rating: Int, id: Int, invoice: String): RateDeliveryMan {
+        return apiRequest { api.rating(
+            PersistentUser.getInstance().getAccessToken(
+                appContext
+            ), rating, id, invoice) }
     }
 }

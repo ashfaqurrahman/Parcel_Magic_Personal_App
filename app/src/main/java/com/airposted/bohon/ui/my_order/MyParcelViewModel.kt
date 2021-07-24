@@ -23,4 +23,6 @@ class MyParcelViewModel(
     suspend fun getDirections(
         url: String
     ) = withContext(Dispatchers.IO) { repository.directionSearch(url) }
+
+    suspend fun rating(rating: Int, id: Int, invoice:String) = withContext(Dispatchers.IO) { repository.rating(rating, id, invoice) }
 }

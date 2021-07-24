@@ -341,20 +341,21 @@
                             android:text="My Coupons"
                             />
 
-                        <LinearLayout
+                        <RelativeLayout
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="vertical"
-                            android:layout_marginBottom="30dp"
+                            android:layout_height="220dp"
                             android:layout_marginStart="20dp"
                             android:layout_marginEnd="20dp"
                             android:layout_below="@+id/coupons"
-                            android:background="@drawable/ic_coupons"
-                            android:gravity="center">
+                            android:background="@drawable/ic_coupons">
 
                             <TextView
+                                android:id="@+id/coupon_title"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:layout_alignParentTop="true"
+                                android:layout_centerHorizontal="true"
+                                android:layout_marginTop="30dp"
                                 android:shadowColor="#29000000"
                                 android:shadowDy="3"
                                 android:shadowRadius="6"
@@ -363,12 +364,14 @@
                                 android:textSize="20sp"
                                 android:textColor="#ffffff"
                                 android:gravity="center_horizontal"
-                                android:text="Enjoy 20% discount on\n first 3 orders"
+                                tools:text="  first 3 orders"
                                 />
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
+                                android:layout_below="@+id/coupon_title"
+                                android:layout_centerHorizontal="true"
                                 android:shadowColor="#29000000"
                                 android:shadowDy="3"
                                 android:shadowRadius="6"
@@ -382,21 +385,24 @@
                                 />
 
                             <TextView
+                                android:id="@+id/coupon"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="30dp"
+                                android:layout_centerHorizontal="true"
+                                android:layout_alignParentBottom="true"
+                                android:layout_marginBottom="30dp"
                                 android:fontFamily="@font/poppins_semibold"
                                 android:lineSpacingExtra="10sp"
                                 android:shadowColor="#29000000"
                                 android:shadowDy="3"
                                 android:shadowRadius="6"
                                 android:textIsSelectable="true"
-                                android:text="ASDDUDD20"
+                                tools:text="ASDDUDD20"
                                 android:textColor="#ffffff"
                                 android:textSize="14sp"
                                 android:textStyle="bold" />
 
-                        </LinearLayout>
+                        </RelativeLayout>
 
                     </RelativeLayout>
 

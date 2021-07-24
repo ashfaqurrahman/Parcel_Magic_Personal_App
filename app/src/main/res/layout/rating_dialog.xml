@@ -13,7 +13,7 @@
         android:src="@drawable/ic_alert"
         app:civ_border_width="2dp"
         app:civ_border_color="#FFFFFFFF"
-        android:layout_marginTop="-32dp"/>
+        android:layout_marginTop="-25dp"/>
 
     <androidx.cardview.widget.CardView
         android:layout_width="wrap_content"
@@ -46,17 +46,16 @@
                 />
 
             <com.willy.ratingbar.ScaleRatingBar
-                android:id="@+id/simpleRatingBar"
+                android:id="@+id/rating"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 app:srb_numStars="5"
                 app:srb_minimumStars="1"
-                app:srb_rating="4"
                 app:srb_starWidth="20dp"
                 app:srb_starHeight="20dp"
                 app:srb_starPadding="15sp"
-                app:srb_stepSize="0.5"
+                app:srb_stepSize="1"
                 app:srb_isIndicator="false"
                 app:srb_clickable="false"
                 app:srb_scrollable="true"
@@ -69,6 +68,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:visibility="gone"
                 android:textAlignment="center"
                 android:layout_marginTop="10dp"
                 android:fontFamily="@font/poppins_regular"
@@ -94,7 +94,7 @@
                     android:text="Not Now"/>
 
                 <TextView
-                    android:id="@+id/yesBtn"
+                    android:id="@+id/submit"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/poppins_medium"
