@@ -193,16 +193,21 @@ open class HomeFragment : Fragment(R.layout.fragment_home),
                 lifecycleScope.launch {
                     try {
                         val response = viewModel.getUserBasedCoupons()
-                        binding.coupon.text = response.coupons[0].coupon_text
-                        binding.couponTitle.text = response.coupons[0].coupon_title
-                        PreferenceProvider(requireActivity()).saveSharedPreferences(
-                            "discount_amount",
-                            response.coupons[0].discount_amount
-                        )
-                        PreferenceProvider(requireActivity()).saveSharedPreferences(
-                            "coupon_text",
-                            response.coupons[0].coupon_text
-                        )
+                        if (response.coupons.isNotEmpty()) {
+                            binding.coupon.text = response.coupons[0].coupon_text
+                            binding.couponTitle.text = response.coupons[0].coupon_title
+                            PreferenceProvider(requireActivity()).saveSharedPreferences(
+                                "discount_amount",
+                                response.coupons[0].discount_amount
+                            )
+                            PreferenceProvider(requireActivity()).saveSharedPreferences(
+                                "coupon_text",
+                                response.coupons[0].coupon_text
+                            )
+                        } else {
+                            binding.couponCodeText.text = "No coupon found"
+                        }
+
                         FirebaseInstanceId.getInstance().instanceId.addOnSuccessListener { instanceIdResult ->
                             val token = instanceIdResult.token
                             lifecycleScope.launch {
