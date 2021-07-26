@@ -10,7 +10,6 @@ import android.location.Geocoder
 import android.location.Location
 import android.location.LocationListener
 import android.location.LocationManager
-import android.media.Rating
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Build
@@ -27,13 +26,11 @@ import com.airposted.bohon.data.network.MyApi
 import com.airposted.bohon.data.network.responses.SettingResponse
 import com.airposted.bohon.data.network.SafeApiRequest
 import com.airposted.bohon.data.network.preferences.PreferenceProvider
-import com.airposted.bohon.data.network.responses.AuthResponse
 import com.airposted.bohon.data.network.responses.SetParcelResponse
 import com.airposted.bohon.model.LocationDetailsWithName
+import com.airposted.bohon.model.auth.AuthResponse
 import com.airposted.bohon.model.coupon.UserCoupon
 import com.google.android.gms.location.*
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import java.lang.reflect.InvocationTargetException
@@ -199,8 +196,8 @@ class HomeRepository(context: Context, private val api: MyApi, private val db: A
     ) : String {
         val response = apiRequest{ api.userNameUpdate(header, name)}
         if (response.success){
-            PersistentUser.getInstance().setFullname(appContext, response.user?.name)
-            userName.postValue(response.user?.name)
+            PersistentUser.getInstance().setFullname(appContext, response.user.username)
+            userName.postValue(response.user.username)
         }
         return response.msg
     }
@@ -211,8 +208,8 @@ class HomeRepository(context: Context, private val api: MyApi, private val db: A
         photo_name: RequestBody
     ) : AuthResponse {
         val response = apiRequest { api.userImageUpdate(header, photo, photo_name)}
-        PersistentUser.getInstance().setUserImage(appContext, response.user?.image)
-        userImage.postValue(response.user?.image)
+        PersistentUser.getInstance().setUserImage(appContext, response.user.image)
+        userImage.postValue(response.user.image)
         return  response
     }
 

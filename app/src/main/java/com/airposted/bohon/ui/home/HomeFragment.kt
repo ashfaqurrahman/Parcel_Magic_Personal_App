@@ -205,7 +205,7 @@ open class HomeFragment : Fragment(R.layout.fragment_home),
                                 response.coupons[0].coupon_text
                             )
                         } else {
-                            binding.couponCodeText.text = "No coupon found"
+                            binding.couponCodeText.text = "No coupon available"
                         }
 
                         FirebaseInstanceId.getInstance().instanceId.addOnSuccessListener { instanceIdResult ->

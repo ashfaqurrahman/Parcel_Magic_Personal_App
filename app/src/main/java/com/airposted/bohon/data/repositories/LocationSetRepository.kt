@@ -8,6 +8,8 @@ import com.airposted.bohon.data.network.MyApi
 import com.airposted.bohon.data.network.SafeApiRequest
 import com.airposted.bohon.data.network.responses.SetParcelResponse
 import com.airposted.bohon.model.*
+import com.airposted.bohon.model.coupon.CheckCouponModel
+import com.airposted.bohon.model.rating.RateDeliveryMan
 
 class LocationSetRepository (
     context: Context,
@@ -49,5 +51,12 @@ class LocationSetRepository (
             PersistentUser.getInstance().getAccessToken(
             appContext
         ), setParcel)}
+    }
+
+    suspend fun checkCoupon(coupon: String): CheckCouponModel {
+        return apiRequest { api.checkCoupon(
+            PersistentUser.getInstance().getAccessToken(
+                appContext
+            ), coupon) }
     }
 }

@@ -1,9 +1,10 @@
 package com.airposted.bohon.data.network
 
-import com.airposted.bohon.data.network.responses.AuthResponse
 import com.airposted.bohon.data.network.responses.SetParcelResponse
 import com.airposted.bohon.data.network.responses.SettingResponse
 import com.airposted.bohon.model.*
+import com.airposted.bohon.model.auth.AuthResponse
+import com.airposted.bohon.model.coupon.CheckCouponModel
 import com.airposted.bohon.model.coupon.UserCoupon
 import com.airposted.bohon.model.rating.RateDeliveryMan
 import okhttp3.*
@@ -16,26 +17,26 @@ import java.util.concurrent.TimeUnit
 interface MyApi {
 
     @FormUrlEncoded
-    @POST("phonenumbercheck")
+    @POST("personal-phonenumber-check")
     suspend fun numberCheck(
         @Field("phone") email: String
     ) : Response<AuthResponse>
 
     @FormUrlEncoded
-    @POST("send_otp_message")
+    @POST("send-otp-message")
     suspend fun sendOTP(
         @Field("phone_number") phone: String
     ) : Response<AuthResponse>
 
     @FormUrlEncoded
-    @POST("register_personal")
+    @POST("register-personal")
     suspend fun userSignup(
         @Field("username") name: String,
         @Field("phone") email: String
     ) : Response<AuthResponse>
 
     @Multipart
-    @POST("register_personal")
+    @POST("register-personal")
     suspend fun userSignupWithPhoto(
         @Part("username") name: RequestBody,
         @Part("phone") email: RequestBody,
@@ -44,70 +45,70 @@ interface MyApi {
     ) : Response<AuthResponse>
 
     @FormUrlEncoded
-    @POST("personal/userupdate")
+    @POST("personal/user-update")
     suspend fun userNameUpdate(
         @Header("Authorization") header: String,
         @Field("username") name: String
     ) : Response<AuthResponse>
 
     @Multipart
-    @POST("personal/userupdate")
+    @POST("personal/user-update")
     suspend fun userImageUpdate(
         @Header("Authorization") header: String,
         @Part file: MultipartBody.Part,
         @Part("image") requestBody: RequestBody
     ) : Response<AuthResponse>
 
-    @POST("personal/set_parcel")
+    @POST("personal/set-parcel")
     suspend fun setOrder(
         @Header("Authorization") header: String,
         @Body setParcel: SetParcel
     ): Response<SetParcelResponse>
 
-    @POST("personal/currentorderlistinstant")
+    @POST("personal/current-order-list-instant")
     suspend fun currentOrderListQuick(
         @Header("Authorization") header: String
     ) : Response<OrderList>
 
-    @POST("personal/currentorderlistexpress")
+    @POST("personal/current-order-list-express")
     suspend fun currentOrderListExpress(
         @Header("Authorization") header: String
     ) : Response<OrderList>
 
     @FormUrlEncoded
-    @POST("delivery/orderstatuschange")
+    @POST("delivery/order-status-change")
     suspend fun changeStatus(
         @Header("Authorization") header: String,
         @Field("invoice_no") invoice: String,
         @Field("current_status") status: Int
     ) : Response<StatusChangeModel>
 
-    @POST("personal/completeorderlistexpress")
+    @POST("personal/complete-order-list-express")
     suspend fun historyOrderListExpress(
         @Header("Authorization") header: String
     ) : Response<OrderList>
 
-    @POST("personal/completeorderlistinstant")
+    @POST("personal/complete-order-list-instant")
     suspend fun historyOrderListQuick(
         @Header("Authorization") header: String
     ) : Response<OrderList>
 
-    @POST("personal/collectedorderlistquick")
+    @POST("personal/collected-order-list-quick")
     suspend fun collectedOrderListQuick(
         @Header("Authorization") header: String
     ) : Response<OrderList>
 
-    @POST("personal/collectedorderlistexpress")
+    @POST("personal/collected-order-list-express")
     suspend fun collectedOrderListExpress(
         @Header("Authorization") header: String
     ) : Response<OrderList>
 
-    @POST("personal/cancelorderlistquick")
+    @POST("personal/cancel-order-list-quick")
     suspend fun canceledOrderListQuick(
         @Header("Authorization") header: String
     ) : Response<OrderList>
 
-    @POST("personal/cancelorderlistexpress")
+    @POST("personal/cancel-order-list-express")
     suspend fun canceledOrderListExpress(
         @Header("Authorization") header: String
     ) : Response<OrderList>
@@ -121,34 +122,41 @@ interface MyApi {
     @GET
     suspend fun getDirectionsList(@Url url: String): Response<GoogleMapDTO>
 
-    @GET("app_settings")
+    @GET("app-settings")
     suspend fun getSetting(): Response<SettingResponse>
 
     @FormUrlEncoded
-    @POST("personal/addfcmtoken")
+    @POST("personal/add-fcm-token")
     suspend fun saveFcmToken(
         @Header("Authorization") header: String,
         @Field("fcm_token") fcm_token: String,
     ): Response<SetParcelResponse>
 
-    @GET("personal/deletefcmtoken")
+    @GET("personal/delete-fcm-token")
     suspend fun deleteFcmToken(
         @Header("Authorization") header: String
     ): Response<SetParcelResponse>
 
-    @GET("personal/userBasedCoupons")
+    @GET("personal/user-based-coupons")
     suspend fun getUserBasedCoupons(
         @Header("Authorization") header: String
     ): Response<UserCoupon>
 
     @FormUrlEncoded
-    @POST("personal/setRating")
+    @POST("personal/set-rating")
     suspend fun rating(
         @Header("Authorization") header: String,
         @Field("rating") rating: Int,
         @Field("logisticId") logisticId: Int,
         @Field("invoice") invoice: String
     ) : Response<RateDeliveryMan>
+
+    @FormUrlEncoded
+    @POST("personal/check-coupon")
+    suspend fun checkCoupon(
+        @Header("Authorization") header: String,
+        @Field("coupon_text") couponText: String
+    ) : Response<CheckCouponModel>
 
     companion object{
         operator fun invoke(

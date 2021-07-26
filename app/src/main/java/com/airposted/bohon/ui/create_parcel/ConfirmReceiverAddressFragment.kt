@@ -33,6 +33,7 @@ import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.*
+import com.google.gson.stream.MalformedJsonException
 import com.sslwireless.sslcommerzlibrary.model.initializer.SSLCProductInitializer
 import com.sslwireless.sslcommerzlibrary.model.initializer.SSLCShipmentInfoInitializer
 import com.sslwireless.sslcommerzlibrary.model.initializer.SSLCommerzInitialization
@@ -51,13 +52,14 @@ import kotlin.collections.ArrayList
 
 class ConfirmReceiverAddressFragment : Fragment(), KodeinAware, SSLCTransactionResponseListener {
 
-    lateinit var mapFragment : SupportMapFragment
+    lateinit var mapFragment: SupportMapFragment
     lateinit var googleMap: GoogleMap
     private lateinit var binding: FragmentConfirmReceiverAddressBinding
     override val kodein by kodein()
     private val factory: LocationSetViewModelFactory by instance()
     private lateinit var viewModel: LocationSetViewModel
-    var distance =  0
+    var distance = 0
+    var charge = 0.0
     var myCommunicator: CommunicatorFragmentInterface? = null
     private var setParcel = SetParcel()
 
@@ -82,7 +84,8 @@ class ConfirmReceiverAddressFragment : Fragment(), KodeinAware, SSLCTransactionR
         setProgressDialog(requireActivity())
         myCommunicator = context as CommunicatorFragmentInterface
 
-        mapFragment = childFragmentManager.findFragmentById(R.id.mapReceiverDetails) as SupportMapFragment
+        mapFragment =
+            childFragmentManager.findFragmentById(R.id.mapReceiverDetails) as SupportMapFragment
         mapFragment.getMapAsync {
             googleMap = it
             googleMap.uiSettings.isZoomControlsEnabled = false
@@ -117,14 +120,14 @@ class ConfirmReceiverAddressFragment : Fragment(), KodeinAware, SSLCTransactionR
                 try {
                     val url = getDirectionURL(location1, location2)
                     val list = viewModel.getDirections(url)
-                    val result =  ArrayList<List<LatLng>>()
-                    val path =  ArrayList<LatLng>()
-                    for (i in 0 until list.routes[0].legs[0].steps.size){
+                    val result = ArrayList<List<LatLng>>()
+                    val path = ArrayList<LatLng>()
+                    for (i in 0 until list.routes[0].legs[0].steps.size) {
                         path.addAll(decodePolyline(list.routes[0].legs[0].steps[i].polyline.points))
                     }
                     result.add(path)
                     val lineoption = PolylineOptions()
-                    for (i in result.indices){
+                    for (i in result.indices) {
                         lineoption.addAll(result[i])
                         lineoption.width(6f)
                         lineoption.color(resources.getColor(R.color.blue))
@@ -136,26 +139,10 @@ class ConfirmReceiverAddressFragment : Fragment(), KodeinAware, SSLCTransactionR
                     }*/
                     distance = list.routes[0].legs[0].distance.value
 
-
-                    setParcel.distance = round((distance/1000).toDouble(), 2)
-                    var charge = calculatePrice(requireArguments().getInt("delivery_type"))
+                    setParcel.distance = round((distance / 1000).toDouble(), 2)
+                    charge = calculatePrice(requireArguments().getInt("delivery_type"))
                     setParcel.delivery_charge = charge
                     binding.charge.text = "BDT $charge"
-
-                    binding.apply.setOnClickListener {
-                        if (binding.couponText.text.toString() == PreferenceProvider(requireActivity()).getSharedPreferences("coupon_text")) {
-                            val newCharge = calculatePrice(requireArguments().getInt("delivery_type")) - PreferenceProvider(requireActivity()).getSharedPreferences("discount_amount")!!.toInt()
-                            setParcel.delivery_charge = newCharge
-                            binding.charge.text = "BDT $newCharge"
-                            binding.oldCharge.text = "BDT $charge"
-                            binding.oldCharge.visibility = View.VISIBLE
-                        } else {
-                            charge = calculatePrice(requireArguments().getInt("delivery_type"))
-                            setParcel.delivery_charge = charge
-                            binding.charge.text = "BDT $charge"
-                            binding.oldCharge.visibility = View.GONE
-                        }
-                    }
 
                     val circleDrawable = resources.getDrawable(R.drawable.root_start_point)
                     val markerIcon = getMarkerIconFromDrawable(circleDrawable)
@@ -224,6 +211,45 @@ class ConfirmReceiverAddressFragment : Fragment(), KodeinAware, SSLCTransactionR
 
         }
 
+        binding.apply.setOnClickListener {
+            if (binding.couponText.text.toString().isNotEmpty()) {
+                setProgressDialog(requireContext())
+                lifecycleScope.launch {
+                    try {
+                        val response = viewModel.checkCoupon(binding.couponText.text.toString())
+                        if (response.message == "Successful") {
+                            val newCharge =
+                                calculatePrice(requireArguments().getInt("delivery_type")) - response.coupons.discount_amount.toInt()
+                            setParcel.delivery_charge = newCharge
+                            binding.charge.text = "BDT $newCharge"
+                            binding.oldCharge.text = "BDT $charge"
+                            binding.oldChargeLayout.visibility = View.VISIBLE
+                            dismissDialog()
+                        } else {
+                            charge = calculatePrice(requireArguments().getInt("delivery_type"))
+                            setParcel.delivery_charge = charge
+                            binding.charge.text = "BDT $charge"
+                            binding.oldChargeLayout.visibility = View.GONE
+                            binding.rootLayout.snackbar(response.message)
+                            dismissDialog()
+                        }
+                    } catch (e: MalformedJsonException) {
+                        dismissDialog()
+                        binding.rootLayout.snackbar(e.message!!)
+                        e.printStackTrace()
+                    } catch (e: com.airposted.bohon.utils.ApiException) {
+                        dismissDialog()
+                        binding.rootLayout.snackbar(e.message!!)
+                        e.printStackTrace()
+                    } catch (e: NoInternetException) {
+                        dismissDialog()
+                        binding.rootLayout.snackbar(e.message!!)
+                        e.printStackTrace()
+                    }
+                }
+            }
+        }
+
         binding.back.setOnClickListener {
             requireActivity().onBackPressed()
         }
@@ -233,7 +259,7 @@ class ConfirmReceiverAddressFragment : Fragment(), KodeinAware, SSLCTransactionR
             val radioButton: RadioButton = binding.radioGroup.findViewById(radioButtonID)
             val selectedtext = radioButton.text
 
-            if (selectedtext == "Recipient"){
+            if (selectedtext == "Recipient") {
                 submitOrder()
             } else {
                 val dialogs = Dialog(requireActivity())
@@ -395,15 +421,15 @@ class ConfirmReceiverAddressFragment : Fragment(), KodeinAware, SSLCTransactionR
 
     private fun calculatePrice(position: Int): Double {
         return when (position) {
-            1 ->round(
-                (requireArguments().getInt("parcel_quantity") *  ((distance/1000 * PreferenceProvider(
+            1 -> round(
+                (requireArguments().getInt("parcel_quantity") * ((distance / 1000 * PreferenceProvider(
                     requireActivity()
                 ).getSharedPreferences("per_km_price_quick")!!.toInt()) + PreferenceProvider(
                     requireActivity()
                 ).getSharedPreferences("base_price_quick")!!.toInt())).toDouble(), 2
             )
             else -> round(
-                (requireArguments().getInt("parcel_quantity") *  ((distance/1000 * PreferenceProvider(
+                (requireArguments().getInt("parcel_quantity") * ((distance / 1000 * PreferenceProvider(
                     requireActivity()
                 ).getSharedPreferences("per_km_price_express")!!.toInt()) + PreferenceProvider(
                     requireActivity()
@@ -412,13 +438,13 @@ class ConfirmReceiverAddressFragment : Fragment(), KodeinAware, SSLCTransactionR
         }
     }
 
-    private fun submitOrder(){
+    private fun submitOrder() {
         setProgressDialog(requireActivity())
         lifecycleScope.launch {
             try {
                 val response = viewModel.setOrder(setParcel)
                 dismissDialog()
-                if (response.success){
+                if (response.success) {
                     successDialog(setParcel.invoice_no)
                 }
 
@@ -438,7 +464,7 @@ class ConfirmReceiverAddressFragment : Fragment(), KodeinAware, SSLCTransactionR
         }
     }
 
-    private fun successDialog(invoice: String){
+    private fun successDialog(invoice: String) {
         val dialogs = Dialog(requireActivity())
         dialogs.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialogs.setContentView(R.layout.successful_dialog)
@@ -454,7 +480,10 @@ class ConfirmReceiverAddressFragment : Fragment(), KodeinAware, SSLCTransactionR
 
         proceed.setOnClickListener {
             dialogs.dismiss()
-            requireActivity().supportFragmentManager.popBackStack(ParcelTypeFragment::class.java.name, FragmentManager.POP_BACK_STACK_INCLUSIVE)
+            requireActivity().supportFragmentManager.popBackStack(
+                ParcelTypeFragment::class.java.name,
+                FragmentManager.POP_BACK_STACK_INCLUSIVE
+            )
             myCommunicator?.addContentFragment(MyParcelFragment(), true)
 
         }
@@ -490,7 +519,7 @@ class ConfirmReceiverAddressFragment : Fragment(), KodeinAware, SSLCTransactionR
         return BitmapDescriptorFactory.fromBitmap(bitmap)
     }
 
-    private fun getDirectionURL(origin: LatLng, dest: LatLng) : String{
+    private fun getDirectionURL(origin: LatLng, dest: LatLng): String {
         return "https://maps.googleapis.com/maps/api/directions/json?origin=${origin.latitude},${origin.longitude}&destination=${dest.latitude},${dest.longitude}&key=AIzaSyAJnceVASls_tIv4MiZFkzY1ZrVgu6GmW4&sensor=false&mode=driving"
     }
 

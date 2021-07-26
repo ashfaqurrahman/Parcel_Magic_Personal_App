@@ -158,19 +158,34 @@
                                         android:lineSpacingExtra="10sp"
                                         android:text="@string/delivery_charge" />
 
-                                    <TextView
-                                        android:id="@+id/old_charge"
-                                        android:visibility="gone"
+                                    <RelativeLayout
+                                        android:id="@+id/old_charge_layout"
                                         android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
+                                        android:visibility="visible"
                                         android:layout_toStartOf="@+id/charge"
                                         android:layout_alignParentBottom="true"
                                         android:layout_marginEnd="15dp"
-                                        android:fontFamily="@font/poppins_regular"
-                                        android:textStyle="normal"
-                                        android:textSize="12sp"
-                                        android:textColor="#0f122f"
-                                        android:text="BDT 114.33" />
+                                        android:layout_height="wrap_content">
+
+                                        <View
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="1dp"
+                                            android:layout_alignStart="@+id/old_charge"
+                                            android:layout_alignEnd="@+id/old_charge"
+                                            android:layout_centerInParent="true"
+                                            android:background="#0f122f"/>
+
+                                        <TextView
+                                            android:id="@+id/old_charge"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:fontFamily="@font/poppins_regular"
+                                            android:textStyle="normal"
+                                            android:textSize="12sp"
+                                            android:textColor="#0f122f"
+                                            tools:text="BDT 114.33" />
+
+                                    </RelativeLayout>
 
                                     <TextView
                                         android:id="@+id/charge"
@@ -181,7 +196,7 @@
                                         android:textStyle="normal"
                                         android:textSize="14sp"
                                         android:textColor="#0f122f"
-                                        android:text="BDT 114.33" />
+                                        tools:text="BDT 114.33" />
 
                                 </RelativeLayout>
 

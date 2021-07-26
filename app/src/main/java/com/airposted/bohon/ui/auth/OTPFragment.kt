@@ -18,8 +18,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.aapbd.appbajarlib.storage.PersistentUser
 import com.airposted.bohon.R
-import com.airposted.bohon.data.network.responses.AuthResponse
 import com.airposted.bohon.databinding.FragmentOTPBinding
+import com.airposted.bohon.model.auth.AuthResponse
 import com.airposted.bohon.ui.main.MainActivity
 import com.airposted.bohon.ui.permission.PermissionActivity
 import com.airposted.bohon.utils.*
@@ -210,23 +210,23 @@ class OTPFragment : Fragment(), KodeinAware {
                             PersistentUser.getInstance().setLogin(requireContext())
                             PersistentUser.getInstance().setAccessToken(
                                 requireContext(),
-                                "Bearer " + signupResponse.data?.token
+                                "Bearer " + signupResponse.data.token
                             )
                             PersistentUser.getInstance().setUserID(
                                 requireContext(),
-                                signupResponse.user?.id.toString()
+                                signupResponse.user.id.toString()
                             )
                             PersistentUser.getInstance().setFullname(
                                 requireContext(),
-                                signupResponse.user?.name
+                                signupResponse.user.username
                             )
                             PersistentUser.getInstance().setPhonenumber(
                                 requireContext(),
-                                signupResponse.user?.phone
+                                signupResponse.user.phone
                             )
                             PersistentUser.getInstance().setUserImage(
                                 requireContext(),
-                                signupResponse.user?.image
+                                signupResponse.user.image
                             )
 
                             val intent = Intent(requireContext(), PermissionActivity::class.java)
@@ -279,7 +279,7 @@ class OTPFragment : Fragment(), KodeinAware {
                 )
                 if (response.success) {
                     timer()
-                    otp = response.data?.token
+                    otp = response.data.token
                 } else {
                     binding.main.snackbar(response.msg)
                 }

@@ -87,7 +87,7 @@
                                 android:layout_alignParentEnd="true"
                                 android:fontFamily="@font/poppins_medium"
                                 android:lineSpacingExtra="10sp"
-                                android:text="#AIR5555555"
+                                tools:text="#AIR5555555"
                                 android:textIsSelectable="true"
                                 android:textColor="#1a1662"
                                 android:textSize="15sp"
@@ -133,7 +133,7 @@
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/poppins_regular"
                                 android:textStyle="normal"
-                                android:textSize="13sp"
+                                android:textSize="12sp"
                                 android:textColor="#b5b7dd"
                                 android:text="Quantity"
                                 />
@@ -164,7 +164,7 @@
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/poppins_regular"
                                 android:textStyle="normal"
-                                android:textSize="13sp"
+                                android:textSize="12sp"
                                 android:textColor="#b5b7dd"
                                 android:text="Size"
                                 />
@@ -194,7 +194,7 @@
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/poppins_regular"
                                 android:textStyle="normal"
-                                android:textSize="13sp"
+                                android:textSize="12sp"
                                 android:textColor="#b5b7dd"
                                 android:text="Total Distance"
                                 />
@@ -226,7 +226,7 @@
                                 android:layout_height="wrap_content"
                                 android:fontFamily="@font/poppins_regular"
                                 android:textStyle="normal"
-                                android:textSize="13sp"
+                                android:textSize="12sp"
                                 android:textColor="#b5b7dd"
                                 android:text="Delivery Charge"
                                 />

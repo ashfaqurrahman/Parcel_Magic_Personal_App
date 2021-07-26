@@ -8,8 +8,8 @@ import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.airposted.bohon.R
-import com.airposted.bohon.data.network.responses.AuthResponse
 import com.airposted.bohon.databinding.FragmentPhoneNumberBinding
+import com.airposted.bohon.model.auth.AuthResponse
 import com.airposted.bohon.utils.*
 import kotlinx.coroutines.launch
 import org.kodein.di.KodeinAware
@@ -20,7 +20,6 @@ class PhoneNumberFragment : Fragment(), KodeinAware {
     override val kodein by kodein()
     private val factory: AuthViewModelFactory by instance()
     private lateinit var viewModel: AuthViewModel
-    private var authResponse: AuthResponse? = null
     private lateinit var binding: FragmentPhoneNumberBinding
     private var communicatorFragmentInterface: AuthCommunicatorFragmentInterface? = null
     private var phone: String? = null
@@ -53,35 +52,31 @@ class PhoneNumberFragment : Fragment(), KodeinAware {
                 setProgressDialog(requireContext())
                 lifecycleScope.launch {
                     try {
-                        authResponse = viewModel.checkNumber("+880$phone")
-                        if (authResponse?.user != null) {
-                            if (authResponse?.user!!.verified == null) {
-                                dismissDialog()
-                                val fragment = WelcomeFragment()
-                                val bundle = Bundle()
-                                bundle.putString("phone", authResponse!!.user?.phone)
-                                bundle.putString("token", authResponse!!.data?.token)
-                                bundle.putInt("id", authResponse!!.user!!.id)
-                                bundle.putString("image", authResponse!!.user!!.image)
-                                bundle.putString("name", authResponse!!.user!!.name)
-                                bundle.putBoolean("isAuth", true)
-                                fragment.arguments = bundle
-                                communicatorFragmentInterface?.addContentFragment(fragment, true)
-                            } else {
+                        val authResponse = viewModel.checkNumber("+880$phone")
+                        if (authResponse.success) {
+                            if (authResponse.msg == "User not registered") {
                                 dismissDialog()
                                 val fragment = SignUpFragment()
                                 val bundle = Bundle()
                                 bundle.putString("phone", "+880$phone")
                                 fragment.arguments = bundle
                                 communicatorFragmentInterface?.addContentFragment(fragment, true)
+                            } else {
+                                dismissDialog()
+                                val fragment = WelcomeFragment()
+                                val bundle = Bundle()
+                                bundle.putString("phone", authResponse.user.phone)
+                                bundle.putString("token", authResponse.data.token)
+                                bundle.putInt("id", authResponse.user.id)
+                                bundle.putString("image", authResponse.user.image)
+                                bundle.putString("name", authResponse.user.username)
+                                bundle.putBoolean("isAuth", true)
+                                fragment.arguments = bundle
+                                communicatorFragmentInterface?.addContentFragment(fragment, true)
                             }
                         } else {
                             dismissDialog()
-                            val fragment = SignUpFragment()
-                            val bundle = Bundle()
-                            bundle.putString("phone", "+880$phone")
-                            fragment.arguments = bundle
-                            communicatorFragmentInterface?.addContentFragment(fragment, true)
+                            binding.main.snackbar(authResponse.msg)
                         }
                     } catch (e: ApiException) {
                         dismissDialog()

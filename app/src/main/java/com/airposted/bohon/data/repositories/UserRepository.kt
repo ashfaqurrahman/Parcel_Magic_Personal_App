@@ -2,8 +2,8 @@ package com.airposted.bohon.data.repositories
 
 import com.airposted.bohon.data.network.MyApi
 import com.airposted.bohon.data.network.SafeApiRequest
-import com.airposted.bohon.data.network.responses.AuthResponse
 import com.airposted.bohon.model.SearchLocation
+import com.airposted.bohon.model.auth.AuthResponse
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 

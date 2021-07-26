@@ -44,4 +44,6 @@ class LocationSetViewModel (
     suspend fun setOrder(
         setParcel: SetParcel
     ) = withContext(Dispatchers.IO) { repository.setOrder(setParcel) }
+
+    suspend fun checkCoupon(coupon:String) = withContext(Dispatchers.IO) { repository.checkCoupon(coupon) }
 }
