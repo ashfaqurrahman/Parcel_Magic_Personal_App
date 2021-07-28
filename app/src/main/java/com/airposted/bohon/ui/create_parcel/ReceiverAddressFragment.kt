@@ -54,7 +54,7 @@ class ReceiverAddressFragment : Fragment(), KodeinAware, CustomClickListener, On
     private var toLongitude = 0.0
     private var toLocationName = ""
     private lateinit var bottomSheetBehavior: BottomSheetBehavior<ConstraintLayout>
-    private lateinit var locations: List<Location>
+    private var locations: List<Location> = ArrayList()
 
     private var firstStart = true
 
