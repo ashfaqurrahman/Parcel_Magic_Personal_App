@@ -33,41 +33,37 @@
                 android:textStyle="bold"
                 android:textSize="20sp"
                 android:textAlignment="center"
-                android:text="Parcel Quantity"/>
+                android:text="Coupon Code"/>
 
         </RelativeLayout>
 
-        <com.skydoves.powerspinner.PowerSpinnerView
-            android:id="@+id/quantity_spinner"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="18dp"
             android:layout_marginStart="20dp"
             android:layout_marginEnd="20dp"
-            android:background="@drawable/quantity_bg"
-            android:gravity="start"
-            android:hint="01"
-            android:layout_marginTop="21dp"
-            android:paddingStart="15dp"
-            android:paddingTop="15dp"
-            android:paddingEnd="15dp"
-            android:paddingBottom="10dp"
-            android:textSize="14.5sp"
-            app:spinner_arrow_gravity="end"
-            app:spinner_arrow_padding="2dp"
-            app:spinner_arrow_show="true"
-            android:textColor="@color/text_color"
-            app:spinner_arrow_tint="@color/text_color"
-            app:spinner_divider_color="#e5e5e5"
-            app:spinner_divider_show="true"
-            app:spinner_divider_size="0.3dp"
-            app:spinner_item_array="@array/parcel_quantity"
-            app:spinner_popup_animation="dropdown"
-            app:spinner_popup_background="@color/white"
-            android:textColorHint="@color/text_color"
-            app:spinner_popup_elevation="14dp" />
+            android:background="@drawable/input_back"
+            android:gravity="center_vertical">
+
+            <EditText
+                android:id="@+id/coupon_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:fontFamily="@font/poppins_regular"
+                android:hint="@string/coupon"
+                android:inputType="textCapWords"
+                android:maxLines="1"
+                android:padding="15dp"
+                android:imeOptions="actionNext"
+                android:textColor="#000"
+                android:textSize="14sp" />
+
+        </LinearLayout>
 
         <TextView
-            android:id="@+id/done"
+            android:id="@+id/apply"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
@@ -75,7 +71,7 @@
             android:layout_marginTop="20dp"
             android:gravity="center"
             android:layout_gravity="center"
-            android:text="@string/done"
+            android:text="@string/apply"
             android:textSize="16sp"
             android:textStyle="bold"
             android:textColor="@color/white"

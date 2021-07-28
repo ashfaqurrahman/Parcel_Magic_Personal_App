@@ -72,11 +72,11 @@ class ParcelTypeFragment : Fragment() {
         dialogs.setContentView(R.layout.quantity_dialog)
         dialogs.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         dialogs.window?.setLayout(
-            ViewGroup.LayoutParams.WRAP_CONTENT,  //w
+            ViewGroup.LayoutParams.MATCH_PARENT,  //w
             ViewGroup.LayoutParams.MATCH_PARENT //h
         )
         val done = dialogs.findViewById<TextView>(R.id.done)
-        val close = dialogs.findViewById<ImageView>(R.id.cancel)
+        val backImage = dialogs.findViewById<ImageView>(R.id.backImage)
         val quantitySpinner = dialogs.findViewById<PowerSpinnerView>(R.id.quantity_spinner)
         quantitySpinner.setOnSpinnerItemSelectedListener(OnSpinnerItemSelectedListener<String> { oldIndex, oldItem, newIndex, newItem ->
             run {
@@ -87,7 +87,6 @@ class ParcelTypeFragment : Fragment() {
             }
         })
         done.setOnClickListener {
-            dialogs.dismiss()
             val fragment = ReceiverInfoFragment()
             val bundle = Bundle()
             bundle.putInt("parcel_type", i)
@@ -95,8 +94,9 @@ class ParcelTypeFragment : Fragment() {
             bundle.putInt("delivery_type", requireArguments().getInt("delivery_type"))
             fragment.arguments = bundle
             communicatorFragmentInterface?.addContentFragment(fragment, true)
+            dialogs.dismiss()
         }
-        close.setOnClickListener {
+        backImage.setOnClickListener {
             dialogs.dismiss()
         }
         dialogs.setCancelable(true)

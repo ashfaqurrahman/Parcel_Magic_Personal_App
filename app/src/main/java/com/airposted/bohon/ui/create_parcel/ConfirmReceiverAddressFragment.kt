@@ -11,9 +11,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
-import android.widget.RadioButton
-import android.widget.RelativeLayout
-import android.widget.TextView
+import android.widget.*
 import androidx.cardview.widget.CardView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
@@ -34,6 +32,7 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.*
 import com.google.gson.stream.MalformedJsonException
+import com.skydoves.powerspinner.PowerSpinnerView
 import com.sslwireless.sslcommerzlibrary.model.initializer.SSLCProductInitializer
 import com.sslwireless.sslcommerzlibrary.model.initializer.SSLCShipmentInfoInitializer
 import com.sslwireless.sslcommerzlibrary.model.initializer.SSLCommerzInitialization
@@ -79,6 +78,10 @@ class ConfirmReceiverAddressFragment : Fragment(), KodeinAware, SSLCTransactionR
     }
 
     private fun bindUI() {
+        binding.back.setOnClickListener {
+            requireActivity().onBackPressed()
+        }
+
         setParcel.who_will_pay = 1
 
         setProgressDialog(requireActivity())
@@ -142,7 +145,8 @@ class ConfirmReceiverAddressFragment : Fragment(), KodeinAware, SSLCTransactionR
                     setParcel.distance = round((distance / 1000).toDouble(), 2)
                     charge = calculatePrice(requireArguments().getInt("delivery_type"))
                     setParcel.delivery_charge = charge
-                    binding.charge.text = "BDT $charge"
+                    binding.charge.text = "Tk $charge"
+                    binding.total.text = "Tk $charge"
 
                     val circleDrawable = resources.getDrawable(R.drawable.root_start_point)
                     val markerIcon = getMarkerIconFromDrawable(circleDrawable)
@@ -211,50 +215,31 @@ class ConfirmReceiverAddressFragment : Fragment(), KodeinAware, SSLCTransactionR
 
         }
 
-        binding.apply.setOnClickListener {
-            if (binding.couponText.text.toString().isNotEmpty()) {
-                setProgressDialog(requireContext())
-                lifecycleScope.launch {
-                    try {
-                        val response = viewModel.checkCoupon(binding.couponText.text.toString())
-                        if (response.message == "Successful") {
-                            val newCharge =
-                                calculatePrice(requireArguments().getInt("delivery_type")) - response.coupons.discount_amount.toInt()
-                            setParcel.delivery_charge = newCharge
-                            binding.charge.text = "BDT $newCharge"
-                            binding.oldCharge.text = "BDT $charge"
-                            binding.oldChargeLayout.visibility = View.VISIBLE
-                            dismissDialog()
-                        } else {
-                            charge = calculatePrice(requireArguments().getInt("delivery_type"))
-                            setParcel.delivery_charge = charge
-                            binding.charge.text = "BDT $charge"
-                            binding.oldChargeLayout.visibility = View.GONE
-                            binding.rootLayout.snackbar(response.message)
-                            dismissDialog()
-                        }
-                    } catch (e: MalformedJsonException) {
-                        dismissDialog()
-                        binding.rootLayout.snackbar(e.message!!)
-                        e.printStackTrace()
-                    } catch (e: com.airposted.bohon.utils.ApiException) {
-                        dismissDialog()
-                        binding.rootLayout.snackbar(e.message!!)
-                        e.printStackTrace()
-                    } catch (e: NoInternetException) {
-                        dismissDialog()
-                        binding.rootLayout.snackbar(e.message!!)
-                        e.printStackTrace()
-                    }
-                }
-            }
+        binding.applyCoupon.setOnClickListener {
+            showCouponDialog()
         }
 
-        binding.back.setOnClickListener {
-            requireActivity().onBackPressed()
+        binding.removeCoupon.setOnClickListener {
+            charge = calculatePrice(requireArguments().getInt("delivery_type"))
+            setParcel.delivery_charge = charge
+            binding.total.text = "Tk $charge"
+            binding.applyCoupon.visibility = View.VISIBLE
+            binding.couponLayout.visibility = View.GONE
         }
 
-        binding.confirmReceiverAddress.setOnClickListener {
+        binding.collect.setOnClickListener {
+            binding.collectSelected.visibility = View.VISIBLE
+            binding.digitalSelect.visibility = View.GONE
+            binding.confirmDeliveryText.text = getString(R.string.confirm_delivery)
+        }
+
+        binding.digital.setOnClickListener {
+            binding.collectSelected.visibility = View.GONE
+            binding.digitalSelect.visibility = View.VISIBLE
+            binding.confirmDeliveryText.text = getString(R.string.proceed_to_payment)
+        }
+
+        binding.confirmDelivery.setOnClickListener {
             val radioButtonID = binding.radioGroup.checkedRadioButtonId
             val radioButton: RadioButton = binding.radioGroup.findViewById(radioButtonID)
             val selectedtext = radioButton.text
@@ -262,85 +247,50 @@ class ConfirmReceiverAddressFragment : Fragment(), KodeinAware, SSLCTransactionR
             if (selectedtext == "Recipient") {
                 submitOrder()
             } else {
-                val dialogs = Dialog(requireActivity())
-                dialogs.requestWindowFeature(Window.FEATURE_NO_TITLE)
-                dialogs.setContentView(R.layout.payment_method_dialog)
-                dialogs.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-                dialogs.window?.setLayout(
-                    ViewGroup.LayoutParams.MATCH_PARENT,  //w
-                    ViewGroup.LayoutParams.WRAP_CONTENT //h
-                )
+                when (binding.confirmDeliveryText.text) {
+                    getString(R.string.confirm_delivery) -> {
+                        submitOrder()
+                    }
+                    getString(R.string.proceed_to_payment) -> {
+                        val sslCommerzInitialization = SSLCommerzInitialization(
+                            "centr5eb574ade72ea",
+                            "centr5eb574ade72ea@ssl",
+                            setParcel.delivery_charge,
+                            SSLCCurrencyType.BDT,
+                            setParcel.invoice_no,
+                            "Shop",
+                            SSLCSdkType.TESTBOX
+                        )
 
-                val collect = dialogs.findViewById<CardView>(R.id.collect)
-                val collect_selected = dialogs.findViewById<RelativeLayout>(R.id.collect_selected)
-                val digital = dialogs.findViewById<CardView>(R.id.digital)
-                val digital_selected = dialogs.findViewById<RelativeLayout>(R.id.digital_select)
-                val done_next = dialogs.findViewById<TextView>(R.id.next_done)
+                        /*val customerInfoInitializer = SSLCCustomerInfoInitializer(
+                            addParcel.sender_name, addParcel.sender_email,
+                            addParcel.sender_address, addParcel.sender_city_id.toString(), addParcel.sender_zip_code, addParcel.sender_country_id.toString(), addParcel.sender_phone
+                        )*/
 
-                collect.setOnClickListener {
-                    collect_selected.visibility = View.VISIBLE
-                    digital_selected.visibility = View.GONE
-                    done_next.text = getString(R.string.done)
-                }
-
-                digital.setOnClickListener {
-                    collect_selected.visibility = View.GONE
-                    digital_selected.visibility = View.VISIBLE
-                    done_next.text = getString(R.string.proceed_to_payment)
-                }
-
-                done_next.setOnClickListener {
-                    dialogs.dismiss()
-                    when (done_next.text) {
-                        getString(R.string.done) -> {
-                            dialogs.dismiss()
-                            submitOrder()
-                        }
-                        getString(R.string.proceed_to_payment) -> {
-                            val sslCommerzInitialization = SSLCommerzInitialization(
-                                "centr5eb574ade72ea",
-                                "centr5eb574ade72ea@ssl",
-                                setParcel.delivery_charge,
-                                SSLCCurrencyType.BDT,
-                                setParcel.invoice_no,
-                                "Shop",
-                                SSLCSdkType.TESTBOX
+                        val productInitializer = SSLCProductInitializer(
+                            "food", "food",
+                            SSLCProductInitializer.ProductProfile.TravelVertical(
+                                "Travel", "10",
+                                "A", "12", "Dhk-Syl"
                             )
+                        )
 
-                            /*val customerInfoInitializer = SSLCCustomerInfoInitializer(
-                                addParcel.sender_name, addParcel.sender_email,
-                                addParcel.sender_address, addParcel.sender_city_id.toString(), addParcel.sender_zip_code, addParcel.sender_country_id.toString(), addParcel.sender_phone
-                            )*/
-
-                            val productInitializer = SSLCProductInitializer(
-                                "food", "food",
-                                SSLCProductInitializer.ProductProfile.TravelVertical(
-                                    "Travel", "10",
-                                    "A", "12", "Dhk-Syl"
-                                )
+                        val shipmentInfoInitializer = SSLCShipmentInfoInitializer(
+                            "Courier",
+                            2, SSLCShipmentInfoInitializer.ShipmentDetails(
+                                "AA", "Address 1",
+                                "Dhaka", "1000", "BD"
                             )
+                        )
 
-                            val shipmentInfoInitializer = SSLCShipmentInfoInitializer(
-                                "Courier",
-                                2, SSLCShipmentInfoInitializer.ShipmentDetails(
-                                    "AA", "Address 1",
-                                    "Dhaka", "1000", "BD"
-                                )
-                            )
-
-                            IntegrateSSLCommerz
-                                .getInstance(context)
-                                .addSSLCommerzInitialization(sslCommerzInitialization)
-                                //.addCustomerInfoInitializer(customerInfoInitializer)
-                                //.addProductInitializer(productInitializer)
-                                .buildApiCall(this)
-                        }
+                        IntegrateSSLCommerz
+                            .getInstance(context)
+                            .addSSLCommerzInitialization(sslCommerzInitialization)
+                            //.addCustomerInfoInitializer(customerInfoInitializer)
+                            //.addProductInitializer(productInitializer)
+                            .buildApiCall(this)
                     }
                 }
-
-                dialogs.setCancelable(true)
-
-                dialogs.show()
             }
             /*when {
                 binding.receiverName.text.isNullOrEmpty() -> {
@@ -402,6 +352,69 @@ class ConfirmReceiverAddressFragment : Fragment(), KodeinAware, SSLCTransactionR
         setParcel.sender_latitude = requireArguments().getDouble("sender_latitude")
         setParcel.sender_longitude = requireArguments().getDouble("sender_longitude")
         setParcel.pick_address = requireArguments().getString("sender_location_name")!!
+    }
+
+    private fun showCouponDialog() {
+        val dialogs = Dialog(requireActivity())
+        dialogs.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        dialogs.setContentView(R.layout.coupon_dialog)
+        dialogs.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialogs.window?.setLayout(
+            ViewGroup.LayoutParams.MATCH_PARENT,  //w
+            ViewGroup.LayoutParams.MATCH_PARENT //h
+        )
+        val backImage = dialogs.findViewById<ImageView>(R.id.backImage)
+        val couponText = dialogs.findViewById<EditText>(R.id.coupon_text)
+        val apply = dialogs.findViewById<TextView>(R.id.apply)
+        apply.setOnClickListener {
+            hideKeyboard(requireActivity())
+            if (couponText.text.toString().isNotEmpty()) {
+                setProgressDialog(requireContext())
+                lifecycleScope.launch {
+                    try {
+                        val response = viewModel.checkCoupon(couponText.text.toString())
+                        if (response.message == "Successful") {
+                            val newCharge =
+                                calculatePrice(requireArguments().getInt("delivery_type")) - response.coupons.discount_amount.toInt()
+                            setParcel.delivery_charge = newCharge
+                            binding.total.text = "Tk $newCharge"
+                            binding.discountAmount.text = "Tk -${response.coupons.discount_amount}"
+                            binding.couponText.text = couponText.text.toString()
+                            binding.rootLayout.snackbar(response.message)
+                            binding.applyCoupon.visibility = View.GONE
+                            binding.couponLayout.visibility = View.VISIBLE
+                            dismissDialog()
+                            dialogs.dismiss()
+                        } else {
+                            charge = calculatePrice(requireArguments().getInt("delivery_type"))
+                            setParcel.delivery_charge = charge
+                            binding.total.text = "Tk $charge"
+                            binding.applyCoupon.visibility = View.VISIBLE
+                            binding.couponLayout.visibility = View.GONE
+                            binding.rootLayout.snackbar(response.message)
+                            dismissDialog()
+                        }
+                    } catch (e: MalformedJsonException) {
+                        dismissDialog()
+                        binding.rootLayout.snackbar(e.message!!)
+                        e.printStackTrace()
+                    } catch (e: com.airposted.bohon.utils.ApiException) {
+                        dismissDialog()
+                        binding.rootLayout.snackbar(e.message!!)
+                        e.printStackTrace()
+                    } catch (e: NoInternetException) {
+                        dismissDialog()
+                        binding.rootLayout.snackbar(e.message!!)
+                        e.printStackTrace()
+                    }
+                }
+            }
+        }
+        backImage.setOnClickListener {
+            dialogs.dismiss()
+        }
+        dialogs.setCancelable(true)
+        dialogs.show()
     }
 
     private fun getSaltString(): String {

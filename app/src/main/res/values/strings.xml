@@ -109,4 +109,6 @@
     <string name="confirm_delivery">Confirm Delivery</string>
     <string name="coupon">Coupon Code</string>
     <string name="apply">Apply</string>
+    <string name="apply_voucher">Apply a voucher</string>
+    <string name="total">Total</string>
 </resources>

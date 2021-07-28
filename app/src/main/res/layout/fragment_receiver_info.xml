@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/white"
@@ -15,6 +15,7 @@
         android:id="@+id/root_layout">
 
         <RelativeLayout
+            android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
@@ -58,6 +59,7 @@
         </RelativeLayout>
 
         <RelativeLayout
+            android:layout_below="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="15sp"
@@ -68,14 +70,14 @@
 
             <ScrollView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:scrollbars="none">
 
                 <LinearLayout
                     android:id="@+id/content_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingBottom="100dp"
+                    android:paddingBottom="10dp"
                     android:orientation="vertical">
 
                     <TextView
@@ -86,23 +88,12 @@
                         android:textColor="#1a1a1a"
                         android:textSize="32sp"
                         android:textStyle="normal"
-                        android:text="Who&apos;s receiving the Package" />
+                        android:text="Who is receiving the parcel?" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="13sp"
-                        android:fontFamily="@font/poppins_medium"
-                        android:lineSpacingExtra="5sp"
-                        android:textColor="#000000"
-                        android:textSize="14sp"
-                        android:textStyle="normal"
-                        android:text="The driver may contact the recipient to Compete the delivery " />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="20dp"
+                        android:layout_marginTop="30dp"
                         android:fontFamily="@font/poppins_medium"
                         android:lineSpacingExtra="12sp"
                         android:textColor="#000000"
@@ -192,6 +183,15 @@
 
             </ScrollView>
 
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="15sp"
+            android:layout_marginEnd="15sp"
+            android:layout_marginBottom="5dp">
+
             <TextView
                 android:id="@+id/next"
                 android:layout_width="match_parent"
@@ -208,6 +208,6 @@
 
         </RelativeLayout>
 
-    </LinearLayout>
+    </RelativeLayout>
 
 </layout>
