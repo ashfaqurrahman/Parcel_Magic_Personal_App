@@ -368,11 +368,11 @@ class ConfirmReceiverAddressFragment : Fragment(), KodeinAware, SSLCTransactionR
         val couponText = dialogs.findViewById<EditText>(R.id.coupon_text)
         val apply = dialogs.findViewById<TextView>(R.id.apply)
         apply.setOnClickListener {
-            hideKeyboard(requireActivity())
             if (couponText.text.toString().isNotEmpty()) {
                 setProgressDialog(requireContext())
                 lifecycleScope.launch {
                     try {
+                        hideKeyboard(requireActivity())
                         val response = viewModel.checkCoupon(couponText.text.toString())
                         if (response.message == "Successful") {
                             val newCharge =
