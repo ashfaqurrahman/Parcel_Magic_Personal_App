@@ -38,6 +38,7 @@
                     android:name="com.google.android.gms.maps.SupportMapFragment"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:layout_marginBottom="-20dp"
                     android:layout_above="@id/layout"/>
 
                 <LinearLayout
@@ -143,8 +144,8 @@
                                 <RelativeLayout
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginStart="15dp"
-                                    android:layout_marginEnd="15dp"
+                                    android:layout_marginStart="25dp"
+                                    android:layout_marginEnd="25dp"
                                     android:layout_marginTop="15dp">
 
                                     <TextView
@@ -153,7 +154,7 @@
                                         android:layout_alignParentStart="true"
                                         android:fontFamily="@font/poppins_semibold"
                                         android:textStyle="normal"
-                                        android:textSize="14sp"
+                                        android:textSize="17sp"
                                         android:textColor="#0f122f"
                                         android:lineSpacingExtra="10sp"
                                         android:text="@string/delivery_charge" />
@@ -165,7 +166,7 @@
                                         android:layout_alignParentEnd="true"
                                         android:fontFamily="@font/poppins_semibold"
                                         android:textStyle="normal"
-                                        android:textSize="14sp"
+                                        android:textSize="17sp"
                                         android:textColor="#0f122f"
                                         tools:text="Tk 114.33" />
 
@@ -189,198 +190,156 @@
 
                                 <TextView
                                     android:id="@+id/apply_coupon"
-                                    android:layout_width="wrap_content"
+                                    android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginStart="15dp"
-                                    android:layout_marginTop="10dp"
+                                    android:layout_marginStart="25dp"
+                                    android:layout_marginEnd="25dp"
+                                    android:layout_marginTop="20dp"
+                                    android:drawablePadding="20dp"
+                                    android:paddingTop="7dp"
+                                    android:paddingBottom="7dp"
+                                    android:paddingStart="22dp"
+                                    android:paddingEnd="15dp"
                                     android:fontFamily="@font/poppins_semibold"
+                                    android:background="@drawable/doted_rectengle"
                                     android:textStyle="normal"
-                                    android:textSize="14sp"
+                                    android:textSize="17sp"
                                     android:textColor="#0c5beb"
                                     android:lineSpacingExtra="10sp"
-                                    android:text="@string/apply_voucher" />
+                                    android:text="@string/apply_coupon"
+                                    app:drawableStartCompat="@drawable/ic_coupon_icon" />
 
-                                <com.google.android.material.card.MaterialCardView
+                                <RelativeLayout
                                     android:id="@+id/coupon_layout"
                                     android:visibility="gone"
                                     android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginStart="15dp"
-                                    android:layout_marginEnd="15dp"
-                                    android:layout_marginTop="10dp"
-                                    android:layout_marginBottom="5dp"
-                                    app:cardBackgroundColor="@color/white"
-                                    app:cardCornerRadius="10dp">
+                                    android:layout_marginTop="35dp"
+                                    android:layout_marginStart="25dp"
+                                    android:layout_marginEnd="25dp"
+                                    android:paddingTop="12dp"
+                                    android:paddingBottom="10dp"
+                                    android:paddingStart="12dp"
+                                    android:paddingEnd="12dp"
+                                    android:background="@drawable/doted_rectengle"
+                                    android:layout_height="wrap_content">
 
-                                    <RelativeLayout
-                                        android:layout_width="match_parent"
+                                    <ImageView
+                                        android:id="@+id/coupon_icon"
+                                        android:layout_alignParentStart="true"
+                                        android:layout_marginStart="10dp"
+                                        android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:padding="15dp">
+                                        android:src="@drawable/ic_coupon_icon"
+                                        android:layout_centerVertical="true"/>
 
-                                        <TextView
-                                            android:id="@+id/coupon_text"
-                                            android:layout_width="wrap_content"
-                                            android:layout_height="wrap_content"
-                                            android:layout_alignParentStart="true"
-                                            android:fontFamily="@font/poppins_semibold"
-                                            android:textStyle="normal"
-                                            android:textSize="14sp"
-                                            android:textColor="#0f122f"
-                                            android:lineSpacingExtra="10sp"
-                                            tools:text="Gift30" />
+                                    <View
+                                        android:id="@+id/view"
+                                        android:layout_toEndOf="@+id/coupon_icon"
+                                        android:layout_marginStart="20dp"
+                                        android:layout_width="1dp"
+                                        android:layout_height="wrap_content"
+                                        android:layout_centerVertical="true"
+                                        android:layout_alignTop="@+id/coupon_icon"
+                                        android:layout_alignBottom="@+id/coupon_icon"
+                                        android:background="#c1c1c1"/>
 
-                                        <TextView
-                                            android:id="@+id/discount_amount"
-                                            android:layout_width="wrap_content"
-                                            android:layout_height="wrap_content"
-                                            android:layout_alignParentEnd="true"
-                                            android:layout_centerVertical="true"
-                                            android:fontFamily="@font/poppins_semibold"
-                                            android:textStyle="normal"
-                                            android:textSize="14sp"
-                                            android:textColor="#0c5beb"
-                                            android:lineSpacingExtra="10sp"
-                                            tools:text="Tk -50" />
+                                    <TextView
+                                        android:layout_toEndOf="@+id/view"
+                                        android:layout_marginStart="20dp"
+                                        android:id="@+id/coupon_text"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:fontFamily="@font/poppins_semibold"
+                                        android:textStyle="normal"
+                                        android:textSize="14sp"
+                                        android:textColor="#0f122f"
+                                        tools:text="Gift30" />
 
-                                        <TextView
-                                            android:id="@+id/remove_coupon"
-                                            android:layout_below="@+id/coupon_text"
-                                            android:layout_width="wrap_content"
-                                            android:layout_height="wrap_content"
-                                            android:layout_marginTop="5dp"
-                                            android:layout_alignParentStart="true"
-                                            android:fontFamily="@font/poppins_semibold"
-                                            android:textStyle="normal"
-                                            android:textSize="14sp"
-                                            android:textColor="#0c5beb"
-                                            android:lineSpacingExtra="10sp"
-                                            android:text="Remove" />
+                                    <TextView
+                                        android:id="@+id/discount_amount"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_alignParentEnd="true"
+                                        android:layout_centerVertical="true"
+                                        android:fontFamily="@font/poppins_semibold"
+                                        android:textStyle="normal"
+                                        android:textSize="14sp"
+                                        android:textColor="#0c5beb"
+                                        tools:text="Tk -50" />
 
-                                    </RelativeLayout>
+                                    <TextView
+                                        android:layout_toEndOf="@+id/view"
+                                        android:layout_marginStart="20dp"
+                                        android:id="@+id/remove_coupon"
+                                        android:layout_below="@+id/coupon_text"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:fontFamily="@font/poppins_semibold"
+                                        android:textStyle="normal"
+                                        android:textSize="17sp"
+                                        android:textColor="#0c5beb"
+                                        android:text="Remove" />
 
-                                </com.google.android.material.card.MaterialCardView>
+                                </RelativeLayout>
 
-                                <LinearLayout
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="20dp"
+                                    android:fontFamily="@font/poppins_bold"
+                                    android:layout_marginStart="25dp"
+                                    android:layout_marginEnd="25dp"
+                                    android:textStyle="bold"
+                                    android:textSize="17sp"
+                                    android:textColor="#1a1a1a"
+                                    android:lineSpacingExtra="52sp"
+                                    android:text="Select Payment Method"/>
+
+                                <RadioGroup
+                                    android:id="@+id/payment_method"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginStart="10dp"
-                                    android:layout_marginTop="20dp"
-                                    android:layout_marginEnd="10dp"
-                                    android:orientation="horizontal"
-                                    android:weightSum="2">
+                                    android:layout_marginStart="25dp"
+                                    android:layout_marginEnd="25dp"
+                                    android:orientation="vertical">
 
-                                    <androidx.cardview.widget.CardView
-                                        android:id="@+id/collect"
-                                        android:layout_width="0dp"
+                                    <RadioButton
+                                        android:id="@+id/coc"
+                                        android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
-                                        app:cardBackgroundColor="@color/white"
-                                        android:layout_weight="1"
-                                        android:layout_margin="5dp"
-                                        app:cardCornerRadius="7dp">
+                                        android:gravity="center_vertical"
+                                        android:fontFamily="@font/poppins_medium"
+                                        android:textStyle="normal"
+                                        android:checked="true"
+                                        android:textSize="17sp"
+                                        android:text="Cash on collect"/>
 
-                                        <RelativeLayout
-                                            android:layout_width="match_parent"
-                                            android:layout_height="45dp">
-
-                                            <RelativeLayout
-                                                android:id="@+id/collect_selected"
-                                                android:visibility="visible"
-                                                android:layout_width="match_parent"
-                                                android:layout_height="45dp"
-                                                android:background="@drawable/rectangle_border_bg">
-
-                                                <ImageView
-                                                    android:layout_width="13dp"
-                                                    android:layout_height="13dp"
-                                                    android:layout_marginTop="3dp"
-                                                    android:layout_marginEnd="3dp"
-                                                    android:padding="3dp"
-                                                    android:layout_alignParentEnd="true"
-                                                    android:src="@drawable/ic_right_icon"
-                                                    android:background="@drawable/circle_solid_blue"/>
-
-                                            </RelativeLayout>
-
-                                            <TextView
-                                                android:layout_width="wrap_content"
-                                                android:layout_height="wrap_content"
-                                                android:fontFamily="@font/poppins_regular"
-                                                android:textStyle="normal"
-                                                android:layout_centerInParent="true"
-                                                android:textSize="13sp"
-                                                android:textColor="#0f122f"
-                                                android:lineSpacingExtra="7sp"
-                                                android:text="Cash on collect"
-                                                />
-
-                                        </RelativeLayout>
-
-                                    </androidx.cardview.widget.CardView>
-
-                                    <androidx.cardview.widget.CardView
-                                        android:id="@+id/digital"
-                                        android:layout_width="0dp"
+                                    <RadioButton
+                                        android:id="@+id/cod"
+                                        android:gravity="center_vertical"
+                                        android:fontFamily="@font/poppins_medium"
+                                        android:textStyle="normal"
+                                        android:textSize="17sp"
+                                        android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
-                                        app:cardBackgroundColor="@color/white"
-                                        android:layout_weight="1"
-                                        android:layout_margin="5dp"
-                                        app:cardCornerRadius="7dp">
+                                        android:text="Digital payment"/>
 
-                                        <RelativeLayout
-                                            android:layout_width="match_parent"
-                                            android:layout_height="45dp">
-
-                                            <RelativeLayout
-                                                android:id="@+id/digital_select"
-                                                android:visibility="gone"
-                                                android:layout_width="match_parent"
-                                                android:layout_height="45dp"
-                                                android:background="@drawable/rectangle_border_bg">
-
-                                                <ImageView
-                                                    android:layout_width="13dp"
-                                                    android:layout_height="13dp"
-                                                    android:layout_marginTop="3dp"
-                                                    android:layout_marginEnd="3dp"
-                                                    android:padding="3dp"
-                                                    android:layout_alignParentEnd="true"
-                                                    android:src="@drawable/ic_right_icon"
-                                                    android:background="@drawable/circle_solid_blue"/>
-
-                                            </RelativeLayout>
-
-                                            <TextView
-                                                android:layout_width="wrap_content"
-                                                android:layout_height="wrap_content"
-                                                android:fontFamily="@font/poppins_regular"
-                                                android:textStyle="normal"
-                                                android:layout_centerInParent="true"
-                                                android:textSize="13sp"
-                                                android:textColor="#0f122f"
-                                                android:lineSpacingExtra="7sp"
-                                                android:text="Digital Payment"
-                                                />
-
-                                        </RelativeLayout>
-
-                                    </androidx.cardview.widget.CardView>
-
-                                </LinearLayout>
+                                </RadioGroup>
 
                                 <RelativeLayout
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginStart="15dp"
-                                    android:layout_marginEnd="15dp"
+                                    android:layout_marginStart="25dp"
+                                    android:layout_marginEnd="25dp"
                                     android:layout_marginTop="15dp">
 
                                     <TextView
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_alignParentStart="true"
-                                        android:fontFamily="@font/poppins_semibold"
+                                        android:fontFamily="@font/poppins_bold"
                                         android:textStyle="normal"
-                                        android:textSize="14sp"
+                                        android:textSize="17sp"
                                         android:textColor="#0f122f"
                                         android:lineSpacingExtra="10sp"
                                         android:text="@string/total" />
@@ -390,9 +349,9 @@
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_alignParentEnd="true"
-                                        android:fontFamily="@font/poppins_semibold"
+                                        android:fontFamily="@font/poppins_bold"
                                         android:textStyle="normal"
-                                        android:textSize="14sp"
+                                        android:textSize="17sp"
                                         android:textColor="#0f122f"
                                         tools:text="Tk 114.33" />
 
@@ -405,8 +364,8 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginBottom="15dp"
-                                android:layout_marginStart="15dp"
-                                android:layout_marginEnd="15dp"
+                                android:layout_marginStart="25dp"
+                                android:layout_marginEnd="25dp"
                                 android:layout_marginTop="10dp"
                                 android:background="@drawable/after_button_bg"
                                 android:padding="15dp"

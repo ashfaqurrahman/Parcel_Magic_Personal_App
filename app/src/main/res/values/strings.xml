@@ -111,4 +111,6 @@
     <string name="apply">Apply</string>
     <string name="apply_voucher">Apply a voucher</string>
     <string name="total">Total</string>
+    <string name="apply_coupon">Apply a coupon</string>
+    <string name="enter_your_coupon_code">Enter your coupon code</string>
 </resources>

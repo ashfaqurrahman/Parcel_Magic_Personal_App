@@ -227,18 +227,6 @@ class ConfirmReceiverAddressFragment : Fragment(), KodeinAware, SSLCTransactionR
             binding.couponLayout.visibility = View.GONE
         }
 
-        binding.collect.setOnClickListener {
-            binding.collectSelected.visibility = View.VISIBLE
-            binding.digitalSelect.visibility = View.GONE
-            binding.confirmDeliveryText.text = getString(R.string.confirm_delivery)
-        }
-
-        binding.digital.setOnClickListener {
-            binding.collectSelected.visibility = View.GONE
-            binding.digitalSelect.visibility = View.VISIBLE
-            binding.confirmDeliveryText.text = getString(R.string.proceed_to_payment)
-        }
-
         binding.confirmDelivery.setOnClickListener {
             val radioButtonID = binding.radioGroup.checkedRadioButtonId
             val radioButton: RadioButton = binding.radioGroup.findViewById(radioButtonID)
@@ -327,6 +315,19 @@ class ConfirmReceiverAddressFragment : Fragment(), KodeinAware, SSLCTransactionR
                     R.id.receiver -> {
                         binding.cashOnDelivery.visibility = View.VISIBLE
                         setParcel.who_will_pay = 0
+                    }
+                }
+            }
+        }
+
+        binding.paymentMethod.setOnCheckedChangeListener { radioGroup, optionId ->
+            run {
+                when (optionId) {
+                    R.id.coc -> {
+                        binding.confirmDeliveryText.text = getString(R.string.confirm_delivery)
+                    }
+                    R.id.cod -> {
+                        binding.confirmDeliveryText.text = getString(R.string.proceed_to_payment)
                     }
                 }
             }

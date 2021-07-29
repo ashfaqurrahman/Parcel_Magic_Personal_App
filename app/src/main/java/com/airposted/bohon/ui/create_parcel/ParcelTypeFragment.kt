@@ -21,7 +21,6 @@ import com.skydoves.powerspinner.PowerSpinnerView
 class ParcelTypeFragment : Fragment() {
     private lateinit var binding: FragmentParcelTypeBinding
     private var communicatorFragmentInterface: CommunicatorFragmentInterface? = null
-    var quantity = 1
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -54,52 +53,24 @@ class ParcelTypeFragment : Fragment() {
         }
 
         binding.envelopeBtn.setOnClickListener {
-            showQuantityDialog(1)
+            goQuantityPage(1)
         }
 
         binding.smallBtn.setOnClickListener {
-            showQuantityDialog(2)
+            goQuantityPage(2)
         }
 
         binding.largeBtn.setOnClickListener {
-            showQuantityDialog(3)
+            goQuantityPage(3)
         }
     }
 
-    private fun showQuantityDialog(i: Int) {
-        val dialogs = Dialog(requireActivity())
-        dialogs.requestWindowFeature(Window.FEATURE_NO_TITLE)
-        dialogs.setContentView(R.layout.quantity_dialog)
-        dialogs.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        dialogs.window?.setLayout(
-            ViewGroup.LayoutParams.MATCH_PARENT,  //w
-            ViewGroup.LayoutParams.MATCH_PARENT //h
-        )
-        val done = dialogs.findViewById<TextView>(R.id.done)
-        val backImage = dialogs.findViewById<ImageView>(R.id.backImage)
-        val quantitySpinner = dialogs.findViewById<PowerSpinnerView>(R.id.quantity_spinner)
-        quantitySpinner.setOnSpinnerItemSelectedListener(OnSpinnerItemSelectedListener<String> { oldIndex, oldItem, newIndex, newItem ->
-            run {
-                if (oldIndex != newIndex) {
-                    quantity = newIndex + 1
-                    //Toast.makeText(requireContext(), quantity.toString(), Toast.LENGTH_SHORT).show()
-                }
-            }
-        })
-        done.setOnClickListener {
-            val fragment = ReceiverInfoFragment()
-            val bundle = Bundle()
-            bundle.putInt("parcel_type", i)
-            bundle.putInt("parcel_quantity", quantity)
-            bundle.putInt("delivery_type", requireArguments().getInt("delivery_type"))
-            fragment.arguments = bundle
-            communicatorFragmentInterface?.addContentFragment(fragment, true)
-            dialogs.dismiss()
-        }
-        backImage.setOnClickListener {
-            dialogs.dismiss()
-        }
-        dialogs.setCancelable(true)
-        dialogs.show()
+    private fun goQuantityPage(i: Int) {
+        val fragment = QuantityFragment()
+        val bundle = Bundle()
+        bundle.putInt("parcel_type", i)
+        bundle.putInt("delivery_type", requireArguments().getInt("delivery_type"))
+        fragment.arguments = bundle
+        communicatorFragmentInterface?.addContentFragment(fragment, true)
     }
 }
