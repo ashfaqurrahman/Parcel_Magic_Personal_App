@@ -62,7 +62,9 @@ class LocationSetRepository (
                 appContext
             ), coupon)
         }
-        couponPrice.postValue(response)
+        if (response.coupons != null){
+            couponPrice.postValue(response)
+        }
         return response
     }
 }

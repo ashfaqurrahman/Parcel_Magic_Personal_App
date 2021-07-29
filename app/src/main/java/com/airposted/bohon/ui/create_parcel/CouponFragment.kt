@@ -41,6 +41,7 @@ class CouponFragment : Fragment(), KodeinAware {
     }
 
     private fun bindUI() {
+        binding.toolbar.toolbarTitle.text = "Coupon Code"
         binding.apply.setOnClickListener {
             if (binding.couponText.text.toString().isNotEmpty()) {
                 setProgressDialog(requireContext())

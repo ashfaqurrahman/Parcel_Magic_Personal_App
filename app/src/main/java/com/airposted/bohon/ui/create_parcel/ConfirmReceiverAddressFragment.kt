@@ -62,6 +62,7 @@ class ConfirmReceiverAddressFragment : Fragment(), KodeinAware, SSLCTransactionR
     var charge = 0.0
     var myCommunicator: CommunicatorFragmentInterface? = null
     private var setParcel = SetParcel()
+    var communicatorFragmentInterface: CommunicatorFragmentInterface? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -79,6 +80,7 @@ class ConfirmReceiverAddressFragment : Fragment(), KodeinAware, SSLCTransactionR
     }
 
     private fun bindUI() {
+        communicatorFragmentInterface = context as CommunicatorFragmentInterface
         binding.back.setOnClickListener {
             requireActivity().onBackPressed()
         }
@@ -191,9 +193,9 @@ class ConfirmReceiverAddressFragment : Fragment(), KodeinAware, SSLCTransactionR
                     googleMap.moveCamera(
                         CameraUpdateFactory.newLatLngBounds(
                             bounds.build(),
-                            mapFragment.requireView().width - 200,
-                            mapFragment.requireView().height - 200,
-                            (mapFragment.requireView().height * 0.05f).toInt()
+                            mapFragment.requireView().width - 300,
+                            mapFragment.requireView().height - 300,
+                            (mapFragment.requireView().height * 0.1f).toInt()
                         )
                     )
 
@@ -217,18 +219,19 @@ class ConfirmReceiverAddressFragment : Fragment(), KodeinAware, SSLCTransactionR
         }
 
         viewModel.couponPrice.observe(viewLifecycleOwner, ) {
-            val newCharge = calculatePrice(requireArguments().getInt("delivery_type")) - it.coupon.discount_amount.toInt()
+            val newCharge = calculatePrice(requireArguments().getInt("delivery_type")) - it.coupons!!.discount_amount.toInt()
             setParcel.delivery_charge = newCharge
             binding.total.text = "Tk $newCharge"
             binding.discountAmount.text = "Tk -${it.coupons.discount_amount}"
-            binding.couponText.text = it.coupon.coupon_text
-            binding.rootLayout.snackbar(it.message)
+            binding.couponText.text = it.coupons.coupon_text
+            binding.rootLayout.snackbar("Coupon Added")
             binding.applyCoupon.visibility = View.GONE
             binding.couponLayout.visibility = View.VISIBLE
         }
 
         binding.applyCoupon.setOnClickListener {
-            showCouponDialog()
+            val fragment = CouponFragment()
+            communicatorFragmentInterface?.addContentFragment(fragment, true)
         }
 
         binding.removeCoupon.setOnClickListener {
@@ -388,7 +391,7 @@ class ConfirmReceiverAddressFragment : Fragment(), KodeinAware, SSLCTransactionR
                         val response = viewModel.checkCoupon(couponText.text.toString())
                         if (response.message == "Successful") {
                             val newCharge =
-                                calculatePrice(requireArguments().getInt("delivery_type")) - response.coupons.discount_amount.toInt()
+                                calculatePrice(requireArguments().getInt("delivery_type")) - response.coupons!!.discount_amount.toInt()
                             setParcel.delivery_charge = newCharge
                             binding.total.text = "Tk $newCharge"
                             binding.discountAmount.text = "Tk -${response.coupons.discount_amount}"

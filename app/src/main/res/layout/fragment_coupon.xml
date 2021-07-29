@@ -9,7 +9,8 @@
         android:orientation="vertical"
         android:clickable="true"
         android:focusable="true"
-        tools:context=".view.main.TermsConditionsFragment">
+        tools:context=".view.main.TermsConditionsFragment"
+        android:background="@color/white">
 
         <include layout="@layout/custom_toolbar"
             android:id="@+id/toolbar"/>
