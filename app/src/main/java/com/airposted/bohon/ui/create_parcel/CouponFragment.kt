@@ -22,7 +22,6 @@ import org.kodein.di.generic.instance
 
 class CouponFragment : Fragment(), KodeinAware {
     private lateinit var binding: FragmentCouponBinding
-    private var communicatorFragmentInterface: CommunicatorFragmentInterface? = null
     override val kodein by kodein()
     private val factory: LocationSetViewModelFactory by instance()
     private lateinit var viewModel: LocationSetViewModel
@@ -75,6 +74,7 @@ class CouponFragment : Fragment(), KodeinAware {
 
         binding.toolbar.backImage.setOnClickListener {
             requireActivity().onBackPressed()
+            hideKeyboard(requireActivity())
         }
     }
 

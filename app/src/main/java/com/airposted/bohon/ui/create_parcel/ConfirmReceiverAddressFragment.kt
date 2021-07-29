@@ -7,6 +7,7 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.Drawable
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -147,9 +148,22 @@ class ConfirmReceiverAddressFragment : Fragment(), KodeinAware, SSLCTransactionR
 
                     setParcel.distance = round((distance / 1000).toDouble(), 2)
                     charge = calculatePrice(requireArguments().getInt("delivery_type"))
+                    Log.e("AAA", charge.toString())
                     setParcel.delivery_charge = charge
                     binding.charge.text = "Tk $charge"
                     binding.total.text = "Tk $charge"
+
+                    viewModel.couponPrice.observe(viewLifecycleOwner, ) {
+                        val newCharge = calculatePrice(requireArguments().getInt("delivery_type")) - it.coupons!!.discount_amount.toInt()
+                        Log.e("AAA", it.coupons!!.discount_amount)
+                        setParcel.delivery_charge = newCharge
+                        binding.total.text = "Tk $newCharge"
+                        binding.discountAmount.text = "Tk -${it.coupons.discount_amount}"
+                        binding.couponText.text = it.coupons.coupon_text
+                        binding.rootLayout.snackbar("Coupon Added")
+                        binding.applyCoupon.visibility = View.GONE
+                        binding.couponLayout.visibility = View.VISIBLE
+                    }
 
                     val circleDrawable = resources.getDrawable(R.drawable.root_start_point)
                     val markerIcon = getMarkerIconFromDrawable(circleDrawable)
@@ -216,17 +230,6 @@ class ConfirmReceiverAddressFragment : Fragment(), KodeinAware, SSLCTransactionR
                 }
             }
 
-        }
-
-        viewModel.couponPrice.observe(viewLifecycleOwner, ) {
-            val newCharge = calculatePrice(requireArguments().getInt("delivery_type")) - it.coupons!!.discount_amount.toInt()
-            setParcel.delivery_charge = newCharge
-            binding.total.text = "Tk $newCharge"
-            binding.discountAmount.text = "Tk -${it.coupons.discount_amount}"
-            binding.couponText.text = it.coupons.coupon_text
-            binding.rootLayout.snackbar("Coupon Added")
-            binding.applyCoupon.visibility = View.GONE
-            binding.couponLayout.visibility = View.VISIBLE
         }
 
         binding.applyCoupon.setOnClickListener {
