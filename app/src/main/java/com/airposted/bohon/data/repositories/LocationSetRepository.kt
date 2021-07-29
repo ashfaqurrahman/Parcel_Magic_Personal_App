@@ -9,6 +9,8 @@ import com.airposted.bohon.data.network.SafeApiRequest
 import com.airposted.bohon.data.network.responses.SetParcelResponse
 import com.airposted.bohon.model.*
 import com.airposted.bohon.model.coupon.CheckCouponModel
+import com.airposted.bohon.model.coupon.Coupon
+import com.airposted.bohon.model.coupon.Coupons
 import com.airposted.bohon.model.rating.RateDeliveryMan
 
 class LocationSetRepository (
@@ -19,6 +21,7 @@ class LocationSetRepository (
 
     private val from = MutableLiveData<LocationDetailsWithName>()
     private val to = MutableLiveData<LocationDetailsWithName>()
+    val couponPrice = MutableLiveData<CheckCouponModel>()
 
     init {
         from
@@ -54,9 +57,12 @@ class LocationSetRepository (
     }
 
     suspend fun checkCoupon(coupon: String): CheckCouponModel {
-        return apiRequest { api.checkCoupon(
+        val response = apiRequest { api.checkCoupon(
             PersistentUser.getInstance().getAccessToken(
                 appContext
-            ), coupon) }
+            ), coupon)
+        }
+        couponPrice.postValue(response)
+        return response
     }
 }

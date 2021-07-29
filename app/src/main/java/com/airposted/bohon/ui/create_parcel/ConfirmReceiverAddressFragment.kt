@@ -17,6 +17,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.observe
 import com.aapbd.appbajarlib.storage.PersistentUser
 import com.airposted.bohon.R
 import com.airposted.bohon.data.network.preferences.PreferenceProvider
@@ -213,6 +214,17 @@ class ConfirmReceiverAddressFragment : Fragment(), KodeinAware, SSLCTransactionR
                 }
             }
 
+        }
+
+        viewModel.couponPrice.observe(viewLifecycleOwner, ) {
+            val newCharge = calculatePrice(requireArguments().getInt("delivery_type")) - it.coupon.discount_amount.toInt()
+            setParcel.delivery_charge = newCharge
+            binding.total.text = "Tk $newCharge"
+            binding.discountAmount.text = "Tk -${it.coupons.discount_amount}"
+            binding.couponText.text = it.coupon.coupon_text
+            binding.rootLayout.snackbar(it.message)
+            binding.applyCoupon.visibility = View.GONE
+            binding.couponLayout.visibility = View.VISIBLE
         }
 
         binding.applyCoupon.setOnClickListener {
