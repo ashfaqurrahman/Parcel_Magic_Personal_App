@@ -13,31 +13,30 @@
             android:orientation="horizontal"
             android:id="@+id/top_layout"
             tools:ignore="RelativeOverlap"
-            android:background="@color/top_bar_color">
+            android:background="@color/purple_500">
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/backImage"
                 android:layout_width="25dp"
-                android:padding="5dp"
-                android:layout_marginStart="15dp"
-                android:layout_centerVertical="true"
                 android:layout_height="25dp"
-                app:srcCompat="@drawable/ic_keyboard_backspace"/>
+                android:layout_centerVertical="true"
+                android:layout_marginStart="15dp"
+                android:padding="5dp"
+                app:srcCompat="@drawable/ic_keyboard_backspace_white" />
 
             <TextView
                 android:id="@+id/toolbar_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_toEndOf="@+id/backImage"
-                android:layout_marginStart="25dp"
                 android:layout_centerVertical="true"
+                android:layout_marginStart="25dp"
+                android:layout_toEndOf="@+id/backImage"
                 android:fontFamily="@font/poppins_medium"
-                android:textStyle="normal"
-                android:textSize="20sp"
-                android:textColor="#111329"
                 android:lineSpacingExtra="5sp"
-                tools:text="Mobile Number"
-                />
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:textStyle="normal"
+                tools:text="Mobile Number" />
 
         </RelativeLayout>
 

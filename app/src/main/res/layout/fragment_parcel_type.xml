@@ -58,27 +58,27 @@
                     />
 
                 <TextView
-                    android:layout_below="@id/delivery_type"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_below="@id/delivery_type"
+                    android:layout_marginTop="1dp"
                     android:fontFamily="@font/poppins_bold"
-                    android:textSize="36sp"
-                    android:textStyle="bold"
-                    android:textColor="#ffffff"
                     android:text="Delivery"
-                    />
+                    android:textColor="#ffffff"
+                    android:textSize="36sp"
+                    android:textStyle="bold" />
 
             </RelativeLayout>
 
             <ImageView
                 android:id="@+id/delivery_icon"
-                android:layout_width="200dp"
-                android:layout_height="170dp"
-                android:layout_marginEnd="-30dp"
-                android:layout_alignBottom="@+id/title_layout"
+                android:layout_width="130dp"
+                android:layout_height="100dp"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="20dp"
                 android:elevation="2dp"
-                android:scaleType="fitXY"
-                android:layout_alignParentEnd="true"/>
+                android:layout_centerVertical="true"
+                android:scaleType="fitXY" />
 
         </RelativeLayout>
 

@@ -57,12 +57,12 @@
 
                 <ImageView
                     android:id="@+id/from_icon"
-                    android:layout_marginStart="15dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_alignTop="@+id/from_layout"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_location_icon_solid"/>
+                    android:layout_alignTop="@+id/from_layout"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginTop="10dp"
+                    android:src="@drawable/ic_location_icon_solid" />
 
                 <ImageView
                     android:layout_width="2dp"

@@ -48,7 +48,7 @@ class ParcelTypeFragment : Fragment() {
             }
             1 -> {
                 binding.deliveryType.text = getString(R.string.quick)
-                binding.deliveryIcon.setBackgroundResource(R.drawable.ic_quick_large_icon)
+                binding.deliveryIcon.setBackgroundResource(R.drawable.ic_regular_icon)
             }
         }
 

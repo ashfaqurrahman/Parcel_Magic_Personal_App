@@ -46,7 +46,9 @@ class IntroActivity : AppCompatActivity() {
         btnNext = findViewById(R.id.btn_next)
         layouts = intArrayOf(
             R.layout.welcome_slide1,
-            R.layout.welcome_slide2
+            R.layout.welcome_slide2,
+            R.layout.welcome_slide3,
+            R.layout.welcome_slide4
         )
         addBottomDots(0)
         changeStatusBarColor()

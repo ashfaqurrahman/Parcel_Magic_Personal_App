@@ -24,7 +24,7 @@
       android:fillColor="#fff"/>
   <path
       android:pathData="M145.222,163.223L111.164,163.223l-51.951,5.024 -52.349,-5.024L6.864,40.182l50.429,-40.182s28.2,28.358 54.97,40.182a97.661,97.661 0,0 0,52.1 7.115v96.675z"
-      android:fillColor="#3b6998"/>
+      android:fillColor="#5b0697"/>
   <group>
     <clip-path
         android:pathData="M145.221,163.222L111.164,163.222L59.214,168.245 6.858,163.222L6.858,40.182l52.137,3.767 53.263,-3.767 52.1,7.115v96.675z"/>
@@ -63,7 +63,7 @@
       android:fillAlpha="0.1"/>
   <path
       android:pathData="M106.745,84.962c0,9.939 -18,38.084 -18,38.084s-18,-28.145 -18,-38.084a18,18 0,1 1,35.991 0z"
-      android:fillColor="#ff5252"/>
+      android:fillColor="#f08f43"/>
   <path
       android:pathData="M88.75,83.707m-5.441,0a5.441,5.441 0,1 1,10.882 0a5.441,5.441 0,1 1,-10.882 0"
       android:fillColor="#fff"/>

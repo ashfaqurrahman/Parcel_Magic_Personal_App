@@ -3,59 +3,57 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="@drawable/splash_bg_gradient_start_end">
+    android:background="@drawable/intro_main_bg">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center_horizontal"
         android:background="@drawable/ic_intro_two_bg1"
+        android:gravity="center_horizontal"
         android:orientation="vertical">
 
         <ImageView
             android:id="@+id/intro_two_bg"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="50dp"
             android:layout_marginTop="100dp"
+            android:layout_marginBottom="50dp"
             android:src="@drawable/ic_intro_two_bg" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_alignParentBottom="true"
             android:layout_below="@id/intro_two_bg"
-            android:gravity="center">
+            android:layout_alignParentBottom="true"
+            android:gravity="center"
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/poppins_semibold"
-                android:textSize="25sp"
-                android:textStyle="normal"
-                android:textColor="#ffffff"
+                android:gravity="center"
                 android:paddingStart="15dp"
                 android:paddingEnd="15dp"
-                android:gravity="center"
                 android:text="Send parcel whenever you want!"
-                />
+                android:textColor="#ffffff"
+                android:textSize="25sp"
+                android:textStyle="normal" />
 
             <TextView
                 android:id="@+id/desc1"
-                android:layout_marginTop="15dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
                 android:fontFamily="@font/poppins_regular"
+                android:gravity="center"
                 android:paddingStart="15dp"
                 android:paddingEnd="15dp"
-                android:textStyle="normal"
-                android:textSize="14sp"
-                android:textColor="#ffffff"
-                android:gravity="center"
                 android:text="Need to send something in less than 24 hours? Don’t worry Airposted parcel has got you covered. Our service is absolutely hassle-free and wallet friendly!"
-                />
+                android:textColor="#ffffff"
+                android:textSize="14sp"
+                android:textStyle="normal" />
 
         </LinearLayout>
 

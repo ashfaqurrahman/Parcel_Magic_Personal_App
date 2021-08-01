@@ -4,24 +4,26 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="?android:colorBackground"
     android:layout_height="match_parent">
+
     <RelativeLayout
-        style="@style/top_bar_layout"
-        android:orientation="horizontal"
         android:id="@+id/top_layout"
-        android:background="@drawable/gradient_background">
+        style="@style/top_bar_layout"
+        android:background="@drawable/gradient_background"
+        android:orientation="horizontal">
 
         <RelativeLayout
             android:layout_width="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true">
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/backImage"
-                android:layout_marginStart="10dp"
                 android:layout_width="25dp"
-                android:layout_centerVertical="true"
                 android:layout_height="25dp"
-                app:srcCompat="@drawable/ic_back_icon"/>
+                android:padding="5dp"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="15dp"
+                app:srcCompat="@drawable/ic_keyboard_backspace" />
         </RelativeLayout>
 
         <androidx.appcompat.widget.AppCompatTextView
@@ -31,9 +33,9 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:text="@string/webview"
-            android:textStyle="bold"
-            android:textColor="@color/black"
-            android:textSize="20sp"/>
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:textStyle="bold" />
 
     </RelativeLayout>
 

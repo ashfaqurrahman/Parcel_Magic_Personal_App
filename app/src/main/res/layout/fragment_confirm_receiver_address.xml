@@ -38,8 +38,8 @@
                     android:name="com.google.android.gms.maps.SupportMapFragment"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginBottom="-20dp"
-                    android:layout_above="@id/layout"/>
+                    android:layout_above="@id/layout"
+                    android:layout_marginBottom="-21dp" />
 
                 <LinearLayout
                     android:id="@+id/layout"
@@ -165,9 +165,9 @@
                                         android:layout_height="wrap_content"
                                         android:layout_alignParentEnd="true"
                                         android:fontFamily="@font/poppins_semibold"
-                                        android:textStyle="normal"
-                                        android:textSize="17sp"
                                         android:textColor="#0f122f"
+                                        android:textSize="17sp"
+                                        android:textStyle="normal"
                                         tools:text="Tk 114.33" />
 
                                 </RelativeLayout>
@@ -204,7 +204,7 @@
                                     android:background="@drawable/doted_rectengle"
                                     android:textStyle="normal"
                                     android:textSize="17sp"
-                                    android:textColor="#0c5beb"
+                                    android:textColor="@color/orange"
                                     android:lineSpacingExtra="10sp"
                                     android:text="@string/apply_coupon"
                                     app:drawableStartCompat="@drawable/ic_coupon_icon" />
@@ -244,15 +244,15 @@
                                         android:background="#c1c1c1"/>
 
                                     <TextView
-                                        android:layout_toEndOf="@+id/view"
-                                        android:layout_marginStart="20dp"
                                         android:id="@+id/coupon_text"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
+                                        android:layout_marginStart="20dp"
+                                        android:layout_toEndOf="@+id/view"
                                         android:fontFamily="@font/poppins_semibold"
-                                        android:textStyle="normal"
-                                        android:textSize="14sp"
                                         android:textColor="#0f122f"
+                                        android:textSize="15sp"
+                                        android:textStyle="normal"
                                         tools:text="Gift30" />
 
                                     <TextView
@@ -262,23 +262,23 @@
                                         android:layout_alignParentEnd="true"
                                         android:layout_centerVertical="true"
                                         android:fontFamily="@font/poppins_semibold"
+                                        android:textColor="@color/orange"
+                                        android:textSize="17sp"
                                         android:textStyle="normal"
-                                        android:textSize="14sp"
-                                        android:textColor="#0c5beb"
                                         tools:text="Tk -50" />
 
                                     <TextView
-                                        android:layout_toEndOf="@+id/view"
-                                        android:layout_marginStart="20dp"
                                         android:id="@+id/remove_coupon"
-                                        android:layout_below="@+id/coupon_text"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
+                                        android:layout_below="@+id/coupon_text"
+                                        android:layout_marginStart="20dp"
+                                        android:layout_toEndOf="@+id/view"
                                         android:fontFamily="@font/poppins_semibold"
-                                        android:textStyle="normal"
+                                        android:text="Remove"
+                                        android:textColor="@color/orange"
                                         android:textSize="17sp"
-                                        android:textColor="#0c5beb"
-                                        android:text="Remove" />
+                                        android:textStyle="normal" />
 
                                 </RelativeLayout>
 
@@ -312,6 +312,9 @@
                                         android:textStyle="normal"
                                         android:checked="true"
                                         android:textSize="17sp"
+                                        android:drawableStart="@drawable/ic_taka"
+                                        android:padding="10dp"
+                                        android:drawablePadding="15dp"
                                         android:text="Cash on collect"/>
 
                                     <RadioButton
@@ -322,7 +325,10 @@
                                         android:textSize="17sp"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
-                                        android:text="Digital payment"/>
+                                        android:src="@drawable/ic_logo_light"
+                                        android:padding="10dp"
+                                        android:drawableLeft="@drawable/digital_payment"
+                                        />
 
                                 </RadioGroup>
 

@@ -167,8 +167,8 @@ open class HomeFragment : Fragment(R.layout.fragment_home),
             )
         )
 
-        binding.expressBtn.background = gradientDrawable
-        binding.quickBtn.background = gradientDrawable
+//        binding.expressBtn.background = gradientDrawable
+//        binding.quickBtn.background = gradientDrawable
 
         lifecycleScope.launch {
             try {

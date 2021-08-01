@@ -34,19 +34,18 @@
                             android:id="@+id/toolbar_layout"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:background="@color/purple_500"
                             android:paddingTop="39dp"
-                            android:paddingBottom="20dp"
-                            android:background="#0c5beb">
+                            android:paddingBottom="20dp">
 
                             <ImageView
                                 android:id="@+id/menu"
                                 android:layout_width="36dp"
                                 android:layout_height="36dp"
                                 android:layout_marginStart="20dp"
-                                android:padding="9dp"
                                 android:background="@drawable/circle_gradient_center"
-                                android:src="@drawable/ic_menu"
-                                />
+                                android:padding="9dp"
+                                android:src="@drawable/ic_menu" />
 
                             <TextView
                                 android:id="@+id/what_to_send"
@@ -55,15 +54,15 @@
                                 android:layout_alignParentEnd="true"
                                 android:layout_marginEnd="20dp"
                                 android:background="@drawable/button_bg1"
-                                android:paddingEnd="18dp"
+                                android:drawablePadding="8dp"
+                                android:fontFamily="@font/poppins_semibold"
                                 android:paddingStart="18dp"
                                 android:paddingTop="9dp"
+                                android:paddingEnd="18dp"
                                 android:paddingBottom="9dp"
-                                android:drawablePadding="8dp"
                                 android:text="@string/what_to_send"
-                                android:textSize="13sp"
                                 android:textColor="@color/white"
-                                android:fontFamily="@font/poppins_semibold"
+                                android:textSize="13sp"
                                 app:drawableLeftCompat="@drawable/ic_question_mark" />
 
                         </RelativeLayout>
@@ -110,42 +109,40 @@
                             </RelativeLayout>
 
                             <RelativeLayout
-                                android:visibility="visible"
                                 android:id="@+id/title2_layout"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/bottom_radius_button_bg"
                                 android:paddingStart="20dp"
                                 android:paddingEnd="20dp"
                                 android:paddingBottom="113dp"
-                                android:background="@drawable/bottom_radius_button_bg"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content">
+                                android:visibility="visible">
 
                                 <TextView
                                     android:id="@+id/title2"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:fontFamily="@font/poppins_bold"
-                                    android:textStyle="bold"
-                                    android:textSize="26sp"
-                                    android:textColor="#ffffff"
                                     android:text="To find your pickup \nlocation automatically\nturn on location services"
-                                    />
+                                    android:textColor="#ffffff"
+                                    android:textSize="26sp"
+                                    android:textStyle="bold" />
 
                                 <TextView
                                     android:id="@+id/share_location"
-                                    android:layout_below="@id/title2"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:paddingTop="10dp"
-                                    android:paddingBottom="10dp"
-                                    android:paddingStart="20dp"
-                                    android:paddingEnd="20dp"
+                                    android:layout_below="@id/title2"
                                     android:layout_marginTop="20dp"
                                     android:background="@drawable/share_location_bg"
                                     android:fontFamily="@font/poppins_bold"
-                                    android:textSize="13sp"
-                                    android:textColor="#ffffff"
+                                    android:paddingStart="20dp"
+                                    android:paddingTop="10dp"
+                                    android:paddingEnd="20dp"
+                                    android:paddingBottom="10dp"
                                     android:text="Turn on locaion"
-                                    />
+                                    android:textColor="#ffffff"
+                                    android:textSize="13sp" />
 
                             </RelativeLayout>
 
@@ -153,48 +150,37 @@
 
                         <com.google.android.material.card.MaterialCardView
                             android:id="@+id/delivery_process"
-                            android:layout_below="@+id/title_main_layout"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="-90dp"
-                            app:cardCornerRadius="20dp"
-                            app:cardBackgroundColor="#f6f6f6"
+                            android:layout_below="@+id/title_main_layout"
                             android:layout_marginStart="20dp"
-                            android:layout_marginEnd="20dp">
+                            android:layout_marginTop="-90dp"
+                            android:layout_marginEnd="20dp"
+                            app:cardBackgroundColor="#FFFFFF"
+                            app:cardCornerRadius="20dp">
 
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginTop="15dp"
-                                android:layout_marginBottom="20dp"
                                 android:layout_marginStart="20dp"
+                                android:layout_marginTop="20dp"
                                 android:layout_marginEnd="20dp"
+                                android:layout_marginBottom="25dp"
                                 android:orientation="vertical">
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:fontFamily="@font/poppins_semibold"
-                                    android:textStyle="bold"
-                                    android:textSize="16sp"
-                                    android:textColor="#1a1a1a"
-                                    android:lineSpacingExtra="22sp"
-                                    android:text="Delivery Type"
-                                    />
 
                                 <LinearLayout
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginTop="20dp"
-                                    android:weightSum="2"
-                                    android:orientation="horizontal">
+                                    android:orientation="horizontal"
+                                    android:weightSum="2">
 
                                     <com.google.android.material.card.MaterialCardView
                                         android:layout_width="0dp"
                                         android:layout_height="match_parent"
                                         android:layout_marginEnd="7dp"
-                                        android:layout_weight="1"
                                         android:layout_marginBottom="5dp"
+                                        android:layout_weight="1"
+                                        app:cardBackgroundColor="#fbf5ff"
                                         app:cardCornerRadius="15dp">
 
                                         <LinearLayout
@@ -209,29 +195,27 @@
                                                 android:layout_width="wrap_content"
                                                 android:layout_height="wrap_content"
                                                 android:layout_marginTop="12dp"
-                                                android:src="@drawable/ic_express"/>
+                                                android:src="@drawable/ic_express_icon" />
 
                                             <TextView
                                                 android:layout_width="wrap_content"
                                                 android:layout_height="wrap_content"
-                                                android:layout_marginTop="2dp"
+                                                android:layout_marginTop="8dp"
                                                 android:fontFamily="@font/poppins_medium"
-                                                android:textStyle="normal"
-                                                android:textSize="15sp"
-                                                android:textColor="#1a1a1a"
                                                 android:text="@string/express"
-                                                />
+                                                android:textColor="#1a1a1a"
+                                                android:textSize="15sp"
+                                                android:textStyle="normal" />
 
                                             <TextView
                                                 android:layout_width="wrap_content"
                                                 android:layout_height="wrap_content"
                                                 android:layout_marginTop="2dp"
-                                                android:fontFamily="@font/poppins_medium"
-                                                android:textStyle="normal"
                                                 android:layout_marginBottom="12dp"
-                                                android:textSize="12sp"
+                                                android:fontFamily="@font/poppins_medium"
                                                 android:text="24 Hours"
-                                                />
+                                                android:textSize="12sp"
+                                                android:textStyle="normal" />
 
                                         </LinearLayout>
 
@@ -241,8 +225,9 @@
                                         android:layout_width="0dp"
                                         android:layout_height="match_parent"
                                         android:layout_marginStart="8dp"
-                                        android:layout_weight="1"
                                         android:layout_marginBottom="5dp"
+                                        android:layout_weight="1"
+                                        app:cardBackgroundColor="#fbf5ff"
                                         app:cardCornerRadius="15dp">
 
                                         <LinearLayout
@@ -250,35 +235,33 @@
                                             android:layout_width="match_parent"
                                             android:layout_height="match_parent"
                                             android:layout_weight="1"
-                                            android:padding="15dp"
                                             android:gravity="center"
-                                            android:orientation="vertical">
+                                            android:orientation="vertical"
+                                            android:padding="15dp">
 
                                             <ImageView
                                                 android:layout_width="wrap_content"
                                                 android:layout_height="wrap_content"
-                                                android:src="@drawable/ic_quick_icon"/>
+                                                android:src="@drawable/ic_regular_icon" />
 
                                             <TextView
                                                 android:layout_width="wrap_content"
                                                 android:layout_height="wrap_content"
-                                                android:layout_marginTop="2dp"
+                                                android:layout_marginTop="8dp"
                                                 android:fontFamily="@font/poppins_medium"
-                                                android:textStyle="normal"
-                                                android:textSize="15sp"
-                                                android:textColor="#1a1a1a"
                                                 android:text="@string/quick"
-                                                />
+                                                android:textColor="#1a1a1a"
+                                                android:textSize="15sp"
+                                                android:textStyle="normal" />
 
                                             <TextView
                                                 android:layout_width="wrap_content"
                                                 android:layout_height="wrap_content"
                                                 android:layout_marginTop="2dp"
                                                 android:fontFamily="@font/poppins_medium"
-                                                android:textStyle="normal"
-                                                android:textSize="12sp"
                                                 android:text="48 Hours"
-                                                />
+                                                android:textSize="12sp"
+                                                android:textStyle="normal" />
 
                                         </LinearLayout>
 
@@ -344,10 +327,10 @@
                         <RelativeLayout
                             android:layout_width="match_parent"
                             android:layout_height="220dp"
+                            android:layout_below="@+id/coupons"
                             android:layout_marginStart="20dp"
                             android:layout_marginEnd="20dp"
-                            android:layout_below="@+id/coupons"
-                            android:background="@drawable/ic_coupons">
+                            android:background="@drawable/ic_coupon_bg">
 
                             <TextView
                                 android:id="@+id/coupon_title"
@@ -355,17 +338,16 @@
                                 android:layout_height="wrap_content"
                                 android:layout_alignParentTop="true"
                                 android:layout_centerHorizontal="true"
-                                android:layout_marginTop="30dp"
+                                android:layout_marginTop="35dp"
+                                android:fontFamily="@font/poppins_semibold"
+                                android:gravity="center_horizontal"
                                 android:shadowColor="#29000000"
                                 android:shadowDy="3"
                                 android:shadowRadius="6"
-                                android:fontFamily="@font/poppins_semibold"
-                                android:textStyle="normal"
-                                android:textSize="20sp"
                                 android:textColor="#ffffff"
-                                android:gravity="center_horizontal"
-                                tools:text="  first 3 orders"
-                                />
+                                android:textSize="20sp"
+                                android:textStyle="normal"
+                                tools:text="  first 3 orders" />
 
                             <TextView
                                 android:id="@+id/coupon_code_text"
@@ -373,35 +355,34 @@
                                 android:layout_height="wrap_content"
                                 android:layout_below="@+id/coupon_title"
                                 android:layout_centerHorizontal="true"
+                                android:layout_marginTop="20dp"
+                                android:fontFamily="@font/poppins_regular"
+                                android:lineSpacingExtra="10sp"
                                 android:shadowColor="#29000000"
                                 android:shadowDy="3"
                                 android:shadowRadius="6"
-                                android:fontFamily="@font/poppins_regular"
-                                android:textStyle="normal"
-                                android:textSize="14sp"
-                                android:layout_marginTop="20dp"
-                                android:textColor="#ffffff"
-                                android:lineSpacingExtra="10sp"
                                 android:text="Use coupon code:"
-                                />
+                                android:textColor="#ffffff"
+                                android:textSize="14sp"
+                                android:textStyle="normal" />
 
                             <TextView
                                 android:id="@+id/coupon"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_centerHorizontal="true"
                                 android:layout_alignParentBottom="true"
-                                android:layout_marginBottom="30dp"
+                                android:layout_centerHorizontal="true"
+                                android:layout_marginBottom="35dp"
                                 android:fontFamily="@font/poppins_semibold"
                                 android:lineSpacingExtra="10sp"
                                 android:shadowColor="#29000000"
                                 android:shadowDy="3"
                                 android:shadowRadius="6"
-                                android:textIsSelectable="true"
-                                tools:text="ASDDUDD20"
                                 android:textColor="#ffffff"
+                                android:textIsSelectable="true"
                                 android:textSize="14sp"
-                                android:textStyle="bold" />
+                                android:textStyle="bold"
+                                tools:text="ASDDUDD20" />
 
                         </RelativeLayout>
 

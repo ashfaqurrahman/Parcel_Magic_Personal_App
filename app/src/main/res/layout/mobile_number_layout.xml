@@ -97,7 +97,8 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
                 android:layout_marginBottom="10dp"
-                android:src="@drawable/ic_open_screen_bg"/>
+                android:scaleType="fitXY"
+                android:src="@drawable/ic_open_screen_bg" />
 
         </RelativeLayout>
 

@@ -1,18 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="purple_200">#FFBB86FC</color>
-    <color name="purple_500">#FF0c5beb</color>
-    <color name="purple_700">#FF0c5beb</color>
-    <color name="teal_200">#0c5beb</color>
+        <color name="purple_200">#FFBB86FC</color>
+    <color name="purple_500">#5b0697</color>
+    <color name="purple_700">#41006e</color>
+    <color name="teal_200">#5b0697</color>
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFF</color>
     <color name="transparent">#00000000</color>
-    <color name="card_background_color">#0c5beb</color>
+    <color name="card_background_color">#FFFFFF</color>
 
-    <color name="blue">#0c5beb</color>
+    <color name="orange">#f37c1e</color>
+    <color name="blue">#00aeaf</color>
     <color name="top_bar_color">#ffffff</color>
     <color name="gray">#808080</color>
+    <color name="button_before_color">#bd9bd5</color>
 
     <!-- Screens background color-->
     <color name="bg_screen1">#f9faff</color>

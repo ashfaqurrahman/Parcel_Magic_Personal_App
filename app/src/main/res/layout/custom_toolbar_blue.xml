@@ -13,15 +13,16 @@
             android:orientation="horizontal"
             android:id="@+id/top_layout"
             tools:ignore="RelativeOverlap"
-            android:background="@color/blue">
+            android:background="@color/purple_500">
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/backImage"
                 android:layout_width="25dp"
-                android:layout_marginStart="15dp"
-                android:layout_centerVertical="true"
                 android:layout_height="25dp"
-                app:srcCompat="@drawable/ic_back_icon_white"/>
+                android:layout_centerVertical="true"
+                android:layout_marginStart="15dp"
+                android:padding="5dp"
+                app:srcCompat="@drawable/ic_keyboard_backspace_white" />
 
             <TextView
                 android:id="@+id/toolbar_title"

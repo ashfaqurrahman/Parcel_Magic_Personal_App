@@ -97,12 +97,12 @@
                     android:id="@+id/submit"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/poppins_medium"
                     android:layout_alignParentEnd="true"
-                    android:gravity="center"
                     android:layout_gravity="center"
-                    android:textColor="@color/blue"
-                    android:text="Submit"/>
+                    android:fontFamily="@font/poppins_medium"
+                    android:gravity="center"
+                    android:text="Submit"
+                    android:textColor="@color/blue" />
 
             </RelativeLayout>
 

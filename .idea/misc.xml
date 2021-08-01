@@ -1,5 +1,124 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/Users/Munjur/StudioProjects/StagingBitoronbdPersonalApp/app/src/main/res/drawable/after_button_bg.xml" value="0.3828125" />
+        <entry key="..\:/Users/Munjur/StudioProjects/StagingBitoronbdPersonalApp/app/src/main/res/drawable/before_button_bg.xml" value="0.3828125" />
+        <entry key="..\:/Users/Munjur/StudioProjects/StagingBitoronbdPersonalApp/app/src/main/res/drawable/bottom_radius_button_bg.xml" value="0.3828125" />
+        <entry key="..\:/Users/Munjur/StudioProjects/StagingBitoronbdPersonalApp/app/src/main/res/drawable/button_bg.xml" value="0.3828125" />
+        <entry key="..\:/Users/Munjur/StudioProjects/StagingBitoronbdPersonalApp/app/src/main/res/drawable/button_bg1.xml" value="0.3828125" />
+        <entry key="..\:/Users/Munjur/StudioProjects/StagingBitoronbdPersonalApp/app/src/main/res/drawable/circle_gradient_center.xml" value="0.3828125" />
+        <entry key="..\:/Users/Munjur/StudioProjects/StagingBitoronbdPersonalApp/app/src/main/res/drawable/circle_solid_green.xml" value="0.3828125" />
+        <entry key="..\:/Users/Munjur/StudioProjects/StagingBitoronbdPersonalApp/app/src/main/res/drawable/circle_with_border.xml" value="0.3828125" />
+        <entry key="..\:/Users/Munjur/StudioProjects/StagingBitoronbdPersonalApp/app/src/main/res/drawable/custom_progress.xml" value="0.3828125" />
+        <entry key="..\:/Users/Munjur/StudioProjects/StagingBitoronbdPersonalApp/app/src/main/res/drawable/gradiant_bg.xml" value="0.3828125" />
+        <entry key="..\:/Users/Munjur/StudioProjects/StagingBitoronbdPersonalApp/app/src/main/res/drawable/gradient_background.xml" value="0.3828125" />
+        <entry key="..\:/Users/Munjur/StudioProjects/StagingBitoronbdPersonalApp/app/src/main/res/drawable/ic_back_icon.xml" value="0.3828125" />
+        <entry key="..\:/Users/Munjur/StudioProjects/StagingBitoronbdPersonalApp/app/src/main/res/drawable/ic_call.xml" value="0.3828125" />
+        <entry key="..\:/Users/Munjur/StudioProjects/StagingBitoronbdPersonalApp/app/src/main/res/drawable/ic_cancelled_order.xml" value="0.3828125" />
+        <entry key="..\:/Users/Munjur/StudioProjects/StagingBitoronbdPersonalApp/app/src/main/res/drawable/ic_coupon_icon.xml" value="0.3828125" />
+        <entry key="..\:/Users/Munjur/StudioProjects/StagingBitoronbdPersonalApp/app/src/main/res/drawable/ic_coupons.xml" value="0.3828125" />
+        <entry key="..\:/Users/Munjur/StudioProjects/StagingBitoronbdPersonalApp/app/src/main/res/drawable/ic_digital_payment.xml" value="0.3828125" />
+        <entry key="..\:/Users/Munjur/StudioProjects/StagingBitoronbdPersonalApp/app/src/main/res/drawable/ic_edit.xml" value="0.3828125" />
+        <entry key="..\:/Users/Munjur/StudioProjects/StagingBitoronbdPersonalApp/app/src/main/res/drawable/ic_edit_profile.xml" value="0.3828125" />
+        <entry key="..\:/Users/Munjur/StudioProjects/StagingBitoronbdPersonalApp/app/src/main/res/drawable/ic_express.xml" value="0.3828125" />
+        <entry key="..\:/Users/Munjur/StudioProjects/StagingBitoronbdPersonalApp/app/src/main/res/drawable/ic_information.xml" value="0.3828125" />
+        <entry key="..\:/Users/Munjur/StudioProjects/StagingBitoronbdPersonalApp/app/src/main/res/drawable/ic_intro_two_bg1.xml" value="0.3828125" />
+        <entry key="..\:/Users/Munjur/StudioProjects/StagingBitoronbdPersonalApp/app/src/main/res/drawable/ic_keyboard_backspace.xml" value="0.3828125" />
+        <entry key="..\:/Users/Munjur/StudioProjects/StagingBitoronbdPersonalApp/app/src/main/res/drawable/ic_location_icon_solid.xml" value="0.3828125" />
+        <entry key="..\:/Users/Munjur/StudioProjects/StagingBitoronbdPersonalApp/app/src/main/res/drawable/ic_logo_light.xml" value="0.3828125" />
+        <entry key="..\:/Users/Munjur/StudioProjects/StagingBitoronbdPersonalApp/app/src/main/res/drawable/ic_map_icon.xml" value="0.3828125" />
+        <entry key="..\:/Users/Munjur/StudioProjects/StagingBitoronbdPersonalApp/app/src/main/res/drawable/ic_marker.xml" value="0.3828125" />
+        <entry key="..\:/Users/Munjur/StudioProjects/StagingBitoronbdPersonalApp/app/src/main/res/drawable/ic_my_parcel_icon.xml" value="0.3828125" />
+        <entry key="..\:/Users/Munjur/StudioProjects/StagingBitoronbdPersonalApp/app/src/main/res/drawable/ic_open_screen_bg.xml" value="0.3828125" />
+        <entry key="..\:/Users/Munjur/StudioProjects/StagingBitoronbdPersonalApp/app/src/main/res/drawable/ic_parcel_history.xml" value="0.3828125" />
+        <entry key="..\:/Users/Munjur/StudioProjects/StagingBitoronbdPersonalApp/app/src/main/res/drawable/ic_quick_icon.xml" value="0.3828125" />
+        <entry key="..\:/Users/Munjur/StudioProjects/StagingBitoronbdPersonalApp/app/src/main/res/drawable/ic_splash_bg.xml" value="0.3828125" />
+        <entry key="..\:/Users/Munjur/StudioProjects/StagingBitoronbdPersonalApp/app/src/main/res/drawable/ic_success_icon.xml" value="0.3828125" />
+        <entry key="..\:/Users/Munjur/StudioProjects/StagingBitoronbdPersonalApp/app/src/main/res/drawable/ic_welcome.xml" value="0.3828125" />
+        <entry key="..\:/Users/Munjur/StudioProjects/StagingBitoronbdPersonalApp/app/src/main/res/drawable/launcher_screen_with_logo.xml" value="0.3828125" />
+        <entry key="..\:/Users/Munjur/StudioProjects/StagingBitoronbdPersonalApp/app/src/main/res/drawable/my_order_toolbar_bg.xml" value="0.3828125" />
+        <entry key="..\:/Users/Munjur/StudioProjects/StagingBitoronbdPersonalApp/app/src/main/res/drawable/rounder_blue.xml" value="0.3828125" />
+        <entry key="..\:/Users/Munjur/StudioProjects/StagingBitoronbdPersonalApp/app/src/main/res/drawable/share_location_bg.xml" value="0.3828125" />
+        <entry key="..\:/Users/Munjur/StudioProjects/StagingBitoronbdPersonalApp/app/src/main/res/drawable/splash_bg_gradient_start_end.xml" value="0.3828125" />
+        <entry key="..\:/Users/Munjur/StudioProjects/StagingBitoronbdPersonalApp/app/src/main/res/drawable/splash_main_bg.xml" value="0.3828125" />
+        <entry key="..\:/Users/Munjur/StudioProjects/StagingBitoronbdPersonalApp/app/src/main/res/layout/activity_auth.xml" value="0.36102564102564105" />
+        <entry key="..\:/Users/Munjur/StudioProjects/StagingBitoronbdPersonalApp/app/src/main/res/layout/activity_intro.xml" value="0.36102564102564105" />
+        <entry key="..\:/Users/Munjur/StudioProjects/StagingBitoronbdPersonalApp/app/src/main/res/layout/activity_location_set.xml" value="0.36102564102564105" />
+        <entry key="..\:/Users/Munjur/StudioProjects/StagingBitoronbdPersonalApp/app/src/main/res/layout/activity_main.xml" value="0.36102564102564105" />
+        <entry key="..\:/Users/Munjur/StudioProjects/StagingBitoronbdPersonalApp/app/src/main/res/layout/activity_permission.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/Munjur/StudioProjects/StagingBitoronbdPersonalApp/app/src/main/res/layout/activity_splash.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/Munjur/StudioProjects/StagingBitoronbdPersonalApp/app/src/main/res/layout/activity_web_view.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/Munjur/StudioProjects/StagingBitoronbdPersonalApp/app/src/main/res/layout/cancel_order_dialog.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/Munjur/StudioProjects/StagingBitoronbdPersonalApp/app/src/main/res/layout/contact_info.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/Munjur/StudioProjects/StagingBitoronbdPersonalApp/app/src/main/res/layout/coupon_dialog.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/Munjur/StudioProjects/StagingBitoronbdPersonalApp/app/src/main/res/layout/custom_progress_bar.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/Munjur/StudioProjects/StagingBitoronbdPersonalApp/app/src/main/res/layout/custom_toolbar.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/Munjur/StudioProjects/StagingBitoronbdPersonalApp/app/src/main/res/layout/custom_toolbar_blue.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/Munjur/StudioProjects/StagingBitoronbdPersonalApp/app/src/main/res/layout/dialog_gps_lost.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/Munjur/StudioProjects/StagingBitoronbdPersonalApp/app/src/main/res/layout/fragment_cancel_order.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/Munjur/StudioProjects/StagingBitoronbdPersonalApp/app/src/main/res/layout/fragment_collected_order.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/Munjur/StudioProjects/StagingBitoronbdPersonalApp/app/src/main/res/layout/fragment_confirm_delivery_request.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/Munjur/StudioProjects/StagingBitoronbdPersonalApp/app/src/main/res/layout/fragment_confirm_receiver_address.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/Munjur/StudioProjects/StagingBitoronbdPersonalApp/app/src/main/res/layout/fragment_coupon.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/Munjur/StudioProjects/StagingBitoronbdPersonalApp/app/src/main/res/layout/fragment_express_delivery.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/Munjur/StudioProjects/StagingBitoronbdPersonalApp/app/src/main/res/layout/fragment_help.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/Munjur/StudioProjects/StagingBitoronbdPersonalApp/app/src/main/res/layout/fragment_home.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/Munjur/StudioProjects/StagingBitoronbdPersonalApp/app/src/main/res/layout/fragment_location_set.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/Munjur/StudioProjects/StagingBitoronbdPersonalApp/app/src/main/res/layout/fragment_my_parcel.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/Munjur/StudioProjects/StagingBitoronbdPersonalApp/app/src/main/res/layout/fragment_my_parcel_history.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/Munjur/StudioProjects/StagingBitoronbdPersonalApp/app/src/main/res/layout/fragment_notification_details.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/Munjur/StudioProjects/StagingBitoronbdPersonalApp/app/src/main/res/layout/fragment_o_t_p.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/Munjur/StudioProjects/StagingBitoronbdPersonalApp/app/src/main/res/layout/fragment_o_t_p_firebase.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/Munjur/StudioProjects/StagingBitoronbdPersonalApp/app/src/main/res/layout/fragment_open_screen.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/Munjur/StudioProjects/StagingBitoronbdPersonalApp/app/src/main/res/layout/fragment_order_details.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/Munjur/StudioProjects/StagingBitoronbdPersonalApp/app/src/main/res/layout/fragment_package_guideline.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/Munjur/StudioProjects/StagingBitoronbdPersonalApp/app/src/main/res/layout/fragment_parcel_type.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/Munjur/StudioProjects/StagingBitoronbdPersonalApp/app/src/main/res/layout/fragment_phone_number.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/Munjur/StudioProjects/StagingBitoronbdPersonalApp/app/src/main/res/layout/fragment_product.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/Munjur/StudioProjects/StagingBitoronbdPersonalApp/app/src/main/res/layout/fragment_profile.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/Munjur/StudioProjects/StagingBitoronbdPersonalApp/app/src/main/res/layout/fragment_quantity.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/Munjur/StudioProjects/StagingBitoronbdPersonalApp/app/src/main/res/layout/fragment_quick_delivery.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/Munjur/StudioProjects/StagingBitoronbdPersonalApp/app/src/main/res/layout/fragment_receiver_address.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/Munjur/StudioProjects/StagingBitoronbdPersonalApp/app/src/main/res/layout/fragment_receiver_info.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/Munjur/StudioProjects/StagingBitoronbdPersonalApp/app/src/main/res/layout/fragment_search_receiver_address.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/Munjur/StudioProjects/StagingBitoronbdPersonalApp/app/src/main/res/layout/fragment_sign_up.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/Munjur/StudioProjects/StagingBitoronbdPersonalApp/app/src/main/res/layout/fragment_terms_conditions.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/Munjur/StudioProjects/StagingBitoronbdPersonalApp/app/src/main/res/layout/fragment_web_view.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/Munjur/StudioProjects/StagingBitoronbdPersonalApp/app/src/main/res/layout/fragment_welcome.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/Munjur/StudioProjects/StagingBitoronbdPersonalApp/app/src/main/res/layout/header_layout.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/Munjur/StudioProjects/StagingBitoronbdPersonalApp/app/src/main/res/layout/item_location_search.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/Munjur/StudioProjects/StagingBitoronbdPersonalApp/app/src/main/res/layout/mobile_number_layout.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/Munjur/StudioProjects/StagingBitoronbdPersonalApp/app/src/main/res/layout/my_parcel_history_list_item.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/Munjur/StudioProjects/StagingBitoronbdPersonalApp/app/src/main/res/layout/my_parcel_list_item.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/Munjur/StudioProjects/StagingBitoronbdPersonalApp/app/src/main/res/layout/my_parcel_list_item_after_appointed_delivery_man.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/Munjur/StudioProjects/StagingBitoronbdPersonalApp/app/src/main/res/layout/open_screen_layout.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/Munjur/StudioProjects/StagingBitoronbdPersonalApp/app/src/main/res/layout/order_dialog.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/Munjur/StudioProjects/StagingBitoronbdPersonalApp/app/src/main/res/layout/otp_layout.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/Munjur/StudioProjects/StagingBitoronbdPersonalApp/app/src/main/res/layout/payment_method_dialog.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/Munjur/StudioProjects/StagingBitoronbdPersonalApp/app/src/main/res/layout/product_type.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/Munjur/StudioProjects/StagingBitoronbdPersonalApp/app/src/main/res/layout/quantity_dialog.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/Munjur/StudioProjects/StagingBitoronbdPersonalApp/app/src/main/res/layout/rating_dialog.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/Munjur/StudioProjects/StagingBitoronbdPersonalApp/app/src/main/res/layout/receiver_address_dialog.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/Munjur/StudioProjects/StagingBitoronbdPersonalApp/app/src/main/res/layout/row.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/Munjur/StudioProjects/StagingBitoronbdPersonalApp/app/src/main/res/layout/sign_out_dialog.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/Munjur/StudioProjects/StagingBitoronbdPersonalApp/app/src/main/res/layout/sign_up_layout.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/Munjur/StudioProjects/StagingBitoronbdPersonalApp/app/src/main/res/layout/successful_dialog.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/Munjur/StudioProjects/StagingBitoronbdPersonalApp/app/src/main/res/layout/test.xml" value="0.36102564102564105" />
+        <entry key="..\:/Users/Munjur/StudioProjects/StagingBitoronbdPersonalApp/app/src/main/res/layout/update_my_location.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/Munjur/StudioProjects/StagingBitoronbdPersonalApp/app/src/main/res/layout/update_profile.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/Munjur/StudioProjects/StagingBitoronbdPersonalApp/app/src/main/res/layout/welcome_back_layout.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/Munjur/StudioProjects/StagingBitoronbdPersonalApp/app/src/main/res/layout/welcome_slide1.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/Munjur/StudioProjects/StagingBitoronbdPersonalApp/app/src/main/res/layout/welcome_slide2.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/Munjur/StudioProjects/StagingBitoronbdPersonalApp/app/src/main/res/layout/welcome_slide3.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/Munjur/StudioProjects/StagingBitoronbdPersonalApp/app/src/main/res/layout/welcome_slide4.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/Munjur/StudioProjects/StagingBitoronbdPersonalApp/app/src/main/res/layout/what_to_send_dialog.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/Munjur/StudioProjects/StagingBitoronbdPersonalApp/app/src/main/res/layout/wheel_menu_item.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/Munjur/StudioProjects/StagingBitoronbdPersonalApp/app/src/main/res/menu/drawer_menu.xml" value="0.36666666666666664" />
+      </map>
+    </option>
+  </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>

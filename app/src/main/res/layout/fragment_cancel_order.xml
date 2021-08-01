@@ -27,13 +27,13 @@
 
                 <ImageView
                     android:id="@+id/back"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:padding="5dp"
-                    android:layout_marginStart="10dp"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
                     android:layout_alignParentStart="true"
-                    android:src="@drawable/ic_keyboard_backspace_white"/>
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="10dp"
+                    android:padding="5dp"
+                    android:src="@drawable/ic_keyboard_backspace_white" />
 
                 <TextView
                     android:id="@+id/title"
@@ -61,11 +61,12 @@
                     android:paddingTop="7dp"
                     android:paddingEnd="5dp"
                     android:paddingBottom="7dp"
+                    android:textColor="@color/white"
+                    android:textColorHint="@color/white"
                     android:textSize="14.5sp"
                     app:spinner_arrow_gravity="end"
                     app:spinner_arrow_padding="2dp"
                     app:spinner_arrow_show="true"
-                    android:textColor="@color/white"
                     app:spinner_arrow_tint="@color/white"
                     app:spinner_divider_color="#e5e5e5"
                     app:spinner_divider_show="true"
@@ -73,7 +74,6 @@
                     app:spinner_item_array="@array/delivery_type"
                     app:spinner_popup_animation="dropdown"
                     app:spinner_popup_background="#004cd8"
-                    android:textColorHint="@color/white"
                     app:spinner_popup_elevation="14dp" />
 
             </RelativeLayout>
