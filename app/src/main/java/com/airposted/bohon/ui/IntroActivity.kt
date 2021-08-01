@@ -53,7 +53,7 @@ class IntroActivity : AppCompatActivity() {
         addBottomDots(0)
         changeStatusBarColor()
         myViewPagerAdapter = MyViewPagerAdapter()
-        viewPager!!.setAdapter(myViewPagerAdapter)
+        viewPager!!.adapter = myViewPagerAdapter
         viewPager!!.addOnPageChangeListener(viewPagerPageChangeListener)
         btnSkip!!.setOnClickListener {
             startActivity(Intent(context, AuthActivity::class.java))
