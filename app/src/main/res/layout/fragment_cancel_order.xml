@@ -73,7 +73,7 @@
                     app:spinner_divider_size="0.3dp"
                     app:spinner_item_array="@array/delivery_type"
                     app:spinner_popup_animation="dropdown"
-                    app:spinner_popup_background="#004cd8"
+                    app:spinner_popup_background="@color/purple_700"
                     app:spinner_popup_elevation="14dp" />
 
             </RelativeLayout>
