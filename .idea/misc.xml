@@ -3,6 +3,12 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/Munjur/StudioProjects/Airposted/StagingBitoronbdPersonalApp/app/src/main/res/layout/fragment_confirm_receiver_address.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/Munjur/StudioProjects/Airposted/StagingBitoronbdPersonalApp/app/src/main/res/layout/fragment_receiver_address.xml" value="0.36102564102564105" />
+        <entry key="..\:/Users/Munjur/StudioProjects/Airposted/StagingBitoronbdPersonalApp/app/src/main/res/layout/welcome_slide1.xml" value="0.36102564102564105" />
+        <entry key="..\:/Users/Munjur/StudioProjects/Airposted/StagingBitoronbdPersonalApp/app/src/main/res/layout/welcome_slide2.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/Munjur/StudioProjects/Airposted/StagingBitoronbdPersonalApp/app/src/main/res/layout/welcome_slide3.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/Munjur/StudioProjects/Airposted/StagingBitoronbdPersonalApp/app/src/main/res/layout/welcome_slide4.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/Munjur/StudioProjects/StagingBitoronbdPersonalApp/app/src/main/res/drawable/after_button_bg.xml" value="0.3828125" />
         <entry key="..\:/Users/Munjur/StudioProjects/StagingBitoronbdPersonalApp/app/src/main/res/drawable/before_button_bg.xml" value="0.3828125" />
         <entry key="..\:/Users/Munjur/StudioProjects/StagingBitoronbdPersonalApp/app/src/main/res/drawable/bottom_radius_button_bg.xml" value="0.3828125" />
@@ -14,16 +20,22 @@
         <entry key="..\:/Users/Munjur/StudioProjects/StagingBitoronbdPersonalApp/app/src/main/res/drawable/custom_progress.xml" value="0.3828125" />
         <entry key="..\:/Users/Munjur/StudioProjects/StagingBitoronbdPersonalApp/app/src/main/res/drawable/gradiant_bg.xml" value="0.3828125" />
         <entry key="..\:/Users/Munjur/StudioProjects/StagingBitoronbdPersonalApp/app/src/main/res/drawable/gradient_background.xml" value="0.3828125" />
+        <entry key="..\:/Users/Munjur/StudioProjects/StagingBitoronbdPersonalApp/app/src/main/res/drawable/ic_air_parcel_logo.xml" value="0.3828125" />
         <entry key="..\:/Users/Munjur/StudioProjects/StagingBitoronbdPersonalApp/app/src/main/res/drawable/ic_back_icon.xml" value="0.3828125" />
+        <entry key="..\:/Users/Munjur/StudioProjects/StagingBitoronbdPersonalApp/app/src/main/res/drawable/ic_box_large_icon.xml" value="0.3828125" />
         <entry key="..\:/Users/Munjur/StudioProjects/StagingBitoronbdPersonalApp/app/src/main/res/drawable/ic_call.xml" value="0.3828125" />
         <entry key="..\:/Users/Munjur/StudioProjects/StagingBitoronbdPersonalApp/app/src/main/res/drawable/ic_cancelled_order.xml" value="0.3828125" />
         <entry key="..\:/Users/Munjur/StudioProjects/StagingBitoronbdPersonalApp/app/src/main/res/drawable/ic_coupon_icon.xml" value="0.3828125" />
         <entry key="..\:/Users/Munjur/StudioProjects/StagingBitoronbdPersonalApp/app/src/main/res/drawable/ic_coupons.xml" value="0.3828125" />
         <entry key="..\:/Users/Munjur/StudioProjects/StagingBitoronbdPersonalApp/app/src/main/res/drawable/ic_digital_payment.xml" value="0.3828125" />
+        <entry key="..\:/Users/Munjur/StudioProjects/StagingBitoronbdPersonalApp/app/src/main/res/drawable/ic_document_large_icon.xml" value="0.3828125" />
         <entry key="..\:/Users/Munjur/StudioProjects/StagingBitoronbdPersonalApp/app/src/main/res/drawable/ic_edit.xml" value="0.3828125" />
         <entry key="..\:/Users/Munjur/StudioProjects/StagingBitoronbdPersonalApp/app/src/main/res/drawable/ic_edit_profile.xml" value="0.3828125" />
         <entry key="..\:/Users/Munjur/StudioProjects/StagingBitoronbdPersonalApp/app/src/main/res/drawable/ic_express.xml" value="0.3828125" />
         <entry key="..\:/Users/Munjur/StudioProjects/StagingBitoronbdPersonalApp/app/src/main/res/drawable/ic_information.xml" value="0.3828125" />
+        <entry key="..\:/Users/Munjur/StudioProjects/StagingBitoronbdPersonalApp/app/src/main/res/drawable/ic_intro_one_bg.xml" value="0.3828125" />
+        <entry key="..\:/Users/Munjur/StudioProjects/StagingBitoronbdPersonalApp/app/src/main/res/drawable/ic_intro_one_car.xml" value="0.3828125" />
+        <entry key="..\:/Users/Munjur/StudioProjects/StagingBitoronbdPersonalApp/app/src/main/res/drawable/ic_intro_two_bg.xml" value="0.3828125" />
         <entry key="..\:/Users/Munjur/StudioProjects/StagingBitoronbdPersonalApp/app/src/main/res/drawable/ic_intro_two_bg1.xml" value="0.3828125" />
         <entry key="..\:/Users/Munjur/StudioProjects/StagingBitoronbdPersonalApp/app/src/main/res/drawable/ic_keyboard_backspace.xml" value="0.3828125" />
         <entry key="..\:/Users/Munjur/StudioProjects/StagingBitoronbdPersonalApp/app/src/main/res/drawable/ic_location_icon_solid.xml" value="0.3828125" />

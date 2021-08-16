@@ -104,18 +104,18 @@
                         android:id="@+id/search_from"
                         android:layout_width="match_parent"
                         android:layout_height="40dp"
-                        android:inputType="text"
-                        app:closeIcon="@drawable/ic_close_red"
-                        app:searchIcon="@null"
-                        app:iconifiedByDefault="false"
-                        app:queryHint="Pic Up location"
-                        android:textSize="14sp"
-                        android:textStyle="bold"
                         android:focusableInTouchMode="true"
                         android:fontFamily="@font/poppins_regular"
-                        app:queryBackground="@null"
+                        android:inputType="text"
+                        android:textColor="@color/black"
                         android:textColorHint="@color/black"
-                        android:textColor="@color/black"/>
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        app:closeIcon="@drawable/ic_close_red"
+                        app:iconifiedByDefault="false"
+                        app:queryBackground="@null"
+                        app:queryHint="Pic Up location"
+                        app:searchIcon="@null" />
 
                     <!--<com.airbnb.lottie.LottieAnimationView
                         android:id="@+id/loading_from"
