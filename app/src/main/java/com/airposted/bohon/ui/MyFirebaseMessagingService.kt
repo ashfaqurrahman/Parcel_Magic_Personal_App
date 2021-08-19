@@ -28,6 +28,8 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
             wl_cpu.acquire(10000)
         }
 
+        Log.e("aaaaa", "Ok")
+
         /*val dataMap: Map<String, String> = remoteMessage.data
         val title = dataMap["title"]
         val body = dataMap["text"]

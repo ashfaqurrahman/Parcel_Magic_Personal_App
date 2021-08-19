@@ -2,19 +2,23 @@ package com.airposted.bohon.ui.home
 
 import android.Manifest
 import android.app.Dialog
+import android.content.Context
 import android.content.Intent
 import android.content.IntentSender.SendIntentException
 import android.content.pm.PackageManager
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.graphics.drawable.GradientDrawable
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.provider.Settings
 import android.util.Log
 import android.view.*
 import android.widget.*
 import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
+import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -27,14 +31,14 @@ import com.airposted.bohon.data.network.preferences.PreferenceProvider
 import com.airposted.bohon.databinding.FragmentHomeBinding
 import com.airposted.bohon.model.LocationDetailsWithName
 import com.airposted.bohon.ui.auth.AuthActivity
-import com.airposted.bohon.ui.help.HelpFragment
-import com.airposted.bohon.ui.main.CommunicatorFragmentInterface
-import com.airposted.bohon.ui.profile.ProfileFragment
-import com.airposted.bohon.ui.my_order.CancelOrderFragment
-import com.airposted.bohon.ui.my_order.MyParcelFragment
-import com.airposted.bohon.ui.history.MyParcelHistoryFragment
 import com.airposted.bohon.ui.create_parcel.PackageGuidelineFragment
 import com.airposted.bohon.ui.create_parcel.ParcelTypeFragment
+import com.airposted.bohon.ui.help.HelpFragment
+import com.airposted.bohon.ui.history.MyParcelHistoryFragment
+import com.airposted.bohon.ui.main.CommunicatorFragmentInterface
+import com.airposted.bohon.ui.my_order.CancelOrderFragment
+import com.airposted.bohon.ui.my_order.MyParcelFragment
+import com.airposted.bohon.ui.profile.ProfileFragment
 import com.airposted.bohon.ui.termsconditions.TermsConditionsFragment
 import com.airposted.bohon.utils.*
 import com.bumptech.glide.Glide
@@ -49,6 +53,7 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.iid.FirebaseInstanceId
 import com.google.gson.stream.MalformedJsonException
+import com.judemanutd.autostarter.AutoStartPermissionHelper
 import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.coroutines.launch
 import org.kodein.di.KodeinAware
@@ -90,6 +95,19 @@ open class HomeFragment : Fragment(R.layout.fragment_home),
     @RequiresApi(Build.VERSION_CODES.M)
     private fun bindUI() = Coroutines.main {
 
+        if (AutoStartPermissionHelper.getInstance().isAutoStartPermissionAvailable(requireActivity())) {
+            AutoStartPermissionHelper.getInstance().getAutoStartPermission(requireActivity())
+        } else {
+            Log.e("aaaaaa", "Autostart Disabled")
+            //requireActivity().startActivity(Intent(Settings.ACTION_BATTERY_SAVER_SETTINGS))
+            if (NotificationManagerCompat.from(requireActivity()).areNotificationsEnabled()) {
+                Log.e("aaaaaa", "Enabled")
+            } else {
+                Log.e("aaaaaa", "Disabled")
+                openAppNotificationSettings(requireActivity())
+            }
+        }
+
         setProgressDialog(requireActivity())
 
         googleApiClient = getAPIClientInstance()
@@ -126,11 +144,11 @@ open class HomeFragment : Fragment(R.layout.fragment_home),
         val pic = hView.findViewById<CircleImageView>(R.id.profile_image)
         val name = hView.findViewById<TextView>(R.id.user_name)
 
-        viewModel.name.observe(viewLifecycleOwner, ) {
+        viewModel.name.observe(viewLifecycleOwner) {
             name.text = it
         }
 
-        viewModel.image.observe(viewLifecycleOwner, ) {
+        viewModel.image.observe(viewLifecycleOwner) {
             Glide.with(requireActivity()).load(
                 it
             ).placeholder(R.mipmap.ic_launcher).error(
@@ -261,6 +279,28 @@ open class HomeFragment : Fragment(R.layout.fragment_home),
                 e.printStackTrace()
             }
         }
+    }
+
+    private fun openAppNotificationSettings(context: Context) {
+        val intent = Intent().apply {
+            when {
+                Build.VERSION.SDK_INT >= Build.VERSION_CODES.O -> {
+                    action = Settings.ACTION_APP_NOTIFICATION_SETTINGS
+                    putExtra(Settings.EXTRA_APP_PACKAGE, context.packageName)
+                }
+                Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP -> {
+                    action = "android.settings.APP_NOTIFICATION_SETTINGS"
+                    putExtra("app_package", context.packageName)
+                    putExtra("app_uid", context.applicationInfo.uid)
+                }
+                else -> {
+                    action = Settings.ACTION_APPLICATION_DETAILS_SETTINGS
+                    addCategory(Intent.CATEGORY_DEFAULT)
+                    data = Uri.parse("package:" + context.packageName)
+                }
+            }
+        }
+        context.startActivity(intent)
     }
 
     private fun getAPIClientInstance(): GoogleApiClient {
