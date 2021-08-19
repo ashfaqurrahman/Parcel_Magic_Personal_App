@@ -67,4 +67,8 @@ class LocationSetRepository (
         }
         return response
     }
+
+    fun couponPriceUpdate() {
+        couponPrice.postValue(null)
+    }
 }

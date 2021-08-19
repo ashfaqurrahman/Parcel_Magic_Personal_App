@@ -135,4 +135,5 @@ dependencies {
     implementation (name: 'sslCommerzSdk', ext:'aar')
     //PowerSpinner
     implementation "com.github.skydoves:powerspinner:1.1.7"
+    implementation 'com.github.judemanutd:autostarter:1.1.0'
 }

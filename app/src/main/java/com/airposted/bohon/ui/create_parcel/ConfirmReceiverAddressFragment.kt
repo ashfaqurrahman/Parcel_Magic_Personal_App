@@ -93,7 +93,7 @@ class ConfirmReceiverAddressFragment : Fragment(), KodeinAware, SSLCTransactionR
 
         mapFragment =
             childFragmentManager.findFragmentById(R.id.mapReceiverDetails) as SupportMapFragment
-        mapFragment.getMapAsync {
+        mapFragment.getMapAsync { it ->
             googleMap = it
             googleMap.uiSettings.isZoomControlsEnabled = false
             googleMap.uiSettings.isZoomGesturesEnabled = false
@@ -148,21 +148,21 @@ class ConfirmReceiverAddressFragment : Fragment(), KodeinAware, SSLCTransactionR
 
                     setParcel.distance = round((distance / 1000).toDouble(), 2)
                     charge = calculatePrice(requireArguments().getInt("delivery_type"))
-                    Log.e("AAA", charge.toString())
                     setParcel.delivery_charge = charge
                     binding.charge.text = "Tk $charge"
                     binding.total.text = "Tk $charge"
 
                     viewModel.couponPrice.observe(viewLifecycleOwner, ) {
-                        val newCharge = calculatePrice(requireArguments().getInt("delivery_type")) - it.coupons!!.discount_amount.toInt()
-                        Log.e("AAA", it.coupons!!.discount_amount)
-                        setParcel.delivery_charge = newCharge
-                        binding.total.text = "Tk $newCharge"
-                        binding.discountAmount.text = "Tk -${it.coupons.discount_amount}"
-                        binding.couponText.text = it.coupons.coupon_text
-                        binding.rootLayout.snackbar("Coupon Added")
-                        binding.applyCoupon.visibility = View.GONE
-                        binding.couponLayout.visibility = View.VISIBLE
+                        if (it != null) {
+                            val newCharge = calculatePrice(requireArguments().getInt("delivery_type")) - it.coupons!!.discount_amount.toInt()
+                            setParcel.delivery_charge = newCharge
+                            binding.total.text = "Tk $newCharge"
+                            binding.discountAmount.text = "Tk -${it.coupons.discount_amount}"
+                            binding.couponText.text = it.coupons.coupon_text
+                            binding.rootLayout.snackbar("Coupon Added")
+                            binding.applyCoupon.visibility = View.GONE
+                            binding.couponLayout.visibility = View.VISIBLE
+                        }
                     }
 
                     val circleDrawable = resources.getDrawable(R.drawable.root_start_point)
@@ -238,6 +238,7 @@ class ConfirmReceiverAddressFragment : Fragment(), KodeinAware, SSLCTransactionR
         }
 
         binding.removeCoupon.setOnClickListener {
+            viewModel.couponPriceUpdate
             charge = calculatePrice(requireArguments().getInt("delivery_type"))
             setParcel.delivery_charge = charge
             binding.total.text = "Tk $charge"

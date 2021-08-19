@@ -86,7 +86,7 @@ class ReceiverAddressFragment : Fragment(), KodeinAware, CustomClickListener, On
             fromLatitude = locationDetailsWithName.latitude
             fromLongitude = locationDetailsWithName.longitude
 
-            binding.searchFrom.setQuery(locationDetailsWithName.locationName, false)
+            binding.searchFrom.setQuery(locationDetailsWithName.locationName.replace(", null", ""), false)
             from = false
             binding.recyclerview.visibility = View.GONE
 

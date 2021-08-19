@@ -46,5 +46,6 @@ class LocationSetViewModel (
     ) = withContext(Dispatchers.IO) { repository.setOrder(setParcel) }
 
     val couponPrice = repository.couponPrice
+    val couponPriceUpdate = repository.couponPriceUpdate()
     suspend fun checkCoupon(coupon:String) = withContext(Dispatchers.IO) { repository.checkCoupon(coupon) }
 }

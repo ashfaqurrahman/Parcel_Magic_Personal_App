@@ -33,6 +33,7 @@ import com.airposted.bohon.model.coupon.UserCoupon
 import com.google.android.gms.location.*
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
+import java.io.IOException
 import java.lang.reflect.InvocationTargetException
 import java.util.*
 
@@ -165,6 +166,10 @@ class HomeRepository(context: Context, private val api: MyApi, private val db: A
                         currentLocation.postValue(LocationDetailsWithName(addresses[0].featureName + ", " + addresses[0].thoroughfare + ", " + addresses[0].subLocality + ", " + addresses[0].locality, location.latitude, location.longitude))
                     }
                 } catch (e: InvocationTargetException) {
+                    Log.e("aaaaaa", "Location not found")
+                } catch (e: RuntimeException) {
+                    Log.e("aaaaaa", "Location not found")
+                } catch (e: IOException) {
                     Log.e("aaaaaa", "Location not found")
                 }
             }
