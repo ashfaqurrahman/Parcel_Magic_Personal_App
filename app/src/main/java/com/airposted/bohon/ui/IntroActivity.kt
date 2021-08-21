@@ -51,7 +51,7 @@ class IntroActivity : AppCompatActivity() {
             R.layout.welcome_slide4
         )
         addBottomDots(0)
-        changeStatusBarColor()
+        //changeStatusBarColor()
         myViewPagerAdapter = MyViewPagerAdapter()
         viewPager!!.adapter = myViewPagerAdapter
         viewPager!!.addOnPageChangeListener(viewPagerPageChangeListener)
